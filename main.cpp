@@ -20,11 +20,11 @@ int main(int argc, char *argv[])
     // qDebug() << "here"; // You can use this for tracing
 
     view.setFixedSize(600, 600);
-    view.setWindowTitle("Maze Game");
+    view.setWindowTitle("GTA VI");
     QBrush brush(Qt::black);
     view.setBackgroundBrush(brush);
 
-    QFile file(":Board.txt");
+    QFile file(":Maze.txt");
     file.open(QIODevice::ReadOnly);
     QTextStream stream(&file);
     int boardData[10][10];
@@ -41,17 +41,59 @@ int main(int argc, char *argv[])
     grassImage = grassImage.scaledToWidth(50);
     grassImage = grassImage.scaledToHeight(50);
 
-    QPixmap bricksImage(":assets/images/gees-def_still_2x.png");
-    bricksImage = bricksImage.scaledToWidth(50);
-    bricksImage = bricksImage.scaledToHeight(50);
+    QPixmap brick1Image(":assets/images/car up.png");
+    brick1Image = brick1Image.scaledToWidth(50);
+    brick1Image = brick1Image.scaledToHeight(50);
+
+    QPixmap brick2Image(":assets/images/car left.png");
+    brick2Image = brick2Image.scaledToWidth(50);
+    brick2Image = brick2Image.scaledToHeight(50);
+
+    QPixmap brick3Image(":assets/images/car bottom.png");
+    brick3Image = brick3Image.scaledToWidth(50);
+    brick3Image = brick3Image.scaledToHeight(50);
+
+    QPixmap brick4Image(":assets/images/car right.png");
+    brick4Image = brick4Image.scaledToWidth(50);
+    brick4Image = brick4Image.scaledToHeight(50);
+
+    QPixmap brick5Image(":assets/images/Tree.png");
+    brick5Image = brick5Image.scaledToWidth(50);
+    brick5Image = brick5Image.scaledToHeight(50);
+
+    QPixmap brick6Image(":assets/images/house.png");
+    brick6Image = brick6Image.scaledToWidth(50);
+    brick6Image = brick6Image.scaledToHeight(50);
+
+    QPixmap homeImage(":assets/images/Home.png");
+    homeImage = homeImage.scaledToWidth(50);
+    homeImage = homeImage.scaledToHeight(50);
+
+    QPixmap arrowImage(":assets/images/arrow.png");
+    arrowImage = arrowImage.scaledToWidth(50);
+    arrowImage = arrowImage.scaledToHeight(50);
 
     QGraphicsPixmapItem boardItems[10][10];
     for (int i = 0; i < 10; i++)
         for (int j = 0; j < 10; j++)
         {
             // Set Image
-            if (boardData[i][j] < 0)
-                boardItems[i][j].setPixmap(bricksImage);
+            if (boardData[i][j] == -1)
+                boardItems[i][j].setPixmap(brick1Image);
+            else if (boardData[i][j] == -2)
+                boardItems[i][j].setPixmap(brick2Image);
+            else if (boardData[i][j] == -3)
+                boardItems[i][j].setPixmap(brick3Image);
+            else if (boardData[i][j] == -4)
+                boardItems[i][j].setPixmap(brick4Image);
+            else if (boardData[i][j] == -5)
+                boardItems[i][j].setPixmap(brick5Image);
+            else if (boardData[i][j] == -6)
+                boardItems[i][j].setPixmap(brick6Image);
+            else if (boardData[i][j] == 20)
+                boardItems[i][j].setPixmap(homeImage);
+            else if (boardData[i][j] == 43)
+                boardItems[i][j].setPixmap(arrowImage);
             else
                 boardItems[i][j].setPixmap(grassImage);
 

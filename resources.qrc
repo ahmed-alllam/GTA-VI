@@ -6,8 +6,14 @@
         <file>assets/images/blank.png</file>
         <file>assets/images/horz.png</file>
         <file>assets/images/vert.png</file>
-        <file>assets/images/gees-def_still_2x.png</file>
-        <file>Grass.png</file>
-        <file>Bricks.png</file>
+        <file>assets/images/Tree.png</file>
+        <file>Maze.txt</file>
+        <file>assets/images/Home.png</file>
+        <file>assets/images/car up.png</file>
+        <file>assets/images/car bottom.png</file>
+        <file>assets/images/car left.png</file>
+        <file>assets/images/car right.png</file>
+        <file>assets/images/house.png</file>
+        <file>assets/images/arrow.png</file>
     </qresource>
 </RCC>
