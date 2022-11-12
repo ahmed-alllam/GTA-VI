@@ -18,7 +18,6 @@ int main(int argc, char *argv[])
     QGraphicsScene scene;
 
 
-<<<<<<< HEAD
     view.setWindowState(Qt::WindowMaximized);
     view.fitInView(scene.sceneRect(), Qt::IgnoreAspectRatio);
     view.setWindowTitle("GTA VI");
@@ -26,11 +25,7 @@ int main(int argc, char *argv[])
     view.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     QBrush brush(Qt::gray);
-=======
-    view.setFixedSize(600, 600);
-    view.setWindowTitle("GTA VI");
-    QBrush brush(Qt::black);
->>>>>>> db2464d960dfcc25d0c23926b84a62c8237bfd65
+
     view.setBackgroundBrush(brush);
 
     QFile file(":Maze.txt");
@@ -53,43 +48,38 @@ int main(int argc, char *argv[])
     grassImage = grassImage.scaledToWidth(unitWidth);
     grassImage = grassImage.scaledToHeight(unitHeight);
 
-<<<<<<< HEAD
-    QPixmap bricksImage(":assets/images/gees-def_still_2x.png");
-    bricksImage = bricksImage.scaledToWidth(unitWidth);
-    bricksImage = bricksImage.scaledToHeight(unitHeight);
-=======
+
     QPixmap brick1Image(":assets/images/car up.png");
-    brick1Image = brick1Image.scaledToWidth(50);
-    brick1Image = brick1Image.scaledToHeight(50);
+    brick1Image = brick1Image.scaledToWidth(unitWidth);
+    brick1Image = brick1Image.scaledToHeight(unitWidth);
 
     QPixmap brick2Image(":assets/images/car left.png");
-    brick2Image = brick2Image.scaledToWidth(50);
-    brick2Image = brick2Image.scaledToHeight(50);
+    brick2Image = brick2Image.scaledToWidth(unitWidth);
+    brick2Image = brick2Image.scaledToHeight(unitWidth);
 
     QPixmap brick3Image(":assets/images/car bottom.png");
-    brick3Image = brick3Image.scaledToWidth(50);
-    brick3Image = brick3Image.scaledToHeight(50);
+    brick3Image = brick3Image.scaledToWidth(unitWidth);
+    brick3Image = brick3Image.scaledToHeight(unitWidth);
 
     QPixmap brick4Image(":assets/images/car right.png");
-    brick4Image = brick4Image.scaledToWidth(50);
-    brick4Image = brick4Image.scaledToHeight(50);
+    brick4Image = brick4Image.scaledToWidth(unitWidth);
+    brick4Image = brick4Image.scaledToHeight(unitWidth);
 
     QPixmap brick5Image(":assets/images/Tree.png");
-    brick5Image = brick5Image.scaledToWidth(50);
-    brick5Image = brick5Image.scaledToHeight(50);
+    brick5Image = brick5Image.scaledToWidth(unitWidth);
+    brick5Image = brick5Image.scaledToHeight(unitWidth);
 
     QPixmap brick6Image(":assets/images/house.png");
-    brick6Image = brick6Image.scaledToWidth(50);
-    brick6Image = brick6Image.scaledToHeight(50);
+    brick6Image = brick6Image.scaledToWidth(unitWidth);
+    brick6Image = brick6Image.scaledToHeight(unitWidth);
 
     QPixmap homeImage(":assets/images/Home.png");
-    homeImage = homeImage.scaledToWidth(50);
-    homeImage = homeImage.scaledToHeight(50);
+    homeImage = homeImage.scaledToWidth(unitWidth);
+    homeImage = homeImage.scaledToHeight(unitWidth);
 
     QPixmap arrowImage(":assets/images/arrow.png");
-    arrowImage = arrowImage.scaledToWidth(50);
-    arrowImage = arrowImage.scaledToHeight(50);
->>>>>>> db2464d960dfcc25d0c23926b84a62c8237bfd65
+    arrowImage = arrowImage.scaledToWidth(unitWidth);
+    arrowImage = arrowImage.scaledToHeight(unitWidth);
 
     QGraphicsPixmapItem boardItems[10][10];
     for (int i = 0; i < 10; i++)
