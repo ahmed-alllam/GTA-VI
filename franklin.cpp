@@ -22,8 +22,8 @@ Franklin::Franklin(int boardData[10][10]){
     ammo = 100;
     speed = 10;
     direction = 0;
-    x = 1;
-    y = 1;
+    x = 4;
+    y = 4;
 
     setPos((x+1)*unitWidth, (y+1)*unitHeight);
     
