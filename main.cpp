@@ -36,12 +36,12 @@ int main(int argc, char *argv[])
             boardData[i][j] = temp.toInt();
         }
 
-    QPixmap grassImage(":Grass.png");
+    QPixmap grassImage(":assets/images/blank.png");
 
     grassImage = grassImage.scaledToWidth(50);
     grassImage = grassImage.scaledToHeight(50);
 
-    QPixmap bricksImage(":Bricks.png");
+    QPixmap bricksImage(":assets/images/gees-def_still_2x.png");
     bricksImage = bricksImage.scaledToWidth(50);
     bricksImage = bricksImage.scaledToHeight(50);
 

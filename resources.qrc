@@ -3,6 +3,10 @@
         <file>assets/images/2left.png</file>
         <file>Board.txt</file>
         <file>assets/images/Franklin.png</file>
+        <file>assets/images/blank.png</file>
+        <file>assets/images/horz.png</file>
+        <file>assets/images/vert.png</file>
+        <file>assets/images/gees-def_still_2x.png</file>
         <file>Grass.png</file>
         <file>Bricks.png</file>
     </qresource>

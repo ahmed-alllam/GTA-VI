@@ -6,7 +6,13 @@
 #include <QList>
 
 Franklin::Franklin(int boardData[10][10]){
-    setPixmap(QPixmap(":assets/images/Franklin.png"));
+
+    QPixmap franklinImage(":assets/images/Franklin.png");
+
+    franklinImage = franklinImage.scaledToWidth(50);
+    franklinImage = franklinImage.scaledToHeight(50);
+
+    setPixmap(franklinImage);
     
     health = 100;
     score = 0;
