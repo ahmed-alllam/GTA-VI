@@ -9,8 +9,11 @@ Franklin::Franklin(int boardData[10][10]){
 
     QPixmap franklinImage(":assets/images/Franklin.png");
 
-    franklinImage = franklinImage.scaledToWidth(50);
-    franklinImage = franklinImage.scaledToHeight(50);
+    int unitWidth = 100;
+    int unitHeight = 100;
+
+    franklinImage = franklinImage.scaledToWidth(unitWidth);
+    franklinImage = franklinImage.scaledToHeight(unitHeight);
 
     setPixmap(franklinImage);
     
@@ -22,7 +25,7 @@ Franklin::Franklin(int boardData[10][10]){
     x = 1;
     y = 1;
 
-    setPos((x+1)*50, (y+1)*50);
+    setPos((x+1)*unitWidth, (y+1)*unitHeight);
     
     for(int i = 0; i < 10; i++){
         for(int j = 0; j < 10; j++){
@@ -32,6 +35,9 @@ Franklin::Franklin(int boardData[10][10]){
 }
 
 void Franklin::keyPressEvent(QKeyEvent * event){
+    int unitWidth = 100;
+    int unitHeight = 100;
+
     if (event->key() == Qt::Key_Up && boardData[x - 1][y] >= 0)
     {
         x--;
@@ -48,5 +54,5 @@ void Franklin::keyPressEvent(QKeyEvent * event){
     {
         y--;
     }
-    setPos(50 + y * 50, 50 + x * 50);
+    setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
 }

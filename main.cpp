@@ -17,11 +17,14 @@ int main(int argc, char *argv[])
     QGraphicsView view;
     QGraphicsScene scene;
 
-    // qDebug() << "here"; // You can use this for tracing
 
-    view.setFixedSize(600, 600);
-    view.setWindowTitle("Maze Game");
-    QBrush brush(Qt::black);
+    view.setWindowState(Qt::WindowMaximized);
+    view.fitInView(scene.sceneRect(), Qt::IgnoreAspectRatio);
+    view.setWindowTitle("GTA VI");
+    view.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    QBrush brush(Qt::gray);
     view.setBackgroundBrush(brush);
 
     QFile file(":Board.txt");
@@ -36,14 +39,17 @@ int main(int argc, char *argv[])
             boardData[i][j] = temp.toInt();
         }
 
+    int unitWidth = 100;
+    int unitHeight = 100;
+
     QPixmap grassImage(":assets/images/blank.png");
 
-    grassImage = grassImage.scaledToWidth(50);
-    grassImage = grassImage.scaledToHeight(50);
+    grassImage = grassImage.scaledToWidth(unitWidth);
+    grassImage = grassImage.scaledToHeight(unitHeight);
 
     QPixmap bricksImage(":assets/images/gees-def_still_2x.png");
-    bricksImage = bricksImage.scaledToWidth(50);
-    bricksImage = bricksImage.scaledToHeight(50);
+    bricksImage = bricksImage.scaledToWidth(unitWidth);
+    bricksImage = bricksImage.scaledToHeight(unitHeight);
 
     QGraphicsPixmapItem boardItems[10][10];
     for (int i = 0; i < 10; i++)
@@ -56,7 +62,7 @@ int main(int argc, char *argv[])
                 boardItems[i][j].setPixmap(grassImage);
 
             // Set Position
-            boardItems[i][j].setPos(50 + j * 50, 50 + i * 50);
+            boardItems[i][j].setPos(unitWidth + j * unitWidth, unitHeight + i * unitHeight);
 
             // Add to the Scene
             scene.addItem(&boardItems[i][j]);
