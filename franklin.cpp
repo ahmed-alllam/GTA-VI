@@ -5,7 +5,7 @@
 #include <QKeyEvent>
 #include <QList>
 
-Franklin::Franklin(int boardData[10][10]){
+Franklin::Franklin(int boardData[12][16]){
 
     QPixmap franklinImage(":assets/images/Franklin.png");
 
@@ -27,8 +27,8 @@ Franklin::Franklin(int boardData[10][10]){
 
     setPos((x+1)*unitWidth, (y+1)*unitHeight);
     
-    for(int i = 0; i < 10; i++){
-        for(int j = 0; j < 10; j++){
+    for(int i = 0; i < 12; i++){
+        for(int j = 0; j < 16; j++){
             this->boardData[i][j] = boardData[i][j];
         }
     }

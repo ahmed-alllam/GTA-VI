@@ -21,9 +21,9 @@ private:
     int direction;
     int x;
     int y;
-    int boardData[10][10];
+    int boardData[12][16];
 public:
-    Franklin(int boardData[10][10]);
+    Franklin(int boardData[12][16]);
 public slots:
     void keyPressEvent(QKeyEvent * event);
 };
