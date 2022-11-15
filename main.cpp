@@ -7,12 +7,14 @@
 #include <QTextStream>
 #include <QGraphicsPixmapItem>
 #include "franklin.h"
-#include "enemy1.h""
+#include "enemy1.h"
 #include <QDir>
 #include <QTimer>
 #include <QDebug>
 #include <QApplication>
 #include <QGuiApplication>
+#include <QSoundEffect>
+
 
 
 Franklin * franklinMain = nullptr;
@@ -67,6 +69,12 @@ int main(int argc, char *argv[])
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
     int unitWidth = qMin(screenWidth, screenHeight) / 12;
     int unitHeight = qMin(screenWidth, screenHeight) / 12;
+
+    QSoundEffect effect;
+    effect.setSource(QUrl::fromLocalFile(":assets/sounds/backsound.mp3"));
+    effect.setLoopCount(QSoundEffect::Infinite);
+    effect.setVolume(0.25f);
+    effect.play();
 
     QPixmap blankImage(":assets/images/blank.png");
 

@@ -5,6 +5,8 @@
 #include <QKeyEvent>
 #include <QList>
 #include <QGuiApplication>
+#include <QSoundEffect>
+
 
 Franklin::Franklin(int boardData[12][16]){
 
@@ -19,6 +21,10 @@ Franklin::Franklin(int boardData[12][16]){
     franklinImage = franklinImage.scaledToHeight(unitHeight);
 
     setPixmap(franklinImage);
+
+    QSoundEffect Ah;
+    Ah.setSource(QUrl::fromLocalFile(":assets/sounds/Ah Shit Here We Go Again.mp3"));
+    Ah.setVolume(0.5f);
     
     health = 100;
     score = 0;
@@ -29,7 +35,7 @@ Franklin::Franklin(int boardData[12][16]){
     y = 7;
 
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
-
+    Ah.play();
     for(int i = 0; i < 12; i++){
         for(int j = 0; j < 16; j++){
             this->boardData[i][j] = boardData[i][j];
