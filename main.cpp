@@ -8,8 +8,21 @@
 #include <QGraphicsPixmapItem>
 #include "franklin.h"
 #include <QDir>
+#include <QTimer>
 #include <QDebug>
 #include <QApplication>
+#include <QGuiApplication>
+
+
+Franklin * franklinMain = nullptr;
+
+void focus_player()
+{
+    if(franklinMain != nullptr) {
+        franklinMain->setFlag(QGraphicsPixmapItem::ItemIsFocusable);
+        franklinMain->setFocus();
+    }
+}
 
 int main(int argc, char *argv[])
 {
@@ -17,12 +30,13 @@ int main(int argc, char *argv[])
     QGraphicsView view;
     QGraphicsScene scene;
 
-
     view.setWindowState(Qt::WindowMaximized);
     view.fitInView(scene.sceneRect(), Qt::IgnoreAspectRatio);
     view.setWindowTitle("GTA VI");
     view.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    view.setFixedSize(1920, 1080);
 
     QBrush brush(Qt::gray);
 
@@ -40,14 +54,16 @@ int main(int argc, char *argv[])
             boardData[i][j] = temp.toInt();
         }
 
-    int unitWidth = 100;
-    int unitHeight = 100;
+    // calculate the size of the the unit square depending on the size of the window
+    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
+    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
+    int unitWidth = qMin(screenWidth, screenHeight) / 12;
+    int unitHeight = qMin(screenWidth, screenHeight) / 12;
 
     QPixmap grassImage(":assets/images/blank.png");
 
     grassImage = grassImage.scaledToWidth(unitWidth);
     grassImage = grassImage.scaledToHeight(unitHeight);
-
 
     QPixmap brick1Image(":assets/images/car up.png");
     brick1Image = brick1Image.scaledToWidth(unitWidth);
@@ -81,30 +97,29 @@ int main(int argc, char *argv[])
     arrowImage = arrowImage.scaledToWidth(unitWidth);
     arrowImage = arrowImage.scaledToHeight(unitWidth);
 
-    QPixmap VertRoadImage(":assets/images/vert.png");//aadded for test
+    QPixmap VertRoadImage(":assets/images/vert.png"); // aadded for test
     VertRoadImage = VertRoadImage.scaledToWidth(unitWidth);
     VertRoadImage = VertRoadImage.scaledToHeight(unitWidth);
 
-    QPixmap HorRoadImage(":assets/images/horz.png");//aadded for test
+    QPixmap HorRoadImage(":assets/images/horz.png"); // aadded for test
     HorRoadImage = HorRoadImage.scaledToWidth(unitWidth);
     HorRoadImage = HorRoadImage.scaledToHeight(unitWidth);
 
-    QPixmap toleft_RoadImage(":assets/images/2left.png");//aadded 
+    QPixmap toleft_RoadImage(":assets/images/2left.png"); // aadded
     toleft_RoadImage = toleft_RoadImage.scaledToWidth(unitWidth);
     toleft_RoadImage = toleft_RoadImage.scaledToHeight(unitWidth);
 
-    QPixmap toright_RoadImage(":assets/images/2right.png");//aadded 
+    QPixmap toright_RoadImage(":assets/images/2right.png"); // aadded
     toright_RoadImage = toright_RoadImage.scaledToWidth(unitWidth);
     toright_RoadImage = toright_RoadImage.scaledToHeight(unitWidth);
 
-    QPixmap toleft_RoadImage2(":assets/images/2left2.png");//aadded 
+    QPixmap toleft_RoadImage2(":assets/images/2left2.png"); // aadded
     toleft_RoadImage2 = toleft_RoadImage2.scaledToWidth(unitWidth);
     toleft_RoadImage2 = toleft_RoadImage2.scaledToHeight(unitWidth);
 
-    QPixmap toright_RoadImage2(":assets/images/2right2.png");//aadded 
+    QPixmap toright_RoadImage2(":assets/images/2right2.png"); // aadded
     toright_RoadImage2 = toright_RoadImage2.scaledToWidth(unitWidth);
     toright_RoadImage2 = toright_RoadImage2.scaledToHeight(unitWidth);
-
 
     QGraphicsPixmapItem boardItems[12][16];
     for (int i = 0; i < 12; i++)
@@ -115,30 +130,30 @@ int main(int argc, char *argv[])
                 boardItems[i][j].setPixmap(brick1Image);
             else if (boardData[i][j] == -2)
                 boardItems[i][j].setPixmap(brick2Image);
-        /*   else if (boardData[i][j] == -3)
-                boardItems[i][j].setPixmap(brick3Image);
-            else if (boardData[i][j] == -4)
-                boardItems[i][j].setPixmap(brick4Image);
-            else if (boardData[i][j] == -5)
-                boardItems[i][j].setPixmap(brick5Image);
-            else if (boardData[i][j] == -6)
-                boardItems[i][j].setPixmap(brick6Image);
-            else if (boardData[i][j] == 20)
-                boardItems[i][j].setPixmap(homeImage);
-            else if (boardData[i][j] == 43)
-                boardItems[i][j].setPixmap(arrowImage);*/
-            else if (boardData[i][j] ==4)
+            /*   else if (boardData[i][j] == -3)
+                    boardItems[i][j].setPixmap(brick3Image);
+                else if (boardData[i][j] == -4)
+                    boardItems[i][j].setPixmap(brick4Image);
+                else if (boardData[i][j] == -5)
+                    boardItems[i][j].setPixmap(brick5Image);
+                else if (boardData[i][j] == -6)
+                    boardItems[i][j].setPixmap(brick6Image);
+                else if (boardData[i][j] == 20)
+                    boardItems[i][j].setPixmap(homeImage);
+                else if (boardData[i][j] == 43)
+                    boardItems[i][j].setPixmap(arrowImage);*/
+            else if (boardData[i][j] == 4)
                 boardItems[i][j].setPixmap(VertRoadImage);
             else if (boardData[i][j] == 2)
                 boardItems[i][j].setPixmap(HorRoadImage);
-           /* else if (boardData[i][j] == 7)
+            else if (boardData[i][j] == 7)
                 boardItems[i][j].setPixmap(toright_RoadImage);
             else if (boardData[i][j] == 8)
                 boardItems[i][j].setPixmap(toright_RoadImage2);
             else if (boardData[i][j] == 9)
                 boardItems[i][j].setPixmap(toleft_RoadImage);
             else if (boardData[i][j] == 10)
-                boardItems[i][j].setPixmap(toleft_RoadImage2);*/
+                boardItems[i][j].setPixmap(toleft_RoadImage2);
             else if (boardData[i][j] < -2)
                 boardItems[i][j].setPixmap(brick5Image);
             else
@@ -153,11 +168,14 @@ int main(int argc, char *argv[])
 
     Franklin franklin(boardData);
     scene.addItem(&franklin);
+    franklinMain = &franklin;
 
-    franklin.setFlag(QGraphicsPixmapItem::ItemIsFocusable);
-    franklin.setFocus();
+    QTimer* timer = new QTimer();
+    QObject::connect(timer, &QTimer::timeout, focus_player);
+    timer->start(350);
 
     view.setScene(&scene);
     view.show();
     return a.exec();
 }
+
