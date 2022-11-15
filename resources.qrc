@@ -24,5 +24,9 @@
         <file>assets/images/T Right.png</file>
         <file>assets/images/T Up.png</file>
         <file>assets/images/Whiskey.png</file>
+        <file>assets/images/water.png</file>
+        <file>assets/images/2left2.png</file>
+        <file>assets/images/2right.png</file>
+        <file>assets/images/2right2.png</file>
     </qresource>
 </RCC>

@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
     brick1Image = brick1Image.scaledToWidth(unitWidth);
     brick1Image = brick1Image.scaledToHeight(unitWidth);
 
-    QPixmap brick2Image(":assets/images/car left.png");
+    QPixmap brick2Image(":assets/images/water.png");
     brick2Image = brick2Image.scaledToWidth(unitWidth);
     brick2Image = brick2Image.scaledToHeight(unitWidth);
 
@@ -199,7 +199,7 @@ int main(int argc, char *argv[])
             else if (boardData[i][j] == 15)
                 boardItems[i][j].setPixmap(CrossImage);
             else
-                boardItems[i][j].setPixmap(brick6Image);
+                boardItems[i][j].setPixmap(blankImage);
 
             // Set Position
             boardItems[i][j].setPos(unitWidth + j * unitWidth, unitHeight + i * unitHeight);
