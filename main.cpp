@@ -7,6 +7,7 @@
 #include <QTextStream>
 #include <QGraphicsPixmapItem>
 #include "franklin.h"
+#include "enemy1.h""
 #include <QDir>
 #include <QTimer>
 #include <QDebug>
@@ -15,12 +16,19 @@
 
 
 Franklin * franklinMain = nullptr;
+enemy1 * enemy11Main = nullptr;
 
 void focus_player()
 {
     if(franklinMain != nullptr) {
-        franklinMain->setFlag(QGraphicsPixmapItem::ItemIsFocusable);
-        franklinMain->setFocus();
+        franklinMain->focus_player();
+    }
+}
+
+void enemy1_move()
+{
+    if(enemy11Main != nullptr) {
+        enemy11Main->move();
     }
 }
 
@@ -170,9 +178,18 @@ int main(int argc, char *argv[])
     scene.addItem(&franklin);
     franklinMain = &franklin;
 
+    enemy1 enemy11(boardData);
+    scene.addItem(&enemy11);
+    enemy11Main = &enemy11;
+
     QTimer* timer = new QTimer();
     QObject::connect(timer, &QTimer::timeout, focus_player);
     timer->start(350);
+    
+    QTimer* timer2 = new QTimer();
+    QObject::connect(timer2, &QTimer::timeout, enemy1_move);
+    timer2->start(800);
+
 
     view.setScene(&scene);
     view.show();

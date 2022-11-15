@@ -9,13 +9,21 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    bullet.cpp \
+    enemy1.cpp \
+    enemy2.cpp \
     main.cpp \
     mainwindow.cpp \
-    franklin.cpp
+    franklin.cpp \
+    pellet.cpp
 
 HEADERS += \
+    bullet.h \
+    enemy1.h \
+    enemy2.h \
     mainwindow.h \
-    franklin.h
+    franklin.h \
+    pellet.h
 
 FORMS += \
     mainwindow.ui

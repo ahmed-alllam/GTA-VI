@@ -24,6 +24,7 @@ private:
     int boardData[12][16];
 public:
     Franklin(int boardData[12][16]);
+    void focus_player();
 public slots:
     void keyPressEvent(QKeyEvent * event);
 };

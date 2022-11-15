@@ -63,3 +63,8 @@ void Franklin::keyPressEvent(QKeyEvent * event){
     }
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
 }
+
+void Franklin::focus_player(){
+    setFlag(QGraphicsPixmapItem::ItemIsFocusable);
+    setFocus();
+}
