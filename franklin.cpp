@@ -29,7 +29,6 @@ Franklin::Franklin(int boardData[12][16]){
     QMediaPlayer *player = new QMediaPlayer;
     QAudioOutput * audioOutput = new QAudioOutput;
     player->setAudioOutput(audioOutput);
-    player->setLoops(QMediaPlayer::Infinite);
     player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
     player->play();
     
