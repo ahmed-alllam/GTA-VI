@@ -25,11 +25,11 @@ Franklin::Franklin(int boardData[12][16]){
     ammo = 100;
     speed = 10;
     direction = 0;
-    x = 7;
-    y = 5;
+    x = 5;
+    y = 7;
 
-    setPos((x+1)*unitWidth, (y+1)*unitHeight);
-    
+    setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
+
     for(int i = 0; i < 12; i++){
         for(int j = 0; j < 16; j++){
             this->boardData[i][j] = boardData[i][j];
