@@ -6,6 +6,10 @@
 #include <QList>
 #include <QGuiApplication>
 #include <QSoundEffect>
+#include <QAudioFormat>
+#include <QMediaPlayer>
+#include <QAudioOutput>
+
 
 
 Franklin::Franklin(int boardData[12][16]){
@@ -22,9 +26,12 @@ Franklin::Franklin(int boardData[12][16]){
 
     setPixmap(franklinImage);
 
-    QSoundEffect Ah;
-    Ah.setSource(QUrl::fromLocalFile(":assets/sounds/Ah Shit Here We Go Again.mp3"));
-    Ah.setVolume(0.5f);
+    QMediaPlayer *player = new QMediaPlayer;
+    QAudioOutput * audioOutput = new QAudioOutput;
+    player->setAudioOutput(audioOutput);
+    player->setLoops(QMediaPlayer::Infinite);
+    player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
+    player->play();
     
     health = 100;
     score = 0;
@@ -35,7 +42,6 @@ Franklin::Franklin(int boardData[12][16]){
     y = 7;
 
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
-    Ah.play();
     for(int i = 0; i < 12; i++){
         for(int j = 0; j < 16; j++){
             this->boardData[i][j] = boardData[i][j];

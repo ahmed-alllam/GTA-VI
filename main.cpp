@@ -13,8 +13,9 @@
 #include <QDebug>
 #include <QApplication>
 #include <QGuiApplication>
-#include <QSoundEffect>
-
+#include <QAudioFormat>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 
 Franklin * franklinMain = nullptr;
@@ -70,11 +71,13 @@ int main(int argc, char *argv[])
     int unitWidth = qMin(screenWidth, screenHeight) / 12;
     int unitHeight = qMin(screenWidth, screenHeight) / 12;
 
-    QSoundEffect effect;
-    effect.setSource(QUrl::fromLocalFile(":assets/sounds/backsound.mp3"));
-    effect.setLoopCount(QSoundEffect::Infinite);
-    effect.setVolume(0.25f);
-    effect.play();
+    QMediaPlayer *player = new QMediaPlayer;
+    QAudioOutput * audioOutput = new QAudioOutput;
+    player->setAudioOutput(audioOutput);
+    player->setLoops(QMediaPlayer::Infinite);
+    player->setSource(QUrl("qrc:/assets/sounds/backsound.mp3"));
+    player->play();
+
 
     QPixmap blankImage(":assets/images/blank.png");
 

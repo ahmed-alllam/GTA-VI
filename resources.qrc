@@ -32,5 +32,6 @@
         <file>assets/sounds/Dog.mp3</file>
         <file>assets/sounds/shot.mp3</file>
         <file>assets/sounds/backsound.mp3</file>
+        <file>assets/sounds/Ah Shit Here We Go Again.wav</file>
     </qresource>
 </RCC>
