@@ -68,10 +68,10 @@ int main(int argc, char *argv[])
     int unitWidth = qMin(screenWidth, screenHeight) / 12;
     int unitHeight = qMin(screenWidth, screenHeight) / 12;
 
-    QPixmap grassImage(":assets/images/blank.png");
+    QPixmap blankImage(":assets/images/blank.png");
 
-    grassImage = grassImage.scaledToWidth(unitWidth);
-    grassImage = grassImage.scaledToHeight(unitHeight);
+    blankImage = blankImage.scaledToWidth(unitWidth);
+    blankImage = blankImage.scaledToHeight(unitHeight);
 
     QPixmap brick1Image(":assets/images/car up.png");
     brick1Image = brick1Image.scaledToWidth(unitWidth);
@@ -96,6 +96,10 @@ int main(int argc, char *argv[])
     QPixmap brick6Image(":assets/images/house.png");
     brick6Image = brick6Image.scaledToWidth(unitWidth);
     brick6Image = brick6Image.scaledToHeight(unitWidth);
+
+    QPixmap brick7Image(":assets/images/Bodygard.png");
+    brick7Image = brick7Image.scaledToWidth(unitWidth);
+    brick7Image = brick7Image.scaledToHeight(unitWidth);
 
     QPixmap homeImage(":assets/images/Home.png");
     homeImage = homeImage.scaledToWidth(unitWidth);
@@ -129,6 +133,26 @@ int main(int argc, char *argv[])
     toright_RoadImage2 = toright_RoadImage2.scaledToWidth(unitWidth);
     toright_RoadImage2 = toright_RoadImage2.scaledToHeight(unitWidth);
 
+    QPixmap TUImage(":assets/images/T Up.png"); // aadded
+    TUImage = TUImage.scaledToWidth(unitWidth);
+    TUImage = TUImage.scaledToHeight(unitWidth);
+
+    QPixmap TDImage(":assets/images/T Down.png"); // aadded
+    TDImage = TDImage.scaledToWidth(unitWidth);
+    TDImage = TDImage.scaledToHeight(unitWidth);
+
+    QPixmap TLImage(":assets/images/T Left.png"); // aadded
+    TLImage = TLImage.scaledToWidth(unitWidth);
+    TLImage = TLImage.scaledToHeight(unitWidth);
+
+    QPixmap TRImage(":assets/images/T Right.png"); // aadded
+    TRImage = TRImage.scaledToWidth(unitWidth);
+    TRImage = TRImage.scaledToHeight(unitWidth);
+
+    QPixmap CrossImage(":assets/images/cross road.png"); // aadded
+    CrossImage = CrossImage.scaledToWidth(unitWidth);
+    CrossImage = CrossImage.scaledToHeight(unitWidth);
+
     QGraphicsPixmapItem boardItems[12][16];
     for (int i = 0; i < 12; i++)
         for (int j = 0; j < 16; j++)
@@ -138,18 +162,20 @@ int main(int argc, char *argv[])
                 boardItems[i][j].setPixmap(brick1Image);
             else if (boardData[i][j] == -2)
                 boardItems[i][j].setPixmap(brick2Image);
-            /*   else if (boardData[i][j] == -3)
-                    boardItems[i][j].setPixmap(brick3Image);
-                else if (boardData[i][j] == -4)
-                    boardItems[i][j].setPixmap(brick4Image);
-                else if (boardData[i][j] == -5)
-                    boardItems[i][j].setPixmap(brick5Image);
-                else if (boardData[i][j] == -6)
-                    boardItems[i][j].setPixmap(brick6Image);
-                else if (boardData[i][j] == 20)
-                    boardItems[i][j].setPixmap(homeImage);
-                else if (boardData[i][j] == 43)
-                    boardItems[i][j].setPixmap(arrowImage);*/
+            else if (boardData[i][j] == -3)
+                boardItems[i][j].setPixmap(brick3Image);
+            else if (boardData[i][j] == -4)
+                boardItems[i][j].setPixmap(brick4Image);
+            else if (boardData[i][j] == -5)
+                boardItems[i][j].setPixmap(brick5Image);
+            else if (boardData[i][j] == -6)
+                boardItems[i][j].setPixmap(brick6Image);
+            else if (boardData[i][j] == -7)
+                boardItems[i][j].setPixmap(brick7Image);
+            else if (boardData[i][j] == 20)
+                boardItems[i][j].setPixmap(homeImage);
+            else if (boardData[i][j] == 50)
+                boardItems[i][j].setPixmap(arrowImage);
             else if (boardData[i][j] == 4)
                 boardItems[i][j].setPixmap(VertRoadImage);
             else if (boardData[i][j] == 2)
@@ -160,12 +186,20 @@ int main(int argc, char *argv[])
                 boardItems[i][j].setPixmap(toright_RoadImage2);
             else if (boardData[i][j] == 9)
                 boardItems[i][j].setPixmap(toleft_RoadImage);
-            else if (boardData[i][j] == 10)
+            else if (boardData[i][j] == 3)
                 boardItems[i][j].setPixmap(toleft_RoadImage2);
-            else if (boardData[i][j] < -2)
-                boardItems[i][j].setPixmap(brick5Image);
+            else if (boardData[i][j] == 13)
+                boardItems[i][j].setPixmap(TRImage);
+            else if (boardData[i][j] == 14)
+                boardItems[i][j].setPixmap(TLImage);
+            else if (boardData[i][j] == 12)
+                boardItems[i][j].setPixmap(TDImage);
+            else if (boardData[i][j] == 11)
+                boardItems[i][j].setPixmap(TUImage);
+            else if (boardData[i][j] == 15)
+                boardItems[i][j].setPixmap(CrossImage);
             else
-                boardItems[i][j].setPixmap(grassImage);
+                boardItems[i][j].setPixmap(brick6Image);
 
             // Set Position
             boardItems[i][j].setPos(unitWidth + j * unitWidth, unitHeight + i * unitHeight);

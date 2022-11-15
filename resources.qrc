@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>assets/images/2left.png</file>
-        <file>Board.txt</file>
         <file>assets/images/Franklin.png</file>
         <file>assets/images/blank.png</file>
         <file>assets/images/horz.png</file>
@@ -16,5 +15,14 @@
         <file>assets/images/house.png</file>
         <file>assets/images/arrow.png</file>
         <file>assets/images/Gangster-Wars-2D-Game-Kit14.png</file>
+        <file>assets/images/Bodygard.png</file>
+        <file>assets/images/cross road.png</file>
+        <file>assets/images/Franklin 2.png</file>
+        <file>assets/images/pngtree-bullet-icon-in-cartoon-style-png-image_1799886.png</file>
+        <file>assets/images/T Down.png</file>
+        <file>assets/images/T Left.png</file>
+        <file>assets/images/T Right.png</file>
+        <file>assets/images/T Up.png</file>
+        <file>assets/images/Whiskey.png</file>
     </qresource>
 </RCC>
