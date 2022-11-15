@@ -18,8 +18,8 @@ enemy1::enemy1(int boardData[12][16])
 
     setPixmap(enemy1Image);
 
-    x = 3;
-    y = 7;
+    x = 9;
+    y = 8;
 
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
 
