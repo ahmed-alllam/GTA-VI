@@ -4,6 +4,7 @@
 #include <QList>
 #include <QGuiApplication>
 
+
 enemy1::enemy1(int boardData[12][16])
 {
     QPixmap enemy1Image(":assets/images/Gangster-Wars-2D-Game-Kit14.png");
@@ -20,6 +21,7 @@ enemy1::enemy1(int boardData[12][16])
 
     x = 9;
     y = 8;
+    direction = 0;
 
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
 
@@ -31,12 +33,40 @@ enemy1::enemy1(int boardData[12][16])
 }
 
 void enemy1::move(){
+    // int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
+    // int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
+    // int unitWidth = qMin(screenWidth, screenHeight) / 12;
+    // int unitHeight = qMin(screenWidth, screenHeight) / 12;
+
+    // int direction = rand() % 4;
+
+    // if (direction == 0 && boardData[x - 1][y] >= 0)
+    // {
+    //     x--;
+    // }
+    // else if (direction == 1 && boardData[x + 1][y] >= 0)
+    // {
+    //     x++;
+    // }
+    // else if (direction == 2 && boardData[x][y + 1] >= 0)
+    // {
+    //     y++;
+    // }
+    // else if (direction == 3 && boardData[x][y - 1] >= 0)
+    // {
+    //     y--;
+    // }
+
+    // setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
+
+
+    // make the enemy move in the specified direction until it hits a wall
+    // when it hits a wall, it will change direction randomly
+
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
     int unitWidth = qMin(screenWidth, screenHeight) / 12;
     int unitHeight = qMin(screenWidth, screenHeight) / 12;
-
-    int direction = rand() % 4;
 
     if (direction == 0 && boardData[x - 1][y] >= 0)
     {
@@ -54,6 +84,12 @@ void enemy1::move(){
     {
         y--;
     }
+    else
+    {
+        direction = rand() % 4;
+    }
 
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
+
+    
 }

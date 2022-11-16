@@ -8,6 +8,7 @@ class enemy1 : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 private:
+    int direction;
     int x;
     int y;
     int boardData[12][16];
