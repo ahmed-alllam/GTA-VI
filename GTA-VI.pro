@@ -13,6 +13,7 @@ SOURCES += \
     bullet.cpp \
     enemy1.cpp \
     enemy2.cpp \
+    gamemanager.cpp \
     main.cpp \
     mainwindow.cpp \
     franklin.cpp \
@@ -22,6 +23,7 @@ HEADERS += \
     bullet.h \
     enemy1.h \
     enemy2.h \
+    gamemanager.h \
     mainwindow.h \
     franklin.h \
     pellet.h

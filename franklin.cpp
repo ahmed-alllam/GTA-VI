@@ -11,7 +11,6 @@
 #include <QAudioOutput>
 
 
-
 Franklin::Franklin(int boardData[12][16]){
 
     QPixmap franklinImage(":assets/images/Franklin.png");
@@ -20,6 +19,8 @@ Franklin::Franklin(int boardData[12][16]){
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
     int unitWidth = qMin(screenWidth, screenHeight) / 12;
     int unitHeight = qMin(screenWidth, screenHeight) / 12;
+
+    qDebug() << "unitWidth: " << unitWidth;
 
     franklinImage = franklinImage.scaledToWidth(unitWidth);
     franklinImage = franklinImage.scaledToHeight(unitHeight);
