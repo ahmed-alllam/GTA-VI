@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QGraphicsPixmapItem>
 
-class pellet : public QObject, QGraphicsPixmapItem
+class pellet : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 private:
@@ -12,7 +12,7 @@ private:
     int y;
     int boardData[12][16];
 public:
-    pellet(int boardData[12][16]);
+    pellet(int boardData[12][16], int x, int y);
 signals:
 
 };

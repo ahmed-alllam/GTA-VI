@@ -4,11 +4,15 @@
 #include <QObject>
 #include <QGraphicsPixmapItem>
 
-class bullet : public QObject, QGraphicsPixmapItem
+class bullet : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
+private:
+    int x;
+    int y;
+    int boardData[12][16];
 public:
-    explicit bullet(QObject *parent = nullptr);
+    bullet(int boardData[12][16], int x, int y);
 
 signals:
 

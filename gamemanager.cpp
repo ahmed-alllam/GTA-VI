@@ -3,6 +3,7 @@
 #include <QGraphicsPixmapItem>
 #include "franklin.h"
 #include "enemy1.h"
+#include "pellet.h"
 #include <QDir>
 #include <QTimer>
 #include <QDebug>
@@ -16,6 +17,14 @@
 Franklin *GameManager::franklin = nullptr;
 enemy1 *GameManager::enemy1 = nullptr;
 
+bullet *GameManager::bullet1 = nullptr;
+bullet *GameManager::bullet2 = nullptr;
+bullet *GameManager::bullet3 = nullptr;
+bullet *GameManager::bullet4 = nullptr;
+
+pellet *GameManager::pellet1 = nullptr;
+pellet *GameManager::pellet2 = nullptr;
+
 GameManager::GameManager(QGraphicsScene *scene)
 {
     this->scene = scene;
@@ -24,6 +33,8 @@ GameManager::GameManager(QGraphicsScene *scene)
     create_player();
     create_enemies();
     create_sound();
+    create_bullets();
+    create_pellets();
 }
 
 void GameManager::add_board_images()
@@ -236,4 +247,23 @@ void GameManager::create_enemies()
     QTimer *timer2 = new QTimer();
     QObject::connect(timer2, &QTimer::timeout, enemy1_move);
     timer2->start(400);
+}
+
+void GameManager::create_bullets() {
+    bullet1 = new class bullet(boardData, 2, 1);
+    bullet2 = new class bullet(boardData, 10, 13);
+    bullet3 = new class bullet(boardData, 10, 3);
+    bullet4 = new class bullet(boardData, 2, 14);
+    scene->addItem(bullet1);
+    scene->addItem(bullet2);
+    scene->addItem(bullet3);
+    scene->addItem(bullet4);
+}
+
+void GameManager::create_pellets()
+{
+    pellet1 = new class pellet(boardData, 9, 1);
+    pellet2 = new class pellet(boardData, 4, 14);
+    scene->addItem(pellet1);
+    scene->addItem(pellet2);
 }
