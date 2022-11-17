@@ -112,13 +112,15 @@ void Franklin::keyPressEvent(QKeyEvent *event)
             }
             else if (event->key() == Qt::Key_Right && boardData[x][y + 1] >= 0)
             {
-                setPixmap(franklinImager1);
+                QTimer::singleShot(1000, this, SLOT(Move(2)));
+                QTimer::singleShot(2000, this, SLOT(Move(3)));
                 y++;
                 direction = 0;
             }
             else if (event->key() == Qt::Key_Left && boardData[x][y - 1] >= 0)
             {
-                setPixmap(franklinImagel1);
+                QTimer::singleShot(1000, this, SLOT(Move(0)));
+                QTimer::singleShot(2000, this, SLOT(Move(1)));
                 y--;
                 direction = 1;
             }
@@ -134,13 +136,15 @@ void Franklin::keyPressEvent(QKeyEvent *event)
             }
             else if (event->key() == Qt::Key_Left && boardData[x][y + 1] >= 0)
             {
-                setPixmap(franklinImager1);
+                QTimer::singleShot(1000, this, SLOT(Move(2)));
+                QTimer::singleShot(2000, this, SLOT(Move(3)));
                 y++;
                 direction = 0;
             }
             else if (event->key() == Qt::Key_Right && boardData[x][y - 1] >= 0)
             {
-                setPixmap(franklinImagel1);
+                QTimer::singleShot(1000, this, SLOT(Move(0)));
+                QTimer::singleShot(2000, this, SLOT(Move(1)));
                 y--;
                 direction = 1;
             }
@@ -195,6 +199,48 @@ void Franklin::keyPressEvent(QKeyEvent *event)
 
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
     checkCollision();
+}
+
+void Franklin::Move(int a)
+{
+    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
+    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
+    int unitWidth = qMin(screenWidth, screenHeight) / 12;
+    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+
+    QPixmap franklinImagel1(":assets/images/Franklin model 2 m3.png");
+    QPixmap franklinImagel2(":assets/images/Franklin model 2 m2.png");
+    QPixmap franklinImager1(":assets/images/Franklin model 2 m4.png");
+    QPixmap franklinImager2(":assets/images/Franklin model 2 m1.png");
+
+    franklinImagel1 = franklinImagel1.scaledToWidth(unitWidth);
+    franklinImagel1 = franklinImagel1.scaledToHeight(unitHeight);
+
+    franklinImagel2 = franklinImagel2.scaledToWidth(unitWidth);
+    franklinImagel2 = franklinImagel2.scaledToHeight(unitHeight);
+
+    franklinImager1 = franklinImager1.scaledToWidth(unitWidth);
+    franklinImager1 = franklinImager1.scaledToHeight(unitHeight);
+
+    franklinImager2 = franklinImager2.scaledToWidth(unitWidth);
+    franklinImager2 = franklinImager2.scaledToHeight(unitHeight);
+
+    if(a == 0)
+    {
+        setPixmap(franklinImager1);
+    }
+    else if(a == 1)
+    {
+        setPixmap(franklinImager2);
+    }
+    else if(a == 2)
+    {
+        setPixmap(franklinImagel1);
+    }
+    else
+    {
+        setPixmap(franklinImagel2);
+    }
 }
 
 void Franklin::focus_player()

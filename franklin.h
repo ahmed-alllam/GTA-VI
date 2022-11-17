@@ -31,6 +31,7 @@ public:
     void setIsDrunk(bool);
     void setPowerful(bool);
     int getHealth();
+    void Move(int);
 public slots:
     void keyPressEvent(QKeyEvent * event);
 };
