@@ -16,15 +16,17 @@ class Franklin: public QObject, public QGraphicsPixmapItem{
 private:
     int health;
     int score;
-    int ammo;
-    int speed;
     int direction;
+    bool isPowerful;
     int x;
     int y;
     int boardData[12][16];
 public:
     Franklin(int boardData[12][16]);
     void focus_player();
+    void checkCollision();
+    bool getIsPowerful();
+    void setPowerful(bool);
 public slots:
     void keyPressEvent(QKeyEvent * event);
 };

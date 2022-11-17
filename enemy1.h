@@ -15,6 +15,7 @@ private:
 public:
     enemy1(int boardData[12][16]);
     void move();
+    void checkCollision();
 
 signals:
 
