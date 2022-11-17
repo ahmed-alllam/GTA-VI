@@ -4,6 +4,7 @@
 #include "franklin.h"
 #include "enemy1.h"
 #include "pellet.h"
+#include "Drunk.h"
 #include <QDir>
 #include <QTimer>
 #include <QDebug>
@@ -266,10 +267,10 @@ void GameManager::create_pellets()
 {
     pellet1 = new class pellet(boardData, 9, 1);
     pellet2 = new class pellet(boardData, 4, 14);
-//    drunk = new class Drunk(boardData, 1, 3);
+    drunk = new class Drunk(boardData, 1, 3);
     scene->addItem(pellet1);
     scene->addItem(pellet2);
-//    scene->addItem(drunk);
+    scene->addItem(drunk);
 }
 
 void GameManager::create_healthbar() {

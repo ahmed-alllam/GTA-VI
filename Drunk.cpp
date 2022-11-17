@@ -4,6 +4,7 @@
 #include <QList>
 #include <QGuiApplication>
 
+
 Drunk::Drunk(int boardData[12][16], int x, int y)
 {
     QPixmap bottleImage(":assets/images/Whiskey.png");
@@ -13,8 +14,8 @@ Drunk::Drunk(int boardData[12][16], int x, int y)
     int unitWidth = qMin(screenWidth, screenHeight) / 12;
     int unitHeight = qMin(screenWidth, screenHeight) / 12;
 
-    bottleImage = bottleImage.scaledToWidth(unitWidth);
-    bottleImage = bottleImage.scaledToHeight(unitHeight);
+    bottleImage = bottleImage.scaledToWidth(unitWidth/1.3);
+    bottleImage = bottleImage.scaledToHeight(unitHeight/1.3);
 
     setPixmap(bottleImage);
 
