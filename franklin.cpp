@@ -96,6 +96,22 @@ void Franklin::checkCollision()
 
         }
         else if(typeid(*(collision[i])) == typeid(pellet)) {
+            QPixmap franklinImage(":assets/images/Franklin.png");
+
+            int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
+            int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
+            int unitWidth = qMin(screenWidth, screenHeight) / 12;
+            int unitHeight = qMin(screenWidth, screenHeight) / 12;
+
+            franklinImage = franklinImage.scaledToWidth(unitWidth);
+            franklinImage = franklinImage.scaledToHeight(unitHeight);
+
+            setPixmap(franklinImage);
+            setPowerful(true);
+
+
+            
+            // add qtimer to reverse it after 1 sec
 
         }
     }
