@@ -32,9 +32,10 @@ GameManager::GameManager(QGraphicsScene *scene)
     add_board_images();
     create_player();
     create_enemies();
-    create_sound();
+//    create_sound();
     create_bullets();
     create_pellets();
+    create_healthbar();
 }
 
 void GameManager::add_board_images()
@@ -266,4 +267,37 @@ void GameManager::create_pellets()
     pellet2 = new class pellet(boardData, 4, 14);
     scene->addItem(pellet1);
     scene->addItem(pellet2);
+}
+
+void GameManager::create_healthbar() {
+    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
+    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
+    int unitWidth = qMin(screenWidth, screenHeight) / 17;
+    int unitHeight = qMin(screenWidth, screenHeight) / 17;
+    int unitHeight2 = qMin(screenWidth, screenHeight) / 12;
+
+
+    QPixmap blankImage(":assets/images/extra.png");
+
+    blankImage = blankImage.scaledToWidth(unitWidth);
+    blankImage = blankImage.scaledToHeight(unitHeight);
+
+    QGraphicsPixmapItem * item = new QGraphicsPixmapItem;
+    item->setPixmap(blankImage);
+    item->setPos(0, 1.5* unitHeight2);
+
+    QGraphicsPixmapItem * item1 = new QGraphicsPixmapItem;
+    item1->setPixmap(blankImage);
+    item1->setPos(-1*unitWidth - 30, 1.5*unitHeight2);
+
+    QGraphicsPixmapItem * item2 = new QGraphicsPixmapItem;
+    item2->setPixmap(blankImage);
+    item2->setPos(-2*unitWidth - 60,1.5*unitHeight2);
+
+    scene->addItem(item);
+    scene->addItem(item1);
+    scene->addItem(item2);
+
+
+
 }

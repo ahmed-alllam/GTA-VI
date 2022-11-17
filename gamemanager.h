@@ -37,6 +37,8 @@ public:
     void create_sound();     // to create and display the sound
     void create_bullets();   // to create and display the bullets
     void create_pellets();   // to create and display the pellet
+    void create_healthbar();   // to create and display the pellet
+
 };
 
 #endif // GAMEMANAGER_H

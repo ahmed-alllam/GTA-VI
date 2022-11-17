@@ -8,6 +8,7 @@
 #include <QGraphicsPixmapItem>
 #include "franklin.h"
 #include "enemy1.h"
+#include "mainwindow.h"
 #include "gamemanager.h"
 #include <QDir>
 #include <QTimer>
@@ -40,6 +41,7 @@ int main(int argc, char *argv[])
     GameManager gameManager(scene);
 
     view.setScene(scene);
+
     view.show();
     return a.exec();
 }

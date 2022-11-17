@@ -31,7 +31,7 @@ Franklin::Franklin(int boardData[12][16]){
     QAudioOutput * audioOutput = new QAudioOutput;
     player->setAudioOutput(audioOutput);
     player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
-    player->play();
+//    player->play();
     
     health = 100;
     score = 0;
