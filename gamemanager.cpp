@@ -252,10 +252,10 @@ void GameManager::create_enemies()
 }
 
 void GameManager::create_bullets() {
-    bullet1 = new class bullet(boardData, 2, 1);
-    bullet2 = new class bullet(boardData, 10, 13);
-    bullet3 = new class bullet(boardData, 10, 3);
-    bullet4 = new class bullet(boardData, 2, 14);
+    bullet1 = new class bullet(boardData, 1, 1);
+    bullet2 = new class bullet(boardData, 10, 14);
+    bullet3 = new class bullet(boardData, 10, 1);
+    bullet4 = new class bullet(boardData, 1, 14);
     scene->addItem(bullet1);
     scene->addItem(bullet2);
     scene->addItem(bullet3);
@@ -266,8 +266,10 @@ void GameManager::create_pellets()
 {
     pellet1 = new class pellet(boardData, 9, 1);
     pellet2 = new class pellet(boardData, 4, 14);
+//    drunk = new class Drunk(boardData, 1, 3);
     scene->addItem(pellet1);
     scene->addItem(pellet2);
+//    scene->addItem(drunk);
 }
 
 void GameManager::create_healthbar() {
@@ -282,28 +284,57 @@ void GameManager::create_healthbar() {
 
     blankImage = blankImage.scaledToWidth(unitWidth);
     blankImage = blankImage.scaledToHeight(unitHeight);
+    for (int i = 0; i<franklin->getHealth(); i++)
+    {
+        QGraphicsPixmapItem * item = new QGraphicsPixmapItem;
+        item->setPixmap(blankImage);
+        item->setPos(((-i)*unitWidth)-(30*i), 1.5* unitHeight2);
+        scene->addItem(item);
+    }
+//    QGraphicsPixmapItem * item = new QGraphicsPixmapItem;
+//    item->setPixmap(blankImage);
+//    item->setPos(0, 1.5* unitHeight2);
 
-    QGraphicsPixmapItem * item = new QGraphicsPixmapItem;
-    item->setPixmap(blankImage);
-    item->setPos(0, 1.5* unitHeight2);
+//    QGraphicsPixmapItem * item1 = new QGraphicsPixmapItem;
+//    item1->setPixmap(blankImage);
+//    item1->setPos(-1*unitWidth - 30, 1.5*unitHeight2);
 
-    QGraphicsPixmapItem * item1 = new QGraphicsPixmapItem;
-    item1->setPixmap(blankImage);
-    item1->setPos(-1*unitWidth - 30, 1.5*unitHeight2);
+//    QGraphicsPixmapItem * item2 = new QGraphicsPixmapItem;
+//    item2->setPixmap(blankImage);
+//    item2->setPos(-2*unitWidth - 60,1.5*unitHeight2);
 
-    QGraphicsPixmapItem * item2 = new QGraphicsPixmapItem;
-    item2->setPixmap(blankImage);
-    item2->setPos(-2*unitWidth - 60,1.5*unitHeight2);
-
-    scene->addItem(item);
-    scene->addItem(item1);
-    scene->addItem(item2);
+//    scene->addItem(item);
+//    scene->addItem(item1);
+//    scene->addItem(item2);
 
 
     QLabel *label = new QLabel();
-    label->setText("Normal Mode");
+    if(franklin->getIsPowerful())
+    {
+        label->setText("Powerful Mode");
+    }
+    else
+    {
+        label->setText("Normal Mode");
+    }
+
     label->setAlignment(Qt::AlignCenter);
     label->move(-1.5*unitWidth, 3 *unitHeight2);
 
     scene->addWidget(label);
+
+    QLabel *label2 = new QLabel();
+    if(franklin->getIsDrunk())
+    {
+        label2->setText("Drunk");
+    }
+    else
+    {
+        label2->setText("Not Drunk");
+    }
+
+    label2->setAlignment(Qt::AlignCenter);
+    label2->move(-1.5*unitWidth, 6 *unitHeight2);
+
+    scene->addWidget(label2);
 }

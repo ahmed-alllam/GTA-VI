@@ -17,7 +17,6 @@
         <file>assets/images/Gangster-Wars-2D-Game-Kit14.png</file>
         <file>assets/images/Bodygard.png</file>
         <file>assets/images/cross road.png</file>
-        <file>assets/images/Franklin 2.png</file>
         <file>assets/images/bullet.png</file>
         <file>assets/images/T Down.png</file>
         <file>assets/images/T Left.png</file>
@@ -35,5 +34,13 @@
         <file>assets/sounds/shot.mp3</file>
         <file>assets/sounds/backsound.mp3</file>
         <file>assets/sounds/Ah Shit Here We Go Again.wav</file>
+        <file>assets/images/Franklin model 2 m1.png</file>
+        <file>assets/images/Franklin model 2 m2.png</file>
+        <file>assets/images/Franklin model 2 m3.png</file>
+        <file>assets/images/Franklin model 2 m4.png</file>
+        <file>assets/images/Franklin model 2 powered 2.png</file>
+        <file>assets/images/Franklin model 2 powered.png</file>
+        <file>assets/images/Franklin model 2 protected 2.png</file>
+        <file>assets/images/Franklin model 2 protected.png</file>
     </qresource>
 </RCC>
