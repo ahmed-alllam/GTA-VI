@@ -96,7 +96,7 @@ void Franklin::checkCollision()
 
         }
         else if(typeid(*(collision[i])) == typeid(pellet)) {
-            QPixmap franklinImage(":assets/images/Franklin.png");
+            QPixmap franklinImage(":assets/images/Franklin.png"); // change  the image
 
             int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
             int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
@@ -108,9 +108,8 @@ void Franklin::checkCollision()
 
             setPixmap(franklinImage);
             setPowerful(true);
+            (collision[i])->setVisible(false);
 
-
-            
             // add qtimer to reverse it after 1 sec
 
         }
