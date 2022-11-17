@@ -5,10 +5,10 @@
 #include <QKeyEvent>
 #include <QList>
 #include <QGuiApplication>
-#include <QSoundEffect>
-#include <QAudioFormat>
-#include <QMediaPlayer>
-#include <QAudioOutput>
+//#include <QSoundEffect>
+//#include <QAudioFormat>
+//#include <QMediaPlayer>
+//#include <QAudioOutput>
 
 
 Franklin::Franklin(int boardData[12][16]){
@@ -27,10 +27,10 @@ Franklin::Franklin(int boardData[12][16]){
 
     setPixmap(franklinImage);
 
-    QMediaPlayer *player = new QMediaPlayer;
-    QAudioOutput * audioOutput = new QAudioOutput;
-    player->setAudioOutput(audioOutput);
-    player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
+//    QMediaPlayer *player = new QMediaPlayer;
+//    QAudioOutput * audioOutput = new QAudioOutput;
+//    player->setAudioOutput(audioOutput);
+//    player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
 //    player->play();
     
     health = 100;

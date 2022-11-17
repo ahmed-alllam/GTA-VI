@@ -10,9 +10,9 @@
 #include <QApplication>
 #include <QGuiApplication>
 #include <QGraphicsScene>
-#include <QAudioFormat>
-#include <QMediaPlayer>
-#include <QAudioOutput>
+//#include <QAudioFormat>
+//#include <QMediaPlayer>
+//#include <QAudioOutput>
 #include <QLabel>
 
 Franklin *GameManager::franklin = nullptr;
@@ -205,15 +205,15 @@ void GameManager::create_board() // to create and display the board
         }
 }
 
-void GameManager::create_sound() // to create and display the sound
-{
-    QMediaPlayer *player = new QMediaPlayer;
-    QAudioOutput *audioOutput = new QAudioOutput;
-    player->setAudioOutput(audioOutput);
-    player->setLoops(QMediaPlayer::Infinite);
-    player->setSource(QUrl("qrc:/assets/sounds/backsound.mp3"));
-    player->play();
-}
+//void GameManager::create_sound() // to create and display the sound
+//{
+//    QMediaPlayer *player = new QMediaPlayer;
+//    QAudioOutput *audioOutput = new QAudioOutput;
+//    player->setAudioOutput(audioOutput);
+//    player->setLoops(QMediaPlayer::Infinite);
+//    player->setSource(QUrl("qrc:/assets/sounds/backsound.mp3"));
+//    player->play();
+//}
 
 void enemy1_move()
 {
