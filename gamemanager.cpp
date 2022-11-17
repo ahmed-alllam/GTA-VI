@@ -13,6 +13,7 @@
 #include <QAudioFormat>
 #include <QMediaPlayer>
 #include <QAudioOutput>
+#include <QLabel>
 
 Franklin *GameManager::franklin = nullptr;
 enemy1 *GameManager::enemy1 = nullptr;
@@ -299,5 +300,10 @@ void GameManager::create_healthbar() {
     scene->addItem(item2);
 
 
+    QLabel *label = new QLabel();
+    label->setText("Normal Mode");
+    label->setAlignment(Qt::AlignCenter);
+    label->move(-1.5*unitWidth, 3 *unitHeight2);
 
+    scene->addWidget(label);
 }
