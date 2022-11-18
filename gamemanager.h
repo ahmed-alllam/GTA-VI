@@ -33,6 +33,7 @@ public:
     //QGraphicsItem* temp2;      //in process
     Drunk *drunk;
     GameManager(QGraphicsScene *scene);
+    void launch_game();
     void create_player();    // create and dispaly players
     void create_enemies();   // to create and dispaly enemies
     void add_board_images(); // to create and display the board

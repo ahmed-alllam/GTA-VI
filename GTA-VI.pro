@@ -16,6 +16,7 @@ SOURCES += \
     enemy1.cpp \
     enemy2.cpp \
     gamemanager.cpp \
+    homepage.cpp \
     main.cpp \
     mainwindow.cpp \
     franklin.cpp \
@@ -27,11 +28,13 @@ HEADERS += \
     enemy1.h \
     enemy2.h \
     gamemanager.h \
+    homepage.h \
     mainwindow.h \
     franklin.h \
     pellet.h
 
 FORMS += \
+    homepage.ui \
     mainwindow.ui
 
 # Default rules for deployment.

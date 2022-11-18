@@ -5,6 +5,7 @@
 #include "enemy1.h"
 #include "pellet.h"
 #include "Drunk.h"
+#include "homepage.h"
 #include <QDir>
 #include <QTimer>
 #include <QDebug>
@@ -15,6 +16,7 @@
 //#include <QMediaPlayer>
 //#include <QAudioOutput>
 #include <QLabel>
+#include <QPushButton>
 
 
 #include<QProgressBar>
@@ -32,11 +34,23 @@ pellet *GameManager::pellet2 = nullptr;
 GameManager::GameManager(QGraphicsScene *scene)
 {
     this->scene = scene;
+
+    // create and launch homepage.cpp
+    homepage * home = new homepage(this, scene);
+    scene->addWidget(home);
+
+
+
+}
+
+void GameManager::launch_game() {
+    scene->clear();
+
     create_board();
     add_board_images();
     create_player();
     create_enemies();
-//    create_sound();
+//   create_sound();
     create_bullets();
     create_pellets();
     create_healthbar();
