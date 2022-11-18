@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "gamemanager.h"
 #include <QGraphicsScene.h>
+#include <QGraphicsView>
 
 namespace Ui {
 class homepage;
