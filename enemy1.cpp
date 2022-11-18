@@ -4,6 +4,7 @@
 #include <QKeyEvent>
 #include <QList>
 #include <QGuiApplication>
+#include <QTimer>
 
 
 enemy1::enemy1(int boardData[12][16])
@@ -71,7 +72,9 @@ void enemy1::checkCollision(){
     {
         if (typeid(*(colliding_items[i])) == typeid(Franklin))
         {
-            qDebug() << "collisions!!";
+            this->x = 9;
+            this->y = 8;
+            QTimer::singleShot(1, this, SLOT(x=x&&y=y));
         }
     }
 }

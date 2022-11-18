@@ -16,6 +16,7 @@ class Franklin: public QObject, public QGraphicsPixmapItem{
 private:
     int health;
     int score;
+    bool drunk;
     int direction;
     bool isPowerful;
     int x;
@@ -26,7 +27,11 @@ public:
     void focus_player();
     void checkCollision();
     bool getIsPowerful();
+    bool getIsDrunk();
+    void setIsDrunk(bool);
     void setPowerful(bool);
+    int getHealth();
+    void Move(int);
 public slots:
     void keyPressEvent(QKeyEvent * event);
 };

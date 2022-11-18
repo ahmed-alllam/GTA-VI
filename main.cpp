@@ -34,8 +34,9 @@ int main(int argc, char *argv[])
 
     view.setFixedSize(1920, 1080);
 
-    QBrush brush(Qt::gray);
-
+    // qbrush with qcolor of hex code 335f3f
+    QBrush brush(QColor(0x335f3f));
+    
     view.setBackgroundBrush(brush);
 
     GameManager gameManager(scene);

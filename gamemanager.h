@@ -9,6 +9,7 @@
 #include "enemy1.h"
 #include "bullet.h"
 #include "pellet.h"
+#include "Drunk.h"
 
 class GameManager
 {
@@ -30,6 +31,7 @@ public:
     static pellet *pellet1;
     static pellet *pellet2;
     //QGraphicsItem* temp2;      //in process
+    Drunk *drunk;
     GameManager(QGraphicsScene *scene);
     void create_player();    // create and dispaly players
     void create_enemies();   // to create and dispaly enemies
