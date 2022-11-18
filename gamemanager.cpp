@@ -15,6 +15,8 @@
 //#include <QAudioOutput>
 #include <QLabel>
 
+
+#include<QProgressBar>
 Franklin *GameManager::franklin = nullptr;
 enemy1 *GameManager::enemy1 = nullptr;
 
@@ -277,6 +279,23 @@ void GameManager::create_healthbar() {
     int unitHeight = qMin(screenWidth, screenHeight) / 17;
     int unitHeight2 = qMin(screenWidth, screenHeight) / 12;
 
+    QGraphicsRectItem*panel=new QGraphicsRectItem(65,0,1070,70);
+    QBrush brush;
+    brush.setColor(Qt::darkGray);
+    brush.setStyle(Qt::SolidPattern);
+    panel->setBrush(brush);
+    scene->addItem(panel);
+
+    QGraphicsTextItem *txt= new QGraphicsTextItem("NORMAL MODE");
+    QFont fonty("Arial", 20, QFont::StyleNormal);
+    txt->setPos(500,20);
+    txt->setFont(fonty);
+    txt->setDefaultTextColor(Qt::darkBlue);
+    scene->addItem(txt);
+
+
+
+
 
     QPixmap blankImage(":assets/images/extra.png");
 
@@ -285,25 +304,29 @@ void GameManager::create_healthbar() {
 
     QGraphicsPixmapItem * item = new QGraphicsPixmapItem;
     item->setPixmap(blankImage);
-    item->setPos(0, 1.5* unitHeight2);
+    //item->setPos(0, 1.5* unitHeight2);           //old position
+    item->setPos(80,15);
 
     QGraphicsPixmapItem * item1 = new QGraphicsPixmapItem;
     item1->setPixmap(blankImage);
-    item1->setPos(-1*unitWidth - 30, 1.5*unitHeight2);
+   // item1->setPos(-1*unitWidth - 30, 1.5*unitHeight2);  //old position
+    item1->setPos(160,15);
 
     QGraphicsPixmapItem * item2 = new QGraphicsPixmapItem;
     item2->setPixmap(blankImage);
-    item2->setPos(-2*unitWidth - 60,1.5*unitHeight2);
+//    item2->setPos(-2*unitWidth - 60,1.5*unitHeight2);        //old position
+    item2->setPos(240,15);
 
     scene->addItem(item);
     scene->addItem(item1);
     scene->addItem(item2);
-
-
-    QLabel *label = new QLabel();
-    label->setText("Normal Mode");
-    label->setAlignment(Qt::AlignCenter);
-    label->move(-1.5*unitWidth, 3 *unitHeight2);
-
-    scene->addWidget(label);
+    //remove_heart(1);
+/* removed label*/
+//    QLabel *label = new QLabel();
+//    label->setText("Normal Mode");
+//    label->setAlignment(Qt::AlignCenter);
+//    label->move(-1.5*unitWidth, 3 *unitHeight2);
+    //    scene->addWidget(label);
 }
+
+

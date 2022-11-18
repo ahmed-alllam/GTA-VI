@@ -29,6 +29,7 @@ public:
     static bullet *bullet4;
     static pellet *pellet1;
     static pellet *pellet2;
+    //QGraphicsItem* temp2;      //in process
     GameManager(QGraphicsScene *scene);
     void create_player();    // create and dispaly players
     void create_enemies();   // to create and dispaly enemies
@@ -38,6 +39,7 @@ public:
     void create_bullets();   // to create and display the bullets
     void create_pellets();   // to create and display the pellet
     void create_healthbar();   // to create and display the pellet
+   // void remove_heart(int);  // in process
 
 };
 
