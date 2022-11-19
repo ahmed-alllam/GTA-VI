@@ -5,10 +5,13 @@
 #include <QList>
 #include <QGuiApplication>
 #include <QTimer>
+#include "gamemanager.h"
 
 
-enemy1::enemy1(int boardData[12][16])
+enemy1::enemy1(int boardData[12][16], void * gameManager)
 {
+    this->gameManager = gameManager;
+
     QPixmap enemy1Image(":assets/images/Gangster-Wars-2D-Game-Kit14.png");
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
@@ -74,7 +77,11 @@ void enemy1::checkCollision(){
         {
             this->x = 9;
             this->y = 8;
-            QTimer::singleShot(1, this, SLOT(x=x&&y=y));
+
+            GameManager * manager = static_cast<GameManager *>(gameManager);
+            manager->franklin_hit();
+
+//            QTimer::singleShot(1, this, SLOT(x=x&&y=y));
         }
     }
 }

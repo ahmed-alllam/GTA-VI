@@ -15,8 +15,13 @@
 //#include <QAudioFormat>
 //#include <QMediaPlayer>
 //#include <QAudioOutput>
-Franklin::Franklin(int boardData[12][16])
+#include "gamemanager.h"
+
+Franklin::Franklin(int boardData[12][16], void *gameManager)
 {
+
+    this->gameManager = gameManager;
+
     QPixmap franklinImagel1(":assets/images/Franklin model 2 m3.png");
     QPixmap franklinImagel2(":assets/images/Franklin model 2 m2.png");
     QPixmap franklinImager1(":assets/images/Franklin model 2 m4.png");
@@ -259,28 +264,7 @@ void Franklin::checkCollision()
     {
         if (typeid(*(collision[i])) == typeid(enemy1))
         {
-                if(!getIsPowerful())
-                {
-                this->health--;
-                    //remove_heart from the game manger
-                if(health == 0){
-                    QMessageBox msgBox;
-                    msgBox.setText("Game Over!!!!");
-                    msgBox.exec();
-                }
-                this->x = 5;
-                this->y = 7;
-                setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
-                //    QMediaPlayer *player = new QMediaPlayer;
-                //    QAudioOutput * audioOutput = new QAudioOutput;
-                //    player->setAudioOutput(audioOutput);
-                //    player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
-                //    player->play();
-                }
-                else
-                {
-                    setPowerful(false);
-                }
+                hit();
         }
         else if(typeid(*(collision[i])) == typeid(bullet)) {
             QPixmap franklinImagel(":assets/images/Franklin model 2 powered 2.png"); // change  the image
@@ -333,8 +317,36 @@ void Franklin::checkCollision()
         }
         // add qtimer to reverse it after 1 sec
     }
-    QTimer::singleShot(1000, this, SLOT(checkCollision()));
 }
+
+void Franklin::hit() {
+    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
+    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
+    int unitWidth = qMin(screenWidth, screenHeight) / 12;
+    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+
+    if(!getIsPowerful())
+    {
+    this->health--;
+        GameManager * manager = static_cast<GameManager *>(gameManager);
+        manager->remove_heart();
+        //remove_heart from the game manger
+
+    this->x = 5;
+    this->y = 7;
+    setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
+    //    QMediaPlayer *player = new QMediaPlayer;
+    //    QAudioOutput * audioOutput = new QAudioOutput;
+    //    player->setAudioOutput(audioOutput);
+    //    player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
+    //    player->play();
+    }
+    else
+    {
+        setPowerful(false);
+    }
+}
+
 void Franklin::setPowerful(bool isPowerful)
 {
     this->isPowerful = isPowerful;

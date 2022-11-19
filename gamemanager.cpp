@@ -18,6 +18,8 @@
 #include <QLabel>
 #include <QPushButton>
 #include<QProgressBar>
+#include <QMessageBox>
+
 Franklin *GameManager::franklin = nullptr;
 enemy1 *GameManager::enemy1 = nullptr;
 
@@ -248,7 +250,7 @@ void player_focus()
 
 void GameManager::create_player()
 {
-    franklin = new Franklin(boardData);
+    franklin = new Franklin(boardData, this);
     scene->addItem(franklin);
 
     QTimer *timer = new QTimer();
@@ -258,7 +260,7 @@ void GameManager::create_player()
 
 void GameManager::create_enemies()
 {
-    enemy1 = new class enemy1(boardData);
+    enemy1 = new class enemy1(boardData, this);
     scene->addItem(enemy1);
 
     QTimer *timer2 = new QTimer();
@@ -323,7 +325,7 @@ void GameManager::create_healthbar() {
         hearts[i].setPos(80*(i+1), 15);
         scene->addItem( &hearts[i]);
     }
-    remove_heart();
+//    remove_heart();
 
 
     /*Drunk and label part */
@@ -362,8 +364,22 @@ void GameManager::create_healthbar() {
 
 void GameManager::remove_heart()
 {
-        scene->removeItem(&hearts[franklin->getHealth()-1]);
 
+        int health = franklin->getHealth();
+
+        if (health >= 0){
+            scene->removeItem(&hearts[health]);
+        }
+
+        if(health == 0){
+            QMessageBox msgBox;
+            msgBox.setText("Game Over!!!!");
+            msgBox.exec();
+        }
+}
+
+void GameManager::franklin_hit() {
+    franklin->hit();
 }
 
 

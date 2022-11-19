@@ -12,8 +12,9 @@ private:
     int x;
     int y;
     int boardData[12][16];
+    void * gameManager;
 public:
-    enemy1(int boardData[12][16]);
+    enemy1(int boardData[12][16], void * gameManager);
     void move();
     void checkCollision();
 
