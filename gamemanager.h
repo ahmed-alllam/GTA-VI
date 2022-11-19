@@ -43,6 +43,7 @@ public:
     void create_pellets();   // to create and display the pellet
     void create_healthbar();   // to create and display the pellet
     void remove_heart();
+    void franklin_hit();
 
 };
 

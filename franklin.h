@@ -22,9 +22,10 @@ private:
     int x;
     int y;
     int boardData[12][16];
+    void * gameManager;
 
 public:
-    Franklin(int boardData[12][16]);
+    Franklin(int boardData[12][16], void *gameManager);
     void focus_player();
     void checkCollision();
     bool getIsPowerful();
@@ -33,6 +34,7 @@ public:
     void setPowerful(bool);
     int getHealth();
     void Move(int);
+    void hit();
 public slots:
     void keyPressEvent(QKeyEvent * event);
 };
