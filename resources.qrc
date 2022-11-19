@@ -45,5 +45,6 @@
         <file>assets/images/kiro.png</file>
         <file>assets/images/allam.png</file>
         <file>assets/images/tawfiq.png</file>
+        <file>Accounts.txt</file>
     </qresource>
 </RCC>

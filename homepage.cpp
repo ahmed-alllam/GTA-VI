@@ -1,11 +1,29 @@
 #include "homepage.h"
 #include "ui_homepage.h"
+#include <QFile>
 #include <QObject>
 
 homepage::homepage(GameManager *gameManager, QGraphicsScene *scene)
 {
     ui = new Ui::homepage;
     ui->setupUi(this);
+
+    QFile acc(":Accounts.txt");
+    acc.open(QIODevice::ReadOnly);
+    QTextStream stream(&acc);
+    QString u;
+    QString p;
+    while(!stream.atEnd())
+    {
+         stream >> u;
+         stream >> p;
+         user.append(u);
+         pass.append(p);
+    }
+    ui->pass->setEchoMode(QLineEdit::Password);
+    ui->OnlineButton->setVisible(false);
+    ui->pushButton->setVisible(false);
+    ui->errorLabel->setVisible(false);
     QGraphicsScene *scene1 = new QGraphicsScene();
     QGraphicsScene *scene2 = new QGraphicsScene();
     QGraphicsScene *scene3 = new QGraphicsScene();
@@ -41,3 +59,89 @@ void homepage::exit()
     if (this->gameManager != nullptr)
         this->gameManager->launch_game();
 }
+
+void homepage::on_Log_clicked()
+{
+    ui->errorLabel->setVisible(false);
+    bool flag = true;
+    QString username = ui->user->text();
+    QString password = ui->pass->text();
+    if(username == "")
+    {
+        ui->errorLabel->setText("Please enter your username");
+        ui->errorLabel->setVisible(true);
+    }
+    else if(password == "")
+    {
+        ui->errorLabel->setText("Please enter the password");
+        ui->errorLabel->setVisible(true);
+    }
+    else
+    {
+    for (int i = 0; i < user.length(); i++) {
+        if (user[i] == username) {
+            flag = false;
+            ui->errorLabel->setText("This user already exist");
+            ui->errorLabel->setVisible(true);
+        }
+    }
+    if(flag)
+    {
+        user.append(username);
+        pass.append(password);
+        QFile acc(":Accounts.txt");
+        acc.open(QIODevice::WriteOnly);
+        QTextStream stream(&acc);
+        stream << username;
+        stream << password;
+        ui->errorLabel->setText("This user is added, now you can log in");
+        ui->errorLabel->setVisible(true);
+    }
+    }
+    ui->user->setText("");
+    ui->pass->setText("");
+}
+
+
+void homepage::on_Sign_clicked()
+{
+    ui->errorLabel->setVisible(false);
+    bool flag = true;
+    QString username = ui->user->text();
+    QString password = ui->pass->text();
+    if(username == "")
+    {
+        ui->errorLabel->setText("Please enter your username");
+        ui->errorLabel->setVisible(true);
+    }
+    else if(password == "")
+    {
+        ui->errorLabel->setText("Please enter the password");
+        ui->errorLabel->setVisible(true);
+    }
+    else
+    {
+    for (int i = 0; i < user.length(); i++) {
+        if (user[i] == username) {
+            flag = false;
+            if (pass[i] == password) {
+                ui->OnlineButton->setVisible(true);
+                ui->pushButton->setVisible(true);
+                ui->errorLabel->setText("Welcome " + username + ",");
+                ui->errorLabel->setVisible(true);
+                } else {
+                ui->errorLabel->setText("Incorrect password");
+                ui->errorLabel->setVisible(true);
+                }
+            }
+        }
+        if (flag)
+        {
+        ui->errorLabel->setText("User not found");
+        ui->errorLabel->setVisible(true);
+        }
+    }
+    ui->user->setText("");
+    ui->pass->setText("");
+}
+
