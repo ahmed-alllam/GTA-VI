@@ -2,13 +2,14 @@
 #include "ui_homepage.h"
 #include <QFile>
 #include <QObject>
+#include <QSaveFile>
 
 homepage::homepage(GameManager *gameManager, QGraphicsScene *scene)
 {
     ui = new Ui::homepage;
     ui->setupUi(this);
 
-    QFile acc(":Accounts.txt");
+    QFile acc("Accounts.txt");
     acc.open(QIODevice::ReadOnly);
     QTextStream stream(&acc);
     QString u;
@@ -17,6 +18,7 @@ homepage::homepage(GameManager *gameManager, QGraphicsScene *scene)
     {
          stream >> u;
          stream >> p;
+         qDebug() << u;
          user.append(u);
          pass.append(p);
     }
@@ -89,11 +91,13 @@ void homepage::on_Log_clicked()
     {
         user.append(username);
         pass.append(password);
-        QFile acc(":Accounts.txt");
+        QFile acc("Accounts.txt");
         acc.open(QIODevice::WriteOnly);
         QTextStream stream(&acc);
-        stream << username;
+        stream << username << "\n";
         stream << password;
+        acc.close();
+
         ui->errorLabel->setText("This user is added, now you can log in");
         ui->errorLabel->setVisible(true);
     }
