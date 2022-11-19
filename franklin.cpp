@@ -15,10 +15,8 @@
 //#include <QAudioFormat>
 //#include <QMediaPlayer>
 //#include <QAudioOutput>
-
 Franklin::Franklin(int boardData[12][16])
 {
-
     QPixmap franklinImagel1(":assets/images/Franklin model 2 m3.png");
     QPixmap franklinImagel2(":assets/images/Franklin model 2 m2.png");
     QPixmap franklinImager1(":assets/images/Franklin model 2 m4.png");
@@ -48,6 +46,7 @@ Franklin::Franklin(int boardData[12][16])
     //    player->setAudioOutput(audioOutput);
     //    player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
     //    player->play();
+
 
     health = 3;
     score = 0;
@@ -263,6 +262,7 @@ void Franklin::checkCollision()
                 if(!getIsPowerful())
                 {
                 this->health--;
+                    //remove_heart from the game manger
                 if(health == 0){
                     QMessageBox msgBox;
                     msgBox.setText("Game Over!!!!");

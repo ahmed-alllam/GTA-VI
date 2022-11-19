@@ -15,9 +15,6 @@
 //#include <QMediaPlayer>
 //#include <QAudioOutput>
 #include <QLabel>
-
-
-#include<QProgressBar>
 Franklin *GameManager::franklin = nullptr;
 enemy1 *GameManager::enemy1 = nullptr;
 
@@ -297,63 +294,24 @@ void GameManager::create_healthbar() {
     scene->addItem(txt);
 
 
-
+  /* Creating Hearts */
+    hearts= new QGraphicsPixmapItem[3];
 
 
     QPixmap blankImage(":assets/images/extra.png");
 
     blankImage = blankImage.scaledToWidth(unitWidth);
     blankImage = blankImage.scaledToHeight(unitHeight);
-//    for (int i = 0; i<franklin->getHealth(); i++)
-//    {
-//        QGraphicsPixmapItem * item = new QGraphicsPixmapItem;
-//        item->setPixmap(blankImage);
-//        item->setPos(((-i)*unitWidth)-(30*i), 1.5* unitHeight2);
-//        scene->addItem(item);
-//    }
-//    QGraphicsPixmapItem * item = new QGraphicsPixmapItem;
-//    item->setPixmap(blankImage);
-//    item->setPos(0, 1.5* unitHeight2);
+    for (int i = 0; i<3; i++)
+    {
+        hearts[i].setPixmap(blankImage);
+        hearts[i].setPos(80*(i+1), 15);
+        scene->addItem( &hearts[i]);
+    }
+    remove_heart();
 
 
-    QGraphicsPixmapItem * item = new QGraphicsPixmapItem;
-    item->setPixmap(blankImage);
-    //item->setPos(0, 1.5* unitHeight2);           //old position
-    item->setPos(80,15);
-
-    QGraphicsPixmapItem * item1 = new QGraphicsPixmapItem;
-    item1->setPixmap(blankImage);
-   // item1->setPos(-1*unitWidth - 30, 1.5*unitHeight2);  //old position
-    item1->setPos(160,15);
-
-    QGraphicsPixmapItem * item2 = new QGraphicsPixmapItem;
-    item2->setPixmap(blankImage);
-//    item2->setPos(-2*unitWidth - 60,1.5*unitHeight2);        //old position
-    item2->setPos(240,15);
-
-    scene->addItem(item);
-    scene->addItem(item1);
-    scene->addItem(item2);
-
-/* removed label*/
-//    QLabel *label = new QLabel();
-//    label->setText("Normal Mode");
-//    label->setAlignment(Qt::AlignCenter);
-//    label->move(-1.5*unitWidth, 3 *unitHeight2);
-    //    scene->addWidget(label);
-
-//    QGraphicsPixmapItem * item1 = new QGraphicsPixmapItem;
-//    item1->setPixmap(blankImage);
-//    item1->setPos(-1*unitWidth - 30, 1.5*unitHeight2);
-
-//    QGraphicsPixmapItem * item2 = new QGraphicsPixmapItem;
-//    item2->setPixmap(blankImage);
-//    item2->setPos(-2*unitWidth - 60,1.5*unitHeight2);
-
-//    scene->addItem(item);
-//    scene->addItem(item1);
-//    scene->addItem(item2);
-
+    /*Drunk and label part */
 
 //    QLabel *label = new QLabel();
 //    if(franklin->getIsPowerful())
@@ -386,5 +344,13 @@ void GameManager::create_healthbar() {
 //    scene->addWidget(label2);
 
 }
+
+void GameManager::remove_heart()
+{
+        scene->removeItem(&hearts[franklin->getHealth()-1]);
+
+}
+
+
 
 
