@@ -1,5 +1,6 @@
 #include "homepage.h"
 #include "ui_homepage.h"
+#include "log_in.h"
 #include <QFile>
 #include <QObject>
 #include <QSaveFile>
@@ -19,8 +20,8 @@ homepage::homepage(GameManager *gameManager, QGraphicsScene *scene)
          stream >> u;
          stream >> p;
          qDebug() << u;
-         user.append(u);
-         pass.append(p);
+         user->append(u);
+         pass->append(p);
     }
     ui->pass->setEchoMode(QLineEdit::Password);
     ui->OnlineButton->setVisible(false);
@@ -64,46 +65,9 @@ void homepage::exit()
 
 void homepage::on_Log_clicked()
 {
-    ui->errorLabel->setVisible(false);
-    bool flag = true;
-    QString username = ui->user->text();
-    QString password = ui->pass->text();
-    if(username == "")
-    {
-        ui->errorLabel->setText("Please enter your username");
-        ui->errorLabel->setVisible(true);
-    }
-    else if(password == "")
-    {
-        ui->errorLabel->setText("Please enter the password");
-        ui->errorLabel->setVisible(true);
-    }
-    else
-    {
-    for (int i = 0; i < user.length(); i++) {
-        if (user[i] == username) {
-            flag = false;
-            ui->errorLabel->setText("This user already exist");
-            ui->errorLabel->setVisible(true);
-        }
-    }
-    if(flag)
-    {
-        user.append(username);
-        pass.append(password);
-        QFile acc("Accounts.txt");
-        acc.open(QIODevice::WriteOnly);
-        QTextStream stream(&acc);
-        stream << username << "\n";
-        stream << password;
-        acc.close();
-
-        ui->errorLabel->setText("This user is added, now you can log in");
-        ui->errorLabel->setVisible(true);
-    }
-    }
-    ui->user->setText("");
-    ui->pass->setText("");
+    Log_in dialog(this, user, pass);
+    dialog.setModal(true);
+    dialog.exec();
 }
 
 
@@ -125,10 +89,10 @@ void homepage::on_Sign_clicked()
     }
     else
     {
-    for (int i = 0; i < user.length(); i++) {
-        if (user[i] == username) {
+    for (int i = 0; i < user->length(); i++) {
+        if (user->at(i) == username) {
             flag = false;
-            if (pass[i] == password) {
+            if (pass->at(i) == password) {
                 ui->OnlineButton->setVisible(true);
                 ui->pushButton->setVisible(true);
                 ui->errorLabel->setText("Welcome " + username + ",");
