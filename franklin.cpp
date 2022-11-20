@@ -328,10 +328,8 @@ void Franklin::hit() {
     if(!getIsPowerful())
     {
     this->health--;
-        GameManager * manager = static_cast<GameManager *>(gameManager);
-        manager->remove_heart();
-        //remove_heart from the game manger
-
+    GameManager * manager = static_cast<GameManager *>(gameManager);
+    manager->remove_heart();
     this->x = 5;
     this->y = 7;
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
@@ -346,6 +344,8 @@ void Franklin::hit() {
         setPowerful(false);
     }
 }
+
+
 
 void Franklin::setPowerful(bool isPowerful)
 {
