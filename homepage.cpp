@@ -20,8 +20,8 @@ homepage::homepage(GameManager *gameManager, QGraphicsScene *scene)
          stream >> u;
          stream >> p;
          qDebug() << u;
-         user->append(u);
-         pass->append(p);
+         user.append(u);
+         pass.append(p);
     }
     ui->pass->setEchoMode(QLineEdit::Password);
     ui->OnlineButton->setVisible(false);
@@ -65,7 +65,7 @@ void homepage::exit()
 
 void homepage::on_Log_clicked()
 {
-    Log_in dialog(this, user, pass);
+    Log_in dialog(this, &user, &pass);
     dialog.setModal(true);
     dialog.exec();
 }
@@ -89,10 +89,10 @@ void homepage::on_Sign_clicked()
     }
     else
     {
-    for (int i = 0; i < user->length(); i++) {
-        if (user->at(i) == username) {
+    for (int i = 0; i < user.length(); i++) {
+        if (user[i] == username) {
             flag = false;
-            if (pass->at(i) == password) {
+            if (pass[i] == password) {
                 ui->OnlineButton->setVisible(true);
                 ui->pushButton->setVisible(true);
                 ui->errorLabel->setText("Welcome " + username + ",");
