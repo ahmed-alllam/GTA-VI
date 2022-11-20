@@ -19,6 +19,8 @@
 #include <QPushButton>
 #include<QProgressBar>
 #include <QMessageBox>
+#include <QGraphicsRectItem> //added
+
 
 Franklin *GameManager::franklin = nullptr;
 enemy1 *GameManager::enemy1 = nullptr;
@@ -30,6 +32,16 @@ bullet *GameManager::bullet4 = nullptr;
 
 pellet *GameManager::pellet1 = nullptr;
 pellet *GameManager::pellet2 = nullptr;
+
+void GameManager::restart_game()
+{
+
+}
+
+void GameManager::exit()
+{
+
+}
 
 GameManager::GameManager(QGraphicsScene *scene)
 {
@@ -303,9 +315,27 @@ void GameManager::create_healthbar() {
     panel->setBrush(brush);
     scene->addItem(panel);
 
-    if(franklin->getIsPowerful())
+    if(franklin->getIsPowerful() && franklin->getIsDrunk())
+    {
+        QGraphicsTextItem *txt= new QGraphicsTextItem("Powerful and Drunk Mode");
+        QFont fonty("Arial", 20, QFont::StyleNormal);
+        txt->setPos(500,20);
+        txt->setFont(fonty);
+        txt->setDefaultTextColor(Qt::darkBlue);
+        scene->addItem(txt);
+    }
+    else if(franklin->getIsPowerful())
     {
         QGraphicsTextItem *txt= new QGraphicsTextItem("Powerful Mode");
+        QFont fonty("Arial", 20, QFont::StyleNormal);
+        txt->setPos(500,20);
+        txt->setFont(fonty);
+        txt->setDefaultTextColor(Qt::darkBlue);
+        scene->addItem(txt);
+    }
+    else if(franklin->getIsDrunk())
+    {
+        QGraphicsTextItem *txt= new QGraphicsTextItem("Drunk Mode");
         QFont fonty("Arial", 20, QFont::StyleNormal);
         txt->setPos(500,20);
         txt->setFont(fonty);
@@ -337,7 +367,6 @@ void GameManager::create_healthbar() {
         hearts[i].setPos(80*(i+1), 15);
         scene->addItem( &hearts[i]);
     }
-//    remove_heart();
 
 
     /*Drunk and label part */
@@ -383,15 +412,60 @@ void GameManager::remove_heart()
             scene->removeItem(&hearts[health]);
         }
 
-        if(health == 0){
-            QMessageBox msgBox;
-            msgBox.setText("Game Over!!!!");
-            msgBox.exec();
+        if(health == 2){
+
+            game_over();
         }
 }
 
 void GameManager::franklin_hit() {
     franklin->hit();
+}
+
+
+void GameManager::drawPanel(int x, int y, int width, int height, QColor color, double opacity){
+    // draws a panel at the specified location with the specified properties
+    QGraphicsRectItem* panel = new QGraphicsRectItem(x,y,width,height);
+    QBrush brush;
+    brush.setStyle(Qt::SolidPattern);
+    brush.setColor(color);
+    panel->setBrush(brush);
+    panel->setOpacity(opacity);
+    scene->addItem(panel);
+}
+
+
+
+void GameManager::game_over()
+{
+    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
+    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
+    for (size_t i = 0, n = scene->items().size(); i < n; i++){
+            scene->items()[i]->setEnabled(false);
+        }
+    // back ground panel and main
+    drawPanel(0,0,screenWidth,screenHeight+100,Qt::black,0.65);
+    drawPanel(screenWidth/3,screenHeight/3,400,400,Qt::lightGray,0.85);
+
+    /* Gmae Over Text*/
+    QGraphicsTextItem* overText = new QGraphicsTextItem("GAME OVER");
+     QFont fonty("Arial", 20, QFont::StyleNormal);
+    overText->setPos(screenWidth/3 + 100,screenHeight/3+80);
+    overText->setFont(fonty);
+    scene->addItem(overText);
+
+    QPushButton *p =new QPushButton;
+    p->setText("PLAY AGAIN");
+    p->setGeometry(screenWidth/3+40,screenHeight/3+250, 100,50);
+    scene->addWidget(p);
+    QObject::connect(p,&QPushButton::clicked,[=](){restart_game();});
+
+    QPushButton* quit;
+    quit=new QPushButton("Quit");
+    quit->setGeometry(screenWidth/3+230,screenHeight/3+250, 100,50);
+    scene->addWidget(quit);
+
+     QObject::connect(quit,&QPushButton::clicked,[=](){exit();});
 }
 
 

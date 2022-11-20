@@ -119,7 +119,7 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 0;
                 setPixmap(franklinImager1);
                 connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(150);
+                timer->start(50);
 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
             else if (event->key() == Qt::Key_Left && boardData[x][y - 1] >= 0)
@@ -128,7 +128,7 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 1;
                 setPixmap(franklinImagel1);
                 connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(150);
+                timer->start(50);
 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
         }
@@ -147,7 +147,7 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 0;
                 setPixmap(franklinImager1);
                 connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(150);
+                timer->start(50);
 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
             else if (event->key() == Qt::Key_Right && boardData[x][y - 1] >= 0)
@@ -156,7 +156,7 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 1;
                 setPixmap(franklinImagel1);
                 connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(150);
+                timer->start(50);
 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
         }
@@ -228,15 +228,40 @@ void Franklin::Move()
     franklinImager2 = franklinImager2.scaledToWidth(unitWidth);
     franklinImager2 = franklinImager2.scaledToHeight(unitHeight);
 
-    if(direction == 0)
+    QPixmap franklinImagel(":assets/images/Franklin model 2 protected 2.png"); // change  the image
+    QPixmap franklinImager(":assets/images/Franklin model 2 protected.png"); // change  the image
+
+    franklinImagel = franklinImagel.scaledToWidth(unitWidth);
+    franklinImagel = franklinImagel.scaledToHeight(unitHeight);
+
+    franklinImager = franklinImager.scaledToWidth(unitWidth);
+    franklinImager = franklinImager.scaledToHeight(unitHeight);
+
+    if(!getIsPowerful())
     {
-        setPixmap(franklinImager2);
-        timer->stop();
+        if(direction == 0)
+        {
+            setPixmap(franklinImager2);
+            timer->stop();
+        }
+        else
+        {
+            setPixmap(franklinImagel2);
+            timer->stop();
+        }
     }
     else
     {
-        setPixmap(franklinImagel2);
-        timer->stop();
+        if(direction == 0)
+        {
+            setPixmap(franklinImager);
+            timer->stop();
+        }
+        else
+        {
+            setPixmap(franklinImagel);
+            timer->stop();
+        }
     }
 }
 
@@ -306,8 +331,8 @@ void Franklin::checkCollision()
 
             setPowerful(true);
             manager->create_healthbar();
-//            connect(timer, &QTimer::timeout, this, SLOT(setPowerful(false)));
-//            timer->start(10000);
+            connect(timer, &QTimer::timeout, this,  &Franklin::setPowerful2False);
+            timer->start(60000);
 //            QTimer::singleShot(10000, this, SLOT(setPowerful(false)));
             (collision[i])->setVisible(false);
 
@@ -315,8 +340,9 @@ void Franklin::checkCollision()
         else if(typeid(*(collision[i])) == typeid(Drunk)) {
 
             setIsDrunk(true);
-//            connect(timer, &QTimer::timeout, this, SLOT(setIsDrunk(false)));
-//            timer->start(10000);
+            manager->create_healthbar();
+            connect(timer, &QTimer::timeout, this, &Franklin::setDrunk2False);
+            timer->start(30000);
 //            QTimer::singleShot(10000, this, SLOT(setIsDrunk(false)));
             (collision[i])->setVisible(false);
 
@@ -336,9 +362,7 @@ void Franklin::hit() {
     if(!getIsPowerful())
     {
     this->health--;
-        manager->remove_heart();
-        //remove_heart from the game manger
-
+    manager->remove_heart();
     this->x = 5;
     this->y = 7;
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
@@ -356,10 +380,11 @@ void Franklin::hit() {
     }
 }
 
+
+
 void Franklin::setPowerful(bool isPowerful)
 {
     this->isPowerful = isPowerful;
-    timer->stop();
 }
 
 bool Franklin::getIsPowerful()
@@ -380,5 +405,23 @@ bool Franklin::getIsDrunk()
 void Franklin::setIsDrunk(bool a = 0)
 {
     this->drunk = a;
+    timer->stop();
+}
+
+void Franklin::setDrunk2False()
+{
+    this->drunk = false;
+    GameManager * manager = static_cast<GameManager *>(gameManager);
+    manager->create_healthbar();
+    this->Move();
+    timer->stop();
+}
+
+void Franklin::setPowerful2False()
+{
+    this->isPowerful = false;
+    GameManager * manager = static_cast<GameManager *>(gameManager);
+    manager->create_healthbar();
+    this->Move();
     timer->stop();
 }

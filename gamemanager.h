@@ -4,14 +4,16 @@
 #include <QString>
 #include <QTimer>
 #include <QGraphicsScene>
+#include<QObject>
 
 #include "franklin.h"
 #include "enemy1.h"
 #include "bullet.h"
 #include "pellet.h"
 #include "Drunk.h"
+#include "qobjectdefs.h"
 
-class GameManager
+class GameManager: QObject
 {
 
 private:
@@ -21,6 +23,10 @@ private:
     QTimer *timer2; // the last stage checker
     QTimer *timer3; // win checker
     QGraphicsScene *scene;
+private slots:
+
+void restart_game();
+void exit();
 public:
     static Franklin *franklin;
     static enemy1 *enemy1;
@@ -44,6 +50,9 @@ public:
     void create_healthbar();   // to create and display the pellet
     void remove_heart();
     void franklin_hit();
+    void drawPanel(int x, int y, int width, int height, QColor color, double opacity);
+    //void restart_game();
+    void game_over();
 
 };
 

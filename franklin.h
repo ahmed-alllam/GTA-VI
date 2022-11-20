@@ -33,6 +33,8 @@ public:
     bool getIsDrunk();
     void setIsDrunk(bool);
     void setPowerful(bool);
+    void setPowerful2False();
+    void setDrunk2False();
     int getHealth();
     void Move();
     void hit();
