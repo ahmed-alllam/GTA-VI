@@ -116,17 +116,17 @@ void Franklin::keyPressEvent(QKeyEvent *event)
             }
             else if (event->key() == Qt::Key_Right && boardData[x][y + 1] >= 0)
             {
-                QTimer::singleShot(1000, this, SLOT(Move(2)));
-                QTimer::singleShot(2000, this, SLOT(Move(3)));
                 y++;
                 direction = 0;
+                setPixmap(franklinImager1);
+//                QTimer::singleShot(2000, this, SLOT(Move()));
             }
             else if (event->key() == Qt::Key_Left && boardData[x][y - 1] >= 0)
             {
-                QTimer::singleShot(1000, this, SLOT(Move(0)));
-                QTimer::singleShot(2000, this, SLOT(Move(1)));
                 y--;
                 direction = 1;
+                setPixmap(franklinImagel1);
+//                QTimer::singleShot(2000, this, SLOT(Move()));
             }
         }
         else{
@@ -140,17 +140,17 @@ void Franklin::keyPressEvent(QKeyEvent *event)
             }
             else if (event->key() == Qt::Key_Left && boardData[x][y + 1] >= 0)
             {
-                QTimer::singleShot(1000, this, SLOT(Move(2)));
-                QTimer::singleShot(2000, this, SLOT(Move(3)));
                 y++;
                 direction = 0;
+                setPixmap(franklinImager1);
+//                QTimer::singleShot(2000, this, SLOT(Move()));
             }
             else if (event->key() == Qt::Key_Right && boardData[x][y - 1] >= 0)
             {
-                QTimer::singleShot(1000, this, SLOT(Move(0)));
-                QTimer::singleShot(2000, this, SLOT(Move(1)));
                 y--;
                 direction = 1;
+                setPixmap(franklinImagel1);
+//                QTimer::singleShot(2000, this, SLOT(Move()));
             }
         }
     }
@@ -205,41 +205,25 @@ void Franklin::keyPressEvent(QKeyEvent *event)
     checkCollision();
 }
 
-void Franklin::Move(int a)
+void Franklin::Move()
 {
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
     int unitWidth = qMin(screenWidth, screenHeight) / 12;
     int unitHeight = qMin(screenWidth, screenHeight) / 12;
 
-    QPixmap franklinImagel1(":assets/images/Franklin model 2 m3.png");
     QPixmap franklinImagel2(":assets/images/Franklin model 2 m2.png");
-    QPixmap franklinImager1(":assets/images/Franklin model 2 m4.png");
     QPixmap franklinImager2(":assets/images/Franklin model 2 m1.png");
-
-    franklinImagel1 = franklinImagel1.scaledToWidth(unitWidth);
-    franklinImagel1 = franklinImagel1.scaledToHeight(unitHeight);
 
     franklinImagel2 = franklinImagel2.scaledToWidth(unitWidth);
     franklinImagel2 = franklinImagel2.scaledToHeight(unitHeight);
 
-    franklinImager1 = franklinImager1.scaledToWidth(unitWidth);
-    franklinImager1 = franklinImager1.scaledToHeight(unitHeight);
-
     franklinImager2 = franklinImager2.scaledToWidth(unitWidth);
     franklinImager2 = franklinImager2.scaledToHeight(unitHeight);
 
-    if(a == 0)
-    {
-        setPixmap(franklinImager1);
-    }
-    else if(a == 1)
+    if(direction == 0)
     {
         setPixmap(franklinImager2);
-    }
-    else if(a == 2)
-    {
-        setPixmap(franklinImagel1);
     }
     else
     {
@@ -259,6 +243,7 @@ void Franklin::checkCollision()
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
     int unitWidth = qMin(screenWidth, screenHeight) / 12;
     int unitHeight = qMin(screenWidth, screenHeight) / 12;
+    GameManager * manager = static_cast<GameManager *>(gameManager);
     QList<QGraphicsItem *> collision = collidingItems();
     for (int i = 0; i < collision.size(); i++)
     {
@@ -278,10 +263,12 @@ void Franklin::checkCollision()
             if(direction == 1)
             {
                 setPixmap(franklinImagel);
+//                QTimer::singleShot(2000, this, SLOT(Move()));
             }
             else
             {
                setPixmap(franklinImager);
+//               QTimer::singleShot(2000, this, SLOT(Move()));
             }
             (collision[i])->setVisible(false);
 
@@ -305,12 +292,15 @@ void Franklin::checkCollision()
             }
 
             setPowerful(true);
+            manager->create_healthbar();
+//            QTimer::singleShot(10000, this, SLOT(setPowerful(false)));
             (collision[i])->setVisible(false);
 
         }
         else if(typeid(*(collision[i])) == typeid(Drunk)) {
 
             setIsDrunk(true);
+//            QTimer::singleShot(10000, this, SLOT(setIsDrunk(false)));
             (collision[i])->setVisible(false);
 
 
@@ -324,6 +314,7 @@ void Franklin::hit() {
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
     int unitWidth = qMin(screenWidth, screenHeight) / 12;
     int unitHeight = qMin(screenWidth, screenHeight) / 12;
+    GameManager * manager = static_cast<GameManager *>(gameManager);
 
     if(!getIsPowerful())
     {
@@ -342,6 +333,8 @@ void Franklin::hit() {
     else
     {
         setPowerful(false);
+        manager->create_healthbar();
+        Move();
     }
 }
 

@@ -70,6 +70,10 @@ void enemy1::move(){
 }
 
 void enemy1::checkCollision(){
+    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
+    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
+    int unitWidth = qMin(screenWidth, screenHeight) / 12;
+    int unitHeight = qMin(screenWidth, screenHeight) / 12;
     QList<QGraphicsItem *> colliding_items = collidingItems();
     for (int i = 0, n = colliding_items.size(); i < n; ++i)
     {
@@ -80,8 +84,7 @@ void enemy1::checkCollision(){
 
             GameManager * manager = static_cast<GameManager *>(gameManager);
             manager->franklin_hit();
-
-//            QTimer::singleShot(1, this, SLOT(x=x&&y=y));
+            setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
         }
     }
 }

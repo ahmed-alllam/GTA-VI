@@ -26,6 +26,7 @@ private:
 private slots:
 
 void restart_game();
+void exit();
 public:
     static Franklin *franklin;
     static enemy1 *enemy1;

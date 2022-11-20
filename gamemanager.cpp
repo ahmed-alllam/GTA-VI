@@ -36,9 +36,10 @@ pellet *GameManager::pellet2 = nullptr;
 void GameManager::restart_game()
 {
 
-       qDebug () << "restart game";
+}
 
-
+void GameManager::exit()
+{
 
 }
 
@@ -314,12 +315,24 @@ void GameManager::create_healthbar() {
     panel->setBrush(brush);
     scene->addItem(panel);
 
-    QGraphicsTextItem *txt= new QGraphicsTextItem("NORMAL MODE"); //
-    QFont fonty("Arial", 20, QFont::StyleNormal);
-    txt->setPos(500,20);
-    txt->setFont(fonty);
-    txt->setDefaultTextColor(Qt::darkBlue);
-    scene->addItem(txt);
+    if(franklin->getIsPowerful())
+    {
+        QGraphicsTextItem *txt= new QGraphicsTextItem("Powerful Mode");
+        QFont fonty("Arial", 20, QFont::StyleNormal);
+        txt->setPos(500,20);
+        txt->setFont(fonty);
+        txt->setDefaultTextColor(Qt::darkBlue);
+        scene->addItem(txt);
+    }
+    else
+    {
+        QGraphicsTextItem *txt= new QGraphicsTextItem("NORMAL MODE");
+        QFont fonty("Arial", 20, QFont::StyleNormal);
+        txt->setPos(500,20);
+        txt->setFont(fonty);
+        txt->setDefaultTextColor(Qt::darkBlue);
+        scene->addItem(txt);
+    }
 
 
   /* Creating Hearts */
@@ -330,7 +343,7 @@ void GameManager::create_healthbar() {
 
     blankImage = blankImage.scaledToWidth(unitWidth);
     blankImage = blankImage.scaledToHeight(unitHeight);
-    for (int i = 0; i<3; i++)
+    for (int i = 0; i<franklin->getHealth() ; i++)
     {
         hearts[i].setPixmap(blankImage);
         hearts[i].setPos(80*(i+1), 15);
@@ -416,29 +429,25 @@ void GameManager::game_over()
     drawPanel(0,0,screenWidth,screenHeight+100,Qt::black,0.65);
     drawPanel(screenWidth/3,screenHeight/3,400,400,Qt::lightGray,0.85);
 
+    /* Gmae Over Text*/
+    QGraphicsTextItem* overText = new QGraphicsTextItem("GAME OVER");
+     QFont fonty("Arial", 20, QFont::StyleNormal);
+    overText->setPos(screenWidth/3 + 100,screenHeight/3+80);
+    overText->setFont(fonty);
+    scene->addItem(overText);
 
     QPushButton *p =new QPushButton;
-    //p->move(screenWidth/3+40,screenHeight/3+250);
     p->setText("PLAY AGAIN");
     p->setGeometry(screenWidth/3+40,screenHeight/3+250, 100,50);
     scene->addWidget(p);
-    //QObject::connect(p, SIGNAL(clicked()), this, SLOT(restart_game),Qt::QueuedConnection);
+    QObject::connect(p,&QPushButton::clicked,[=](){restart_game();});
 
-        QGraphicsTextItem* overText = new QGraphicsTextItem("GAME OVER");
-         QFont fonty("Arial", 20, QFont::StyleNormal);
-        overText->setPos(screenWidth/3 + 100,screenHeight/3+80);
-        overText->setFont(fonty);
-        scene->addItem(overText);
+    QPushButton* quit;
+    quit=new QPushButton("Quit");
+    quit->setGeometry(screenWidth/3+230,screenHeight/3+250, 100,50);
+    scene->addWidget(quit);
 
-        QPushButton* quit;
-        quit=new QPushButton("Quit");
-        quit->setGeometry(screenWidth/3+230,screenHeight/3+250, 100,50);
-         scene->addWidget(quit);
-
-
-
-        // QObject::connect(quit,SIGNAL(clicked()),this, SLOT(restart_game()),Qt::QueuedConnection);
-         QObject::connect(quit,&QPushButton::clicked,[=](){restart_game();});
+     QObject::connect(quit,&QPushButton::clicked,[=](){exit();});
 }
 
 

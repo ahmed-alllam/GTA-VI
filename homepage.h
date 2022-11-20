@@ -24,8 +24,14 @@ public:
 private slots:
      void exit();
 
+     void on_Log_clicked();
+
+     void on_Sign_clicked();
+
 private:
     Ui::homepage *ui;
+    QList<QString> *user;
+    QList<QString> *pass;
 };
 
 #endif // HOMEPAGE_H
