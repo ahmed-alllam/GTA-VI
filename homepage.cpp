@@ -10,6 +10,10 @@ homepage::homepage(GameManager *gameManager, QGraphicsScene *scene)
     ui = new Ui::homepage;
     ui->setupUi(this);
 
+    user = new QList<QString>;
+    pass = new QList<QString>;
+
+
     QFile acc("Accounts.txt");
     acc.open(QIODevice::ReadOnly);
     QTextStream stream(&acc);
@@ -19,7 +23,6 @@ homepage::homepage(GameManager *gameManager, QGraphicsScene *scene)
     {
          stream >> u;
          stream >> p;
-         qDebug() << u;
          user->append(u);
          pass->append(p);
     }
