@@ -20,6 +20,7 @@
 #include<QProgressBar>
 #include <QMessageBox>
 #include <QGraphicsRectItem> //added
+#include<qprocess.h>
 
 
 Franklin *GameManager::franklin = nullptr;
@@ -40,7 +41,13 @@ void GameManager::restart_game()
 
 void GameManager::exit()
 {
+    QString program = qApp->arguments()[0];
+    QStringList arguments = qApp->arguments().mid(1); // remove the 1st argument - the program name
+    qApp->quit();
+    QProcess::startDetached(program, arguments);
 
+//    qApp->quit();
+//    QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
 }
 
 GameManager::GameManager(QGraphicsScene *scene)
