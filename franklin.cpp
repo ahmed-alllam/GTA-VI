@@ -9,7 +9,6 @@
 #include <pellet.h>
 #include <bullet.h>
 #include <Drunk.h>
-#include <QTimer>
 #include <QMessageBox>
 //#include <QSoundEffect>
 //#include <QAudioFormat>
@@ -119,6 +118,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 y++;
                 direction = 0;
                 setPixmap(franklinImager1);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(150);
 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
             else if (event->key() == Qt::Key_Left && boardData[x][y - 1] >= 0)
@@ -126,6 +127,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 y--;
                 direction = 1;
                 setPixmap(franklinImagel1);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(150);
 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
         }
@@ -143,6 +146,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 y++;
                 direction = 0;
                 setPixmap(franklinImager1);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(150);
 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
             else if (event->key() == Qt::Key_Right && boardData[x][y - 1] >= 0)
@@ -150,6 +155,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 y--;
                 direction = 1;
                 setPixmap(franklinImagel1);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(150);
 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
         }
@@ -224,10 +231,12 @@ void Franklin::Move()
     if(direction == 0)
     {
         setPixmap(franklinImager2);
+        timer->stop();
     }
     else
     {
         setPixmap(franklinImagel2);
+        timer->stop();
     }
 }
 
@@ -263,11 +272,15 @@ void Franklin::checkCollision()
             if(direction == 1)
             {
                 setPixmap(franklinImagel);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(1000);
 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
             else
             {
                setPixmap(franklinImager);
+               connect(timer, &QTimer::timeout, this, &Franklin::Move);
+               timer->start(1000);
 //               QTimer::singleShot(2000, this, SLOT(Move()));
             }
             (collision[i])->setVisible(false);
@@ -293,6 +306,8 @@ void Franklin::checkCollision()
 
             setPowerful(true);
             manager->create_healthbar();
+//            connect(timer, &QTimer::timeout, this, SLOT(setPowerful(false)));
+//            timer->start(10000);
 //            QTimer::singleShot(10000, this, SLOT(setPowerful(false)));
             (collision[i])->setVisible(false);
 
@@ -300,6 +315,8 @@ void Franklin::checkCollision()
         else if(typeid(*(collision[i])) == typeid(Drunk)) {
 
             setIsDrunk(true);
+//            connect(timer, &QTimer::timeout, this, SLOT(setIsDrunk(false)));
+//            timer->start(10000);
 //            QTimer::singleShot(10000, this, SLOT(setIsDrunk(false)));
             (collision[i])->setVisible(false);
 
@@ -342,6 +359,7 @@ void Franklin::hit() {
 void Franklin::setPowerful(bool isPowerful)
 {
     this->isPowerful = isPowerful;
+    timer->stop();
 }
 
 bool Franklin::getIsPowerful()
@@ -362,4 +380,5 @@ bool Franklin::getIsDrunk()
 void Franklin::setIsDrunk(bool a = 0)
 {
     this->drunk = a;
+    timer->stop();
 }
