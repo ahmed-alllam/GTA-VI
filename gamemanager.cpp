@@ -303,12 +303,24 @@ void GameManager::create_healthbar() {
     panel->setBrush(brush);
     scene->addItem(panel);
 
-    QGraphicsTextItem *txt= new QGraphicsTextItem("NORMAL MODE"); //
-    QFont fonty("Arial", 20, QFont::StyleNormal);
-    txt->setPos(500,20);
-    txt->setFont(fonty);
-    txt->setDefaultTextColor(Qt::darkBlue);
-    scene->addItem(txt);
+    if(franklin->getIsPowerful())
+    {
+        QGraphicsTextItem *txt= new QGraphicsTextItem("Powerful Mode");
+        QFont fonty("Arial", 20, QFont::StyleNormal);
+        txt->setPos(500,20);
+        txt->setFont(fonty);
+        txt->setDefaultTextColor(Qt::darkBlue);
+        scene->addItem(txt);
+    }
+    else
+    {
+        QGraphicsTextItem *txt= new QGraphicsTextItem("NORMAL MODE");
+        QFont fonty("Arial", 20, QFont::StyleNormal);
+        txt->setPos(500,20);
+        txt->setFont(fonty);
+        txt->setDefaultTextColor(Qt::darkBlue);
+        scene->addItem(txt);
+    }
 
 
   /* Creating Hearts */
@@ -319,7 +331,7 @@ void GameManager::create_healthbar() {
 
     blankImage = blankImage.scaledToWidth(unitWidth);
     blankImage = blankImage.scaledToHeight(unitHeight);
-    for (int i = 0; i<3; i++)
+    for (int i = 0; i<franklin->getHealth() ; i++)
     {
         hearts[i].setPixmap(blankImage);
         hearts[i].setPos(80*(i+1), 15);
