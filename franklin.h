@@ -24,6 +24,16 @@ private:
     int y;
     int boardData[12][16];
     void * gameManager;
+    QPixmap franklinImagel1;
+    QPixmap franklinImagel2;
+    QPixmap franklinImager1;
+    QPixmap franklinImager2;
+    QPixmap franklinImagel;
+    QPixmap franklinImager;
+    QPixmap franklinImagell;
+    QPixmap franklinImagerr;
+    int unitWidth;
+    int unitHeight;
 
 public:
     Franklin(int boardData[12][16], void *gameManager);

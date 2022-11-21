@@ -487,10 +487,10 @@ void GameManager::remove_heart()
         int health = franklin->getHealth();
 
         if (health >= 0){
-//            scene->removeItem(&hearts[health]);
+            scene->removeItem(&hearts[health]);
         }
 
-        if(health == 2){
+        if(health == 0){
 
             game_over();
         }

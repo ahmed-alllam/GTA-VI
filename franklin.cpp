@@ -22,15 +22,15 @@ Franklin::Franklin(int boardData[12][16], void *gameManager)
 
     this->gameManager = gameManager;
 
-    QPixmap franklinImagel1(":assets/images/Franklin model 2 m3.png");
-    QPixmap franklinImagel2(":assets/images/Franklin model 2 m2.png");
-    QPixmap franklinImager1(":assets/images/Franklin model 2 m4.png");
-    QPixmap franklinImager2(":assets/images/Franklin model 2 m1.png");
+    franklinImagel1 = QPixmap(":assets/images/Franklin model 2 m3.png");
+    franklinImagel2 = QPixmap(":assets/images/Franklin model 2 m2.png");
+    franklinImager1 = QPixmap(":assets/images/Franklin model 2 m4.png");
+    franklinImager2 = QPixmap(":assets/images/Franklin model 2 m1.png");
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+    unitWidth = qMin(screenWidth, screenHeight) / 12;
+    unitHeight = qMin(screenWidth, screenHeight) / 12;
 
     franklinImagel1 = franklinImagel1.scaledToWidth(unitWidth);
     franklinImagel1 = franklinImagel1.scaledToHeight(unitHeight);
@@ -43,6 +43,25 @@ Franklin::Franklin(int boardData[12][16], void *gameManager)
 
     franklinImager2 = franklinImager2.scaledToWidth(unitWidth);
     franklinImager2 = franklinImager2.scaledToHeight(unitHeight);
+
+
+    franklinImagel = QPixmap(":assets/images/Franklin model 2 protected 2.png"); // change  the image
+    franklinImager = QPixmap(":assets/images/Franklin model 2 protected.png"); // change  the image
+
+    franklinImagel = franklinImagel.scaledToWidth(unitWidth);
+    franklinImagel = franklinImagel.scaledToHeight(unitHeight);
+
+    franklinImager = franklinImager.scaledToWidth(unitWidth);
+    franklinImager = franklinImager.scaledToHeight(unitHeight);
+
+    franklinImagell = QPixmap(":assets/images/Franklin model 2 powered 2.png"); // change  the image
+    franklinImagerr = QPixmap(":assets/images/Franklin model 2 powered.png"); // change  the image
+
+    franklinImagell = franklinImagell.scaledToWidth(unitWidth);
+    franklinImagell = franklinImagell.scaledToHeight(unitHeight);
+
+    franklinImagerr = franklinImagerr.scaledToWidth(unitWidth);
+    franklinImagerr = franklinImagerr.scaledToHeight(unitHeight);
 
     setPixmap(franklinImagel1);
 
@@ -73,36 +92,7 @@ Franklin::Franklin(int boardData[12][16], void *gameManager)
 
 void Franklin::keyPressEvent(QKeyEvent *event)
 {
-    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
-    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight = qMin(screenWidth, screenHeight) / 12;
 
-    QPixmap franklinImagel1(":assets/images/Franklin model 2 m3.png");
-    QPixmap franklinImagel2(":assets/images/Franklin model 2 m2.png");
-    QPixmap franklinImager1(":assets/images/Franklin model 2 m4.png");
-    QPixmap franklinImager2(":assets/images/Franklin model 2 m1.png");
-
-    franklinImagel1 = franklinImagel1.scaledToWidth(unitWidth);
-    franklinImagel1 = franklinImagel1.scaledToHeight(unitHeight);
-
-    franklinImagel2 = franklinImagel2.scaledToWidth(unitWidth);
-    franklinImagel2 = franklinImagel2.scaledToHeight(unitHeight);
-
-    franklinImager1 = franklinImager1.scaledToWidth(unitWidth);
-    franklinImager1 = franklinImager1.scaledToHeight(unitHeight);
-
-    franklinImager2 = franklinImager2.scaledToWidth(unitWidth);
-    franklinImager2 = franklinImager2.scaledToHeight(unitHeight);
-
-    QPixmap franklinImagel(":assets/images/Franklin model 2 protected 2.png"); // change  the image
-    QPixmap franklinImager(":assets/images/Franklin model 2 protected.png"); // change  the image
-
-    franklinImagel = franklinImagel.scaledToWidth(unitWidth);
-    franklinImagel = franklinImagel.scaledToHeight(unitHeight);
-
-    franklinImager = franklinImager.scaledToWidth(unitWidth);
-    franklinImager = franklinImager.scaledToHeight(unitHeight);
 
     if (!getIsPowerful()){
         if(!drunk){
@@ -219,29 +209,6 @@ void Franklin::keyPressEvent(QKeyEvent *event)
 
 void Franklin::Move()
 {
-    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
-    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight = qMin(screenWidth, screenHeight) / 12;
-
-    QPixmap franklinImagel2(":assets/images/Franklin model 2 m2.png");
-    QPixmap franklinImager2(":assets/images/Franklin model 2 m1.png");
-
-    franklinImagel2 = franklinImagel2.scaledToWidth(unitWidth);
-    franklinImagel2 = franklinImagel2.scaledToHeight(unitHeight);
-
-    franklinImager2 = franklinImager2.scaledToWidth(unitWidth);
-    franklinImager2 = franklinImager2.scaledToHeight(unitHeight);
-
-    QPixmap franklinImagel(":assets/images/Franklin model 2 protected 2.png"); // change  the image
-    QPixmap franklinImager(":assets/images/Franklin model 2 protected.png"); // change  the image
-
-    franklinImagel = franklinImagel.scaledToWidth(unitWidth);
-    franklinImagel = franklinImagel.scaledToHeight(unitHeight);
-
-    franklinImager = franklinImager.scaledToWidth(unitWidth);
-    franklinImager = franklinImager.scaledToHeight(unitHeight);
-
     if(!getIsPowerful())
     {
         if(direction == 0)
@@ -278,10 +245,6 @@ void Franklin::focus_player()
 
 void Franklin::checkCollision()
 {
-    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
-    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight = qMin(screenWidth, screenHeight) / 12;
     GameManager * manager = static_cast<GameManager *>(gameManager);
     QList<QGraphicsItem *> collision = collidingItems();
     for (int i = 0; i < collision.size(); i++)
@@ -295,23 +258,16 @@ void Franklin::checkCollision()
                 hit();
         }
         else if(typeid(*(collision[i])) == typeid(bullet)) {
-            QPixmap franklinImagel(":assets/images/Franklin model 2 powered 2.png"); // change  the image
-            QPixmap franklinImager(":assets/images/Franklin model 2 powered.png"); // change  the image
 
-            franklinImagel = franklinImagel.scaledToWidth(unitWidth);
-            franklinImagel = franklinImagel.scaledToHeight(unitHeight);
-
-            franklinImager = franklinImager.scaledToWidth(unitWidth);
-            franklinImager = franklinImager.scaledToHeight(unitHeight);
             if(direction == 1)
             {
-                setPixmap(franklinImagel);
+                setPixmap(franklinImagell);
                 connect(timer, &QTimer::timeout, this, &Franklin::Move);
                 timer->start(1000);
             }
             else
             {
-               setPixmap(franklinImager);
+               setPixmap(franklinImagerr);
                connect(timer, &QTimer::timeout, this, &Franklin::Move);
                timer->start(1000);
             }
@@ -320,14 +276,7 @@ void Franklin::checkCollision()
 
         }
         else if(typeid(*(collision[i])) == typeid(pellet)) {
-            QPixmap franklinImagel(":assets/images/Franklin model 2 protected 2.png"); // change  the image
-            QPixmap franklinImager(":assets/images/Franklin model 2 protected.png"); // change  the image
 
-            franklinImagel = franklinImagel.scaledToWidth(unitWidth);
-            franklinImagel = franklinImagel.scaledToHeight(unitHeight);
-
-            franklinImager = franklinImager.scaledToWidth(unitWidth);
-            franklinImager = franklinImager.scaledToHeight(unitHeight);
             if(direction == 1)
             {
                 setPixmap(franklinImagel);
@@ -361,10 +310,7 @@ void Franklin::checkCollision()
 }
 
 void Franklin::hit() {
-    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
-    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+
     GameManager * manager = static_cast<GameManager *>(gameManager);
 
     if(!getIsPowerful())
