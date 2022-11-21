@@ -14,6 +14,7 @@ CONFIG += c++17
 SOURCES += \
     Drunk.cpp \
     bullet.cpp \
+    dog.cpp \
     enemy1.cpp \
     enemy2.cpp \
     gamemanager.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
 HEADERS += \
     Drunk.h \
     bullet.h \
+    dog.h \
     enemy1.h \
     enemy2.h \
     gamemanager.h \
