@@ -6,6 +6,7 @@
 #include <QList>
 #include <QGuiApplication>
 #include <enemy1.h>
+#include <enemy2.h>
 #include <pellet.h>
 #include <bullet.h>
 #include <Drunk.h>
@@ -303,15 +304,14 @@ void Franklin::checkCollision()
                 setPixmap(franklinImagel);
                 connect(timer, &QTimer::timeout, this, &Franklin::Move);
                 timer->start(1000);
-//                QTimer::singleShot(2000, this, SLOT(Move()));
             }
             else
             {
                setPixmap(franklinImager);
                connect(timer, &QTimer::timeout, this, &Franklin::Move);
                timer->start(1000);
-//               QTimer::singleShot(2000, this, SLOT(Move()));
             }
+            manager->shoot();
             (collision[i])->setVisible(false);
 
         }
@@ -428,4 +428,14 @@ void Franklin::setPowerful2False()
     manager->create_healthbar();
     this->Move();
     timer->stop();
+}
+
+int Franklin::getX()
+{
+    return this->x;
+}
+
+int Franklin::getY()
+{
+    return this->y;
 }

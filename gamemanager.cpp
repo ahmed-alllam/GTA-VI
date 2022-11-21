@@ -59,9 +59,24 @@ GameManager::GameManager(QGraphicsScene *scene)
     // create and launch homepage.cpp
     homepage * home = new homepage(this, scene);
     scene->addWidget(home);
+}
 
-
-
+void GameManager::shoot()
+{
+    int dis_1 = pow((franklin->getX() - enemy1->getX()),2);
+    dis_1 += pow((franklin->getY() - enemy1->getY()),2);
+    dis_1 = sqrt(dis_1);
+    int dis_2 = pow((franklin->getX() - enemy2->getX()),2);
+    dis_2 += pow((franklin->getY() - enemy2->getY()),2);
+    dis_2 = sqrt(dis_2);
+    if(dis_1 < dis_2)
+    {
+        enemy1->reduceHealth();
+    }
+    else
+    {
+        enemy2->reduceHealth();
+    }
 }
 
 void GameManager::launch_game() {

@@ -23,7 +23,7 @@ enemy2::enemy2(int boardData[12][16], void * gameManager)
     enemy2Image = enemy2Image.scaledToHeight(unitHeight);
 
     setPixmap(enemy2Image);
-
+	health = 2;
     x = 3;
     y = 11;
     direction = 0;
@@ -86,5 +86,24 @@ void enemy2::checkCollision(){
             manager->franklin_hit();
             setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
         }
+    }
+}
+
+int enemy2::getX()
+{
+    return this->x;
+}
+
+int enemy2::getY()
+{
+    return this->y;
+}
+
+void enemy2::reduceHealth()
+{
+    this->health--;
+    if (health == 0)
+    {
+        this->setVisible(false);
     }
 }

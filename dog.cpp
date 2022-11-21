@@ -23,7 +23,7 @@ dog::dog(int boardData[12][16], void * gameManager)
     dogImage = dogImage.scaledToHeight(unitHeight);
 
     setPixmap(dogImage);
-
+	health = 2;
     x = 1;
     y = 14;
     direction = 0;
@@ -86,5 +86,24 @@ void dog::checkCollision(){
             manager->franklin_hit();
             setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
         }
+    }
+}
+
+int dog::getX()
+{
+    return this->x;
+}
+
+int dog::getY()
+{
+    return this->y;
+}
+
+void dog::reduceHealth()
+{
+    this->health--;
+    if (health == 0)
+    {
+        this->setVisible(false);
     }
 }

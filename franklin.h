@@ -35,6 +35,8 @@ public:
     void setPowerful(bool);
     void setPowerful2False();
     void setDrunk2False();
+    int getX();
+    int getY();
     int getHealth();
     void Move();
     void hit();

@@ -56,6 +56,7 @@ public:
     void drawPanel(int x, int y, int width, int height, QColor color, double opacity);
     //void restart_game();
     void game_over();
+    void shoot();
 
 };
 
