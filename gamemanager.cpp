@@ -36,7 +36,7 @@ pellet *GameManager::pellet2 = nullptr;
 
 void GameManager::restart_game()
 {
-
+    launch_game();
 }
 
 void GameManager::exit()
@@ -447,7 +447,7 @@ void GameManager::game_over()
     p->setText("PLAY AGAIN");
     p->setGeometry(screenWidth/3+40,screenHeight/3+250, 100,50);
     scene->addWidget(p);
-    QObject::connect(p,&QPushButton::clicked,[=](){restart_game();});
+    QObject::connect(p,&QPushButton::clicked,p,std::move([=](){restart_game();}), Qt::QueuedConnection);
 
     QPushButton* quit;
     quit=new QPushButton("Quit");
