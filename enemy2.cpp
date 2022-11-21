@@ -12,18 +12,18 @@ enemy2::enemy2(int boardData[12][16], void * gameManager)
 {
     this->gameManager = gameManager;
 
-    QPixmap enemy2Image(":assets/images/Gangster-Wars-2D-Game-Kit14.png");
+    QPixmap enemy2FLImage(":assets/images/GangsterFL.png");
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
     int unitWidth = qMin(screenWidth, screenHeight) / 12;
     int unitHeight = qMin(screenWidth, screenHeight) / 12;
 
-    enemy2Image = enemy2Image.scaledToWidth(unitWidth);
-    enemy2Image = enemy2Image.scaledToHeight(unitHeight);
+    enemy2FLImage = enemy2FLImage.scaledToWidth(unitWidth);
+    enemy2FLImage = enemy2FLImage.scaledToHeight(unitHeight);
 
-    setPixmap(enemy2Image);
-	health = 2;
+    setPixmap(enemy2FLImage);
+    health = 2;
     x = 3;
     y = 11;
     direction = 0;
@@ -42,6 +42,22 @@ void enemy2::move(){
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
     int unitWidth = qMin(screenWidth, screenHeight) / 12;
     int unitHeight = qMin(screenWidth, screenHeight) / 12;
+    QPixmap enemy2FLImage(":assets/images/GangsterFL.png");
+    QPixmap enemy2FRImage(":assets/images/GangsterFR.png");
+    QPixmap enemy2HLImage(":assets/images/GangsterHL.png");
+    QPixmap enemy2HRImage(":assets/images/GangsterHR.png");
+
+    enemy2FLImage = enemy2FLImage.scaledToWidth(unitWidth);
+    enemy2FLImage = enemy2FLImage.scaledToHeight(unitHeight);
+
+    enemy2FRImage = enemy2FRImage.scaledToWidth(unitWidth);
+    enemy2FRImage = enemy2FRImage.scaledToHeight(unitHeight);
+
+    enemy2HLImage = enemy2HLImage.scaledToWidth(unitWidth);
+    enemy2HLImage = enemy2HLImage.scaledToHeight(unitHeight);
+
+    enemy2HRImage = enemy2HRImage.scaledToWidth(unitWidth);
+    enemy2HRImage = enemy2HRImage.scaledToHeight(unitHeight);
 
     if (direction == 0 && boardData[x - 1][y] >= 0)
     {
@@ -54,10 +70,26 @@ void enemy2::move(){
     else if (direction == 2 && boardData[x][y + 1] >= 0)
     {
         y++;
+        if(health == 2)
+        {
+            setPixmap(enemy2FRImage);
+        }
+        else if(health == 1)
+        {
+            setPixmap(enemy2HRImage);
+        }
     }
     else if (direction == 3 && boardData[x][y - 1] >= 0)
     {
         y--;
+        if(health == 2)
+        {
+            setPixmap(enemy2FLImage);
+        }
+        else if(health == 1)
+        {
+            setPixmap(enemy2HLImage);
+        }
     }
     else
     {

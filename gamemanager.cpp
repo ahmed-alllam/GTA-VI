@@ -77,6 +77,11 @@ void GameManager::shoot()
     {
         enemy2->reduceHealth();
     }
+//    QMediaPlayer *player1 = new QMediaPlayer;
+//    QAudioOutput *audioOutput1 = new QAudioOutput;
+//    player1->setAudioOutput(audioOutput1);
+//    player1->setSource(QUrl("qrc:/assets/sounds/shot.mp3"));
+//    player1->play();
 }
 
 void GameManager::launch_game() {

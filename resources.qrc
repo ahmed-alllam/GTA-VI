@@ -47,5 +47,9 @@
         <file>assets/images/tawfiq.png</file>
         <file>Accounts.txt</file>
         <file>assets/images/dog-muzzle-animation-pet-dog-footage-160116428_iconl.png</file>
+        <file>assets/images/GangsterFL.png</file>
+        <file>assets/images/GangsterFR.png</file>
+        <file>assets/images/GangsterHL.png</file>
+        <file>assets/images/GangsterHR.png</file>
     </qresource>
 </RCC>
