@@ -59,8 +59,12 @@ homepage::~homepage()
 
 void homepage::exit()
 {
-    if (this->gameManager != nullptr)
+    if (this->gameManager != nullptr) {
         this->gameManager->launch_game();
+
+        // delete all the ui widgets without using close() or deleteLater()
+        deleteLater();
+    }
 }
 
 void homepage::on_Log_clicked()

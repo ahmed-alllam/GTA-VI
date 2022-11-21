@@ -13,7 +13,7 @@
 #include "Drunk.h"
 #include "qobjectdefs.h"
 
-class GameManager: QObject
+class GameManager: public QObject
 {
 
 private:
@@ -23,7 +23,7 @@ private:
     QTimer *timer2; // the last stage checker
     QTimer *timer3; // win checker
     QGraphicsScene *scene;
-private slots:
+public slots:
 
 void restart_game();
 void exit();
@@ -33,6 +33,7 @@ public:
     static bullet *bullet1;
     static bullet *bullet2;
     static bullet *bullet3;
+    QGraphicsRectItem **panels;
     static bullet *bullet4;
     static pellet *pellet1;
     static pellet *pellet2;
@@ -50,8 +51,8 @@ public:
     void create_healthbar();   // to create and display the pellet
     void remove_heart();
     void franklin_hit();
-    void drawPanel(int x, int y, int width, int height, QColor color, double opacity);
-    //void restart_game();
+    QGraphicsRectItem* drawPanel(int x, int y, int width, int height, QColor color, double opacity);
+//    void restart_game();
     void game_over();
 
 };

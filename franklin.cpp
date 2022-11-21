@@ -118,8 +118,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 y++;
                 direction = 0;
                 setPixmap(franklinImager1);
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(20);
+//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+//                timer->start(20);
 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
             else if (event->key() == Qt::Key_Left && boardData[x][y - 1] >= 0)
@@ -127,8 +127,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 y--;
                 direction = 1;
                 setPixmap(franklinImagel1);
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(20);
+//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+//                timer->start(20);
 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
         }
@@ -146,8 +146,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 y++;
                 direction = 0;
                 setPixmap(franklinImager1);
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(20);
+//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+//                timer->start(20);
 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
             else if (event->key() == Qt::Key_Right && boardData[x][y - 1] >= 0)
@@ -155,8 +155,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 y--;
                 direction = 1;
                 setPixmap(franklinImagel1);
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(20);
+//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+//                timer->start(20);
 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
         }
@@ -242,12 +242,12 @@ void Franklin::Move()
         if(direction == 0)
         {
             setPixmap(franklinImager2);
-            timer->stop();
+//            timer->stop();
         }
         else
         {
             setPixmap(franklinImagel2);
-            timer->stop();
+//            timer->stop();
         }
     }
     else
@@ -255,12 +255,12 @@ void Franklin::Move()
         if(direction == 0)
         {
             setPixmap(franklinImager);
-            timer->stop();
+//            timer->stop();
         }
         else
         {
             setPixmap(franklinImagel);
-            timer->stop();
+//            timer->stop();
         }
     }
 }

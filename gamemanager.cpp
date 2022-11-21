@@ -20,7 +20,9 @@
 #include<QProgressBar>
 #include <QMessageBox>
 #include <QGraphicsRectItem> //added
+#include <QGraphicsProxyWidget>
 #include<qprocess.h>
+#include "enemy2.h"
 
 
 Franklin *GameManager::franklin = nullptr;
@@ -34,9 +36,45 @@ bullet *GameManager::bullet4 = nullptr;
 pellet *GameManager::pellet1 = nullptr;
 pellet *GameManager::pellet2 = nullptr;
 
+
+
 void GameManager::restart_game()
 {
-    launch_game();
+    QList<QGraphicsItem *> items = scene->items();
+
+    franklin = nullptr;
+    enemy1 = nullptr;
+
+    bullet1 = nullptr;
+    bullet2 = nullptr;
+    bullet3 = nullptr;
+   bullet4 = nullptr;
+
+    pellet1 = nullptr;
+    pellet2 = nullptr;
+
+
+    for (int i = 0; i < items.size(); i++) {
+        qDebug() << typeid(*items[i]).name();
+        if(typeid(*items[i]) == typeid(QGraphicsProxyWidget) || typeid(*items[i]) == typeid(QGraphicsTextItem) || typeid(*items[i]) == typeid(QPushButton) || typeid(*items[i]) == typeid(QGraphicsRectItem) || typeid(*items[i]) == typeid(bullet) || typeid(*items[i]) == typeid(class Franklin) || typeid(*items[i]) == typeid(class enemy1) || typeid(*items[i]) == typeid(class Drunk) || typeid(*items[i]) == typeid(class pellet)) {
+            scene->removeItem(items[i]);
+            delete items[i];
+        }
+    }
+
+
+
+        for (size_t i = 0, n = scene->items().size(); i < n; i++) {
+            scene->items()[i]->setEnabled(true);
+        }
+
+
+        create_player();
+        create_enemies();
+    //   create_sound();
+        create_bullets();
+        create_pellets();
+        create_healthbar();
 }
 
 void GameManager::exit()
@@ -63,8 +101,6 @@ GameManager::GameManager(QGraphicsScene *scene)
 }
 
 void GameManager::launch_game() {
-    scene->clear();
-
     create_board();
     add_board_images();
     create_player();
@@ -272,7 +308,7 @@ void GameManager::create_player()
     franklin = new Franklin(boardData, this);
     scene->addItem(franklin);
 
-    QTimer *timer = new QTimer();
+    timer = new QTimer();
     QObject::connect(timer, &QTimer::timeout, player_focus);
     timer->start(350);
 }
@@ -282,7 +318,7 @@ void GameManager::create_enemies()
     enemy1 = new class enemy1(boardData, this);
     scene->addItem(enemy1);
 
-    QTimer *timer2 = new QTimer();
+    timer2 = new QTimer();
     QObject::connect(timer2, &QTimer::timeout, enemy1_move);
     timer2->start(400);
 }
@@ -313,13 +349,12 @@ void GameManager::create_healthbar() {
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
     int unitWidth = qMin(screenWidth, screenHeight) / 17;
     int unitHeight = qMin(screenWidth, screenHeight) / 17;
-    int unitHeight2 = qMin(screenWidth, screenHeight) / 12;
 
     QGraphicsRectItem*panel=new QGraphicsRectItem(65,0,1070,70);
-    QBrush brush;
-    brush.setColor(Qt::darkGray);
-    brush.setStyle(Qt::SolidPattern);
-    panel->setBrush(brush);
+    QBrush * brush = new QBrush();
+    brush->setColor(Qt::darkGray);
+    brush->setStyle(Qt::SolidPattern);
+    panel->setBrush(*brush);
     scene->addItem(panel);
 
     if(franklin->getIsPowerful() && franklin->getIsDrunk())
@@ -361,8 +396,7 @@ void GameManager::create_healthbar() {
 
 
   /* Creating Hearts */
-    hearts= new QGraphicsPixmapItem[3];
-
+    hearts = new QGraphicsPixmapItem[3];
 
     QPixmap blankImage(":assets/images/extra.png");
 
@@ -372,7 +406,7 @@ void GameManager::create_healthbar() {
     {
         hearts[i].setPixmap(blankImage);
         hearts[i].setPos(80*(i+1), 15);
-        scene->addItem( &hearts[i]);
+        scene->addItem(&hearts[i]);
     }
 
 
@@ -416,7 +450,7 @@ void GameManager::remove_heart()
         int health = franklin->getHealth();
 
         if (health >= 0){
-            scene->removeItem(&hearts[health]);
+//            scene->removeItem(&hearts[health]);
         }
 
         if(health == 2){
@@ -430,8 +464,9 @@ void GameManager::franklin_hit() {
 }
 
 
-void GameManager::drawPanel(int x, int y, int width, int height, QColor color, double opacity){
+QGraphicsRectItem* GameManager::drawPanel(int x, int y, int width, int height, QColor color, double opacity){
     // draws a panel at the specified location with the specified properties
+
     QGraphicsRectItem* panel = new QGraphicsRectItem(x,y,width,height);
     QBrush brush;
     brush.setStyle(Qt::SolidPattern);
@@ -439,6 +474,8 @@ void GameManager::drawPanel(int x, int y, int width, int height, QColor color, d
     panel->setBrush(brush);
     panel->setOpacity(opacity);
     scene->addItem(panel);
+
+    return panel;
 }
 
 
@@ -451,8 +488,10 @@ void GameManager::game_over()
             scene->items()[i]->setEnabled(false);
         }
     // back ground panel and main
-    drawPanel(0,0,screenWidth,screenHeight+100,Qt::black,0.65);
-    drawPanel(screenWidth/3,screenHeight/3,400,400,Qt::lightGray,0.85);
+     panels = new QGraphicsRectItem*[2];
+
+//    panels[0] = drawPanel(0,0,screenWidth,screenHeight,Qt::black,0.65);
+    panels[1] = drawPanel(screenWidth/3-20,screenHeight/3-20,400,400,Qt::lightGray,1);
 
     /* Gmae Over Text*/
     QGraphicsTextItem* overText = new QGraphicsTextItem("GAME OVER");
@@ -465,7 +504,10 @@ void GameManager::game_over()
     p->setText("PLAY AGAIN");
     p->setGeometry(screenWidth/3+40,screenHeight/3+250, 100,50);
     scene->addWidget(p);
-    QObject::connect(p,&QPushButton::clicked,p,std::move([=](){restart_game();}), Qt::QueuedConnection);
+
+    QObject::connect(p, &QPushButton::clicked, this, [=] () {
+            restart_game();
+        }, Qt::QueuedConnection);
 
     QPushButton* quit;
     quit=new QPushButton("Quit");
@@ -473,6 +515,10 @@ void GameManager::game_over()
     scene->addWidget(quit);
 
      QObject::connect(quit,&QPushButton::clicked,[=](){exit();});
+
+     timer->stop();
+     timer2->stop();
+//     timer3->stop();
 }
 
 
