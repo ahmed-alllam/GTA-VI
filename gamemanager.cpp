@@ -322,9 +322,27 @@ void GameManager::create_healthbar() {
     panel->setBrush(brush);
     scene->addItem(panel);
 
-    if(franklin->getIsPowerful())
+    if(franklin->getIsPowerful() && franklin->getIsDrunk())
+    {
+        QGraphicsTextItem *txt= new QGraphicsTextItem("Powerful and Drunk Mode");
+        QFont fonty("Arial", 20, QFont::StyleNormal);
+        txt->setPos(500,20);
+        txt->setFont(fonty);
+        txt->setDefaultTextColor(Qt::darkBlue);
+        scene->addItem(txt);
+    }
+    else if(franklin->getIsPowerful())
     {
         QGraphicsTextItem *txt= new QGraphicsTextItem("Powerful Mode");
+        QFont fonty("Arial", 20, QFont::StyleNormal);
+        txt->setPos(500,20);
+        txt->setFont(fonty);
+        txt->setDefaultTextColor(Qt::darkBlue);
+        scene->addItem(txt);
+    }
+    else if(franklin->getIsDrunk())
+    {
+        QGraphicsTextItem *txt= new QGraphicsTextItem("Drunk Mode");
         QFont fonty("Arial", 20, QFont::StyleNormal);
         txt->setPos(500,20);
         txt->setFont(fonty);

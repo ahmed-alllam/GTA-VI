@@ -76,5 +76,6 @@ void Log_in::on_Log_clicked()
     }
     ui->user->setText("");
     ui->pass->setText("");
+    ui->pass_2->setText("");
 }
 

@@ -10,6 +10,7 @@
 #include <QGraphicsScene>
 #include <QKeyEvent>
 #include <QList>
+#include <QTimer>
 
 class Franklin: public QObject, public QGraphicsPixmapItem{
     Q_OBJECT
@@ -32,9 +33,12 @@ public:
     bool getIsDrunk();
     void setIsDrunk(bool);
     void setPowerful(bool);
+    void setPowerful2False();
+    void setDrunk2False();
     int getHealth();
     void Move();
     void hit();
+    QTimer *timer = new QTimer(this);
 public slots:
     void keyPressEvent(QKeyEvent * event);
 };
