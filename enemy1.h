@@ -11,11 +11,15 @@ private:
     int direction;
     int x;
     int y;
+    int health;
     int boardData[12][16];
     void * gameManager;
 public:
     enemy1(int boardData[12][16], void * gameManager);
     void move();
+    int getX();
+    int getY();
+    void reduceHealth();
     void checkCollision();
 
 signals:

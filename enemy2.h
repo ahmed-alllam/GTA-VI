@@ -8,11 +8,19 @@ class enemy2 : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 private:
+    int direction;
     int x;
     int y;
+    int health;
     int boardData[12][16];
+    void * gameManager;
 public:
-    enemy2(int boardData[12][16]);
+    enemy2(int boardData[12][16], void * gameManager);
+    void move();
+    int getX();
+    int getY();
+    void reduceHealth();
+    void checkCollision();
 
 signals:
 

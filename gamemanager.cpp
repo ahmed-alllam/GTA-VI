@@ -3,6 +3,7 @@
 #include <QGraphicsPixmapItem>
 #include "franklin.h"
 #include "enemy1.h"
+#include "enemy2.h"
 #include "pellet.h"
 #include "Drunk.h"
 #include "homepage.h"
@@ -27,6 +28,7 @@
 
 Franklin *GameManager::franklin = nullptr;
 enemy1 *GameManager::enemy1 = nullptr;
+enemy2 *GameManager::enemy2 = nullptr;
 
 bullet *GameManager::bullet1 = nullptr;
 bullet *GameManager::bullet2 = nullptr;
@@ -95,9 +97,29 @@ GameManager::GameManager(QGraphicsScene *scene)
     // create and launch homepage.cpp
     homepage * home = new homepage(this, scene);
     scene->addWidget(home);
+}
 
-
-
+void GameManager::shoot()
+{
+    int dis_1 = pow((franklin->getX() - enemy1->getX()),2);
+    dis_1 += pow((franklin->getY() - enemy1->getY()),2);
+    dis_1 = sqrt(dis_1);
+    int dis_2 = pow((franklin->getX() - enemy2->getX()),2);
+    dis_2 += pow((franklin->getY() - enemy2->getY()),2);
+    dis_2 = sqrt(dis_2);
+    if(dis_1 < dis_2)
+    {
+        enemy1->reduceHealth();
+    }
+    else
+    {
+        enemy2->reduceHealth();
+    }
+//    QMediaPlayer *player1 = new QMediaPlayer;
+//    QAudioOutput *audioOutput1 = new QAudioOutput;
+//    player1->setAudioOutput(audioOutput1);
+//    player1->setSource(QUrl("qrc:/assets/sounds/shot.mp3"));
+//    player1->play();
 }
 
 void GameManager::launch_game() {
@@ -295,6 +317,14 @@ void enemy1_move()
     }
 }
 
+void enemy2_move()
+{
+    if (GameManager::enemy2 != nullptr)
+    {
+        GameManager::enemy2->move();
+    }
+}
+
 void player_focus()
 {
     if (GameManager::franklin != nullptr)
@@ -320,6 +350,13 @@ void GameManager::create_enemies()
 
     timer2 = new QTimer();
     QObject::connect(timer2, &QTimer::timeout, enemy1_move);
+    timer2->start(400);
+
+    enemy2 = new class enemy2(boardData, this);
+    scene->addItem(enemy2);
+
+    QTimer *timer4 = new QTimer();
+    QObject::connect(timer4, &QTimer::timeout, enemy2_move);
     timer2->start(400);
 }
 
