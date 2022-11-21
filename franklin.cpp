@@ -335,6 +335,7 @@ void Franklin::checkCollision()
 
             setPowerful(true);
             manager->create_healthbar();
+            manager->activate_mode();   //displaying the progress bar
             connect(timer, &QTimer::timeout, this,  &Franklin::setPowerful2False);
             timer->start(60000);
 //            QTimer::singleShot(10000, this, SLOT(setPowerful(false)));
@@ -345,6 +346,7 @@ void Franklin::checkCollision()
 
             setIsDrunk(true);
             manager->create_healthbar();
+              manager->activate_mode();   //displaying the progress bar
             connect(timer, &QTimer::timeout, this, &Franklin::setDrunk2False);
             timer->start(30000);
 //            QTimer::singleShot(10000, this, SLOT(setIsDrunk(false)));

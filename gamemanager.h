@@ -57,6 +57,7 @@ public:
     //void restart_game();
     void game_over();
     void shoot();
+    void activate_mode();
 
 };
 

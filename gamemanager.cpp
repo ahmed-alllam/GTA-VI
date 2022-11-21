@@ -22,7 +22,8 @@
 #include <QMessageBox>
 #include <QGraphicsRectItem> //added
 #include<qprocess.h>
-
+#include<qmovie.h>
+#include<QMovie>
 
 Franklin *GameManager::franklin = nullptr;
 enemy1 *GameManager::enemy1 = nullptr;
@@ -38,7 +39,33 @@ pellet *GameManager::pellet2 = nullptr;
 
 void GameManager::restart_game()
 {
-    launch_game();
+
+    QMovie* movie = new QMovie(":/assets/images/the_timer.gif");
+
+movie->setBackgroundColor(Qt::red);
+    QLabel* l = new QLabel();
+    l->setGeometry(800,20, 225,30);
+    movie->setScaledSize(l->size());
+
+    l->setMovie(movie);
+    movie->start();
+    scene->addWidget(l);
+    float speed;
+    float i=1;
+    speed=i*40;
+    if(speed<=0)
+    {
+        movie->stop();
+        l->clear();
+       return;
+    }else if(speed==100)
+    {
+        return;
+    }else if(speed>500)
+    {
+        speed=500;
+    }
+    movie->setSpeed(speed);
 }
 
 void GameManager::exit()
@@ -77,6 +104,10 @@ void GameManager::shoot()
     {
         enemy2->reduceHealth();
     }
+}
+
+void GameManager::activate_mode() //displaying the progress bar
+{
 }
 
 void GameManager::launch_game() {
