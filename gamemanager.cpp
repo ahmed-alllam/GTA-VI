@@ -3,6 +3,7 @@
 #include <QGraphicsPixmapItem>
 #include "franklin.h"
 #include "enemy1.h"
+#include "enemy2.h"
 #include "pellet.h"
 #include "Drunk.h"
 #include "homepage.h"
@@ -25,6 +26,7 @@
 
 Franklin *GameManager::franklin = nullptr;
 enemy1 *GameManager::enemy1 = nullptr;
+enemy2 *GameManager::enemy2 = nullptr;
 
 bullet *GameManager::bullet1 = nullptr;
 bullet *GameManager::bullet2 = nullptr;
@@ -259,6 +261,14 @@ void enemy1_move()
     }
 }
 
+void enemy2_move()
+{
+    if (GameManager::enemy2 != nullptr)
+    {
+        GameManager::enemy2->move();
+    }
+}
+
 void player_focus()
 {
     if (GameManager::franklin != nullptr)
@@ -284,6 +294,13 @@ void GameManager::create_enemies()
 
     QTimer *timer2 = new QTimer();
     QObject::connect(timer2, &QTimer::timeout, enemy1_move);
+    timer2->start(400);
+
+    enemy2 = new class enemy2(boardData, this);
+    scene->addItem(enemy2);
+
+    QTimer *timer4 = new QTimer();
+    QObject::connect(timer4, &QTimer::timeout, enemy2_move);
     timer2->start(400);
 }
 

@@ -8,6 +8,7 @@
 
 #include "franklin.h"
 #include "enemy1.h"
+#include "enemy2.h"
 #include "bullet.h"
 #include "pellet.h"
 #include "Drunk.h"
@@ -22,6 +23,7 @@ private:
     QTimer *timer;  // game over checker
     QTimer *timer2; // the last stage checker
     QTimer *timer3; // win checker
+    QTimer *timer4;
     QGraphicsScene *scene;
 private slots:
 
@@ -30,6 +32,7 @@ void exit();
 public:
     static Franklin *franklin;
     static enemy1 *enemy1;
+    static enemy2 *enemy2;
     static bullet *bullet1;
     static bullet *bullet2;
     static bullet *bullet3;

@@ -25,7 +25,7 @@ homepage::homepage(GameManager *gameManager, QGraphicsScene *scene)
     }
     ui->pass->setEchoMode(QLineEdit::Password);
     ui->OnlineButton->setVisible(false);
-    ui->pushButton->setVisible(false);
+//    ui->pushButton->setVisible(false);
     ui->errorLabel->setVisible(false);
     QGraphicsScene *scene1 = new QGraphicsScene();
     QGraphicsScene *scene2 = new QGraphicsScene();
