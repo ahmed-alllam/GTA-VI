@@ -25,7 +25,7 @@ homepage::homepage(GameManager *gameManager, QGraphicsScene *scene)
     }
     ui->pass->setEchoMode(QLineEdit::Password);
     ui->OnlineButton->setVisible(false);
-//    ui->pushButton->setVisible(false);
+    ui->pushButton->setVisible(false);
     ui->errorLabel->setVisible(false);
     QGraphicsScene *scene1 = new QGraphicsScene();
     QGraphicsScene *scene2 = new QGraphicsScene();
@@ -59,8 +59,12 @@ homepage::~homepage()
 
 void homepage::exit()
 {
-    if (this->gameManager != nullptr)
+    if (this->gameManager != nullptr) {
         this->gameManager->launch_game();
+
+        // delete all the ui widgets without using close() or deleteLater()
+        deleteLater();
+    }
 }
 
 void homepage::on_Log_clicked()

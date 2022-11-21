@@ -6,9 +6,6 @@
 #include <QFile>
 #include <QTextStream>
 #include <QGraphicsPixmapItem>
-#include "franklin.h"
-#include "enemy1.h"
-#include "mainwindow.h"
 #include "gamemanager.h"
 #include <QDir>
 #include <QTimer>
@@ -34,9 +31,7 @@ int main(int argc, char *argv[])
 
     view.setFixedSize(1920, 1080);
 
-    // qbrush with qcolor of hex code 335f3f
     QBrush brush(QColor(0x335f3f));
-    
     view.setBackgroundBrush(brush);
 
     GameManager gameManager(scene);

@@ -47,8 +47,15 @@
         <file>assets/images/tawfiq.png</file>
         <file>Accounts.txt</file>
         <file>assets/images/dog-muzzle-animation-pet-dog-footage-160116428_iconl.png</file>
+<<<<<<< HEAD
         <file>assets/images/health_bar.gif</file>
         <file>assets/images/TIMER.gif</file>
         <file>assets/images/the_timer.gif</file>
+=======
+        <file>assets/images/GangsterFL.png</file>
+        <file>assets/images/GangsterFR.png</file>
+        <file>assets/images/GangsterHL.png</file>
+        <file>assets/images/GangsterHR.png</file>
+>>>>>>> 1cd93f44f1bd4d09766b9712b956cd790934fba3
     </qresource>
 </RCC>
