@@ -16,6 +16,7 @@
 //#include <QMediaPlayer>
 //#include <QAudioOutput>
 #include "gamemanager.h"
+#include "flyingbullet.h"
 
 Franklin::Franklin(int boardData[12][16], void *gameManager)
 {
@@ -77,6 +78,7 @@ Franklin::Franklin(int boardData[12][16], void *gameManager)
     direction = 0;
     isPowerful = 0;
     drunk = 0;
+    bullets = 0;
     x = 5;
     y = 7;
 
@@ -203,6 +205,10 @@ void Franklin::keyPressEvent(QKeyEvent *event)
         }
     }
 
+    if(event->key() == Qt::Key_Space) {
+        shoot();
+    }
+
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
     checkCollision();
 }
@@ -243,6 +249,22 @@ void Franklin::focus_player()
     setFocus();
 }
 
+void Franklin::shoot() {
+    if(bullets > 0) {
+        if(bullets == 1) {
+            // change image to normal
+        }
+
+        bullets--;
+
+        GameManager * manager = static_cast<GameManager *>(gameManager);
+        manager->updateCounters();
+
+        FlyingBullet * bullet = new FlyingBullet(boardData, x, y, direction, gameManager);
+        manager->scene->addItem(bullet);
+    }
+}
+
 void Franklin::checkCollision()
 {
     GameManager * manager = static_cast<GameManager *>(gameManager);
@@ -251,32 +273,35 @@ void Franklin::checkCollision()
     {
         if (typeid(*(collision[i])) == typeid(enemy1))
         {
-                hit();
+            GameManager * manager = static_cast<GameManager *>(gameManager);
+            manager->franklin_hit();
         }
         else if (typeid(*(collision[i])) == typeid(enemy2))
         {
-                hit();
+            GameManager * manager = static_cast<GameManager *>(gameManager);
+            manager->franklin_hit();
         }
         else if(typeid(*(collision[i])) == typeid(bullet)) {
+
 
             if(direction == 1)
             {
                 setPixmap(franklinImagell);
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(1000);
+//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+//                timer->start(1000);
             }
             else
             {
                setPixmap(franklinImagerr);
-               connect(timer, &QTimer::timeout, this, &Franklin::Move);
-               timer->start(1000);
+//               connect(timer, &QTimer::timeout, this, &Franklin::Move);
+//               timer->start(1000);
             }
-            manager->shoot();
+            bullets++;
+            GameManager * manager = static_cast<GameManager *>(gameManager);
+            manager->updateCounters();
             (collision[i])->setVisible(false);
-
         }
         else if(typeid(*(collision[i])) == typeid(pellet)) {
-
             if(direction == 1)
             {
                 setPixmap(franklinImagel);
@@ -287,7 +312,10 @@ void Franklin::checkCollision()
             }
 
             setPowerful(true);
-            manager->create_healthbar();
+            score++;
+            GameManager * manager = static_cast<GameManager *>(gameManager);
+            manager->updateCounters();
+            manager->updateModeTxt();
             manager->activate_mode();   //displaying the progress bar
             manager->open_gate();
             connect(timer, &QTimer::timeout, this,  &Franklin::setPowerful2False);
@@ -299,8 +327,12 @@ void Franklin::checkCollision()
         else if(typeid(*(collision[i])) == typeid(Drunk)) {
 
             setIsDrunk(true);
+
             manager->create_healthbar();
               manager->activate_mode();//displaying the progress bar
+            manager->updateModeTxt();
+              manager->activate_mode();   //displaying the progress bar
+
             connect(timer, &QTimer::timeout, this, &Franklin::setDrunk2False);
             timer->start(30000);
 //            QTimer::singleShot(10000, this, SLOT(setIsDrunk(false)));
@@ -322,6 +354,9 @@ void Franklin::hit() {
     manager->remove_heart();
     this->x = 5;
     this->y = 7;
+    bullets = 0;
+    manager->remove_bullets();
+    manager->create_bullets();
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
     //    QMediaPlayer *player = new QMediaPlayer;
     //    QAudioOutput * audioOutput = new QAudioOutput;
@@ -332,12 +367,18 @@ void Franklin::hit() {
     else
     {
         setPowerful(false);
-        manager->create_healthbar();
+        manager->updateModeTxt();
         Move();
     }
 }
 
+int Franklin::getCoinsCount() {
+    return this->score;
+}
 
+int Franklin::getBulletsCount() {
+    return this->bullets;
+}
 
 void Franklin::setPowerful(bool isPowerful)
 {
@@ -369,7 +410,7 @@ void Franklin::setDrunk2False()
 {
     this->drunk = false;
     GameManager * manager = static_cast<GameManager *>(gameManager);
-    manager->create_healthbar();
+    manager->updateModeTxt();
     this->Move();
     timer->stop();
 }
@@ -378,7 +419,7 @@ void Franklin::setPowerful2False()
 {
     this->isPowerful = false;
     GameManager * manager = static_cast<GameManager *>(gameManager);
-    manager->create_healthbar();
+    manager->updateModeTxt();
     this->Move();
     timer->stop();
 }

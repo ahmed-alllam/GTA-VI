@@ -26,6 +26,7 @@
 #include<qmovie.h>
 #include<QMovie>
 #include "enemy2.h"
+#include "flyingbullet.h"
 
 
 Franklin *GameManager::franklin = nullptr;
@@ -48,6 +49,7 @@ void GameManager::restart_game()
 
     franklin = nullptr;
     enemy1 = nullptr;
+    enemy2 = nullptr;
 
     bullet1 = nullptr;
     bullet2 = nullptr;
@@ -59,8 +61,7 @@ void GameManager::restart_game()
 
 
     for (int i = 0; i < items.size(); i++) {
-        qDebug() << typeid(*items[i]).name();
-        if(typeid(*items[i]) == typeid(QGraphicsProxyWidget) || typeid(*items[i]) == typeid(QGraphicsTextItem) || typeid(*items[i]) == typeid(QPushButton) || typeid(*items[i]) == typeid(QGraphicsRectItem) || typeid(*items[i]) == typeid(bullet) || typeid(*items[i]) == typeid(class Franklin) || typeid(*items[i]) == typeid(class enemy1) || typeid(*items[i]) == typeid(class Drunk) || typeid(*items[i]) == typeid(class pellet)) {
+        if(typeid(*items[i]) == typeid(QGraphicsProxyWidget) || typeid(*items[i]) == typeid(QGraphicsTextItem) || typeid(*items[i]) == typeid(QPushButton) || typeid(*items[i]) == typeid(QGraphicsRectItem) || typeid(*items[i]) == typeid(bullet) || typeid(*items[i]) == typeid(class Franklin) || typeid(*items[i]) == typeid(class enemy1) || typeid(*items[i]) == typeid(class enemy2) || typeid(*items[i]) == typeid(class Drunk) || typeid(*items[i]) == typeid(class pellet)|| typeid(*items[i]) == typeid(class FlyingBullet)) {
             scene->removeItem(items[i]);
             delete items[i];
         }
@@ -102,36 +103,14 @@ GameManager::GameManager(QGraphicsScene *scene)
     scene->addWidget(home);
 }
 
-void GameManager::shoot()
-{
-    int dis_1 = pow((franklin->getX() - enemy1->getX()),2);
-    dis_1 += pow((franklin->getY() - enemy1->getY()),2);
-    dis_1 = sqrt(dis_1);
-    int dis_2 = pow((franklin->getX() - enemy2->getX()),2);
-    dis_2 += pow((franklin->getY() - enemy2->getY()),2);
-    dis_2 = sqrt(dis_2);
-    if(dis_1 < dis_2)
-    {
-        enemy1->reduceHealth();
-    }
-    else
-    {
-        enemy2->reduceHealth();
-    }
-//    QMediaPlayer *player1 = new QMediaPlayer;
-//    QAudioOutput *audioOutput1 = new QAudioOutput;
-//    player1->setAudioOutput(audioOutput1);
-//    player1->setSource(QUrl("qrc:/assets/sounds/shot.mp3"));
-//    player1->play();
-}
 
 void GameManager::activate_mode() //displaying the progress bar
 {
     QMovie* movie = new QMovie(":/assets/images/the_timer.gif");
 
-movie->setBackgroundColor(Qt::red);
+    movie->setBackgroundColor(Qt::red);
     QLabel* l = new QLabel();
-    l->setGeometry(800,20, 225,30);
+    l->setGeometry(840,20, 200,30);
     movie->setScaledSize(l->size());
     l->setMovie(movie);
     movie->start();
@@ -341,21 +320,19 @@ void GameManager::create_board() // to create and display the board
 //    player->play();
 //}
 
-void enemy1_move()
+void move_enemies()
 {
     if (GameManager::enemy1 != nullptr)
     {
         GameManager::enemy1->move();
     }
-}
 
-void enemy2_move()
-{
     if (GameManager::enemy2 != nullptr)
     {
         GameManager::enemy2->move();
     }
 }
+
 
 void player_focus()
 {
@@ -380,15 +357,11 @@ void GameManager::create_enemies()
     enemy1 = new class enemy1(boardData, this);
     scene->addItem(enemy1);
 
-    timer2 = new QTimer();
-    QObject::connect(timer2, &QTimer::timeout, enemy1_move);
-    timer2->start(400);
-
     enemy2 = new class enemy2(boardData, this);
     scene->addItem(enemy2);
 
-    QTimer *timer4 = new QTimer();
-    QObject::connect(timer4, &QTimer::timeout, enemy2_move);
+    timer2 = new QTimer();
+    QObject::connect(timer2, &QTimer::timeout, move_enemies);
     timer2->start(400);
 }
 
@@ -403,6 +376,32 @@ void GameManager::create_bullets() {
     scene->addItem(bullet4);
 }
 
+void GameManager::remove_bullets() {
+    if(bullet1 != nullptr){
+        scene->removeItem(bullet1);
+        bullet1 = nullptr;
+        delete bullet1;
+    }
+
+    if(bullet2 != nullptr){
+        scene->removeItem(bullet2);
+        bullet2 = nullptr;
+        delete bullet2;
+    }
+
+    if(bullet3 != nullptr){
+        scene->removeItem(bullet3);
+        bullet3 = nullptr;
+        delete bullet3;
+    }
+
+    if(bullet4 != nullptr){
+        scene->removeItem(bullet4);
+        bullet4 = nullptr;
+        delete bullet4;
+    }
+}
+
 void GameManager::create_pellets()
 {
     pellet1 = new class pellet(boardData, 9, 1);
@@ -413,55 +412,48 @@ void GameManager::create_pellets()
     scene->addItem(drunk);
 }
 
+void GameManager::updateModeTxt() {
+    if(txt != nullptr && franklin != nullptr) {
+        if(franklin->getIsPowerful() && franklin->getIsDrunk())
+        {
+            txt->setPlainText("Powerful and Drunk Mode");
+        }
+        else if(franklin->getIsPowerful())
+        {
+            txt->setPlainText("Powerful Mode");
+        }
+        else if(franklin->getIsDrunk())
+        {
+            txt->setPlainText("Drunk Model");
+        }
+        else
+        {
+            txt->setPlainText("Normal Model");
+        }
+    }
+}
+
 void GameManager::create_healthbar() {
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
     int unitWidth = qMin(screenWidth, screenHeight) / 17;
     int unitHeight = qMin(screenWidth, screenHeight) / 17;
 
-    QGraphicsRectItem*panel=new QGraphicsRectItem(65,0,1070,70);
+    QGraphicsRectItem*panel=new QGraphicsRectItem(65,0,1130,70);
     QBrush * brush = new QBrush();
     brush->setColor(Qt::darkGray);
     brush->setStyle(Qt::SolidPattern);
     panel->setBrush(*brush);
     scene->addItem(panel);
 
-    if(franklin->getIsPowerful() && franklin->getIsDrunk())
-    {
-        QGraphicsTextItem *txt= new QGraphicsTextItem("Powerful and Drunk Mode");
-        QFont fonty("Arial", 20, QFont::StyleNormal);
-        txt->setPos(500,20);
-        txt->setFont(fonty);
-        txt->setDefaultTextColor(Qt::darkBlue);
-        scene->addItem(txt);
-    }
-    else if(franklin->getIsPowerful())
-    {
-        QGraphicsTextItem *txt= new QGraphicsTextItem("Powerful Mode");
-        QFont fonty("Arial", 20, QFont::StyleNormal);
-        txt->setPos(500,20);
-        txt->setFont(fonty);
-        txt->setDefaultTextColor(Qt::darkBlue);
-        scene->addItem(txt);
-    }
-    else if(franklin->getIsDrunk())
-    {
-        QGraphicsTextItem *txt= new QGraphicsTextItem("Drunk Mode");
-        QFont fonty("Arial", 20, QFont::StyleNormal);
-        txt->setPos(500,20);
-        txt->setFont(fonty);
-        txt->setDefaultTextColor(Qt::darkBlue);
-        scene->addItem(txt);
-    }
-    else
-    {
-        QGraphicsTextItem *txt= new QGraphicsTextItem("NORMAL MODE");
-        QFont fonty("Arial", 20, QFont::StyleNormal);
-        txt->setPos(500,20);
-        txt->setFont(fonty);
-        txt->setDefaultTextColor(Qt::darkBlue);
-        scene->addItem(txt);
-    }
+
+
+    txt = new QGraphicsTextItem("NORMAL MODE");
+    QFont fonty("Arial", 20, QFont::StyleNormal);
+    txt->setPos(540,20);
+    txt->setFont(fonty);
+    txt->setDefaultTextColor(Qt::white);
+    scene->addItem(txt);
 
 
   /* Creating Hearts */
@@ -479,6 +471,7 @@ void GameManager::create_healthbar() {
     }
 
 
+
     /* adding the gate static photo*/
     gate= new QMovie(":/assets/images/gate2.gif");
     QLabel* lab = new QLabel();
@@ -486,6 +479,47 @@ void GameManager::create_healthbar() {
     lab->setBackgroundRole(QPalette::Base);
     gate->setScaledSize(lab->size());
     lab->setMovie(gate);
+
+    QPixmap bulletImage(":assets/images/bullet.png");
+    bulletImage = bulletImage.scaledToWidth(unitWidth);
+    bulletImage = bulletImage.scaledToHeight(unitHeight);
+
+    QGraphicsPixmapItem * bulletItem = new QGraphicsPixmapItem();
+    bulletItem->setPos(300 , 15);
+    bulletItem->setPixmap(bulletImage);
+    scene->addItem(bulletItem);
+
+    bulletsCounter = new QGraphicsTextItem("0");
+    bulletsCounter->setPos(360,20);
+    bulletsCounter->setFont(fonty);
+    bulletsCounter->setDefaultTextColor(Qt::white);
+    scene->addItem(bulletsCounter);
+
+
+
+    QPixmap coinImage(":assets/images/coin.png");
+
+    coinImage = coinImage.scaledToWidth(unitWidth);
+    coinImage = coinImage.scaledToHeight(unitHeight);
+
+    QGraphicsPixmapItem * coinItem = new QGraphicsPixmapItem();
+    coinItem->setPos(400 , 15);
+    coinItem->setPixmap(coinImage);
+    scene->addItem(coinItem);
+
+    coinsCounter = new QGraphicsTextItem("0");
+    coinsCounter->setPos(460,20);
+    coinsCounter->setFont(fonty);
+    coinsCounter->setDefaultTextColor(Qt::white);
+    scene->addItem(coinsCounter);
+
+
+
+
+
+
+    /*Drunk and label part */
+
 
     scene->addWidget(lab);
 
@@ -495,6 +529,7 @@ void GameManager::create_healthbar() {
     gate->setPaused(true);
 
 }
+
 
 void GameManager::open_gate()
 {
@@ -520,6 +555,14 @@ void GameManager::open_gate()
 }
 
 
+
+void GameManager::updateCounters() {
+    qDebug() << "updateing " << QString::number(franklin->getBulletsCount()) << QString::number(franklin->getCoinsCount());
+    if(bulletsCounter != nullptr)
+        bulletsCounter->setPlainText(QString::number(franklin->getBulletsCount()));
+    if(coinsCounter != nullptr)
+        coinsCounter->setPlainText(QString::number(franklin->getCoinsCount()));
+}
 void GameManager::remove_heart()
 {
 
@@ -536,6 +579,11 @@ void GameManager::remove_heart()
 }
 
 void GameManager::franklin_hit() {
+    if(enemy1 != nullptr)
+        enemy1->setXandY(9, 8);
+    if(enemy2 != nullptr)
+        enemy2->setXandY(3, 11);
+
     franklin->hit();
 }
 
@@ -594,7 +642,6 @@ void GameManager::game_over()
 
      timer->stop();
      timer2->stop();
-//     timer3->stop();
 }
 
 

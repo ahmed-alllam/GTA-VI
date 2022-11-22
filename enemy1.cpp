@@ -62,10 +62,28 @@ void enemy1::move(){
     if (direction == 0 && boardData[x - 1][y] >= 0)
     {
         x--;
+
+        if(health == 2)
+        {
+            setPixmap(enemy1FRImage);
+        }
+        else if(health == 1)
+        {
+            setPixmap(enemy1HRImage);
+        }
     }
     else if (direction == 1 && boardData[x + 1][y] >= 0)
     {
         x++;
+
+        if(health == 2)
+        {
+            setPixmap(enemy1FLImage);
+        }
+        else if(health == 1)
+        {
+            setPixmap(enemy1HLImage);
+        }
     }
     else if (direction == 2 && boardData[x][y + 1] >= 0)
     {
@@ -111,12 +129,8 @@ void enemy1::checkCollision(){
     {
         if (typeid(*(colliding_items[i])) == typeid(Franklin))
         {
-            this->x = 9;
-            this->y = 8;
-
             GameManager * manager = static_cast<GameManager *>(gameManager);
             manager->franklin_hit();
-            setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
         }
     }
 }
@@ -131,11 +145,29 @@ int enemy1::getY()
     return this->y;
 }
 
+void enemy1::setXandY(int x, int y) {
+    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
+    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
+    int unitWidth = qMin(screenWidth, screenHeight) / 12;
+    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+
+    this->x = x;
+    this->y = y;
+
+    setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
+}
+
 void enemy1::reduceHealth()
 {
     this->health--;
+    move();
     if (health == 0)
     {
-        this->setVisible(false);
+        GameManager * manager = static_cast<GameManager *>(gameManager);
+        manager->enemy1 = nullptr;
+        scene()->removeItem(this);
+        delete this;
+    } else {
+        move();
     }
 }

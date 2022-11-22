@@ -19,6 +19,7 @@ public:
     void move();
     int getX();
     int getY();
+    void setXandY(int x, int y);
     void reduceHealth();
     void checkCollision();
 

@@ -22,6 +22,7 @@ private:
     bool isPowerful;
     int x;
     int y;
+    int bullets;
     int boardData[12][16];
     void * gameManager;
     QPixmap franklinImagel1;
@@ -48,8 +49,11 @@ public:
     int getX();
     int getY();
     int getHealth();
+    void shoot();
     void Move();
     void hit();
+    int getBulletsCount();
+    int getCoinsCount();
     QTimer *timer = new QTimer(this);
 public slots:
     void keyPressEvent(QKeyEvent * event);
