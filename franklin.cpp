@@ -392,7 +392,7 @@ void Franklin::checkCollision()
             manager->activate_mode();   //displaying the progress bar
             manager->open_gate();
             connect(timer, &QTimer::timeout, this,  &Franklin::setPowerful2False);
-            timer->start(60000);
+            timer->start(120000);
 //            QTimer::singleShot(10000, this, SLOT(setPowerful(false)));
             (collision[i])->setVisible(false);
 
@@ -406,7 +406,7 @@ void Franklin::checkCollision()
               manager->activate_mode();   //displaying the progress bar
 
             connect(timer, &QTimer::timeout, this, &Franklin::setDrunk2False);
-            timer->start(30000);
+            timer->start(60000);
 //            QTimer::singleShot(10000, this, SLOT(setIsDrunk(false)));
             (collision[i])->setVisible(false);
 
@@ -504,4 +504,10 @@ int Franklin::getX()
 int Franklin::getY()
 {
     return this->y;
+}
+
+void Franklin::editboard()
+{
+
+    boardData[9][15] = 50;
 }

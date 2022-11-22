@@ -263,7 +263,9 @@ void GameManager::add_board_images()
             else if (boardData[i][j] == 20)
                 boardItems[i][j].setPixmap(homeImage);
             else if (boardData[i][j] == 50)
-                boardItems[i][j].setPixmap(arrowImage);
+                boardItems[i][j].setPixmap(blankImage);
+            else if (boardData[i][j] == -50)
+                boardItems[i][j].setPixmap(blankImage);
             else if (boardData[i][j] == 4)
                 boardItems[i][j].setPixmap(VertRoadImage);
             else if (boardData[i][j] == 2)
@@ -534,6 +536,8 @@ void GameManager::create_healthbar() {
 void GameManager::open_gate()
 {
     gate->setPaused(false);
+    boardData[9][15] = 50;
+    franklin->editboard();
     connect(gate, &QMovie::frameChanged, this,
         [this]()
         {
