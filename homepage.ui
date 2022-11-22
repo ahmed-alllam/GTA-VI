@@ -86,7 +86,8 @@ background-color: transparent</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color:green</string>
+     <string notr="true">
+color:green;background-color:white;</string>
     </property>
     <property name="text">
      <string>Start Story Mode</string>
@@ -107,7 +108,8 @@ background-color: transparent</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color:green</string>
+     <string notr="true">
+color:green;background-color:white;</string>
     </property>
     <property name="text">
      <string>Start Online Mode</string>
@@ -328,7 +330,7 @@ hr { height: 1px; border-width: 0; }
     </property>
     <property name="styleSheet">
      <string notr="true">
-color:green</string>
+color:green;background-color:white;</string>
     </property>
     <property name="text">
      <string>Log In</string>
@@ -345,7 +347,7 @@ color:green</string>
     </property>
     <property name="styleSheet">
      <string notr="true">
-color:green</string>
+color:green;background-color:white;</string>
     </property>
     <property name="text">
      <string>Sign Up</string>
@@ -441,7 +443,8 @@ color:black
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">color:green</string>
+     <string notr="true">
+color:green;background-color:white;</string>
     </property>
     <property name="text">
      <string>Open Market</string>

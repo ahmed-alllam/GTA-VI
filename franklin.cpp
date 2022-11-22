@@ -328,9 +328,8 @@ void Franklin::checkCollision()
 
             setIsDrunk(true);
 
-            manager->create_healthbar();
               manager->activate_mode();//displaying the progress bar
-            manager->updateModeTxt();
+              manager->updateModeTxt();
               manager->activate_mode();   //displaying the progress bar
 
             connect(timer, &QTimer::timeout, this, &Franklin::setDrunk2False);
