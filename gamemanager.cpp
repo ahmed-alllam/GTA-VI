@@ -108,9 +108,9 @@ void GameManager::activate_mode() //displaying the progress bar
 {
     QMovie* movie = new QMovie(":/assets/images/the_timer.gif");
 
-movie->setBackgroundColor(Qt::red);
+    movie->setBackgroundColor(Qt::red);
     QLabel* l = new QLabel();
-    l->setGeometry(800,20, 225,30);
+    l->setGeometry(800,20, 200,30);
     movie->setScaledSize(l->size());
 
     l->setMovie(movie);
@@ -419,7 +419,7 @@ void GameManager::create_healthbar() {
     int unitWidth = qMin(screenWidth, screenHeight) / 17;
     int unitHeight = qMin(screenWidth, screenHeight) / 17;
 
-    QGraphicsRectItem*panel=new QGraphicsRectItem(65,0,1070,70);
+    QGraphicsRectItem*panel=new QGraphicsRectItem(65,0,1130,70);
     QBrush * brush = new QBrush();
     brush->setColor(Qt::darkGray);
     brush->setStyle(Qt::SolidPattern);
@@ -432,7 +432,7 @@ void GameManager::create_healthbar() {
         QFont fonty("Arial", 20, QFont::StyleNormal);
         txt->setPos(500,20);
         txt->setFont(fonty);
-        txt->setDefaultTextColor(Qt::darkBlue);
+        txt->setDefaultTextColor(Qt::white);
         scene->addItem(txt);
     }
     else if(franklin->getIsPowerful())
@@ -441,7 +441,7 @@ void GameManager::create_healthbar() {
         QFont fonty("Arial", 20, QFont::StyleNormal);
         txt->setPos(500,20);
         txt->setFont(fonty);
-        txt->setDefaultTextColor(Qt::darkBlue);
+        txt->setDefaultTextColor(Qt::white);
         scene->addItem(txt);
     }
     else if(franklin->getIsDrunk())
@@ -450,7 +450,7 @@ void GameManager::create_healthbar() {
         QFont fonty("Arial", 20, QFont::StyleNormal);
         txt->setPos(500,20);
         txt->setFont(fonty);
-        txt->setDefaultTextColor(Qt::darkBlue);
+        txt->setDefaultTextColor(Qt::white);
         scene->addItem(txt);
     }
     else
@@ -459,7 +459,7 @@ void GameManager::create_healthbar() {
         QFont fonty("Arial", 20, QFont::StyleNormal);
         txt->setPos(500,20);
         txt->setFont(fonty);
-        txt->setDefaultTextColor(Qt::darkBlue);
+        txt->setDefaultTextColor(Qt::white);
         scene->addItem(txt);
     }
 
@@ -529,6 +529,11 @@ void GameManager::remove_heart()
 }
 
 void GameManager::franklin_hit() {
+    if(enemy1 != nullptr)
+        enemy1->setXandY(9, 8);
+    if(enemy2 != nullptr)
+        enemy2->setXandY(3, 11);
+
     franklin->hit();
 }
 

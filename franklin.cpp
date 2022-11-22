@@ -271,11 +271,13 @@ void Franklin::checkCollision()
     {
         if (typeid(*(collision[i])) == typeid(enemy1))
         {
-                hit();
+            GameManager * manager = static_cast<GameManager *>(gameManager);
+            manager->franklin_hit();
         }
         else if (typeid(*(collision[i])) == typeid(enemy2))
         {
-                hit();
+            GameManager * manager = static_cast<GameManager *>(gameManager);
+            manager->franklin_hit();
         }
         else if(typeid(*(collision[i])) == typeid(bullet)) {
 
@@ -291,7 +293,7 @@ void Franklin::checkCollision()
 //               connect(timer, &QTimer::timeout, this, &Franklin::Move);
 //               timer->start(1000);
             }
-            bullets += 2;
+            bullets += 1;
             (collision[i])->setVisible(false);
         }
         else if(typeid(*(collision[i])) == typeid(pellet)) {

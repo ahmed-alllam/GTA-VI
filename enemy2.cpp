@@ -129,14 +129,22 @@ void enemy2::checkCollision(){
     {
         if (typeid(*(colliding_items[i])) == typeid(Franklin))
         {
-            this->x = 3;
-            this->y = 11;
-
             GameManager * manager = static_cast<GameManager *>(gameManager);
-            manager->franklin_hit();
-            setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
+            manager->franklin_hit();           
         }
     }
+}
+
+void enemy2::setXandY(int x, int y) {
+    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
+    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
+    int unitWidth = qMin(screenWidth, screenHeight) / 12;
+    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+
+    this->x = x;
+    this->y = y;
+
+    setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
 }
 
 int enemy2::getX()
