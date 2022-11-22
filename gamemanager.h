@@ -49,6 +49,7 @@ public:
     void create_board();     // to create and display the board
     void create_sound();     // to create and display the sound
     void create_bullets();   // to create and display the bullets
+    void remove_bullets();
     void create_pellets();   // to create and display the pellet
     void create_healthbar();   // to create and display the pellet
     void remove_heart();

@@ -377,6 +377,32 @@ void GameManager::create_bullets() {
     scene->addItem(bullet4);
 }
 
+void GameManager::remove_bullets() {
+    if(bullet1 != nullptr){
+        scene->removeItem(bullet1);
+        bullet1 = nullptr;
+        delete bullet1;
+    }
+
+    if(bullet2 != nullptr){
+        scene->removeItem(bullet2);
+        bullet2 = nullptr;
+        delete bullet2;
+    }
+
+    if(bullet3 != nullptr){
+        scene->removeItem(bullet3);
+        bullet3 = nullptr;
+        delete bullet3;
+    }
+
+    if(bullet4 != nullptr){
+        scene->removeItem(bullet4);
+        bullet4 = nullptr;
+        delete bullet4;
+    }
+}
+
 void GameManager::create_pellets()
 {
     pellet1 = new class pellet(boardData, 9, 1);

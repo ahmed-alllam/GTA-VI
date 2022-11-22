@@ -293,10 +293,8 @@ void Franklin::checkCollision()
             }
             bullets += 2;
             (collision[i])->setVisible(false);
-
         }
         else if(typeid(*(collision[i])) == typeid(pellet)) {
-
             if(direction == 1)
             {
                 setPixmap(franklinImagel);
@@ -341,6 +339,9 @@ void Franklin::hit() {
     manager->remove_heart();
     this->x = 5;
     this->y = 7;
+    bullets = 0;
+    manager->remove_bullets();
+    manager->create_bullets();
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
     //    QMediaPlayer *player = new QMediaPlayer;
     //    QAudioOutput * audioOutput = new QAudioOutput;
