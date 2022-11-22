@@ -52,5 +52,7 @@
         <file>assets/images/GangsterFR.png</file>
         <file>assets/images/GangsterHL.png</file>
         <file>assets/images/GangsterHR.png</file>
+        <file>assets/images/gate.gif</file>
+        <file>assets/images/gate2.gif</file>
     </qresource>
 </RCC>

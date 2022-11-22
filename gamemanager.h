@@ -29,6 +29,7 @@ public slots:
 
 void restart_game();
 void exit();
+
 public:
     static Franklin *franklin;
     static enemy1 *enemy1;
@@ -42,6 +43,7 @@ public:
     static pellet *pellet2;
     QGraphicsPixmapItem* hearts;
     Drunk *drunk;
+    QMovie *gate;// added
     GameManager(QGraphicsScene *scene);
     void launch_game();
     void create_player();    // create and dispaly players
@@ -59,6 +61,7 @@ public:
     void game_over();
     void shoot();
     void activate_mode();
+    void open_gate();
 
 };
 

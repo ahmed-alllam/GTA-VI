@@ -20,7 +20,7 @@
 #include <QPushButton>
 #include<QProgressBar>
 #include <QMessageBox>
-#include <QGraphicsRectItem> //added
+#include <QGraphicsRectItem>
 #include <QGraphicsProxyWidget>
 #include<qprocess.h>
 #include<qmovie.h>
@@ -90,7 +90,7 @@ void GameManager::exit()
     QProcess::startDetached(program, arguments);
 
 //    qApp->quit();
-//    QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+    //    QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
 }
 
 GameManager::GameManager(QGraphicsScene *scene)
@@ -133,7 +133,6 @@ movie->setBackgroundColor(Qt::red);
     QLabel* l = new QLabel();
     l->setGeometry(800,20, 225,30);
     movie->setScaledSize(l->size());
-
     l->setMovie(movie);
     movie->start();
     scene->addWidget(l);
@@ -480,39 +479,46 @@ void GameManager::create_healthbar() {
     }
 
 
-    /*Drunk and label part */
+    /* adding the gate static photo*/
+    gate= new QMovie(":/assets/images/gate2.gif");
+    QLabel* lab = new QLabel();
+    lab->setGeometry(1100,680, 50,90);
+    lab->setBackgroundRole(QPalette::Base);
+    gate->setScaledSize(lab->size());
+    lab->setMovie(gate);
 
-//    QLabel *label = new QLabel();
-//    if(franklin->getIsPowerful())
-//    {
-//        label->setText("Powerful Mode");
-//    }
-//    else
-//    {
-//        label->setText("Normal Mode");
-//    }
+    scene->addWidget(lab);
 
-//    label->setAlignment(Qt::AlignCenter);
-//    label->move(-1.5*unitWidth, 3 *unitHeight2);
+    gate->setSpeed(40);
 
-//    scene->addWidget(label);
-
-//    QLabel *label2 = new QLabel();
-//    if(franklin->getIsDrunk())
-//    {
-//        label2->setText("Drunk");
-//    }
-//    else
-//    {
-//        label2->setText("Not Drunk");
-//    }
-
-//    label2->setAlignment(Qt::AlignCenter);
-//    label2->move(-1.5*unitWidth, 6 *unitHeight2);
-
-//    scene->addWidget(label2);
+    gate->start();
+    gate->setPaused(true);
 
 }
+
+void GameManager::open_gate()
+{
+    gate->setPaused(false);
+    connect(gate, &QMovie::frameChanged, this,
+        [this]()
+        {
+             //For some reason == movie->frameCount() crashes, so... *
+            if(this->gate->currentFrameNumber() == (gate->frameCount() - 1-gate->frameCount()/2+1))
+            {
+                this->gate->stop();
+                //Explicity emit finished signal so that label **
+                //can show the image instead of a frozen gif
+                //Also, double check that movie stopped before emiting
+                if (this->gate->state() == QMovie::NotRunning)
+                {
+                    emit this->gate->finished();
+                     gate->setPaused(true);
+                }
+            }
+        }
+);
+}
+
 
 void GameManager::remove_heart()
 {
