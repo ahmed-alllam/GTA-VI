@@ -13,20 +13,34 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">QWidget#centralwidget
+{
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(11, 91, 41, 255), stop:1 rgba(159, 82, 49, 255))
+}
+
+</string>
+   </property>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
       <x>370</x>
-      <y>0</y>
+      <y>-20</y>
       <width>331</width>
       <height>131</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>26</pointsize>
+      <pointsize>27</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:white;background-color: transparent</string>
     </property>
     <property name="text">
      <string>Welcome to GTA VI</string>
@@ -38,7 +52,7 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>460</x>
       <y>450</y>
       <width>251</width>
       <height>51</height>
@@ -48,6 +62,10 @@
      <font>
       <pointsize>28</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:white;
+background-color: transparent</string>
     </property>
     <property name="text">
      <string>Created By:</string>
@@ -67,6 +85,9 @@
       <pointsize>22</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">color:green</string>
+    </property>
     <property name="text">
      <string>Start Story Mode</string>
     </property>
@@ -75,7 +96,7 @@
     <property name="geometry">
      <rect>
       <x>650</x>
-      <y>230</y>
+      <y>220</y>
       <width>311</width>
       <height>91</height>
      </rect>
@@ -84,6 +105,9 @@
      <font>
       <pointsize>22</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:green</string>
     </property>
     <property name="text">
      <string>Start Online Mode</string>
@@ -94,7 +118,7 @@
      <rect>
       <x>120</x>
       <y>530</y>
-      <width>256</width>
+      <width>201</width>
       <height>192</height>
      </rect>
     </property>
@@ -105,16 +129,19 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>750</y>
+      <x>100</x>
+      <y>740</y>
       <width>256</width>
-      <height>192</height>
+      <height>61</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <kerning>false</kerning>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:transparent;color:white</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::NoFrame</enum>
@@ -136,13 +163,22 @@ hr { height: 1px; border-width: 0; }
     </property>
    </widget>
    <widget class="QGraphicsView" name="graphicsView_2">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>410</x>
+      <x>435</x>
       <y>530</y>
-      <width>256</width>
+      <width>201</width>
       <height>192</height>
      </rect>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
     </property>
    </widget>
    <widget class="QTextBrowser" name="textBrowser_4">
@@ -152,15 +188,18 @@ hr { height: 1px; border-width: 0; }
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>750</y>
+      <y>740</y>
       <width>256</width>
-      <height>192</height>
+      <height>61</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <kerning>false</kerning>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:transparent;color:white</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::NoFrame</enum>
@@ -184,11 +223,17 @@ hr { height: 1px; border-width: 0; }
    <widget class="QGraphicsView" name="graphicsView_3">
     <property name="geometry">
      <rect>
-      <x>730</x>
+      <x>740</x>
       <y>530</y>
-      <width>256</width>
+      <width>231</width>
       <height>192</height>
      </rect>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
     </property>
    </widget>
    <widget class="QTextBrowser" name="textBrowser_5">
@@ -198,15 +243,18 @@ hr { height: 1px; border-width: 0; }
     <property name="geometry">
      <rect>
       <x>730</x>
-      <y>750</y>
+      <y>740</y>
       <width>256</width>
-      <height>192</height>
+      <height>61</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <kerning>false</kerning>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:transparent;color:white</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::NoFrame</enum>
@@ -232,14 +280,17 @@ hr { height: 1px; border-width: 0; }
      <rect>
       <x>20</x>
       <y>130</y>
-      <width>101</width>
-      <height>20</height>
+      <width>141</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>11</pointsize>
+      <pointsize>20</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:white;background-color: transparent</string>
     </property>
     <property name="text">
      <string>User Name :</string>
@@ -249,15 +300,18 @@ hr { height: 1px; border-width: 0; }
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>180</y>
-      <width>101</width>
-      <height>20</height>
+      <y>170</y>
+      <width>131</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>11</pointsize>
+      <pointsize>20</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:white;background-color: transparent</string>
     </property>
     <property name="text">
      <string>Password :</string>
@@ -266,11 +320,15 @@ hr { height: 1px; border-width: 0; }
    <widget class="QPushButton" name="Sign">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>240</y>
+      <x>220</x>
+      <y>230</y>
       <width>131</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+color:green</string>
     </property>
     <property name="text">
      <string>Log In</string>
@@ -279,11 +337,15 @@ hr { height: 1px; border-width: 0; }
    <widget class="QPushButton" name="Log">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>220</x>
       <y>350</y>
       <width>131</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+color:green</string>
     </property>
     <property name="text">
      <string>Sign Up</string>
@@ -294,37 +356,53 @@ hr { height: 1px; border-width: 0; }
      <rect>
       <x>20</x>
       <y>350</y>
-      <width>261</width>
+      <width>181</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>11</pointsize>
+      <pointsize>14</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">color:white;background-color: transparent</string>
+    </property>
     <property name="text">
-     <string>If you do not have an account</string>
+     <string>Don't have an account?</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="pass">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>180</x>
       <y>170</y>
       <width>201</width>
       <height>31</height>
      </rect>
     </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white;
+color:black
+</string>
+    </property>
    </widget>
    <widget class="QLineEdit" name="user">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>180</x>
       <y>130</y>
       <width>201</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:white;
+color:black
+</string>
     </property>
    </widget>
    <widget class="QLabel" name="errorLabel">
@@ -340,6 +418,9 @@ hr { height: 1px; border-width: 0; }
      <font>
       <pointsize>11</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:white;background-color: transparent</string>
     </property>
     <property name="text">
      <string/>
@@ -358,6 +439,9 @@ hr { height: 1px; border-width: 0; }
      <font>
       <pointsize>22</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:green</string>
     </property>
     <property name="text">
      <string>Open Market</string>
