@@ -438,6 +438,8 @@ void GameManager::create_healthbar() {
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
     int unitWidth = qMin(screenWidth, screenHeight) / 17;
     int unitHeight = qMin(screenWidth, screenHeight) / 17;
+    int unitWidth2 = qMin(screenWidth, screenHeight) / 12;
+    int unitHeight2 = qMin(screenWidth, screenHeight) / 12;
 
     QGraphicsRectItem*panel=new QGraphicsRectItem(65,0,1130,70);
     QBrush * brush = new QBrush();
@@ -475,7 +477,7 @@ void GameManager::create_healthbar() {
     /* adding the gate static photo*/
     gate= new QMovie(":/assets/images/gate2.gif");
     QLabel* lab = new QLabel();
-    lab->setGeometry(1100,680, 50,90);
+    lab->setGeometry(unitWidth2 + 15 * unitWidth2, unitHeight2 + 9 * unitHeight2, unitWidth2, unitHeight2);
     lab->setBackgroundRole(QPalette::Base);
     gate->setScaledSize(lab->size());
     lab->setMovie(gate);
