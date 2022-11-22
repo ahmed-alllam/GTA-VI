@@ -76,7 +76,7 @@ void GameManager::restart_game()
 
         create_player();
         create_enemies();
-        create_sound();
+//        create_sound();
         create_bullets();
         create_pellets();
         create_healthbar();
