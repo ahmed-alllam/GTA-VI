@@ -46,6 +46,7 @@ public:
     QGraphicsPixmapItem* hearts;
     Drunk *drunk;
     QMovie *gate;// added
+    QMovie* movie; // added
     GameManager(QGraphicsScene *scene);
     void launch_game();
     void create_player();    // create and dispaly players

@@ -106,7 +106,7 @@ GameManager::GameManager(QGraphicsScene *scene)
 
 void GameManager::activate_mode() //displaying the progress bar
 {
-    QMovie* movie = new QMovie(":/assets/images/the_timer.gif");
+    movie = new QMovie(":/assets/images/the_timer.gif");
 
     movie->setBackgroundColor(Qt::red);
     QLabel* l = new QLabel();
@@ -115,22 +115,22 @@ void GameManager::activate_mode() //displaying the progress bar
     l->setMovie(movie);
     movie->start();
     scene->addWidget(l);
-    float speed;
-    float i=1;
-    speed=i*40;
-    if(speed<=0)
-    {
-        movie->stop();
-        l->clear();
-       return;
-    }else if(speed==100)
-    {
-        return;
-    }else if(speed>500)
-    {
-        speed=500;
-    }
-    movie->setSpeed(speed);
+    movie->setSpeed(35);
+
+
+    connect(timer, &QTimer::timeout, movie, &QMovie::stop);
+    connect(timer, &QTimer::timeout, l,
+            [l]()
+            {
+                 //For some reason == movie->frameCount() crashes, so... *
+               l->setVisible(false);
+            }
+    );
+    timer->start(10000);
+
+
+
+
 }
 
 void GameManager::launch_game() {
