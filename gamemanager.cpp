@@ -26,6 +26,7 @@
 #include<qmovie.h>
 #include<QMovie>
 #include "enemy2.h"
+#include "flyingbullet.h"
 
 
 Franklin *GameManager::franklin = nullptr;
@@ -60,8 +61,7 @@ void GameManager::restart_game()
 
 
     for (int i = 0; i < items.size(); i++) {
-        qDebug() << typeid(*items[i]).name();
-        if(typeid(*items[i]) == typeid(QGraphicsProxyWidget) || typeid(*items[i]) == typeid(QGraphicsTextItem) || typeid(*items[i]) == typeid(QPushButton) || typeid(*items[i]) == typeid(QGraphicsRectItem) || typeid(*items[i]) == typeid(bullet) || typeid(*items[i]) == typeid(class Franklin) || typeid(*items[i]) == typeid(class enemy1) || typeid(*items[i]) == typeid(class Drunk) || typeid(*items[i]) == typeid(class pellet)) {
+        if(typeid(*items[i]) == typeid(QGraphicsProxyWidget) || typeid(*items[i]) == typeid(QGraphicsTextItem) || typeid(*items[i]) == typeid(QPushButton) || typeid(*items[i]) == typeid(QGraphicsRectItem) || typeid(*items[i]) == typeid(bullet) || typeid(*items[i]) == typeid(class Franklin) || typeid(*items[i]) == typeid(class enemy1) || typeid(*items[i]) == typeid(class Drunk) || typeid(*items[i]) == typeid(class pellet)|| typeid(*items[i]) == typeid(class FlyingBullet)) {
             scene->removeItem(items[i]);
             delete items[i];
         }
