@@ -118,7 +118,7 @@ Franklin::Franklin(int boardData[12][16], void *gameManager)
 
 void Franklin::keyPressEvent(QKeyEvent *event)
 {
-
+    GameManager * manager = static_cast<GameManager *>(gameManager);
 
     if (!getIsPowerful()){
         if(!drunk){
@@ -263,6 +263,10 @@ void Franklin::keyPressEvent(QKeyEvent *event)
 
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
     checkCollision();
+    if(x==9 && y==15)
+    {
+        manager->Win();
+    }
 }
 
 void Franklin::Move()
@@ -390,7 +394,6 @@ void Franklin::checkCollision()
             manager->updateCounters();
             manager->updateModeTxt();
             manager->activate_mode();   //displaying the progress bar
-            manager->open_gate();
             connect(timer, &QTimer::timeout, this,  &Franklin::setPowerful2False);
             timer->start(120000);
 //            QTimer::singleShot(10000, this, SLOT(setPowerful(false)));
