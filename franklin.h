@@ -52,6 +52,8 @@ public:
     void shoot();
     void Move();
     void hit();
+    int getBulletsCount();
+    int getCoinsCount();
     QTimer *timer = new QTimer(this);
 public slots:
     void keyPressEvent(QKeyEvent * event);

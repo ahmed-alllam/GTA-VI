@@ -257,8 +257,10 @@ void Franklin::shoot() {
 
         bullets--;
 
-        FlyingBullet * bullet = new FlyingBullet(boardData, x, y, direction, gameManager);
         GameManager * manager = static_cast<GameManager *>(gameManager);
+        manager->updateCounters();
+
+        FlyingBullet * bullet = new FlyingBullet(boardData, x, y, direction, gameManager);
         manager->scene->addItem(bullet);
     }
 }
@@ -281,6 +283,7 @@ void Franklin::checkCollision()
         }
         else if(typeid(*(collision[i])) == typeid(bullet)) {
 
+
             if(direction == 1)
             {
                 setPixmap(franklinImagell);
@@ -293,7 +296,9 @@ void Franklin::checkCollision()
 //               connect(timer, &QTimer::timeout, this, &Franklin::Move);
 //               timer->start(1000);
             }
-            bullets += 1;
+            bullets++;
+            GameManager * manager = static_cast<GameManager *>(gameManager);
+            manager->updateCounters();
             (collision[i])->setVisible(false);
         }
         else if(typeid(*(collision[i])) == typeid(pellet)) {
@@ -307,7 +312,10 @@ void Franklin::checkCollision()
             }
 
             setPowerful(true);
-            manager->create_healthbar();
+            score++;
+            GameManager * manager = static_cast<GameManager *>(gameManager);
+            manager->updateCounters();
+            manager->updateModeTxt();
             manager->activate_mode();   //displaying the progress bar
             connect(timer, &QTimer::timeout, this,  &Franklin::setPowerful2False);
             timer->start(60000);
@@ -318,7 +326,7 @@ void Franklin::checkCollision()
         else if(typeid(*(collision[i])) == typeid(Drunk)) {
 
             setIsDrunk(true);
-            manager->create_healthbar();
+            manager->updateModeTxt();
               manager->activate_mode();   //displaying the progress bar
             connect(timer, &QTimer::timeout, this, &Franklin::setDrunk2False);
             timer->start(30000);
@@ -354,12 +362,18 @@ void Franklin::hit() {
     else
     {
         setPowerful(false);
-        manager->create_healthbar();
+        manager->updateModeTxt();
         Move();
     }
 }
 
+int Franklin::getCoinsCount() {
+    return this->score;
+}
 
+int Franklin::getBulletsCount() {
+    return this->bullets;
+}
 
 void Franklin::setPowerful(bool isPowerful)
 {
@@ -391,7 +405,7 @@ void Franklin::setDrunk2False()
 {
     this->drunk = false;
     GameManager * manager = static_cast<GameManager *>(gameManager);
-    manager->create_healthbar();
+    manager->updateModeTxt();
     this->Move();
     timer->stop();
 }
@@ -400,7 +414,7 @@ void Franklin::setPowerful2False()
 {
     this->isPowerful = false;
     GameManager * manager = static_cast<GameManager *>(gameManager);
-    manager->create_healthbar();
+    manager->updateModeTxt();
     this->Move();
     timer->stop();
 }

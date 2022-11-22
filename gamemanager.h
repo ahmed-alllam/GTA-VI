@@ -39,6 +39,9 @@ public:
     static bullet *bullet4;
     static pellet *pellet1;
     static pellet *pellet2;
+    QGraphicsTextItem * txt;
+    QGraphicsTextItem * bulletsCounter;
+    QGraphicsTextItem * coinsCounter;
     QGraphicsPixmapItem* hearts;
     Drunk *drunk;
     GameManager(QGraphicsScene *scene);
@@ -47,6 +50,7 @@ public:
     void create_enemies();   // to create and dispaly enemies
     void add_board_images(); // to create and display the board
     void create_board();     // to create and display the board
+    void updateModeTxt();
     void create_sound();     // to create and display the sound
     void create_bullets();   // to create and display the bullets
     void remove_bullets();
@@ -54,6 +58,7 @@ public:
     void create_healthbar();   // to create and display the pellet
     void remove_heart();
     void franklin_hit();
+    void updateCounters();
     QGraphicsRectItem* drawPanel(int x, int y, int width, int height, QColor color, double opacity);
 //    void restart_game();
     void game_over();

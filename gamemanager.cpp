@@ -110,7 +110,7 @@ void GameManager::activate_mode() //displaying the progress bar
 
     movie->setBackgroundColor(Qt::red);
     QLabel* l = new QLabel();
-    l->setGeometry(800,20, 200,30);
+    l->setGeometry(840,20, 200,30);
     movie->setScaledSize(l->size());
 
     l->setMovie(movie);
@@ -413,6 +413,27 @@ void GameManager::create_pellets()
     scene->addItem(drunk);
 }
 
+void GameManager::updateModeTxt() {
+    if(txt != nullptr && franklin != nullptr) {
+        if(franklin->getIsPowerful() && franklin->getIsDrunk())
+        {
+            txt->setPlainText("Powerful and Drunk Mode");
+        }
+        else if(franklin->getIsPowerful())
+        {
+            txt->setPlainText("Powerful Mode");
+        }
+        else if(franklin->getIsDrunk())
+        {
+            txt->setPlainText("Drunk Model");
+        }
+        else
+        {
+            txt->setPlainText("Normal Model");
+        }
+    }
+}
+
 void GameManager::create_healthbar() {
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
@@ -426,42 +447,14 @@ void GameManager::create_healthbar() {
     panel->setBrush(*brush);
     scene->addItem(panel);
 
-    if(franklin->getIsPowerful() && franklin->getIsDrunk())
-    {
-        QGraphicsTextItem *txt= new QGraphicsTextItem("Powerful and Drunk Mode");
-        QFont fonty("Arial", 20, QFont::StyleNormal);
-        txt->setPos(500,20);
-        txt->setFont(fonty);
-        txt->setDefaultTextColor(Qt::white);
-        scene->addItem(txt);
-    }
-    else if(franklin->getIsPowerful())
-    {
-        QGraphicsTextItem *txt= new QGraphicsTextItem("Powerful Mode");
-        QFont fonty("Arial", 20, QFont::StyleNormal);
-        txt->setPos(500,20);
-        txt->setFont(fonty);
-        txt->setDefaultTextColor(Qt::white);
-        scene->addItem(txt);
-    }
-    else if(franklin->getIsDrunk())
-    {
-        QGraphicsTextItem *txt= new QGraphicsTextItem("Drunk Mode");
-        QFont fonty("Arial", 20, QFont::StyleNormal);
-        txt->setPos(500,20);
-        txt->setFont(fonty);
-        txt->setDefaultTextColor(Qt::white);
-        scene->addItem(txt);
-    }
-    else
-    {
-        QGraphicsTextItem *txt= new QGraphicsTextItem("NORMAL MODE");
-        QFont fonty("Arial", 20, QFont::StyleNormal);
-        txt->setPos(500,20);
-        txt->setFont(fonty);
-        txt->setDefaultTextColor(Qt::white);
-        scene->addItem(txt);
-    }
+
+
+    txt = new QGraphicsTextItem("NORMAL MODE");
+    QFont fonty("Arial", 20, QFont::StyleNormal);
+    txt->setPos(540,20);
+    txt->setFont(fonty);
+    txt->setDefaultTextColor(Qt::white);
+    scene->addItem(txt);
 
 
   /* Creating Hearts */
@@ -477,6 +470,45 @@ void GameManager::create_healthbar() {
         hearts[i].setPos(80*(i+1), 15);
         scene->addItem(&hearts[i]);
     }
+
+
+    QPixmap bulletImage(":assets/images/bullet.png");
+
+    bulletImage = bulletImage.scaledToWidth(unitWidth);
+    bulletImage = bulletImage.scaledToHeight(unitHeight);
+
+    QGraphicsPixmapItem * bulletItem = new QGraphicsPixmapItem();
+    bulletItem->setPos(300 , 15);
+    bulletItem->setPixmap(bulletImage);
+    scene->addItem(bulletItem);
+
+    bulletsCounter = new QGraphicsTextItem("0");
+    bulletsCounter->setPos(360,20);
+    bulletsCounter->setFont(fonty);
+    bulletsCounter->setDefaultTextColor(Qt::white);
+    scene->addItem(bulletsCounter);
+
+
+
+    QPixmap coinImage(":assets/images/coin.png");
+
+    coinImage = coinImage.scaledToWidth(unitWidth);
+    coinImage = coinImage.scaledToHeight(unitHeight);
+
+    QGraphicsPixmapItem * coinItem = new QGraphicsPixmapItem();
+    coinItem->setPos(400 , 15);
+    coinItem->setPixmap(coinImage);
+    scene->addItem(coinItem);
+
+    coinsCounter = new QGraphicsTextItem("0");
+    coinsCounter->setPos(460,20);
+    coinsCounter->setFont(fonty);
+    coinsCounter->setDefaultTextColor(Qt::white);
+    scene->addItem(coinsCounter);
+
+
+
+
 
 
     /*Drunk and label part */
@@ -511,6 +543,14 @@ void GameManager::create_healthbar() {
 
 //    scene->addWidget(label2);
 
+}
+
+void GameManager::updateCounters() {
+    qDebug() << "updateing " << QString::number(franklin->getBulletsCount()) << QString::number(franklin->getCoinsCount());
+    if(bulletsCounter != nullptr)
+        bulletsCounter->setPlainText(QString::number(franklin->getBulletsCount()));
+    if(coinsCounter != nullptr)
+        coinsCounter->setPlainText(QString::number(franklin->getCoinsCount()));
 }
 
 void GameManager::remove_heart()
