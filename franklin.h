@@ -60,7 +60,7 @@ public:
     void hit();
     int getBulletsCount();
     int getCoinsCount();
-    void editboard();
+    void editboard(int x);
     QTimer *timer = new QTimer(this);
 public slots:
     void keyPressEvent(QKeyEvent * event);

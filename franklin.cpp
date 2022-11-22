@@ -515,8 +515,8 @@ int Franklin::getY()
     return this->y;
 }
 
-void Franklin::editboard()
+void Franklin::editboard(int x)
 {
 
-    boardData[9][15] = 50;
+    boardData[9][15] = x;
 }

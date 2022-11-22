@@ -67,6 +67,7 @@ public:
     void game_over();
     void activate_mode();
     void open_gate();
+    void close_gate();
     class enemy1* retenemy1();
     class enemy2* retenemy2();
 

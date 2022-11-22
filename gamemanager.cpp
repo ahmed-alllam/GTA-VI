@@ -75,11 +75,14 @@ void GameManager::restart_game()
 
 
         create_player();
+        close_gate();
+
         create_enemies();
 //        create_sound();
         create_bullets();
         create_pellets();
         create_healthbar();
+
 
 }
 
@@ -539,7 +542,7 @@ void GameManager::open_gate()
 {
     gate->setPaused(false);
     boardData[9][15] = 50;
-    franklin->editboard();
+    franklin->editboard(50);
     connect(gate, &QMovie::frameChanged, this,
         [this]()
         {
@@ -558,6 +561,11 @@ void GameManager::open_gate()
             }
         }
 );
+}
+
+void GameManager::close_gate() {
+    boardData[9][15] = -50;
+    franklin->editboard(-50);
 }
 
 
