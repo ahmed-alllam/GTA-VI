@@ -27,6 +27,7 @@ homepage::homepage(GameManager *gameManager, QGraphicsScene *scene)
     ui->OnlineButton->setVisible(false);
     ui->pushButton->setVisible(false);
     ui->errorLabel->setVisible(false);
+    ui->marketButton->setVisible(false);
     QGraphicsScene *scene1 = new QGraphicsScene();
     QGraphicsScene *scene2 = new QGraphicsScene();
     QGraphicsScene *scene3 = new QGraphicsScene();
@@ -98,6 +99,7 @@ void homepage::on_Sign_clicked()
             flag = false;
             if (pass[i] == password) {
                 ui->OnlineButton->setVisible(true);
+                ui->marketButton->setVisible(true);
                 ui->pushButton->setVisible(true);
                 ui->errorLabel->setText("Welcome " + username + ",");
                 ui->errorLabel->setVisible(true);

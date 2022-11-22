@@ -16,6 +16,7 @@
 //#include <QMediaPlayer>
 //#include <QAudioOutput>
 #include "gamemanager.h"
+#include "flyingbullet.h"
 
 Franklin::Franklin(int boardData[12][16], void *gameManager)
 {
@@ -77,6 +78,7 @@ Franklin::Franklin(int boardData[12][16], void *gameManager)
     direction = 0;
     isPowerful = 0;
     drunk = 0;
+    bullets = 0;
     x = 5;
     y = 7;
 
@@ -203,6 +205,10 @@ void Franklin::keyPressEvent(QKeyEvent *event)
         }
     }
 
+    if(event->key() == Qt::Key_Space) {
+        shoot();
+    }
+
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
     checkCollision();
 }
@@ -243,6 +249,20 @@ void Franklin::focus_player()
     setFocus();
 }
 
+void Franklin::shoot() {
+    if(bullets > 0) {
+        if(bullets == 1) {
+            // change image to normal
+        }
+
+        bullets--;
+
+        FlyingBullet * bullet = new FlyingBullet(boardData, x, y, direction, gameManager);
+        GameManager * manager = static_cast<GameManager *>(gameManager);
+        manager->scene->addItem(bullet);
+    }
+}
+
 void Franklin::checkCollision()
 {
     GameManager * manager = static_cast<GameManager *>(gameManager);
@@ -262,16 +282,16 @@ void Franklin::checkCollision()
             if(direction == 1)
             {
                 setPixmap(franklinImagell);
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(1000);
+//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+//                timer->start(1000);
             }
             else
             {
                setPixmap(franklinImagerr);
-               connect(timer, &QTimer::timeout, this, &Franklin::Move);
-               timer->start(1000);
+//               connect(timer, &QTimer::timeout, this, &Franklin::Move);
+//               timer->start(1000);
             }
-            manager->shoot();
+            bullets += 2;
             (collision[i])->setVisible(false);
 
         }

@@ -17,6 +17,7 @@ SOURCES += \
     dog.cpp \
     enemy1.cpp \
     enemy2.cpp \
+    flyingbullet.cpp \
     gamemanager.cpp \
     homepage.cpp \
     log_in.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     dog.h \
     enemy1.h \
     enemy2.h \
+    flyingbullet.h \
     gamemanager.h \
     homepage.h \
     log_in.h \

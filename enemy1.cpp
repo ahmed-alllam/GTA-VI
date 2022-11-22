@@ -62,10 +62,28 @@ void enemy1::move(){
     if (direction == 0 && boardData[x - 1][y] >= 0)
     {
         x--;
+
+        if(health == 2)
+        {
+            setPixmap(enemy1FRImage);
+        }
+        else if(health == 1)
+        {
+            setPixmap(enemy1HRImage);
+        }
     }
     else if (direction == 1 && boardData[x + 1][y] >= 0)
     {
         x++;
+
+        if(health == 2)
+        {
+            setPixmap(enemy1FLImage);
+        }
+        else if(health == 1)
+        {
+            setPixmap(enemy1HLImage);
+        }
     }
     else if (direction == 2 && boardData[x][y + 1] >= 0)
     {
@@ -134,8 +152,14 @@ int enemy1::getY()
 void enemy1::reduceHealth()
 {
     this->health--;
+    move();
     if (health == 0)
     {
-        this->setVisible(false);
+        GameManager * manager = static_cast<GameManager *>(gameManager);
+        manager->enemy1 = nullptr;
+        scene()->removeItem(this);
+        delete this;
+    } else {
+        move();
     }
 }

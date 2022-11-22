@@ -23,12 +23,12 @@ private:
     QTimer *timer;  // game over checker
     QTimer *timer2; // the last stage checker
     QTimer *timer3; // win checker
-    QGraphicsScene *scene;
 public slots:
 
 void restart_game();
 void exit();
 public:
+    QGraphicsScene *scene;
     static Franklin *franklin;
     static enemy1 *enemy1;
     static enemy2 *enemy2;
@@ -56,7 +56,6 @@ public:
     QGraphicsRectItem* drawPanel(int x, int y, int width, int height, QColor color, double opacity);
 //    void restart_game();
     void game_over();
-    void shoot();
     void activate_mode();
 
 };

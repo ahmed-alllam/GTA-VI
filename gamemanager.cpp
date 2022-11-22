@@ -48,6 +48,7 @@ void GameManager::restart_game()
 
     franklin = nullptr;
     enemy1 = nullptr;
+    enemy2 = nullptr;
 
     bullet1 = nullptr;
     bullet2 = nullptr;
@@ -102,28 +103,6 @@ GameManager::GameManager(QGraphicsScene *scene)
     scene->addWidget(home);
 }
 
-void GameManager::shoot()
-{
-    int dis_1 = pow((franklin->getX() - enemy1->getX()),2);
-    dis_1 += pow((franklin->getY() - enemy1->getY()),2);
-    dis_1 = sqrt(dis_1);
-    int dis_2 = pow((franklin->getX() - enemy2->getX()),2);
-    dis_2 += pow((franklin->getY() - enemy2->getY()),2);
-    dis_2 = sqrt(dis_2);
-    if(dis_1 < dis_2)
-    {
-        enemy1->reduceHealth();
-    }
-    else
-    {
-        enemy2->reduceHealth();
-    }
-//    QMediaPlayer *player1 = new QMediaPlayer;
-//    QAudioOutput *audioOutput1 = new QAudioOutput;
-//    player1->setAudioOutput(audioOutput1);
-//    player1->setSource(QUrl("qrc:/assets/sounds/shot.mp3"));
-//    player1->play();
-}
 
 void GameManager::activate_mode() //displaying the progress bar
 {
