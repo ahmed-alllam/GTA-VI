@@ -11,10 +11,10 @@
 #include <bullet.h>
 #include <Drunk.h>
 #include <QMessageBox>
-//#include <QSoundEffect>
-//#include <QAudioFormat>
-//#include <QMediaPlayer>
-//#include <QAudioOutput>
+#include <QSoundEffect>
+#include <QAudioFormat>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 #include "gamemanager.h"
 #include "flyingbullet.h"
 
@@ -90,11 +90,11 @@ Franklin::Franklin(int boardData[12][16], void *gameManager)
 
     setPixmap(franklinImagel1);
 
-    //    QMediaPlayer *player = new QMediaPlayer;
-    //    QAudioOutput * audioOutput = new QAudioOutput;
-    //    player->setAudioOutput(audioOutput);
-    //    player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
-    //    player->play();
+        QMediaPlayer *player = new QMediaPlayer;
+        QAudioOutput * audioOutput = new QAudioOutput;
+        player->setAudioOutput(audioOutput);
+        player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
+        player->play();
 
 
     health = 3;
@@ -334,6 +334,12 @@ void Franklin::shoot() {
 
         bullets--;
 
+        QMediaPlayer *player = new QMediaPlayer;
+        QAudioOutput * audioOutput = new QAudioOutput;
+        player->setAudioOutput(audioOutput);
+        player->setSource(QUrl("qrc:/assets/sounds/shot.mp3"));
+        player->play();
+
         GameManager * manager = static_cast<GameManager *>(gameManager);
         manager->updateCounters();
 
@@ -364,14 +370,14 @@ void Franklin::checkCollision()
             if(direction == 1)
             {
                 setPixmap(franklinImagell);
-//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-//                timer->start(1000);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(1000);
             }
             else
             {
                setPixmap(franklinImagerr);
-//               connect(timer, &QTimer::timeout, this, &Franklin::Move);
-//               timer->start(1000);
+               connect(timer, &QTimer::timeout, this, &Franklin::Move);
+               timer->start(1000);
             }
             bullets++;
             GameManager * manager = static_cast<GameManager *>(gameManager);
@@ -433,11 +439,11 @@ void Franklin::hit() {
     manager->remove_bullets();
     manager->create_bullets();
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
-    //    QMediaPlayer *player = new QMediaPlayer;
-    //    QAudioOutput * audioOutput = new QAudioOutput;
-    //    player->setAudioOutput(audioOutput);
-    //    player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
-    //    player->play();
+        QMediaPlayer *player = new QMediaPlayer;
+        QAudioOutput * audioOutput = new QAudioOutput;
+        player->setAudioOutput(audioOutput);
+        player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
+        player->play();
     }
     else
     {

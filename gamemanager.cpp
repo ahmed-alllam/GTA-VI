@@ -13,9 +13,9 @@
 #include <QApplication>
 #include <QGuiApplication>
 #include <QGraphicsScene>
-//#include <QAudioFormat>
-//#include <QMediaPlayer>
-//#include <QAudioOutput>
+#include <QAudioFormat>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 #include <QLabel>
 #include <QPushButton>
 #include<QProgressBar>
@@ -76,7 +76,7 @@ void GameManager::restart_game()
 
         create_player();
         create_enemies();
-    //   create_sound();
+        create_sound();
         create_bullets();
         create_pellets();
         create_healthbar();
@@ -138,7 +138,7 @@ void GameManager::launch_game() {
     add_board_images();
     create_player();
     create_enemies();
-//   create_sound();
+   create_sound();
     create_bullets();
     create_pellets();
     create_healthbar();
@@ -312,15 +312,15 @@ void GameManager::create_board() // to create and display the board
         }
 }
 
-//void GameManager::create_sound() // to create and display the sound
-//{
-//    QMediaPlayer *player = new QMediaPlayer;
-//    QAudioOutput *audioOutput = new QAudioOutput;
-//    player->setAudioOutput(audioOutput);
-//    player->setLoops(QMediaPlayer::Infinite);
-//    player->setSource(QUrl("qrc:/assets/sounds/backsound.mp3"));
-//    player->play();
-//}
+void GameManager::create_sound() // to create and display the sound
+{
+    QMediaPlayer *player = new QMediaPlayer;
+    QAudioOutput *audioOutput = new QAudioOutput;
+    player->setAudioOutput(audioOutput);
+    player->setLoops(QMediaPlayer::Infinite);
+    player->setSource(QUrl("qrc:/assets/sounds/backsound.mp3"));
+    player->play();
+}
 
 void move_enemies()
 {
