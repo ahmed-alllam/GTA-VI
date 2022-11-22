@@ -54,5 +54,14 @@
         <file>assets/images/GangsterHR.png</file>
         <file>assets/images/gate.gif</file>
         <file>assets/images/gate2.gif</file>
+        <file>assets/images/bulletD.png</file>
+        <file>assets/images/bulletL.png</file>
+        <file>assets/images/bulletR.png</file>
+        <file>assets/images/Franklin D m1.png</file>
+        <file>assets/images/Franklin D m2.png</file>
+        <file>assets/images/Franklin D protected.png</file>
+        <file>assets/images/Franklin U m1.png</file>
+        <file>assets/images/Franklin U m2.png</file>
+        <file>assets/images/Franklin U protected.png</file>
     </qresource>
 </RCC>

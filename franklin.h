@@ -27,10 +27,16 @@ private:
     void * gameManager;
     QPixmap franklinImagel1;
     QPixmap franklinImagel2;
+    QPixmap franklinImageu1;
+    QPixmap franklinImageu2;
+    QPixmap franklinImaged1;
+    QPixmap franklinImaged2;
     QPixmap franklinImager1;
     QPixmap franklinImager2;
     QPixmap franklinImagel;
     QPixmap franklinImager;
+    QPixmap franklinImageu;
+    QPixmap franklinImaged;
     QPixmap franklinImagell;
     QPixmap franklinImagerr;
     int unitWidth;
@@ -54,6 +60,7 @@ public:
     void hit();
     int getBulletsCount();
     int getCoinsCount();
+    void editboard();
     QTimer *timer = new QTimer(this);
 public slots:
     void keyPressEvent(QKeyEvent * event);

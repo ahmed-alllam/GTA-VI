@@ -11,7 +11,10 @@
 
 FlyingBullet::FlyingBullet(int boardData[12][16], int x, int y, int direction, void * manager)
 {
-    QPixmap bulletImage(":assets/images/bullet.png");
+    QPixmap bulletImageu(":assets/images/bullet.png");
+    QPixmap bulletImager(":assets/images/bulletR.png");
+    QPixmap bulletImagel(":assets/images/bulletL.png");
+    QPixmap bulletImaged(":assets/images/bulletD.png");
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
@@ -20,10 +23,27 @@ FlyingBullet::FlyingBullet(int boardData[12][16], int x, int y, int direction, v
     int unitHeight2 = qMin(screenWidth, screenHeight) / 17;
 
 
-    bulletImage = bulletImage.scaledToWidth(unitHeight2);
-    bulletImage = bulletImage.scaledToHeight(unitHeight2);
+    bulletImageu = bulletImageu.scaledToWidth(unitHeight2);
+    bulletImageu = bulletImageu.scaledToHeight(unitHeight2);
 
-    setPixmap(bulletImage);
+    bulletImaged = bulletImaged.scaledToWidth(unitHeight2);
+    bulletImaged = bulletImaged.scaledToHeight(unitHeight2);
+
+    bulletImager = bulletImager.scaledToWidth(unitHeight2);
+    bulletImager = bulletImager.scaledToHeight(unitHeight2);
+
+    bulletImagel = bulletImagel.scaledToWidth(unitHeight2);
+    bulletImagel = bulletImagel.scaledToHeight(unitHeight2);
+
+    if(direction == 0){
+        setPixmap(bulletImager);
+    } else if(direction == 1){
+        setPixmap(bulletImagel);
+    }else if(direction == 2){
+        setPixmap(bulletImageu);
+    }else if(direction == 3){
+        setPixmap(bulletImaged);
+    }
 
     this->x = x;
     this->y = y;
@@ -49,6 +69,10 @@ void FlyingBullet::move() {
         y++;
     } else if(direction == 1){
         y--;
+    }else if(direction == 2){
+        x--;
+    }else if(direction == 3){
+        x++;
     }
 
     // check if bullet hit an enemy
