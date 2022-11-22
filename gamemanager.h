@@ -23,7 +23,6 @@ private:
     QTimer *timer;  // game over checker
     QTimer *timer2; // the last stage checker
     QTimer *timer3; // win checker
-    QTimer *timer4;
     QGraphicsScene *scene;
 public slots:
 

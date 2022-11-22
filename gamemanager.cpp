@@ -342,21 +342,19 @@ void GameManager::create_board() // to create and display the board
 //    player->play();
 //}
 
-void enemy1_move()
+void move_enemies()
 {
     if (GameManager::enemy1 != nullptr)
     {
         GameManager::enemy1->move();
     }
-}
 
-void enemy2_move()
-{
     if (GameManager::enemy2 != nullptr)
     {
         GameManager::enemy2->move();
     }
 }
+
 
 void player_focus()
 {
@@ -381,15 +379,11 @@ void GameManager::create_enemies()
     enemy1 = new class enemy1(boardData, this);
     scene->addItem(enemy1);
 
-    timer2 = new QTimer();
-    QObject::connect(timer2, &QTimer::timeout, enemy1_move);
-    timer2->start(400);
-
     enemy2 = new class enemy2(boardData, this);
     scene->addItem(enemy2);
 
-    QTimer *timer4 = new QTimer();
-    QObject::connect(timer4, &QTimer::timeout, enemy2_move);
+    timer2 = new QTimer();
+    QObject::connect(timer2, &QTimer::timeout, move_enemies);
     timer2->start(400);
 }
 
@@ -588,7 +582,6 @@ void GameManager::game_over()
 
      timer->stop();
      timer2->stop();
-//     timer3->stop();
 }
 
 
