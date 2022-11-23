@@ -62,11 +62,15 @@ public:
     void remove_heart();
     void franklin_hit();
     void updateCounters();
+    void Win();
     QGraphicsRectItem* drawPanel(int x, int y, int width, int height, QColor color, double opacity);
 //    void restart_game();
     void game_over();
     void activate_mode();
     void open_gate();
+    void close_gate();
+    class enemy1* retenemy1();
+    class enemy2* retenemy2();
 
 };
 

@@ -164,6 +164,10 @@ void enemy1::reduceHealth()
     if (health == 0)
     {
         GameManager * manager = static_cast<GameManager *>(gameManager);
+        if(manager->retenemy2() == nullptr)
+        {
+            manager->open_gate();
+        }
         manager->enemy1 = nullptr;
         scene()->removeItem(this);
         delete this;

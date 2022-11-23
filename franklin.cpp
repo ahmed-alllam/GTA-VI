@@ -11,10 +11,10 @@
 #include <bullet.h>
 #include <Drunk.h>
 #include <QMessageBox>
-//#include <QSoundEffect>
-//#include <QAudioFormat>
-//#include <QMediaPlayer>
-//#include <QAudioOutput>
+#include <QSoundEffect>
+#include <QAudioFormat>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 #include "gamemanager.h"
 #include "flyingbullet.h"
 
@@ -90,11 +90,11 @@ Franklin::Franklin(int boardData[12][16], void *gameManager)
 
     setPixmap(franklinImagel1);
 
-    //    QMediaPlayer *player = new QMediaPlayer;
-    //    QAudioOutput * audioOutput = new QAudioOutput;
-    //    player->setAudioOutput(audioOutput);
-    //    player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
-    //    player->play();
+        QMediaPlayer *player = new QMediaPlayer;
+        QAudioOutput * audioOutput = new QAudioOutput;
+        player->setAudioOutput(audioOutput);
+        player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
+        player->play();
 
 
     health = 3;
@@ -118,7 +118,7 @@ Franklin::Franklin(int boardData[12][16], void *gameManager)
 
 void Franklin::keyPressEvent(QKeyEvent *event)
 {
-
+    GameManager * manager = static_cast<GameManager *>(gameManager);
 
     if (!getIsPowerful()){
         if(!drunk){
@@ -263,6 +263,10 @@ void Franklin::keyPressEvent(QKeyEvent *event)
 
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
     checkCollision();
+    if(x==9 && y==15)
+    {
+        manager->Win();
+    }
 }
 
 void Franklin::Move()
@@ -330,6 +334,12 @@ void Franklin::shoot() {
 
         bullets--;
 
+        QMediaPlayer *player = new QMediaPlayer;
+        QAudioOutput * audioOutput = new QAudioOutput;
+        player->setAudioOutput(audioOutput);
+        player->setSource(QUrl("qrc:/assets/sounds/shot.mp3"));
+        player->play();
+
         GameManager * manager = static_cast<GameManager *>(gameManager);
         manager->updateCounters();
 
@@ -360,14 +370,14 @@ void Franklin::checkCollision()
             if(direction == 1)
             {
                 setPixmap(franklinImagell);
-//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-//                timer->start(1000);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(1000);
             }
             else
             {
                setPixmap(franklinImagerr);
-//               connect(timer, &QTimer::timeout, this, &Franklin::Move);
-//               timer->start(1000);
+               connect(timer, &QTimer::timeout, this, &Franklin::Move);
+               timer->start(1000);
             }
             bullets++;
             GameManager * manager = static_cast<GameManager *>(gameManager);
@@ -390,7 +400,9 @@ void Franklin::checkCollision()
             manager->updateCounters();
             manager->updateModeTxt();
             manager->activate_mode();   //displaying the progress bar
+
             manager->open_gate();       //temporarily open the gate
+
             connect(timer, &QTimer::timeout, this,  &Franklin::setPowerful2False);
             timer->start(120000);
 //            QTimer::singleShot(10000, this, SLOT(setPowerful(false)));
@@ -430,11 +442,11 @@ void Franklin::hit() {
     manager->remove_bullets();
     manager->create_bullets();
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
-    //    QMediaPlayer *player = new QMediaPlayer;
-    //    QAudioOutput * audioOutput = new QAudioOutput;
-    //    player->setAudioOutput(audioOutput);
-    //    player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
-    //    player->play();
+        QMediaPlayer *player = new QMediaPlayer;
+        QAudioOutput * audioOutput = new QAudioOutput;
+        player->setAudioOutput(audioOutput);
+        player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
+        player->play();
     }
     else
     {
@@ -506,8 +518,8 @@ int Franklin::getY()
     return this->y;
 }
 
-void Franklin::editboard()
+void Franklin::editboard(int x)
 {
 
-    boardData[9][15] = 50;
+    boardData[9][15] = x;
 }

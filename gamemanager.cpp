@@ -13,9 +13,9 @@
 #include <QApplication>
 #include <QGuiApplication>
 #include <QGraphicsScene>
-//#include <QAudioFormat>
-//#include <QMediaPlayer>
-//#include <QAudioOutput>
+#include <QAudioFormat>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 #include <QLabel>
 #include <QPushButton>
 #include<QProgressBar>
@@ -75,11 +75,14 @@ void GameManager::restart_game()
 
 
         create_player();
+        close_gate();
+
         create_enemies();
-    //   create_sound();
+//        create_sound();
         create_bullets();
         create_pellets();
         create_healthbar();
+
 
 }
 
@@ -138,7 +141,7 @@ void GameManager::launch_game() {
     add_board_images();
     create_player();
     create_enemies();
-//   create_sound();
+   create_sound();
     create_bullets();
     create_pellets();
     create_healthbar();
@@ -312,15 +315,15 @@ void GameManager::create_board() // to create and display the board
         }
 }
 
-//void GameManager::create_sound() // to create and display the sound
-//{
-//    QMediaPlayer *player = new QMediaPlayer;
-//    QAudioOutput *audioOutput = new QAudioOutput;
-//    player->setAudioOutput(audioOutput);
-//    player->setLoops(QMediaPlayer::Infinite);
-//    player->setSource(QUrl("qrc:/assets/sounds/backsound.mp3"));
-//    player->play();
-//}
+void GameManager::create_sound() // to create and display the sound
+{
+    QMediaPlayer *player = new QMediaPlayer;
+    QAudioOutput *audioOutput = new QAudioOutput;
+    player->setAudioOutput(audioOutput);
+    player->setLoops(QMediaPlayer::Infinite);
+    player->setSource(QUrl("qrc:/assets/sounds/backsound.mp3"));
+    player->play();
+}
 
 void move_enemies()
 {
@@ -539,7 +542,7 @@ void GameManager::open_gate()
 {
     gate->setPaused(false);
     boardData[9][15] = 50;
-    franklin->editboard();
+    franklin->editboard(50);
     connect(gate, &QMovie::frameChanged, this,
         [this]()
         {
@@ -558,6 +561,11 @@ void GameManager::open_gate()
             }
         }
 );
+}
+
+void GameManager::close_gate() {
+    boardData[9][15] = -50;
+    franklin->editboard(-50);
 }
 
 
@@ -650,6 +658,51 @@ void GameManager::game_over()
      timer2->stop();
 }
 
+void GameManager::Win()
+{
+    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
+    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
+    for (size_t i = 0, n = scene->items().size(); i < n; i++){
+            scene->items()[i]->setEnabled(false);
+        }
+    // back ground panel and main
+     panels = new QGraphicsRectItem*[2];
 
+//    panels[0] = drawPanel(0,0,screenWidth,screenHeight,Qt::black,0.65);
+    panels[1] = drawPanel(screenWidth/3-20,screenHeight/3-20,400,400,Qt::lightGray,1);
 
+    /* Gmae Over Text*/
+    QGraphicsTextItem* overText = new QGraphicsTextItem("You WON!!!!!!");
+     QFont fonty("Arial", 20, QFont::StyleNormal);
+    overText->setPos(screenWidth/3 + 100,screenHeight/3+80);
+    overText->setFont(fonty);
+    scene->addItem(overText);
 
+    QPushButton *p =new QPushButton;
+    p->setText("PLAY AGAIN");
+    p->setGeometry(screenWidth/3+40,screenHeight/3+250, 100,50);
+    scene->addWidget(p);
+
+    QObject::connect(p, &QPushButton::clicked, this, [=] () {
+            restart_game();
+        }, Qt::QueuedConnection);
+
+    QPushButton* quit;
+    quit=new QPushButton("Quit");
+    quit->setGeometry(screenWidth/3+230,screenHeight/3+250, 100,50);
+    scene->addWidget(quit);
+
+     QObject::connect(quit,&QPushButton::clicked,[=](){exit();});
+
+     timer->stop();
+     timer2->stop();
+}
+
+class enemy1* GameManager::retenemy1()
+{
+    return enemy1;
+}
+class enemy2* GameManager::retenemy2()
+{
+    return enemy2;
+}
