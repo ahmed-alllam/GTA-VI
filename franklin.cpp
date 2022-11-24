@@ -401,8 +401,6 @@ void Franklin::checkCollision()
             manager->updateModeTxt();
             manager->activate_mode();   //displaying the progress bar
 
-            manager->open_gate();       //temporarily open the gate
-
             connect(timer, &QTimer::timeout, this,  &Franklin::setPowerful2False);
             timer->start(120000);
 //            QTimer::singleShot(10000, this, SLOT(setPowerful(false)));
