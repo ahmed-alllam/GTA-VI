@@ -20,6 +20,10 @@ SOURCES += \
     flyingbullet.cpp \
     gamemanager.cpp \
     homepage.cpp \
+    level.cpp \
+    level1.cpp \
+    level2.cpp \
+    level3.cpp \
     log_in.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -35,6 +39,10 @@ HEADERS += \
     flyingbullet.h \
     gamemanager.h \
     homepage.h \
+    level.h \
+    level1.h \
+    level2.h \
+    level3.h \
     log_in.h \
     mainwindow.h \
     franklin.h \

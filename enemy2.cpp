@@ -159,18 +159,18 @@ int enemy2::getY()
 
 void enemy2::reduceHealth()
 {
-    this->health--;
-    if (health == 0)
-    {
-        GameManager * manager = static_cast<GameManager *>(gameManager);
-        if(manager->retenemy1() == nullptr)
-        {
-            manager->open_gate();
-        }
-        manager->enemy2 = nullptr;
-        scene()->removeItem(this);
-        delete this;
-    } else {
-        move();
-    }
+//    this->health--;
+//    if (health == 0)
+//    {
+//        GameManager * manager = static_cast<GameManager *>(gameManager);
+//        if(manager->retenemy1() == nullptr)
+//        {
+//            manager->open_gate();
+//        }
+//        manager->enemy2 = nullptr;
+//        scene()->removeItem(this);
+//        delete this;
+//    } else {
+//        move();
+//    }
 }

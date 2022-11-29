@@ -6,20 +6,14 @@
 #include <QGraphicsScene>
 #include<QObject>
 
-#include "franklin.h"
-#include "enemy1.h"
-#include "enemy2.h"
-#include "bullet.h"
-#include "pellet.h"
-#include "Drunk.h"
 #include "qobjectdefs.h"
+#include "level.h"
 
 class GameManager: public QObject
 {
 
 private:
-    int boardData[12][16];
-
+    level *currentLevel;
     QTimer *timer;  // game over checker
     QTimer *timer2; // the last stage checker
     QTimer *timer3; // win checker
@@ -30,21 +24,11 @@ void exit();
 
 public:
     QGraphicsScene *scene;
-    static Franklin *franklin;
-    static enemy1 *enemy1;
-    static enemy2 *enemy2;
-    static bullet *bullet1;
-    static bullet *bullet2;
-    static bullet *bullet3;
     QGraphicsRectItem **panels;
-    static bullet *bullet4;
-    static pellet *pellet1;
-    static pellet *pellet2;
     QGraphicsTextItem * txt;
     QGraphicsTextItem * bulletsCounter;
     QGraphicsTextItem * coinsCounter;
     QGraphicsPixmapItem* hearts;
-    Drunk *drunk;
     QMovie *gate;// added
     QMovie* movie; // added
     GameManager(QGraphicsScene *scene);
@@ -71,7 +55,6 @@ public:
     void close_gate();
     class enemy1* retenemy1();
     class enemy2* retenemy2();
-
 };
 
 #endif // GAMEMANAGER_H
