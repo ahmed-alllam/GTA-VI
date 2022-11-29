@@ -2,7 +2,6 @@
 #define LEVEL1_H
 
 #include <QGraphicsScene>
-#include <vector>
 
 #include "level.h"
 #include "franklin.h"
@@ -12,8 +11,6 @@
 #include "pellet.h"
 #include "Drunk.h"
 
-using namespace std;
-
 class level1 : public level
 {
 private:
@@ -22,12 +19,27 @@ private:
     Franklin *franklin;
     enemy1 *enemy1;
     enemy2 *enemy2;
-    vector<bullet> bullets;
-    vector<pellet> pellets;
+    QList<bullet*> bullets;
+    QList<pellet*> pellets;
     Drunk *drunk;
     int boardData[12][16];
 public:
     level1(void * gameManager, QGraphicsScene *scene);
+    virtual void create_board();
+    virtual void add_board_images();
+    virtual void create_player();
+    virtual void create_enemies();
+    virtual void create_bullets();
+    virtual void create_pellets();
+    virtual void create_healthbar();
+    virtual void remove_bullets();
+    virtual void open_gate();
+    virtual void close_gate();
+    virtual void updateCounters();
+    virtual void restart_game();
+    virtual void updateModeTxt();
+    virtual void remove_heart();
+    virtual void player_hit();
 
 };
 

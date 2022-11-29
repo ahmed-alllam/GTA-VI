@@ -242,15 +242,15 @@ void GameManager::remove_heart()
     currentLevel->remove_heart();
 }
 
-// void GameManager::franklin_hit() // todo: remove
-// {
-//     if (enemy1 != nullptr)
-//         enemy1->setXandY(9, 8);
-//     if (enemy2 != nullptr)
-//         enemy2->setXandY(3, 11);
+void GameManager::franklin_hit() // todo: remove
+{
+    // if (enemy1 != nullptr)
+    //     enemy1->setXandY(9, 8);
+    // if (enemy2 != nullptr)
+    //     enemy2->setXandY(3, 11);
 
-//     franklin->hit();
-// }
+    // franklin->hit();
+}
 
 QGraphicsRectItem *GameManager::drawPanel(int x, int y, int width, int height, QColor color, double opacity)
 {
@@ -361,7 +361,7 @@ void GameManager::restart_game()
     currentLevel->restart_game();
     delete currentLevel;
 
-    currentLevel = new Level1(this, scene); // todo: change to level 2
+    currentLevel = new level1(this, scene); // todo: change to level 2
 
     create_player();
     close_gate();

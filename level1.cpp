@@ -1,5 +1,11 @@
 #include "level1.h"
+#include "gamemanager.h"
+#include "flyingbullet.h"
+
 #include <QGuiApplication>
+#include <QFile>
+#include <QGraphicsProxyWidget>
+#include <QPushButton>
 
 level1::level1(void * gameManager, QGraphicsScene *scene)
 {
@@ -345,4 +351,12 @@ void level1::restart_game() {
     {
         scene->items()[i]->setEnabled(true);
     }
+}
+
+void level1::player_hit() {
+
+}
+
+void level1::create_healthbar() {
+    
 }
