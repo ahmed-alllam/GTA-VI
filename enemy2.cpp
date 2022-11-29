@@ -6,11 +6,12 @@
 #include <QGuiApplication>
 #include <QTimer>
 #include "gamemanager.h"
+#include "level.h"
 
 
-enemy2::enemy2(int boardData[12][16], void * gameManager)
+enemy2::enemy2(int boardData[12][16], void * currentLevel)
 {
-    this->gameManager = gameManager;
+    this->currentLevel = currentLevel;
 
     QPixmap enemy2FLImage(":assets/images/GangsterFL.png");
 
@@ -129,8 +130,8 @@ void enemy2::checkCollision(){
     {
         if (typeid(*(colliding_items[i])) == typeid(Franklin))
         {
-            GameManager * manager = static_cast<GameManager *>(gameManager);
-            manager->franklin_hit();           
+            level * manager = static_cast<level *>(currentLevel);
+            manager->player_hit();           
         }
     }
 }
@@ -159,18 +160,8 @@ int enemy2::getY()
 
 void enemy2::reduceHealth()
 {
-//    this->health--;
-//    if (health == 0)
-//    {
-//        GameManager * manager = static_cast<GameManager *>(gameManager);
-//        if(manager->retenemy1() == nullptr)
-//        {
-//            manager->open_gate();
-//        }
-//        manager->enemy2 = nullptr;
-//        scene()->removeItem(this);
-//        delete this;
-//    } else {
-//        move();
-//    }
+    this->health--;
+    move();
+    level *manager = static_cast<level *>(currentLevel);
+    manager->enemy_hit();
 }

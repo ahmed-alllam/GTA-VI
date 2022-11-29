@@ -13,9 +13,9 @@ private:
     int y;
     int health;
     int boardData[12][16];
-    void * gameManager;
+    void * currentLevel;
 public:
-    enemy1(int boardData[12][16], void * gameManager);
+    enemy1(int boardData[12][16], void * currentLevel);
     void move();
     int getX();
     int getY();

@@ -1,6 +1,7 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+#include <QObject>
 
 class level
 {
@@ -21,6 +22,9 @@ public:
     virtual void updateModeTxt() = 0;
     virtual void remove_heart() = 0;
     virtual void player_hit() = 0;
+    virtual void move_enemies() = 0;
+    virtual void enemy_hit() = 0;
+
 };
 
 #endif // LEVEL_H

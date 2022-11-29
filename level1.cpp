@@ -185,9 +185,9 @@ void level1::create_player() {
     franklin = new Franklin(boardData, this);
     scene->addItem(franklin);
 
-    // timer = new QTimer();
-    // QObject::connect(timer, &QTimer::timeout, player_focus); // todo
-    // timer->start(350);
+    timer = new QTimer();
+    QObject::connect(timer, &QTimer::timeout, franklin, &Franklin::focus_player);
+    timer->start(350);
 }
 
 void level1::create_enemies() {
@@ -197,9 +197,10 @@ void level1::create_enemies() {
     enemy2 = new class enemy2(boardData, this);
     scene->addItem(enemy2);
 
-    // timer2 = new QTimer();
-    // QObject::connect(timer2, &QTimer::timeout, move_enemies); // todo
-    // timer2->start(400);
+     timer2 = new QTimer();
+     QObject::connect(timer2, &QTimer::timeout, enemy1, &enemy1::move);
+     QObject::connect(timer2, &QTimer::timeout, enemy2, &enemy2::move);
+     timer2->start(400);
 }
 
 void level1::create_bullets() {
@@ -212,7 +213,7 @@ void level1::create_bullets() {
     bullets.push_back(bullet2);
     bullets.push_back(bullet3);
     bullets.push_back(bullet4);
-    
+
     for (int i = 0; i < bullets.size(); i++)
     {
         scene->addItem(bullets[i]);
@@ -327,7 +328,7 @@ void level1::restart_game() {
         }
     }
 
-    // remove pellets  
+    // remove pellets
     for (int i = 0; i < pellets.size(); i++)
     {
         if(pellets[i] != nullptr)
@@ -354,9 +355,31 @@ void level1::restart_game() {
 }
 
 void level1::player_hit() {
+    // if (enemy1 != nullptr)
+    //     enemy1->setXandY(9, 8);
+    // if (enemy2 != nullptr)
+    //     enemy2->setXandY(3, 11);
 
+    // franklin->hit();
+}
+
+void level1::enemy_hit() {
+    //    this->health--;
+//    if (health == 0)
+//    {
+//        GameManager * manager = static_cast<GameManager *>(gameManager);
+//        if(manager->retenemy1() == nullptr)
+//        {
+//            manager->open_gate();
+//        }
+//        manager->enemy2 = nullptr;
+//        scene()->removeItem(this);
+//        delete this;
+//    } else {
+//        move();
+//    }
 }
 
 void level1::create_healthbar() {
-    
+
 }

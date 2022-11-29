@@ -2,6 +2,7 @@
 #define LEVEL1_H
 
 #include <QGraphicsScene>
+#include <QTimer>
 
 #include "level.h"
 #include "franklin.h"
@@ -10,10 +11,13 @@
 #include "bullet.h"
 #include "pellet.h"
 #include "Drunk.h"
+#include <QObject>
 
 class level1 : public level
 {
 private:
+    QTimer *timer;
+    QTimer *timer2;
     QGraphicsScene *scene;
     void * gameManager;
     Franklin *franklin;
@@ -40,7 +44,7 @@ public:
     virtual void updateModeTxt();
     virtual void remove_heart();
     virtual void player_hit();
-
+    virtual void enemy_hit();
 };
 
 #endif // LEVEL1_H
