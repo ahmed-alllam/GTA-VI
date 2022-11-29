@@ -213,6 +213,8 @@ void level1::create_bullets()
     bullet *bullet3 = new class bullet(boardData, 10, 1);
     bullet *bullet4 = new class bullet(boardData, 1, 14);
 
+    bullets.clear();
+
     bullets.push_back(bullet1);
     bullets.push_back(bullet2);
     bullets.push_back(bullet3);
