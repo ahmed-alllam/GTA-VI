@@ -44,7 +44,8 @@ public:
     virtual void updateModeTxt();
     virtual void remove_heart();
     virtual void player_hit();
-    virtual void enemy_hit();
+    virtual void enemy_hit(QGraphicsItem * enemy);
+    virtual void win();
 };
 
 #endif // LEVEL1_H

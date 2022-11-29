@@ -24,7 +24,7 @@ private:
     int y;
     int bullets;
     int boardData[12][16];
-    void * gameManager;
+    void * currentLevel;
     QPixmap franklinImagel1;
     QPixmap franklinImagel2;
     QPixmap franklinImageu1;
@@ -43,7 +43,7 @@ private:
     int unitHeight;
 
 public:
-    Franklin(int boardData[12][16], void *gameManager);
+    Franklin(int boardData[12][16], void *currentLevel);
     void focus_player();
     void checkCollision();
     bool getIsPowerful();

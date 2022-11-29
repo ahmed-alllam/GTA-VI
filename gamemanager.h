@@ -52,8 +52,6 @@ public:
     void activate_mode();
     void open_gate();
     void close_gate();
-    class enemy1* retenemy1();
-    class enemy2* retenemy2();
 };
 
 #endif // GAMEMANAGER_H

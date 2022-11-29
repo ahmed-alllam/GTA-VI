@@ -158,10 +158,12 @@ int enemy2::getY()
     return this->y;
 }
 
+int enemy2::getHealth()
+{
+    return this->health;
+}
+
 void enemy2::reduceHealth()
 {
     this->health--;
-    move();
-    level *manager = static_cast<level *>(currentLevel);
-    manager->enemy_hit();
 }

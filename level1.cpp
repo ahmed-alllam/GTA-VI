@@ -7,7 +7,7 @@
 #include <QGraphicsProxyWidget>
 #include <QPushButton>
 
-level1::level1(void * gameManager, QGraphicsScene *scene)
+level1::level1(void *gameManager, QGraphicsScene *scene)
 {
     this->gameManager = gameManager;
     this->scene = scene;
@@ -168,7 +168,8 @@ void level1::add_board_images()
         }
 }
 
-void level1::create_board() {
+void level1::create_board()
+{
     QFile file(":Maze.txt");
     file.open(QIODevice::ReadOnly);
     QTextStream stream(&file);
@@ -181,7 +182,8 @@ void level1::create_board() {
         }
 }
 
-void level1::create_player() {
+void level1::create_player()
+{
     franklin = new Franklin(boardData, this);
     scene->addItem(franklin);
 
@@ -190,20 +192,22 @@ void level1::create_player() {
     timer->start(350);
 }
 
-void level1::create_enemies() {
+void level1::create_enemies()
+{
     enemy1 = new class enemy1(boardData, this);
     scene->addItem(enemy1);
 
     enemy2 = new class enemy2(boardData, this);
     scene->addItem(enemy2);
 
-     timer2 = new QTimer();
-     QObject::connect(timer2, &QTimer::timeout, enemy1, &enemy1::move);
-     QObject::connect(timer2, &QTimer::timeout, enemy2, &enemy2::move);
-     timer2->start(400);
+    timer2 = new QTimer();
+    QObject::connect(timer2, &QTimer::timeout, enemy1, &enemy1::move);
+    QObject::connect(timer2, &QTimer::timeout, enemy2, &enemy2::move);
+    timer2->start(400);
 }
 
-void level1::create_bullets() {
+void level1::create_bullets()
+{
     bullet *bullet1 = new class bullet(boardData, 1, 1);
     bullet *bullet2 = new class bullet(boardData, 10, 14);
     bullet *bullet3 = new class bullet(boardData, 10, 1);
@@ -220,10 +224,11 @@ void level1::create_bullets() {
     }
 }
 
-void level1::remove_bullets() {
+void level1::remove_bullets()
+{
     for (int i = 0; i < bullets.size(); i++)
     {
-        if(bullets[i] != nullptr)
+        if (bullets[i] != nullptr)
         {
             scene->removeItem(bullets[i]);
             delete bullets[i];
@@ -232,7 +237,8 @@ void level1::remove_bullets() {
     }
 }
 
-void level1::create_pellets() {
+void level1::create_pellets()
+{
     pellet *pellet1 = new class pellet(boardData, 9, 1);
     pellet *pellet2 = new class pellet(boardData, 4, 14);
 
@@ -248,10 +254,11 @@ void level1::create_pellets() {
     scene->addItem(drunk);
 }
 
-void level1::updateModeTxt() {
-    GameManager * manager = static_cast<GameManager *>(gameManager);
+void level1::updateModeTxt()
+{
+    GameManager *manager = static_cast<GameManager *>(gameManager);
 
-     if (manager->txt != nullptr && franklin != nullptr)
+    if (manager->txt != nullptr && franklin != nullptr)
     {
         if (franklin->getIsPowerful() && franklin->getIsDrunk())
         {
@@ -272,18 +279,23 @@ void level1::updateModeTxt() {
     }
 }
 
-void level1::open_gate() {
+void level1::open_gate()
+{
     boardData[9][15] = 50;
     franklin->editboard(50);
+    GameManager *manager = static_cast<GameManager *>(gameManager);
+    manager->open_gate();
 }
 
-void level1::close_gate() {
+void level1::close_gate()
+{
     boardData[9][15] = -50;
     franklin->editboard(-50);
 }
 
-void level1::updateCounters() {
-    GameManager * manager = static_cast<GameManager *>(gameManager);
+void level1::updateCounters()
+{
+    GameManager *manager = static_cast<GameManager *>(gameManager);
 
     if (manager->bulletsCounter != nullptr)
         manager->bulletsCounter->setPlainText(QString::number(franklin->getBulletsCount()));
@@ -291,8 +303,9 @@ void level1::updateCounters() {
         manager->coinsCounter->setPlainText(QString::number(franklin->getCoinsCount()));
 }
 
-void level1::remove_heart() {
-    GameManager * manager = static_cast<GameManager *>(gameManager);
+void level1::remove_heart()
+{
+    GameManager *manager = static_cast<GameManager *>(gameManager);
     int health = franklin->getHealth();
 
     if (health >= 0)
@@ -307,7 +320,8 @@ void level1::remove_heart() {
     }
 }
 
-void level1::restart_game() {
+void level1::restart_game()
+{
     QList<QGraphicsItem *> items = scene->items();
 
     delete franklin;
@@ -320,7 +334,7 @@ void level1::restart_game() {
     // remove bullets
     for (int i = 0; i < bullets.size(); i++)
     {
-        if(bullets[i] != nullptr)
+        if (bullets[i] != nullptr)
         {
             scene->removeItem(bullets[i]);
             delete bullets[i];
@@ -331,7 +345,7 @@ void level1::restart_game() {
     // remove pellets
     for (int i = 0; i < pellets.size(); i++)
     {
-        if(pellets[i] != nullptr)
+        if (pellets[i] != nullptr)
         {
             scene->removeItem(pellets[i]);
             delete pellets[i];
@@ -354,32 +368,55 @@ void level1::restart_game() {
     }
 }
 
-void level1::player_hit() {
-    // if (enemy1 != nullptr)
-    //     enemy1->setXandY(9, 8);
-    // if (enemy2 != nullptr)
-    //     enemy2->setXandY(3, 11);
+void level1::player_hit()
+{
+    if (enemy1 != nullptr)
+        enemy1->setXandY(9, 8);
+    if (enemy2 != nullptr)
+        enemy2->setXandY(3, 11);
 
-    // franklin->hit();
+    franklin->hit();
 }
 
-void level1::enemy_hit() {
-    //    this->health--;
-//    if (health == 0)
-//    {
-//        GameManager * manager = static_cast<GameManager *>(gameManager);
-//        if(manager->retenemy1() == nullptr)
-//        {
-//            manager->open_gate();
-//        }
-//        manager->enemy2 = nullptr;
-//        scene()->removeItem(this);
-//        delete this;
-//    } else {
-//        move();
-//    }
+void level1::enemy_hit(QGraphicsItem *enemy)
+{
+
+    if (typeid(*enemy) == typeid(class enemy1) && enemy1 != nullptr)
+    {
+        enemy1->reduceHealth();
+        if (enemy1->getHealth() == 0)
+        {
+            if (enemy2 == nullptr)
+            {
+                open_gate();
+            }
+            scene->removeItem(enemy1);
+            enemy1 = nullptr;
+            delete enemy1;
+        }
+    }
+    else if (typeid(*enemy) == typeid(class enemy2) && enemy2 != nullptr)
+    {
+        enemy2->reduceHealth();
+        if (enemy2->getHealth() == 0)
+        {
+            if (enemy1 == nullptr)
+            {
+                open_gate();
+            }
+            scene->removeItem(enemy2);
+            enemy2 = nullptr;
+            delete enemy2;
+        }
+    }
 }
 
-void level1::create_healthbar() {
+void level1::create_healthbar()
+{
+}
 
+void level1::win()
+{
+    GameManager *manager = static_cast<GameManager *>(gameManager);
+    manager->Win();
 }

@@ -149,6 +149,11 @@ int enemy1::getY()
     return this->y;
 }
 
+int enemy1::getHealth()
+{
+    return this->health;
+}
+
 void enemy1::setXandY(int x, int y)
 {
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
@@ -162,10 +167,7 @@ void enemy1::setXandY(int x, int y)
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
 }
 
-void enemy1::enemy_hit()
+void enemy1::reduceHealth()
 {
     this->health--;
-    move();
-    level *manager = static_cast<level *>(currentLevel);
-    manager->enemy_hit();
 }

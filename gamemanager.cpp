@@ -207,7 +207,6 @@ void GameManager::activate_mode() // displaying the progress bar
 void GameManager::open_gate()
 {
     gate->setPaused(false);
-    currentLevel->open_gate();
     connect(gate, &QMovie::frameChanged, this,
             [this]()
             {
@@ -295,9 +294,6 @@ void GameManager::game_over()
 
     QObject::connect(quit, &QPushButton::clicked, [=]()
                      { exit(); });
-
-    timer->stop();
-    timer2->stop();
 }
 
 void GameManager::Win()
@@ -341,8 +337,6 @@ void GameManager::Win()
     QObject::connect(quit, &QPushButton::clicked, [=]()
                      { exit(); });
 
-    timer->stop();
-    timer2->stop();
 }
 
 void GameManager::restart_game()

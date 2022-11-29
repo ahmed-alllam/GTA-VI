@@ -22,6 +22,7 @@ public:
     void setXandY(int x, int y);
     void reduceHealth();
     void checkCollision();
+    int getHealth();
 
 signals:
 

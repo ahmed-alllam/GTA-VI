@@ -2,6 +2,7 @@
 #define LEVEL_H
 
 #include <QObject>
+#include <QGraphicsItem>
 
 class level
 {
@@ -22,8 +23,8 @@ public:
     virtual void updateModeTxt() = 0;
     virtual void remove_heart() = 0;
     virtual void player_hit() = 0;
-    virtual void move_enemies() = 0;
-    virtual void enemy_hit() = 0;
+    virtual void enemy_hit(QGraphicsItem * enemy) = 0;
+    virtual void win() = 0;
 
 };
 

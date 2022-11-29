@@ -70,23 +70,23 @@ void dog::move(){
 }
 
 void dog::checkCollision(){
-    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
-    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight = qMin(screenWidth, screenHeight) / 12;
-    QList<QGraphicsItem *> colliding_items = collidingItems();
-    for (int i = 0, n = colliding_items.size(); i < n; ++i)
-    {
-        if (typeid(*(colliding_items[i])) == typeid(Franklin))
-        {
-            this->x = 1;
-            this->y = 14;
+//    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
+//    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
+//    int unitWidth = qMin(screenWidth, screenHeight) / 12;
+//    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+//    QList<QGraphicsItem *> colliding_items = collidingItems();
+//    for (int i = 0, n = colliding_items.size(); i < n; ++i)
+//    {
+//        if (typeid(*(colliding_items[i])) == typeid(Franklin))
+//        {
+//            this->x = 1;
+//            this->y = 14;
 
-            GameManager * manager = static_cast<GameManager *>(gameManager);
-            manager->franklin_hit();
-            setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
-        }
-    }
+//            level * manager = static_cast<level *>(gameManager);
+//            manager->player_hit();
+//            setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
+//        }
+//    }
 }
 
 int dog::getX()
