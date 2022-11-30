@@ -15,6 +15,8 @@
 #include <QByteArray>
 
 #include "gamemanager.h"
+#include "onlinegamemanager.h"
+
 
 homepage::homepage(QGraphicsScene *scene)
 {
@@ -48,6 +50,8 @@ homepage::homepage(QGraphicsScene *scene)
     ui->graphicsView_3->setScene(scene3);
 
     QObject::connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(start_story_mode()), Qt::QueuedConnection);
+    QObject::connect(ui->OnlineButton, SIGNAL(clicked()), this, SLOT(start_online_mode()), Qt::QueuedConnection);
+
 }
 
 homepage::~homepage()
@@ -60,6 +64,12 @@ void homepage::start_story_mode()
     GameManager * manager = new GameManager(scene);
     deleteLater();
     manager->launch_game();
+}
+
+void homepage::start_online_mode() {
+    OnlineGameManager * manager = new OnlineGameManager(scene);
+    deleteLater();
+//    manager->launch_game();
 }
 
 void homepage::on_Log_clicked()

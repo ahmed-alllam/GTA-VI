@@ -21,6 +21,7 @@ private:
 
 private slots:
      void start_story_mode();
+     void start_online_mode();
 
      void on_Log_clicked();
 
