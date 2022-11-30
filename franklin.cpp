@@ -443,11 +443,6 @@ void Franklin::hit()
         manager->create_bullets();
         manager->updateCounters();
         setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
-        QMediaPlayer *player = new QMediaPlayer;
-        QAudioOutput *audioOutput = new QAudioOutput;
-        player->setAudioOutput(audioOutput);
-        player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
-        player->play();
     }
     else
     {

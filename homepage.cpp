@@ -14,10 +14,14 @@
 #include <QJsonObject>
 #include <QByteArray>
 
-homepage::homepage(GameManager *gameManager, QGraphicsScene *scene)
+#include "gamemanager.h"
+
+homepage::homepage(QGraphicsScene *scene)
 {
     ui = new Ui::homepage;
     ui->setupUi(this);
+
+    this->scene = scene;
 
     ui->pass->setEchoMode(QLineEdit::Password);
     ui->OnlineButton->setVisible(false);
@@ -43,8 +47,7 @@ homepage::homepage(GameManager *gameManager, QGraphicsScene *scene)
     scene3->addPixmap(t);
     ui->graphicsView_3->setScene(scene3);
 
-    this->gameManager = gameManager;
-    QObject::connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(exit()), Qt::QueuedConnection);
+    QObject::connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(start_story_mode()), Qt::QueuedConnection);
 }
 
 homepage::~homepage()
@@ -52,15 +55,11 @@ homepage::~homepage()
     delete ui;
 }
 
-void homepage::exit()
+void homepage::start_story_mode()
 {
-    if (this->gameManager != nullptr)
-    {
-        this->gameManager->launch_game();
-
-        // delete all the ui widgets without using close() or deleteLater()
-        deleteLater();
-    }
+    GameManager * manager = new GameManager(scene);
+    deleteLater();
+    manager->launch_game();
 }
 
 void homepage::on_Log_clicked()

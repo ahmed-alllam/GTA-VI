@@ -28,10 +28,6 @@
 GameManager::GameManager(QGraphicsScene *scene)
 {
     this->scene = scene;
-
-    homepage *home = new homepage(this, scene);
-    scene->addWidget(home);
-
     levelNum = 1;
     currentLevel = new level1(this, scene);
 }

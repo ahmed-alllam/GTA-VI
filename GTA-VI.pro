@@ -29,7 +29,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     franklin.cpp \
-    pellet.cpp
+    pellet.cpp \
 
 HEADERS += \
     Drunk.h \
@@ -61,3 +61,12 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resources.qrc
+
+
+DEPENDPATH += libs/QtSocketIo/modules/
+INCLUDEPATH += libs/QtSocketIo/modules/
+INCLUDEPATH += libs/QtSocketIo/src/imports
+INCLUDEPATH += libs/QtSocketIo/src/socketio
+
+
+include(libs/QtSocketIo/modules/qt_socketio.pri)

@@ -318,7 +318,6 @@ void level1::remove_heart()
 
     if (health == 0)
     {
-
         manager->game_over();
         timer2->stop();
     }

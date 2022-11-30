@@ -1,11 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const socketIO = require('socket.io');
 
 const bcrypt = require('bcrypt');
-
-// Initialize express
-const app = express();
-
 
 // Body Parser
 app.use(express.json({limit: '50mb'}));
