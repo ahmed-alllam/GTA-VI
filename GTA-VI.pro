@@ -3,6 +3,7 @@ QT += core
 QT += widgets
 QT += multimedia
 QT += network
+QT += uitools
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -54,7 +55,8 @@ HEADERS += \
 FORMS += \
     homepage.ui \
     log_in.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    onlinegameid.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -62,7 +64,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    resources.qrc
+    resources.qrc \
+    ui.qrc
 
 
 DEPENDPATH += libs/QtSocketIo/modules/
