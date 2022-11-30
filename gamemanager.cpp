@@ -357,7 +357,7 @@ void GameManager::restart_game()
     else if (levelNum == 2)
     {
         qDebug() << "level 2";
-         currentLevel = new level2(this, scene);
+         currentLevel = new level1(this, scene);
     }
     else if (levelNum == 3)
     {
@@ -399,5 +399,5 @@ void GameManager::exit()
     QString program = qApp->arguments()[0];
     QStringList arguments = qApp->arguments().mid(1);
     qApp->quit();
-    QProcess::startDetached(program, arguments);
+//    QProcess::startDetached(program, arguments);
 }

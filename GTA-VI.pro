@@ -29,6 +29,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     franklin.cpp \
+    onlinegamemanager.cpp \
     pellet.cpp \
 
 HEADERS += \
@@ -47,6 +48,7 @@ HEADERS += \
     log_in.h \
     mainwindow.h \
     franklin.h \
+    onlinegamemanager.h \
     pellet.h
 
 FORMS += \
