@@ -6,24 +6,50 @@ const jwt = require('jsonwebtoken');
 const Player = require('../models/player');
 
 router.post('/signup', (req, res, next) => {
-    bcrypt.hash(req.body.password, 10).then(hash => {
-        const player = new Player({
-            username: req.body.username,
-            password: hash
-        });
-        player.save().then(result => {
-            res.status(201).json({
-                message: 'User created!',
-                result: result
-            });
+    // check that the username is not already taken
+    Player
+        .find
+        ({
+            username: req.body.username
         })
-            .catch(err => {
-                res.status(500).json({
-                    error: err
+        .exec()
+        .then(player => {
+            if (player.length >= 1) {
+                return res.status(409).json({
+                    message: 'Username already exists'
+                });
+            } else {
+                // hash the password
+                bcrypt.hash(req.body.password, 10, (err, hash) => {
+                    if (err) {
+                        return res.status(500).json({
+                            error: err
+                        });
+                    } else {
+                        // create a new player
+                        const player = new Player({
+                            username: req.body.username,
+                            password: hash
+                        });
+                        // save the player
+                        player
+                            .save()
+                            .then(result => {
+                                console.log(result);
+                                res.status(201).json({
+                                    message: 'Player created'
+                                });
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                res.status(500).json({
+                                    error: err
+                                });
+                            });
+                    }
                 });
             }
-            );
-    });
+        });
 });
 
 router.post('/signin', (req, res, next) => {
@@ -67,7 +93,7 @@ router.post('/signin', (req, res, next) => {
             });
         })
         .catch(err => {
-            return res.status(401).json({
+            return res.status(400).json({
                 message: 'Invalid authentication credentials!'
             });
         }

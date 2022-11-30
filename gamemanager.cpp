@@ -1,5 +1,7 @@
 #include "gamemanager.h"
 #include "level1.h"
+#include "level2.h"
+#include "level3.h"
 
 #include <QGraphicsPixmapItem>
 #include "homepage.h"
@@ -359,13 +361,12 @@ void GameManager::restart_game()
     }
     else if (levelNum == 2)
     {
-        currentLevel = new level1(this, scene);
         qDebug() << "level 2";
-        // currentLevel = new level2();
+         currentLevel = new level2(this, scene);
     }
     else if (levelNum == 3)
     {
-        currentLevel = new level1(this, scene);
+        currentLevel = new level1(this, scene); //todo
         qDebug() << "level 3";
         // currentLevel = new level3();
     }
