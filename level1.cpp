@@ -11,6 +11,7 @@ level1::level1(void *gameManager, QGraphicsScene *scene)
 {
     this->gameManager = gameManager;
     this->scene = scene;
+    qDebug() << scene;
 }
 
 void level1::add_board_images()
@@ -106,7 +107,7 @@ void level1::add_board_images()
     CrossImage = CrossImage.scaledToHeight(unitWidth);
 
     // create 2d dynamic array of type QGraphicsPixmapItem, with 12 rows and 16 columns
-    QGraphicsPixmapItem **boardItems = new QGraphicsPixmapItem *[12];
+    boardItems = new QGraphicsPixmapItem *[12];
     for (int i = 0; i < 12; i++)
     {
         boardItems[i] = new QGraphicsPixmapItem[16];
@@ -345,6 +346,22 @@ void level1::restart_game()
             delete items[i];
         }
     }
+
+    // delete boardItems (2d dynamic array) from memory and scene
+    for (int i = 0; i < 12; i++)
+    {
+        for (int j = 0; j < 16; j++)
+        {
+            if ((boardItems[i]+j) != nullptr)
+            {
+                scene->removeItem((boardItems[i]+j));
+            }
+        }
+
+        delete[] boardItems[i];
+        boardItems[i] = nullptr;
+    }
+
 }
 
 void level1::player_hit()

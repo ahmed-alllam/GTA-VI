@@ -30,6 +30,7 @@ GameManager::GameManager(QGraphicsScene *scene)
     homepage *home = new homepage(this, scene);
     scene->addWidget(home);
 
+    levelNum = 1;
     currentLevel = new level1(this, scene);
 }
 
@@ -319,9 +320,10 @@ void GameManager::Win()
 
     QPushButton *p = new QPushButton;
     p->setText("NEXT LEVEL");
+    levelNum++;
     p->setGeometry(screenWidth / 3 + 40, screenHeight / 3 + 250, 100, 50);
     // update the level
-    // level = 
+    // level =
     scene->addWidget(p);
 
     QObject::connect(
@@ -350,7 +352,23 @@ void GameManager::restart_game()
     currentLevel->restart_game();
     delete currentLevel;
 
-    currentLevel = new level1(this, scene); // todo: change to level 2
+    if (levelNum == 1)
+    {
+        currentLevel = new level1(this, scene);
+        qDebug() << "level 1";
+    }
+    else if (levelNum == 2)
+    {
+        currentLevel = new level1(this, scene);
+        qDebug() << "level 2";
+        // currentLevel = new level2();
+    }
+    else if (levelNum == 3)
+    {
+        currentLevel = new level1(this, scene);
+        qDebug() << "level 3";
+        // currentLevel = new level3();
+    }
 
     create_board();
     add_board_images();

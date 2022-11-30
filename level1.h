@@ -27,6 +27,7 @@ private:
     QList<pellet*> pellets;
     Drunk *drunk;
     int boardData[12][16];
+    QGraphicsPixmapItem **boardItems;
 public:
     level1(void * gameManager, QGraphicsScene *scene);
     virtual void create_board();

@@ -14,6 +14,7 @@ class GameManager: public QObject
 
 private:
     level *currentLevel;
+    int levelNum;
     QTimer *timer;  // game over checker
     QTimer *timer2; // the last stage checker
     QTimer *timer3; // win checker
