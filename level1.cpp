@@ -417,3 +417,14 @@ void level1::win()
     manager->Win();
     timer2->stop();
 }
+
+void level1::getData(int data[12][16])
+{
+    data = boardData;
+}
+
+void level1::getDest(int& i, int& j)
+{
+    i = franklin->getX();
+    j = franklin->getY();
+}

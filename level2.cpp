@@ -1,12 +1,10 @@
 #include "level2.h"
 #include "gamemanager.h"
 #include "flyingbullet.h"
-
 #include <QGuiApplication>
 #include <QFile>
 #include <QGraphicsProxyWidget>
 #include <QPushButton>
-
 level2::level2(void *gameManager, QGraphicsScene *scene)
 {
     this->gameManager = gameManager;

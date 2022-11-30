@@ -5,10 +5,8 @@
 #include <QTimer>
 #include <QGraphicsScene>
 #include<QObject>
-
 #include "qobjectdefs.h"
 #include "level.h"
-
 class GameManager: public QObject
 {
 
@@ -47,6 +45,7 @@ public:
     void remove_heart();
     void updateCounters();
     void Win();
+//    void Next_level();
     QGraphicsRectItem* drawPanel(int x, int y, int width, int height, QColor color, double opacity);
 //    void restart_game();
     void game_over();

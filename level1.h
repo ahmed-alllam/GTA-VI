@@ -47,6 +47,8 @@ public:
     virtual void player_hit();
     virtual void enemy_hit(QGraphicsItem * enemy);
     virtual void win();
+    virtual void getData(int data[12][16]);
+    virtual void getDest(int& i, int& j);
 };
 
 #endif // LEVEL1_H
