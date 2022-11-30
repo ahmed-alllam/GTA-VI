@@ -326,34 +326,16 @@ void level1::restart_game()
 {
     QList<QGraphicsItem *> items = scene->items();
 
-    delete franklin;
     franklin = nullptr;
-    delete enemy1;
     enemy1 = nullptr;
-    delete enemy2;
     enemy2 = nullptr;
 
     // remove bullets
-    for (int i = 0; i < bullets.size(); i++)
-    {
-        if (bullets[i] != nullptr)
-        {
-            scene->removeItem(bullets[i]);
-            delete bullets[i];
-            bullets[i] = nullptr;
-        }
-    }
+    bullets.clear();
 
     // remove pellets
-    for (int i = 0; i < pellets.size(); i++)
-    {
-        if (pellets[i] != nullptr)
-        {
-            scene->removeItem(pellets[i]);
-            delete pellets[i];
-            pellets[i] = nullptr;
-        }
-    }
+    pellets.clear();
+    drunk = nullptr;
 
     for (int i = 0; i < items.size(); i++)
     {
@@ -362,11 +344,6 @@ void level1::restart_game()
             scene->removeItem(items[i]);
             delete items[i];
         }
-    }
-
-    for (size_t i = 0, n = scene->items().size(); i < n; i++)
-    {
-        scene->items()[i]->setEnabled(true);
     }
 }
 

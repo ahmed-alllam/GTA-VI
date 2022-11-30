@@ -341,11 +341,19 @@ void GameManager::Win()
 
 void GameManager::restart_game()
 {
+
+    for (size_t i = 0, n = scene->items().size(); i < n; i++)
+    {
+        scene->items()[i]->setEnabled(true);
+    }
+
     currentLevel->restart_game();
     delete currentLevel;
 
     currentLevel = new level1(this, scene); // todo: change to level 2
 
+    create_board();
+    add_board_images();
     create_player();
     close_gate();
     create_enemies();
