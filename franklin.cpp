@@ -11,10 +11,10 @@
 #include <bullet.h>
 #include <Drunk.h>
 #include <QMessageBox>
-#include <QSoundEffect>
-#include <QAudioFormat>
-#include <QMediaPlayer>
-#include <QAudioOutput>
+//#include <QSoundEffect>
+//#include <QAudioFormat>
+//#include <QMediaPlayer>
+//#include <QAudioOutput>
 #include "level.h"
 #include "flyingbullet.h"
 
@@ -89,11 +89,11 @@ Franklin::Franklin(int boardData[12][16], void *currentLevel)
 
     setPixmap(franklinImagel1);
 
-    QMediaPlayer *player = new QMediaPlayer;
-    QAudioOutput *audioOutput = new QAudioOutput;
-    player->setAudioOutput(audioOutput);
-    player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
-    player->play();
+//    QMediaPlayer *player = new QMediaPlayer;
+//    QAudioOutput *audioOutput = new QAudioOutput;
+//    player->setAudioOutput(audioOutput);
+//    player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
+//    player->play();
 
     health = 3;
     score = 0;
@@ -342,11 +342,11 @@ void Franklin::shoot()
 
         bullets--;
 
-        QMediaPlayer *player = new QMediaPlayer;
-        QAudioOutput *audioOutput = new QAudioOutput;
-        player->setAudioOutput(audioOutput);
-        player->setSource(QUrl("qrc:/assets/sounds/shot.mp3"));
-        player->play();
+//        QMediaPlayer *player = new QMediaPlayer;
+//        QAudioOutput *audioOutput = new QAudioOutput;
+//        player->setAudioOutput(audioOutput);
+//        player->setSource(QUrl("qrc:/assets/sounds/shot.mp3"));
+//        player->play();
 
         level *manager = static_cast<level *>(currentLevel);
         manager->updateCounters();
@@ -443,11 +443,11 @@ void Franklin::hit()
         manager->create_bullets();
         manager->updateCounters();
         setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
-        QMediaPlayer *player = new QMediaPlayer;
-        QAudioOutput *audioOutput = new QAudioOutput;
-        player->setAudioOutput(audioOutput);
-        player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
-        player->play();
+//        QMediaPlayer *player = new QMediaPlayer;
+//        QAudioOutput *audioOutput = new QAudioOutput;
+//        player->setAudioOutput(audioOutput);
+//        player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
+//        player->play();
     }
     else
     {

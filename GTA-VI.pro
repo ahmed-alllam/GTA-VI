@@ -1,7 +1,7 @@
 QT       += core gui
 QT += core
 QT += widgets
-QT += multimedia
+#QT += multimedia   //disabeld
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
