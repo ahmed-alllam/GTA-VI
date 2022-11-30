@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const socketIO = require('socket.io');
-
+const app = express();
 const bcrypt = require('bcrypt');
 
 // Body Parser
@@ -27,10 +27,13 @@ app.use(function (req, res, next) {
 const authRoutes = require("./routes/auth");
 app.use('/', authRoutes);
 
+const gameRoutes = require("./routes/game");
+app.use('/', gameRoutes);
 
 app.get("/", (req, res) => {
   res.send("Ok");
 });
+
 
 //  DB Connection
 mongoose.connect(
