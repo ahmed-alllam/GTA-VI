@@ -1,6 +1,7 @@
 #include "gamemanager.h"
 #include "level1.h"
-
+//#include "level2.h"
+//#include "level3.h"
 #include <QGraphicsPixmapItem>
 #include "homepage.h"
 #include <QDir>
@@ -380,6 +381,23 @@ void GameManager::restart_game()
     create_healthbar();
     updateCounters();
 }
+
+//void GameManager::Next_level()
+//{
+//    if (levelNum == 1)
+//    {
+//        delete currentLevel;
+//        levelNum++;
+//        currentLevel = new level2(this, scene);
+//    }
+//    else if (levelNum == 2)
+//    {
+//        delete currentLevel;
+//        levelNum++;
+//        currentLevel = new level3(this, scene);
+//    }
+//    launch_game();
+//}
 
 void GameManager::exit()
 {
