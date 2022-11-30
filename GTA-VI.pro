@@ -56,7 +56,8 @@ FORMS += \
     homepage.ui \
     log_in.ui \
     mainwindow.ui \
-    onlinegameid.ui
+    onlinegameid.ui \
+    onlinegamewaiting.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
