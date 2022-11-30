@@ -30,8 +30,6 @@ private slots:
 
 private:
     Ui::homepage *ui;
-    QList<QString> user;
-    QList<QString> pass;
 };
 
 #endif // HOMEPAGE_H
