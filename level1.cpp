@@ -320,6 +320,7 @@ void level1::remove_heart()
     {
 
         manager->game_over();
+        timer2->stop();
     }
 }
 
@@ -415,4 +416,5 @@ void level1::win()
 {
     GameManager *manager = static_cast<GameManager *>(gameManager);
     manager->Win();
+    timer2->stop();
 }
