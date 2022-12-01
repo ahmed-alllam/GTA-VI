@@ -204,7 +204,7 @@ void level1::create_enemies()
     timer2 = new QTimer();
     QObject::connect(timer2, &QTimer::timeout, enemy1, &enemy1::move);
     QObject::connect(timer2, &QTimer::timeout, enemy2, &enemy2::move);
-    timer2->start(400);
+    timer2->start(500);
 }
 
 void level1::create_bullets()

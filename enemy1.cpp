@@ -54,7 +54,7 @@ enemy1::enemy1(int boardData[12][16], void *currentLevel)
 
 void enemy1::move()
 {
-    qDebug() << getX() << " " << getY() << "  " << health;
+    qDebug() << getX() << " " << getY() << "  1";
     if(!bossPath.empty())
             {
               if(x==bossPath.top().first&&y+1==bossPath.top().second)
@@ -83,10 +83,8 @@ void enemy1::move()
               }
               bossPosition.first=bossPath.top().first;
               bossPosition.second=bossPath.top().second;
-              x = bossPosition.first;
-              y = bossPosition.second;
               bossPath.pop();
-              setPos(unitWidth + x * unitWidth, unitHeight + y * unitHeight);
+              setXandY(bossPosition.first, bossPosition.second);
               checkCollision();
               return;
             }
@@ -126,14 +124,8 @@ int enemy1::getHealth()
 
 void enemy1::setXandY(int x, int y)
 {
-    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
-    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight = qMin(screenWidth, screenHeight) / 12;
-
     this->x = x;
     this->y = y;
-
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
 }
 
@@ -342,7 +334,14 @@ void enemy1:: tracePath( Pair destn)
     int col = destn.second;
     while(!bossPath.empty())
             bossPath.pop();
-
+    while (!(cellDetails[r][col].parent_i == r && cellDetails[r][col].parent_j == col))
+    {
+            bossPath.push(std::make_pair(r, col));
+            int temp_row = cellDetails[r][col].parent_i;
+            int temp_col = cellDetails[r][col].parent_j;
+            r = temp_row;
+            col = temp_col;
+    }
 //    while (!((cellDetails[r][col].parent_i == r && cellDetails[r][col].parent_j == col)))
 //    {
 //        bossPath.push(std::make_pair(r, col));
@@ -355,7 +354,6 @@ void enemy1:: tracePath( Pair destn)
 //        r = temp_r;
 //        col = temp_col;
 //    }
-    bossPath.push(std::make_pair(r, col));
     return;
 }
 
