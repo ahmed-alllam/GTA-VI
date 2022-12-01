@@ -54,7 +54,7 @@ wss.on("connection", ws => {
                                             .then(result => {
                                                 // emit the game to the requesting player
                                                 if (game.state === "playing") {
-                                                    ws.clients.forEach(client => {
+                                                    wss.clients.forEach(client => {
                                                         if (client.readyState === WebSocket.OPEN) {
                                                             client.send(JSON.stringify({
                                                                 type: "gameStarted",
