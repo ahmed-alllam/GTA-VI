@@ -18,6 +18,8 @@ public:
 
 private:
     QGraphicsScene *scene;
+    QString token;
+    QString username;
 
 private slots:
      void start_story_mode();

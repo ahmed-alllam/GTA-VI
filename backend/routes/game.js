@@ -17,6 +17,8 @@ router.post("/create", (req, res, next) => {
         const game = new Game({
             players: [req.user._id],
             state: "waiting",
+            // generate a random id of 6 characters
+            id: Math.random().toString(36).substr(2, 6),
         });
         // save the game
         game
