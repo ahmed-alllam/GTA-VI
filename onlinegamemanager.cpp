@@ -1,4 +1,5 @@
 #include "onlinegamemanager.h"
+#include "level1.h"
 
 #include <QGraphicsScene>
 #include <QPushButton>
@@ -112,6 +113,16 @@ void OnlineGameManager::create_game_waiting_panel()
     QUiLoader loader;
     QWidget *layout = loader.load(&file, nullptr);
     scene->addWidget(layout);
+    QLabel *labelID = layout->findChild<QLabel *>("gameId");
+    labelID->setText(game_id);
+}
+
+void OnlineGameManager::gameStarted()
+{
+    scene->clear();
+    level1 * level = new level1(this, scene);
+    level->create_board();
+    level->add_board_images();
 }
 
 void OnlineGameManager::onConnected()
@@ -137,11 +148,17 @@ void OnlineGameManager::onTextMessageReceived(QString message)
     {
         qDebug() << "Game joined";
         create_game_waiting_panel();
+        state = "gameJoined";
     }
     else if (type == "gameStarted")
     {
         qDebug() << "Game started";
-    }
+        if (state == "gameJoined")
+        {
+            state = "gameStarted";
+            emit gameStarted();
+        }
+     }
     else if (type == "error")
     {
         qDebug() << "Error";

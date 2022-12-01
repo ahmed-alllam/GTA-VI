@@ -24,6 +24,7 @@ public:
     void join_game();
     void create_new_game();
     void create_game_waiting_panel();
+    void gameStarted();
     void onConnected();
     void onDisconnected();
     void onTextMessageReceived(QString message);

@@ -33,7 +33,7 @@ wss.on("connection", ws => {
                         // check the game exists
                         if (game) {
                             // check the game is waiting
-                            if (game.state === "waiting") {
+                            if (game.state === "waiting" || (game.state === "playing" && game.players.length < 4)) {
                                 // check the player is not already in the game
                                 if (game.players.indexOf(data.playerId) === -1) {
                                     // check game is not full
@@ -52,24 +52,23 @@ wss.on("connection", ws => {
                                         game
                                             .save()
                                             .then(result => {
-                                                // emit the game to all players
-                                                wss.clients.forEach(client => {
-                                                    if (client.readyState === WebSocket.OPEN) {
-                                                        // if state is playing, send the game
-                                                        if (game.state === "playing") {
+                                                // emit the game to the requesting player
+                                                if (game.state === "playing") {
+                                                    ws.clients.forEach(client => {
+                                                        if (client.readyState === WebSocket.OPEN) {
                                                             client.send(JSON.stringify({
                                                                 type: "gameStarted",
                                                                 game: game
                                                             }));
-                                                        } else if (game.state === "waiting") {
-                                                            // if state is waiting, send the game
-                                                            client.send(JSON.stringify({
-                                                                type: "gameJoined",
-                                                                game: game
-                                                            }));
                                                         }
-                                                    }
-                                                });
+                                                    });
+                                                } else if (game.state === "waiting") {
+                                                    // if state is waiting, send the game
+                                                    ws.send(JSON.stringify({
+                                                        type: "gameJoined",
+                                                        game: game
+                                                    }));
+                                                }
                                             })
                                             .catch(err => {
                                                 console.log(err);

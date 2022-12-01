@@ -17,6 +17,69 @@
    <string notr="true">background-color:white
 </string>
   </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>60</y>
+     <width>411</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>25</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Waiting for players to join</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>260</y>
+     <width>411</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>25</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Game ID:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="gameId">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>260</y>
+     <width>411</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>25</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
