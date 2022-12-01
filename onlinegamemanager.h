@@ -5,7 +5,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QObject>
-
+#include <QWebSocket>
 
 class OnlineGameManager: public QObject
 {
@@ -15,12 +15,17 @@ private:
     QLineEdit *idLine;
     QString token;
     QString username;
+    QString game_id;
+    QWebSocket *socket;
 public:
     OnlineGameManager(QGraphicsScene *scene, QString token, QString username);
     void create_game_id_panel();
-    void join_game(QString id);
+    void join_game();
     void create_new_game();
     void create_game_waiting_panel();
+    void onConnected();
+    void onDisconnected();
+    void onTextMessageReceived(QString message);
 };
 
 #endif // ONLINEGAMEMANAGER_H

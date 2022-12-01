@@ -9,7 +9,12 @@
 #include <QLineEdit>
 #include <QtUiTools>
 
+#include <QtCore/QJsonObject>
+#include <QtCore/QJsonArray>
+#include <QtCore/QDebug>
+
 #include <QNetworkAccessManager>
+#include <QJsonArray>
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QUrl>
@@ -24,6 +29,15 @@ OnlineGameManager::OnlineGameManager(QGraphicsScene *scene, QString token, QStri
     this->username = username;
     this->scene = scene;
     create_game_id_panel();
+
+    QUrl url("https://gta-vi-backend1.onrender.com");
+    url.setScheme("wss");
+    url.setPath("/");
+    socket = new QWebSocket();
+    socket->open(url);
+    connect(socket, &QWebSocket::connected, this, &OnlineGameManager::onConnected);
+    connect(socket, &QWebSocket::disconnected, this, &OnlineGameManager::onDisconnected);
+    connect(socket, &QWebSocket::textMessageReceived, this, &OnlineGameManager::onTextMessageReceived);
 }
 
 void OnlineGameManager::create_game_id_panel()
@@ -51,53 +65,39 @@ void OnlineGameManager::create_game_id_panel()
         joinButton, &QPushButton::clicked, layout, [this]()
         {
         label->setText("Loading...");
-        join_game(idLine->text()); },
+        game_id = idLine->text();
+        join_game(); },
         Qt::QueuedConnection);
 }
 
 void OnlineGameManager::create_new_game()
 {
-    // here we send a post request to the server to create a new game
-    // the base url is https://gta-vi-backend1.onrender.com
-    // the endpoint is /create
-    // the body is empty 
-    // attach the token in the header
-
-    // the response will be a json with the game id
-    // if the response is 200, then the game is created
-    // if the response is 401, then the user is not signed in
-    // if the response is 500, then the game could not be created
-
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QNetworkRequest request(QUrl("https://gta-vi-backend1.onrender.com/create"));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     request.setRawHeader("Authorization", "JWT " + token.toUtf8());
 
     QNetworkReply *reply = manager->post(request, QByteArray());
-    QObject::connect(reply, &QNetworkReply::finished, this, [this, reply]()
-                     {
-                         if (reply->error() == QNetworkReply::NoError)
-                         {
-                             QByteArray bytes = reply->readAll();
-                             QJsonDocument doc = QJsonDocument::fromJson(bytes);
-                             QJsonObject json = doc.object();
-                             QString game_id = json["game_id"].toString();
-                             label->setText("Game created with id " + game_id);
-                             idLine->setText(game_id);
-                         }
-                         else
-                         {
-                            // print status code int
-                            qDebug() << QString::number(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt());
-
-                            qDebug() << reply->errorString();
-                             label->setText("Error creating game");
-                         }
-                     });
+   QObject::connect(reply, &QNetworkReply::finished, this, [this, reply]()
+                    {
+                        if (reply->error() == QNetworkReply::NoError)
+                        {
+                            QByteArray bytes = reply->readAll();
+                            QJsonDocument doc = QJsonDocument::fromJson(bytes);
+                            QJsonObject json = doc.object();
+                           QJsonObject game = json["game"].toObject();
+                           game_id = game["id"].toString();
+                            create_game_waiting_panel();
+                        }
+                        else
+                        {
+                            label->setText("Error creating game");
+                        } });
 }
 
-void OnlineGameManager::join_game(QString id)
+void OnlineGameManager::join_game()
 {
+    socket->sendTextMessage(QString("{\"event\":\"joinGame\",\"gameId\":\"%1\",\"playerId\":\"%2\"}").arg(game_id).arg(username));
 }
 
 void OnlineGameManager::create_game_waiting_panel()
@@ -108,4 +108,19 @@ void OnlineGameManager::create_game_waiting_panel()
     QUiLoader loader;
     QWidget *layout = loader.load(&file, nullptr);
     scene->addWidget(layout);
+}
+
+void OnlineGameManager::onConnected()
+{
+    qDebug() << "Connected";
+}
+
+void OnlineGameManager::onDisconnected()
+{
+    qDebug() << "Disconnected";
+}
+
+void OnlineGameManager::onTextMessageReceived(QString message)
+{
+    qDebug() << "Message received:" << message;
 }

@@ -4,6 +4,7 @@ QT += widgets
 QT += multimedia
 QT += network
 QT += uitools
+QT += websockets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -68,11 +69,3 @@ RESOURCES += \
     resources.qrc \
     ui.qrc
 
-
-DEPENDPATH += libs/QtSocketIo/modules/
-INCLUDEPATH += libs/QtSocketIo/modules/
-INCLUDEPATH += libs/QtSocketIo/src/imports
-INCLUDEPATH += libs/QtSocketIo/src/socketio
-
-
-include(libs/QtSocketIo/modules/qt_socketio.pri)
