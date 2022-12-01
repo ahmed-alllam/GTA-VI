@@ -53,9 +53,10 @@ enemy2::enemy2(int boardData[12][16], void * currentLevel)
 
 void enemy2::move(){
 
-    while(!bossPath.empty())
+    qDebug() << getX() << " " << getY() << "  2";
+    if(!bossPath.empty())
             {
-              if( x==bossPath.top().first&&y+1==bossPath.top().second)
+              if(x==bossPath.top().first&&y+1==bossPath.top().second)
               {
                  checkCollision();
                  if(health == 2)
@@ -67,7 +68,7 @@ void enemy2::move(){
                      setPixmap(enemy2HRImage);
                  }
               }
-              else if( x==bossPath.top().first&&y-1==bossPath.top().second)
+              else if(x==bossPath.top().first&&y-1==bossPath.top().second)
               {
                   checkCollision();
                   if(health == 2)
@@ -81,10 +82,8 @@ void enemy2::move(){
               }
               bossPosition.first=bossPath.top().first;
               bossPosition.second=bossPath.top().second;
-              x = bossPosition.first;
-              y = bossPosition.second;
               bossPath.pop();
-              setPos(unitWidth + x * unitWidth, unitHeight + y * unitHeight);
+              setXandY(bossPosition.first, bossPosition.second);
               checkCollision();
               return;
             }
@@ -139,7 +138,7 @@ void enemy2::reduceHealth()
 void enemy2::aStarSearch()
 {
  // initialize closed list (2D array)
-    for(int i=0;i<12;i++)
+ for(int i=0;i<12;i++)
     {
         for(int j=0;j<16;j++)
         {
@@ -147,7 +146,7 @@ void enemy2::aStarSearch()
         }
     }
 
-    // Declare a 2D array of structure to hold the details
+//    // Declare a 2D array of structure to hold the details
     int i, j;
 
     for (int k = 0; k < 12; k++)
@@ -172,7 +171,7 @@ void enemy2::aStarSearch()
     cellDetails[i][j].parent_j = j;
 
 
-    // Put the starting cell on the open list and set its'f' as 0
+//    // Put the starting cell on the open list and set its'f' as 0
     openList.insert(make_pair(0, std::make_pair(i, j)));
     bool foundOpst = false; // the destination is not reached.
     while (!openList.empty())
@@ -317,7 +316,7 @@ bool enemy2:: isValid(int r, int col) // in the range of the data
     return ((r < 12) && (col < 16));
 }
 
-// if the cell is block +we might use it depends on the enemy lma netfeq
+//// if the cell is block +we might use it depends on the enemy lma netfeq
 bool enemy2:: isBlock(int r, int col)
 {
     return (boardData[r][col] <0);
@@ -328,7 +327,7 @@ int enemy2::H_Calculation(int r, int col, Pair destn) // return the estimation d
 {
     return (sqrt((r - destn.first) * (r - destn.first) + (col - destn.second) * (col - destn.second)));
 }
- // will be changed and make the boss move according to the sequence of steps
+// // will be changed and make the boss move according to the sequence of steps
 
 void enemy2:: tracePath( Pair destn)
 {
@@ -336,20 +335,26 @@ void enemy2:: tracePath( Pair destn)
     int col = destn.second;
     while(!bossPath.empty())
             bossPath.pop();
-
-    while (!((cellDetails[r][col].parent_i == r && cellDetails[r][col].parent_j == col)))
+    while (!(cellDetails[r][col].parent_i == r && cellDetails[r][col].parent_j == col))
     {
-        bossPath.push(std::make_pair(r, col));
-        if(cellDetails[r][col].parent_i==-1||cellDetails[r][col].parent_j==-1)
-            break;
-        if(cellDetails[cellDetails[r][col].parent_i][cellDetails[r][col].parent_j].parent_i==r&&cellDetails[cellDetails[r][col].parent_i][cellDetails[r][col].parent_j].parent_j==col)
-            break;
-        int temp_r = cellDetails[r][col].parent_i;
-        int temp_col = cellDetails[r][col].parent_j;
-        r = temp_r;
-        col = temp_col;
+            bossPath.push(std::make_pair(r, col));
+            int temp_row = cellDetails[r][col].parent_i;
+            int temp_col = cellDetails[r][col].parent_j;
+            r = temp_row;
+            col = temp_col;
     }
-    bossPath.push(std::make_pair(r, col));
+//    while (!((cellDetails[r][col].parent_i == r && cellDetails[r][col].parent_j == col)))
+//    {
+//        bossPath.push(std::make_pair(r, col));
+//        if(cellDetails[r][col].parent_i==-1||cellDetails[r][col].parent_j==-1)
+//            break;
+//        if(cellDetails[cellDetails[r][col].parent_i][cellDetails[r][col].parent_j].parent_i==r&&cellDetails[cellDetails[r][col].parent_i][cellDetails[r][col].parent_j].parent_j==col)
+//            break;
+//        int temp_r = cellDetails[r][col].parent_i;
+//        int temp_col = cellDetails[r][col].parent_j;
+//        r = temp_r;
+//        col = temp_col;
+//    }
     return;
 }
 
