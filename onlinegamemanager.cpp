@@ -30,6 +30,8 @@ OnlineGameManager::OnlineGameManager(QGraphicsScene *scene, QString token, QStri
     this->scene = scene;
     create_game_id_panel();
 
+    state = "init";
+
     QUrl url("https://gta-vi-backend1.onrender.com");
     url.setScheme("wss");
     url.setPath("/");
@@ -64,7 +66,6 @@ void OnlineGameManager::create_game_id_panel()
     QObject::connect(
         joinButton, &QPushButton::clicked, layout, [this]()
         {
-        label->setText("Loading...");
         game_id = idLine->text();
         join_game(); },
         Qt::QueuedConnection);
@@ -87,7 +88,8 @@ void OnlineGameManager::create_new_game()
                             QJsonObject json = doc.object();
                            QJsonObject game = json["game"].toObject();
                            game_id = game["id"].toString();
-                            create_game_waiting_panel();
+                           qDebug() << "created game id is " << game_id;
+                           join_game();
                         }
                         else
                         {
@@ -98,7 +100,8 @@ void OnlineGameManager::create_new_game()
 void OnlineGameManager::join_game()
 {
     qDebug() << "joinging game...";
-    socket->sendTextMessage(QString("{\"event\":\"joinGame\",\"gameId\":\"%1\",\"playerId\":\"%2\"}").arg(game_id).arg(username));
+    label->setText("Joining game...");
+    socket->sendTextMessage(QString("{\"type\":\"joinGame\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\"}").arg(game_id).arg(username));
 }
 
 void OnlineGameManager::create_game_waiting_panel()
@@ -124,4 +127,28 @@ void OnlineGameManager::onDisconnected()
 void OnlineGameManager::onTextMessageReceived(QString message)
 {
     qDebug() << "Message received:" << message;
+
+    // Parse the message
+    QJsonDocument doc = QJsonDocument::fromJson(message.toUtf8());
+    QJsonObject json = doc.object();
+    QString type = json["type"].toString();
+
+    if (type == "gameJoined")
+    {
+        qDebug() << "Game joined";
+        create_game_waiting_panel();
+    }
+    else if (type == "gameStarted")
+    {
+        qDebug() << "Game started";
+    }
+    else if (type == "error")
+    {
+        qDebug() << "Error";
+        if(state == "init")
+        {
+            label->setText("Error joining game");
+        }
+    }
+
 }

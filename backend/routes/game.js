@@ -11,7 +11,6 @@ router.post("/create", (req, res, next) => {
     if (req.user) {
         // create a new game
         const game = new Game({
-            players: [req.user._id],
             state: "waiting",
             // generate a random id of 6 characters
             id: Math.random().toString(36).substr(2, 6),

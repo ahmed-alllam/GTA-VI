@@ -17,6 +17,7 @@ private:
     QString username;
     QString game_id;
     QWebSocket *socket;
+    QString state;
 public:
     OnlineGameManager(QGraphicsScene *scene, QString token, QString username);
     void create_game_id_panel();

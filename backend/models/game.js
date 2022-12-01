@@ -5,12 +5,10 @@ const GameSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    players: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Player",
-        },
-    ],
+    // make list of players usernames
+    players: {
+        type: Array,
+    },
     state: {
         type: String,
         // required: true,
