@@ -50,4 +50,11 @@ app.use((req, res, next) => {
 })
 
 // Listen
-app.listen(process.env.PORT);
+
+const wss = require('./routes/game_sockets');
+const server = app.listen(process.env.PORT);
+server.on('upgrade', (req, socket, head) => {
+  wss.handleUpgrade(req, socket, head, (ws) => {
+    wss.emit('connection', ws, req);
+  });
+});

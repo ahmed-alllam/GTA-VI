@@ -78,8 +78,8 @@ void OnlineGameManager::create_new_game()
     request.setRawHeader("Authorization", "JWT " + token.toUtf8());
 
     QNetworkReply *reply = manager->post(request, QByteArray());
-   QObject::connect(reply, &QNetworkReply::finished, this, [this, reply]()
-                    {
+    QObject::connect(reply, &QNetworkReply::finished, this, [this, reply]()
+                     {
                         if (reply->error() == QNetworkReply::NoError)
                         {
                             QByteArray bytes = reply->readAll();
@@ -97,6 +97,7 @@ void OnlineGameManager::create_new_game()
 
 void OnlineGameManager::join_game()
 {
+    qDebug() << "joinging game...";
     socket->sendTextMessage(QString("{\"event\":\"joinGame\",\"gameId\":\"%1\",\"playerId\":\"%2\"}").arg(game_id).arg(username));
 }
 
