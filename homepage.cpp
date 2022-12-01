@@ -67,7 +67,7 @@ void homepage::start_story_mode()
 }
 
 void homepage::start_online_mode() {
-    OnlineGameManager * manager = new OnlineGameManager(scene);
+    OnlineGameManager * manager = new OnlineGameManager(scene, token, username);
     deleteLater();
 //    manager->launch_game();
 }
@@ -155,6 +155,17 @@ void homepage::on_Sign_clicked()
                 ui->pushButton->setVisible(true);
                 ui->errorLabel->setText("Welcome " + username + ",");
                 ui->errorLabel->setVisible(true);
+
+                // take the JWT token from the response and store it in a variable
+                // so that you can use it in the online game manager
+                // you can use the following code to get the JWT token
+                QByteArray response_data = reply->readAll();
+                QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
+                QJsonObject json_obj = json_doc.object();
+                QString jwt_token = json_obj["token"].toString();
+                qDebug() << jwt_token;
+                this->token = jwt_token;
+                this->username = username;
             }
             else if (status_code == 401 || status_code == 400) {
                 ui->errorLabel->setText("Incorrect credentials");
