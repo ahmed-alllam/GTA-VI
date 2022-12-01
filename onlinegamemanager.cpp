@@ -153,7 +153,7 @@ void OnlineGameManager::onTextMessageReceived(QString message)
     else if (type == "gameStarted")
     {
         qDebug() << "Game started";
-        if (state == "gameJoined")
+        if (state != "gameStarted")
         {
             state = "gameStarted";
             emit gameStarted();
