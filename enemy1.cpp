@@ -18,10 +18,23 @@ enemy1::enemy1(int boardData[12][16], void *currentLevel)
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
     unitWidth = qMin(screenWidth, screenHeight) / 12;
     unitHeight = qMin(screenWidth, screenHeight) / 12;
+
     QPixmap enemy1FLImage(":assets/images/GangsterFL.png");
+    QPixmap enemy1FRImage(":assets/images/GangsterFR.png");
+    QPixmap enemy1HLImage(":assets/images/GangsterHL.png");
+    QPixmap enemy1HRImage(":assets/images/GangsterHR.png");
 
     enemy1FLImage = enemy1FLImage.scaledToWidth(unitWidth);
     enemy1FLImage = enemy1FLImage.scaledToHeight(unitHeight);
+
+    enemy1FRImage = enemy1FRImage.scaledToWidth(unitWidth);
+    enemy1FRImage = enemy1FRImage.scaledToHeight(unitHeight);
+
+    enemy1HLImage = enemy1HLImage.scaledToWidth(unitWidth);
+    enemy1HLImage = enemy1HLImage.scaledToHeight(unitHeight);
+
+    enemy1HRImage = enemy1HRImage.scaledToWidth(unitWidth);
+    enemy1HRImage = enemy1HRImage.scaledToHeight(unitHeight);
 
     setPixmap(enemy1FLImage);
     health = 2;
@@ -42,28 +55,6 @@ enemy1::enemy1(int boardData[12][16], void *currentLevel)
 
 void enemy1::move()
 {
-    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
-    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    unitWidth = qMin(screenWidth, screenHeight) / 12;
-    unitHeight = qMin(screenWidth, screenHeight) / 12;
-    QPixmap enemy1FLImage(":assets/images/GangsterFL.png");
-    QPixmap enemy1FRImage(":assets/images/GangsterFR.png");
-    QPixmap enemy1HLImage(":assets/images/GangsterHL.png");
-    QPixmap enemy1HRImage(":assets/images/GangsterHR.png");
-
-    enemy1FLImage = enemy1FLImage.scaledToWidth(unitWidth);
-    enemy1FLImage = enemy1FLImage.scaledToHeight(unitHeight);
-
-    enemy1FRImage = enemy1FRImage.scaledToWidth(unitWidth);
-    enemy1FRImage = enemy1FRImage.scaledToHeight(unitHeight);
-
-    enemy1HLImage = enemy1HLImage.scaledToWidth(unitWidth);
-    enemy1HLImage = enemy1HLImage.scaledToHeight(unitHeight);
-
-    enemy1HRImage = enemy1HRImage.scaledToWidth(unitWidth);
-    enemy1HRImage = enemy1HRImage.scaledToHeight(unitHeight);
-
-    qDebug() << getX() << " " << getY() << "  1";
     if(!bossPath.empty())
             {
               if(x==bossPath.top().first&&y+1==bossPath.top().second)
@@ -97,8 +88,8 @@ void enemy1::move()
               checkCollision();
               return;
             }
+    else
             aStarSearch();
-            return;
 }
 
 void enemy1::checkCollision()

@@ -6,8 +6,7 @@
 
 #include "level.h"
 #include "franklin.h"
-#include "enemy1.h"
-#include "enemy2.h"
+#include "dog.h"
 #include "bullet.h"
 #include "pellet.h"
 #include "Drunk.h"
@@ -21,8 +20,7 @@ private:
     QGraphicsScene *scene;
     void * gameManager;
     Franklin *franklin;
-    enemy1 *enemy1;
-    enemy2 *enemy2;
+    dog *enemy1;
     QList<bullet*> bullets;
     QList<pellet*> pellets;
     Drunk *drunk;
@@ -47,6 +45,8 @@ public:
     virtual void player_hit();
     virtual void enemy_hit(QGraphicsItem * enemy);
     virtual void win();
+    virtual void getData(int data[12][16]);
+    virtual void getDest(int& i, int& j);
 };
 
 #endif // LEVEL2_H
