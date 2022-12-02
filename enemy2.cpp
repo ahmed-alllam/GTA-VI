@@ -61,7 +61,6 @@ void enemy2::move(){
 
     enemy2HRImage = enemy2HRImage.scaledToWidth(unitWidth);
     enemy2HRImage = enemy2HRImage.scaledToHeight(unitHeight);
-    qDebug() << getX() << " " << getY() << "  2";
     if(!bossPath.empty())
             {
               if(x==bossPath.top().first&&y+1==bossPath.top().second)
@@ -95,8 +94,8 @@ void enemy2::move(){
               checkCollision();
               return;
             }
+    else
             aStarSearch();
-            return;
 }
 
 void enemy2::checkCollision(){

@@ -316,8 +316,10 @@ void GameManager::Win()
     scene->addItem(overText);
 
     QPushButton *p = new QPushButton;
-    p->setText("NEXT LEVEL");
-    levelNum++;
+    if(levelNum != 3)
+        p->setText("NEXT LEVEL");
+    else
+        p->setText("PLAY AGAIN");
     p->setGeometry(screenWidth / 3 + 40, screenHeight / 3 + 250, 100, 50);
     // update the level
     // level =
@@ -351,19 +353,18 @@ void GameManager::restart_game()
 
     if (levelNum == 1)
     {
-        currentLevel = new level1(this, scene);
-        qDebug() << "level 1";
+        levelNum++;
+        currentLevel = new level2(this, scene);
     }
     else if (levelNum == 2)
     {
-        qDebug() << "level 2";
-         currentLevel = new level1(this, scene);
+        levelNum++;
+        currentLevel = new level2(this, scene);
     }
     else if (levelNum == 3)
     {
-        currentLevel = new level1(this, scene); //todo
-        qDebug() << "level 3";
-        // currentLevel = new level3();
+        levelNum = 1;
+        currentLevel = new level1(this, scene);
     }
 
     create_board();
