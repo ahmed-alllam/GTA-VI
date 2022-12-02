@@ -29,6 +29,9 @@ wss.on("connection", ws => {
     let playerId = Math.floor(Math.random() * 1000000000);
     ws.playerId = playerId;
 
+    console.log(playerId);
+    console.log(ws.playerId)
+
     ws.on("message", message => {
         // parse the message
         const data = JSON.parse(message);
@@ -79,6 +82,7 @@ wss.on("connection", ws => {
                                         game.state = "waiting";
                                     }
 
+                                    console.log(ws.playerId);
                                     game.players_ids.push(ws.playerId);
 
                                     // save the game
