@@ -27,7 +27,7 @@ wss.on("connection", ws => {
     // when a message is received
     // give each player a random id
     let playerId = Math.floor(Math.random() * 1000000000);
-    ws.id = playerId;
+    ws.playerId = playerId;
 
     ws.on("message", message => {
         // parse the message
