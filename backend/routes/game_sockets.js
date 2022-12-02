@@ -15,10 +15,30 @@ const wss = new WebSocket.Server({ server });
 
 // make an array of default of positions of players
 let defaultPositions = [
-    { x: 1, y: 1, direction: -1 },
-    { x: 10, y: 14, direction: 1 },
-    { x: 10, y: 1, direction: 1 },
-    { x: 1, y: 14, direction: 1 },
+    { x: 5, y: 3, direction: 0 },
+    { x: 6, y: 10, direction: 1 },
+    { x: 2, y: 10, direction: 1 },
+    { x: 8, y: 4, direction: 0 },
+];
+
+// make an array of default of positions of bullets
+let defaultBullets = [
+    { x: 1, y: 1},
+    { x: 10, y: 14},
+    { x: 10, y: 1},
+    { x: 1, y: 14},
+    { x: 3, y: 6},
+    { x: 1, y: 6},
+];
+
+// make an array of default of positions of pellets
+let defaultPellets = [
+    { x: 9, y: 1},
+    { x: 4, y: 14},
+    { x: 7, y: 13},
+    { x: 9, y: 9},
+    { x: 10, y: 4},
+    { x: 2, y: 3},
 ];
 
 
@@ -28,9 +48,6 @@ wss.on("connection", ws => {
     // give each player a random id
     let playerId = Math.floor(Math.random() * 1000000000);
     ws.playerId = playerId;
-
-    console.log(playerId);
-    console.log(ws.playerId)
 
     ws.on("message", message => {
         // parse the message
@@ -300,6 +317,9 @@ wss.on("connection", ws => {
                                         game.players.set(i, {
                                             id: game.players[i].id,
                                             score: game.players[i].score,
+                                            bullets: game.players[i].bullets,
+                                            health: game.players[i].health,
+                                            isPowerful: game.players[i].isPowerful,
                                             x: data.player.x,
                                             y: data.player.y,
                                             direction: data.player.direction,
@@ -351,6 +371,51 @@ wss.on("connection", ws => {
                 break;
         }
     });
+
+    // every 4000ms, add a new random bullet and pellet to the game and emit the game to all players in the game
+    setInterval(() => {
+        Game
+            .find({
+                state: "playing",
+            })
+            .exec()
+            .then(games => {
+                games.forEach(game => {
+                    // add a new bullet
+                    game.bullets.push({
+                        // get x and y from the list above
+                        x: defaultBullets[Math.floor(Math.random() * defaultBullets.length)].x,
+                        y: defaultBullets[Math.floor(Math.random() * defaultBullets.length)].y,
+                    });
+                    // add a new pellet
+                    game.pellets.push({
+                        // get x and y from the list above
+                        x: defaultPellets[Math.floor(Math.random() * defaultPellets.length)].x,
+                        y: defaultPellets[Math.floor(Math.random() * defaultPellets.length)].y,
+                    });
+                    // save the game
+                    game
+                        .save()
+                        .then(result => {
+                            // emit the game to all players in the same game instance
+                            wss.clients.forEach(client => {
+                                if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                    client.send(JSON.stringify({
+                                        type: "gameUpdated",
+                                        game: result,
+                                    }));
+                                }
+                            });
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, 3000);
 
     ws.send('Hi there, I am a WebSocket server');
 });

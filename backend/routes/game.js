@@ -6,14 +6,33 @@ const Player = require("../models/player");
 
 const app = express();
 
+
+// make an array of default of positions of bullets
+let defaultBullets = [
+    { x: 1, y: 1},
+    { x: 10, y: 14},
+    { x: 10, y: 1},
+    { x: 1, y: 14},
+];
+
+// make an array of default of positions of pellets
+let defaultPellets = [
+    { x: 9, y: 1},
+    { x: 4, y: 14},
+];
+
 router.post("/create", (req, res, next) => {
     // check player is logged in
     if (req.user) {
         // create a new game
         const game = new Game({
             state: "waiting",
-            // generate a random id of 6 characters
-            id: Math.random().toString(36).substr(2, 6),
+            // generate a random id of 4 characters
+            id: Math.random().toString(36).substring(2, 6),
+            // make list of bullets that contains dictionaries of x and y coordinates
+            bullets: defaultBullets,
+            // make list of pellets that contains dictionaries of x and y coordinates
+            pellets: defaultPellets,
         });
         // save the game
         game

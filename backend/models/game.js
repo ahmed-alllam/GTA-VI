@@ -12,6 +12,14 @@ const GameSchema = mongoose.Schema({
     players_ids: {
         type: Array,
     },
+    // array of bullets
+    bullets: {
+        type: Array,
+    },
+    // array of pellets
+    pellets: {
+        type: Array,
+    },
     state: {
         type: String,
         // required: true,
