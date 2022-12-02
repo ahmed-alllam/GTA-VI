@@ -372,6 +372,51 @@ wss.on("connection", ws => {
         }
     });
 
+    ws.on("close", () => {
+        console.log("Client disconnected");
+        // remove the player from the players array in the games he is in
+        // his playerid is included in the players_ids array
+        Game
+            .find({
+                players_ids: ws.playerId
+            })
+            .exec()
+            .then(games => {
+                games.forEach(game => {
+                    game.players_ids = game.players_ids.filter(playerId => playerId !== ws.playerId);
+                    // check if the game is empty
+                    if (game.players_ids.length === 0) {
+                        // delete the game
+                        game
+                            .remove()
+                            .then(result => {
+                                console.log("Game deleted");
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+                    } else {
+                        game.save()
+                            .then(result => {
+                                wss.clients.forEach(client => {
+                                    if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                        client.send(JSON.stringify({
+                                            type: "gameUpdated",
+                                            game: result,
+                                        }));
+                                    }
+                                });
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+                    }
+                });
+            }
+            )
+
+    });
+
     // every 4000ms, add a new random bullet and pellet to the game and emit the game to all players in the game
     setInterval(() => {
         Game
@@ -427,7 +472,7 @@ wss.on("connection", ws => {
             .catch(err => {
                 console.log(err);
             });
-    }, 3000);
+    }, 5000);
 
     ws.send('Hi there, I am a WebSocket server');
 });
