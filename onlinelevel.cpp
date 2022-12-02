@@ -243,3 +243,29 @@ void OnlineLevel::updatePosition(int x, int y, int direction)
     OnlineGameManager *manager = static_cast<OnlineGameManager *>(gameManager);
     manager->updatePosition(x, y, direction);
 }
+
+void OnlineLevel::add_bullet(int x, int y)
+{
+    for (int i = 0; i < bullets.size(); i++)
+    {
+        if (bullets[i]->x == x && bullets[i]->y == y)
+            return;
+    }
+
+    bullet *bullet = new class bullet(boardData, x, y);
+    scene->addItem(bullet);
+    bullets.append(bullet);
+}
+
+void OnlineLevel::add_pellet(int x, int y)
+{
+    for (int i = 0; i < pellets.size(); i++)
+    {
+        if (pellets[i]->x == x && pellets[i]->y == y)
+            return;
+    }
+
+    pellet *pellet = new class pellet(boardData, x, y);
+    scene->addItem(pellet);
+    pellets.append(pellet);
+}

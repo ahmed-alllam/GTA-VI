@@ -23,22 +23,22 @@ let defaultPositions = [
 
 // make an array of default of positions of bullets
 let defaultBullets = [
-    { x: 1, y: 1},
-    { x: 10, y: 14},
-    { x: 10, y: 1},
-    { x: 1, y: 14},
-    { x: 3, y: 6},
-    { x: 1, y: 6},
+    { x: 1, y: 1 },
+    { x: 10, y: 14 },
+    { x: 10, y: 1 },
+    { x: 1, y: 14 },
+    { x: 3, y: 6 },
+    { x: 1, y: 6 },
 ];
 
 // make an array of default of positions of pellets
 let defaultPellets = [
-    { x: 9, y: 1},
-    { x: 4, y: 14},
-    { x: 7, y: 13},
-    { x: 9, y: 9},
-    { x: 10, y: 4},
-    { x: 2, y: 3},
+    { x: 9, y: 1 },
+    { x: 4, y: 14 },
+    { x: 7, y: 13 },
+    { x: 9, y: 9 },
+    { x: 10, y: 4 },
+    { x: 2, y: 3 },
 ];
 
 
@@ -382,34 +382,46 @@ wss.on("connection", ws => {
             .then(games => {
                 games.forEach(game => {
                     // add a new bullet
-                    game.bullets.push({
-                        // get x and y from the list above
-                        x: defaultBullets[Math.floor(Math.random() * defaultBullets.length)].x,
-                        y: defaultBullets[Math.floor(Math.random() * defaultBullets.length)].y,
-                    });
-                    // add a new pellet
-                    game.pellets.push({
-                        // get x and y from the list above
-                        x: defaultPellets[Math.floor(Math.random() * defaultPellets.length)].x,
-                        y: defaultPellets[Math.floor(Math.random() * defaultPellets.length)].y,
-                    });
-                    // save the game
-                    game
-                        .save()
-                        .then(result => {
-                            // emit the game to all players in the same game instance
-                            wss.clients.forEach(client => {
-                                if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                    client.send(JSON.stringify({
-                                        type: "gameUpdated",
-                                        game: result,
-                                    }));
-                                }
-                            });
-                        })
-                        .catch(err => {
-                            console.log(err);
+                    // check if number of bullets is less than 3
+                    change = false;
+                    if (game.bullets.length < 3) {
+                        change = true;
+                        game.bullets.push({
+                            // choose an x and y pair from the list of possible bullet positions
+                            x: defaultBullets[Math.floor(Math.random() * defaultBullets.length)].x,
+                            y: defaultBullets[Math.floor(Math.random() * defaultBullets.length)].y,
                         });
+                    }
+
+                    // check if number of pellets is less than 2
+                    if (game.pellets.length < 2) {
+                        change = true;
+                        // add a new pellet
+                        game.pellets.push({
+                            // get x and y from the list above
+                            x: defaultPellets[Math.floor(Math.random() * defaultPellets.length)].x,
+                            y: defaultPellets[Math.floor(Math.random() * defaultPellets.length)].y,
+                        });
+                    }
+                    // save the game
+                    if (change) {
+                        game
+                            .save()
+                            .then(result => {
+                                // emit the game to all players in the same game instance
+                                wss.clients.forEach(client => {
+                                    if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                        client.send(JSON.stringify({
+                                            type: "gameUpdated",
+                                            game: result,
+                                        }));
+                                    }
+                                });
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+                    }
                 });
             })
             .catch(err => {

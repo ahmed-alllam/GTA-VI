@@ -31,6 +31,8 @@ public:
     void create_players(QJsonArray players);
     void update_player_position(QString playerId, int x, int y, int direction);
     void updatePosition(int x, int y, int direction);
+    void add_bullet(int x, int y);
+    void add_pellet(int x, int y);
     void create_bullets();
     void create_pellets();
     void create_healthbar();

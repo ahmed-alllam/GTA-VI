@@ -152,6 +152,24 @@ void OnlineGameManager::gameUpdated(QJsonObject game)
         int direction = player["direction"].toInt();
         level->update_player_position(playerId, x, y, direction);
     }
+
+    QJsonArray bullets = game["bullets"].toArray();
+    for (int i = 0; i < bullets.size(); i++)
+    {
+        QJsonObject bullet = bullets[i].toObject();
+        int x = bullet["x"].toInt();
+        int y = bullet["y"].toInt();
+        level->add_bullet(x, y);
+    }
+
+    QJsonArray pellets = game["pellets"].toArray();
+    for (int i = 0; i < pellets.size(); i++)
+    {
+        QJsonObject pellet = pellets[i].toObject();
+        int x = pellet["x"].toInt();
+        int y = pellet["y"].toInt();
+        level->add_pellet(x, y);
+    }
 }
 
 void OnlineGameManager::anotherPlayerJoined(QJsonObject game)
