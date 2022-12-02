@@ -12,6 +12,16 @@ const app = express();
 let server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
+
+// make an array of default of positions of players
+let defaultPositions = [
+    { x: 1, y: 1, direction: -1 },
+    { x: 10, y: 14, direction: 1 },
+    { x: 10, y: 1, direction: 1 },
+    { x: 1, y: 14, direction: 1 },
+];
+
+
 // when a new connection is made
 wss.on("connection", ws => {
     // when a message is received
@@ -39,7 +49,14 @@ wss.on("connection", ws => {
                                     // check game is not full
                                     if (game.players.length < 4) {
                                         // add the player to the game
-                                        game.players.push(data.playerId);
+                                        game.players.push({
+                                            id: data.playerId,
+                                            score: 0,
+                                            x: defaultPositions[game.players.length].x,
+                                            y: defaultPositions[game.players.length].y,
+                                            direction: defaultPositions[game.players.length].direction,
+                                        });
+
 
                                         if (game.players.length >= 2) {
                                             game.state = "playing";
@@ -242,7 +259,80 @@ wss.on("connection", ws => {
                         }));
                     });
                 break;
-            // end  todo
+                // end  todo
+                c
+            // when player makes a move
+            case "move":
+                // find the game
+                Game
+                    .findOne({
+                        id: data
+                            .game.gameId
+                    })
+                    .exec()
+                    .then(game => {
+                        // check the game exists
+                        if (game) {
+                            // check the game is in progress
+                            if (game.state === "playing") {
+                                // loop over the players and check if one had the same id as the player who made the move
+                                for (let i = 0; i < game.players.length; i++) {
+                                    if (game.players[i].id === data.playerId) {
+                                        // check the player is the current player
+                                        // update the players position in the game
+                                        
+                                        console.log("before" + game.players[i]);
+                                        
+                                        game.players.set(i, {
+                                            id: game.players[i].id,
+                                            score: game.players[i].score,
+                                            x: data.player.x,
+                                            y: data.player.y,
+                                            direction: data.player.direction,
+                                        });
+
+                                        console.log("after" + game.players[i]);
+
+                                        game.save()
+                                            .then(result => {
+                                                wss.clients.forEach(client => {
+                                                    if (client.readyState === WebSocket.OPEN) {
+                                                        client.send(JSON.stringify({
+                                                            type: "gameUpdated",
+                                                            game: result,
+                                                        }));
+                                                    }
+                                                });
+                                            })
+                                            .catch(err => {
+                                                console.log(err);
+                                            });
+                                        break;
+                                    }
+                                }
+                            } else {
+                                // emit error message
+                                ws.send(JSON.stringify({
+                                    type: "error",
+                                    message: "Game is not in progress",
+                                }));
+                            }
+                        } else {
+                            // emit error message
+                            ws.send(JSON.stringify({
+                                type: "error",
+                                message: "Game not found",
+                            }));
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        ws.send(JSON.stringify({
+                            type: "error",
+                            message: "Game not found",
+                        }));
+                    });
+                break;
             default:
                 break;
         }

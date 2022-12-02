@@ -32,6 +32,8 @@ SOURCES += \
     mainwindow.cpp \
     franklin.cpp \
     onlinegamemanager.cpp \
+    onlinelevel.cpp \
+    onlineplayer.cpp \
     pellet.cpp \
 
 HEADERS += \
@@ -51,6 +53,8 @@ HEADERS += \
     mainwindow.h \
     franklin.h \
     onlinegamemanager.h \
+    onlinelevel.h \
+    onlineplayer.h \
     pellet.h
 
 FORMS += \

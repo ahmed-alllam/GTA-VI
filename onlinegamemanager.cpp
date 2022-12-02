@@ -1,5 +1,4 @@
 #include "onlinegamemanager.h"
-#include "level1.h"
 
 #include <QGraphicsScene>
 #include <QPushButton>
@@ -23,6 +22,19 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QByteArray>
+
+#include <QAudioFormat>
+#include <QMediaPlayer>
+#include <QAudioOutput>
+#include <QLabel>
+#include <QPushButton>
+#include <QProgressBar>
+#include <QMessageBox>
+#include <QGraphicsRectItem>
+#include <QGraphicsProxyWidget>
+#include <qprocess.h>
+#include <qmovie.h>
+#include <QMovie>
 
 OnlineGameManager::OnlineGameManager(QGraphicsScene *scene, QString token, QString username)
 {
@@ -117,12 +129,42 @@ void OnlineGameManager::create_game_waiting_panel()
     labelID->setText(game_id);
 }
 
-void OnlineGameManager::gameStarted()
+void OnlineGameManager::gameStarted(QJsonObject game)
 {
     scene->clear();
-    level1 * level = new level1(this, scene);
+    level = new OnlineLevel(this, scene, username, game_id);
     level->create_board();
     level->add_board_images();
+    QJsonArray players = game["players"].toArray();
+    level->create_players(players);
+    create_sound();
+}
+
+void OnlineGameManager::gameUpdated(QJsonObject game)
+{
+    QJsonArray players = game["players"].toArray();
+    for (int i = 0; i < players.size(); i++)
+    {
+        QJsonObject player = players[i].toObject();
+        QString playerId = player["id"].toString();
+        int x = player["x"].toInt();
+        int y = player["y"].toInt();
+        int direction = player["direction"].toInt();
+        level->update_player_position(playerId, x, y, direction);
+    }
+}
+
+void OnlineGameManager::anotherPlayerJoined(QJsonObject game)
+{
+    QJsonArray players = game["players"].toArray();
+    level->create_players(players);
+}
+
+void OnlineGameManager::updatePosition(int x, int y, int direction)
+{
+    // send the server the new position
+    qDebug() << "emitting move with user name " << username << " x: " << x << " y: " << y;
+    socket->sendTextMessage(QString("{\"type\":\"move\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\", \"player\":{\"x\":%3,\"y\":%4,\"direction\":%5}}").arg(game_id).arg(username).arg(x).arg(y).arg(direction));
 }
 
 void OnlineGameManager::onConnected()
@@ -156,16 +198,34 @@ void OnlineGameManager::onTextMessageReceived(QString message)
         if (state != "gameStarted")
         {
             state = "gameStarted";
-            emit gameStarted();
+            emit gameStarted(json["game"].toObject());
         }
-     }
+        else
+        {
+            emit anotherPlayerJoined(json["game"].toObject());
+        }
+    }
+    else if (type == "gameUpdated")
+    {
+        emit gameUpdated(json["game"].toObject());
+    }
+
     else if (type == "error")
     {
         qDebug() << "Error";
-        if(state == "init")
+        if (state == "init")
         {
             label->setText("Error joining game");
         }
     }
+}
 
+void OnlineGameManager::create_sound()
+{
+    QMediaPlayer *player = new QMediaPlayer;
+    QAudioOutput *audioOutput = new QAudioOutput;
+    player->setAudioOutput(audioOutput);
+    player->setLoops(QMediaPlayer::Infinite);
+    player->setSource(QUrl("qrc:/assets/sounds/backsound.mp3"));
+    player->play();
 }
