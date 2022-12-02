@@ -284,6 +284,8 @@ wss.on("connection", ws => {
                                         console.log("before" + game.players[i]);
                                         
                                         game.players.set(i, {
+                                            id: game.players[i].id,
+                                            score: game.players[i].score,
                                             x: data.player.x,
                                             y: data.player.y,
                                             direction: data.player.direction,
