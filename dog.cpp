@@ -20,9 +20,40 @@ dog::dog(int boardData[12][16], void * gameManager)
     unitWidth = qMin(screenWidth, screenHeight) / 12;
     unitHeight = qMin(screenWidth, screenHeight) / 12;
 
-    QPixmap dogImage(":assets/images/dog-muzzle-animation-pet-dog-footage-160116428_iconl.png");
+    QPixmap enemy4LImage(":assets/images/dog4L.png");
+    QPixmap enemy4RImage(":assets/images/dog4R.png");
+    QPixmap enemy3LImage(":assets/images/dog3L.png");
+    QPixmap enemy3RImage(":assets/images/dog3R.png");
+    QPixmap enemy2LImage(":assets/images/dog2L.png");
+    QPixmap enemy2RImage(":assets/images/dog2R.png");
+    QPixmap enemy1LImage(":assets/images/dog1L.png");
+    QPixmap enemy1RImage(":assets/images/dog1R.png");
 
-    setPixmap(dogImage);
+    enemy4LImage = enemy4LImage.scaledToWidth(unitWidth);
+    enemy4LImage = enemy4LImage.scaledToHeight(unitHeight);
+
+    enemy4RImage = enemy4RImage.scaledToWidth(unitWidth);
+    enemy4RImage = enemy4RImage.scaledToHeight(unitHeight);
+
+    enemy3LImage = enemy3LImage.scaledToWidth(unitWidth);
+    enemy3LImage = enemy3LImage.scaledToHeight(unitHeight);
+
+    enemy3RImage = enemy3RImage.scaledToWidth(unitWidth);
+    enemy3RImage = enemy3RImage.scaledToHeight(unitHeight);
+
+    enemy2LImage = enemy2LImage.scaledToWidth(unitWidth);
+    enemy2LImage = enemy2LImage.scaledToHeight(unitHeight);
+
+    enemy2RImage = enemy2RImage.scaledToWidth(unitWidth);
+    enemy2RImage = enemy2RImage.scaledToHeight(unitHeight);
+
+    enemy1LImage = enemy1LImage.scaledToWidth(unitWidth);
+    enemy1LImage = enemy1LImage.scaledToHeight(unitHeight);
+
+    enemy1RImage = enemy1RImage.scaledToWidth(unitWidth);
+    enemy1RImage = enemy1RImage.scaledToHeight(unitHeight);
+
+    setPixmap(enemy4LImage);
     health = 4;
     x = 1;
     y = 1;
@@ -39,31 +70,46 @@ dog::dog(int boardData[12][16], void * gameManager)
 
 void dog::move()
 {
-    QPixmap dogImage(":assets/images/dog-muzzle-animation-pet-dog-footage-160116428_iconl.png");
     if(!bossPath.empty())
             {
               if(x==bossPath.top().first&&y+1==bossPath.top().second)
               {
                  checkCollision();
-                 if(health == 2)
-                 {
-                     setPixmap(dogImage);
-                 }
-                 else if(health == 1)
-                 {
-                     setPixmap(dogImage);
+                 switch (health) {
+                 case 4:
+                     setPixmap(enemy4RImage);
+                     break;
+                 case 3:
+                     setPixmap(enemy3RImage);
+                     break;
+                 case 2:
+                     setPixmap(enemy2RImage);
+                     break;
+                 case 1:
+                     setPixmap(enemy1RImage);
+                     break;
+                 default:
+                     break;
                  }
               }
               else if(x==bossPath.top().first&&y-1==bossPath.top().second)
               {
                   checkCollision();
-                  if(health == 2)
-                  {
-                      setPixmap(dogImage);
-                  }
-                  else if(health == 1)
-                  {
-                      setPixmap(dogImage);
+                  switch (health) {
+                  case 4:
+                      setPixmap(enemy4LImage);
+                      break;
+                  case 3:
+                      setPixmap(enemy3LImage);
+                      break;
+                  case 2:
+                      setPixmap(enemy2LImage);
+                      break;
+                  case 1:
+                      setPixmap(enemy1LImage);
+                      break;
+                  default:
+                      break;
                   }
               }
               bossPosition.first=bossPath.top().first;

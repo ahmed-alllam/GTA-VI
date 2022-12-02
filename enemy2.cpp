@@ -15,31 +15,6 @@ enemy2::enemy2(int boardData[12][16], void * currentLevel)
     this->currentLevel = currentLevel;
     while(!bossPath.empty())
     {bossPath.pop();}
-    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
-    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    unitWidth = qMin(screenWidth, screenHeight) / 12;
-    unitHeight = qMin(screenWidth, screenHeight) / 12;
-    QPixmap enemy2FLImage(":assets/images/GangsterFL.png");
-
-    enemy2FLImage = enemy2FLImage.scaledToWidth(unitWidth);
-    enemy2FLImage = enemy2FLImage.scaledToHeight(unitHeight);
-
-    setPixmap(enemy2FLImage);
-    health = 2;
-    x = 3;
-    y = 11;
-    direction = 0;
-
-    setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
-
-    for(int i = 0; i < 12; i++){
-        for(int j = 0; j < 16; j++){
-            this->boardData[i][j] = boardData[i][j];
-        }
-    }
-}
-
-void enemy2::move(){
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
@@ -61,6 +36,23 @@ void enemy2::move(){
 
     enemy2HRImage = enemy2HRImage.scaledToWidth(unitWidth);
     enemy2HRImage = enemy2HRImage.scaledToHeight(unitHeight);
+
+    setPixmap(enemy2FLImage);
+    health = 2;
+    x = 3;
+    y = 11;
+    direction = 0;
+
+    setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
+
+    for(int i = 0; i < 12; i++){
+        for(int j = 0; j < 16; j++){
+            this->boardData[i][j] = boardData[i][j];
+        }
+    }
+}
+
+void enemy2::move(){
     if(!bossPath.empty())
             {
               if(x==bossPath.top().first&&y+1==bossPath.top().second)
@@ -105,7 +97,7 @@ void enemy2::checkCollision(){
         if (typeid(*(colliding_items[i])) == typeid(Franklin))
         {
             level * manager = static_cast<level *>(currentLevel);
-            manager->player_hit();           
+            manager->player_hit();
         }
     }
 }
