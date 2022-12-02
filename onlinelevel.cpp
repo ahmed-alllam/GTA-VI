@@ -234,7 +234,6 @@ void OnlineLevel::update_player_position(QString playerId, int x, int y, int dir
         if (players[i]->id == playerId && playerId != this->username)
         {
             players[i]->setCoordinates(x, y, direction);
-            break;
         }
     }
 }

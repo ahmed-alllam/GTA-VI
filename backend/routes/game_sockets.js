@@ -280,9 +280,11 @@ wss.on("connection", ws => {
                                     if (game.players[i].id === data.playerId) {
                                         // check the player is the current player
                                         // update the players position in the game
-                                        game.players[i].x = data.player.x;
-                                        game.players[i].y = data.player.y;
-                                        game.players[i].direction = data.player.direction;
+                                        game.players.set(i, {
+                                            x: data.player.x,
+                                            y: data.player.y,
+                                            direction: data.player.direction,
+                                        });
 
                                         game.save()
                                             .then(result => {

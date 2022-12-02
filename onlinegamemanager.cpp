@@ -163,6 +163,7 @@ void OnlineGameManager::anotherPlayerJoined(QJsonObject game)
 void OnlineGameManager::updatePosition(int x, int y, int direction)
 {
     // send the server the new position
+    qDebug() << "emitting move with user name " << username << " x: " << x << " y: " << y;
     socket->sendTextMessage(QString("{\"type\":\"move\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\", \"player\":{\"x\":%3,\"y\":%4,\"direction\":%5}}").arg(game_id).arg(username).arg(x).arg(y).arg(direction));
 }
 
