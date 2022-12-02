@@ -186,6 +186,8 @@ void OnlineLevel::create_board()
 
 void OnlineLevel::create_players(QJsonArray playersJSON)
 {
+    qDebug () << "creating players "<< playersJSON << playersJSON.size();
+
     for (int i = 0; i < playersJSON.size(); i++)
     {
         QJsonObject player = playersJSON[i].toObject();
@@ -229,7 +231,7 @@ void OnlineLevel::update_player_position(QString playerId, int x, int y, int dir
 {
     for (int i = 0; i < players.size(); i++)
     {
-        if (players[i]->id == playerId)
+        if (players[i]->id == playerId && playerId != this->username)
         {
             players[i]->setCoordinates(x, y, direction);
             break;

@@ -163,7 +163,7 @@ void OnlineGameManager::anotherPlayerJoined(QJsonObject game)
 void OnlineGameManager::updatePosition(int x, int y, int direction)
 {
     // send the server the new position
-    socket->sendTextMessage(QString("{\"type\":\"updatePosition\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\", \"player\":{\"x\":%3,\"y\":%4,\"direction\":%5}}").arg(game_id).arg(username).arg(x).arg(y).arg(direction));
+    socket->sendTextMessage(QString("{\"type\":\"move\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\", \"player\":{\"x\":%3,\"y\":%4,\"direction\":%5}}").arg(game_id).arg(username).arg(x).arg(y).arg(direction));
 }
 
 void OnlineGameManager::onConnected()
@@ -197,16 +197,16 @@ void OnlineGameManager::onTextMessageReceived(QString message)
         if (state != "gameStarted")
         {
             state = "gameStarted";
-            emit gameStarted(json);
+            emit gameStarted(json["game"].toObject());
         }
         else
         {
-            emit anotherPlayerJoined(json);
+            emit anotherPlayerJoined(json["game"].toObject());
         }
     }
     else if (type == "gameUpdated")
     {
-        emit gameUpdated(json);
+        emit gameUpdated(json["game"].toObject());
     }
 
     else if (type == "error")

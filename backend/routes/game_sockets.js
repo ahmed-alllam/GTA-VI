@@ -284,15 +284,20 @@ wss.on("connection", ws => {
                                         game.players[i].y = data.player.y;
                                         game.players[i].direction = data.player.direction;
 
-                                        // emit the game to all players in the same game instance
-                                        wss.clients.forEach(client => {
-                                            if (client.readyState === WebSocket.OPEN) {
-                                                client.send(JSON.stringify({
-                                                    type: "gameUpdated",
-                                                    game: game,
-                                                }));
-                                            }
-                                        });
+                                        game.save()
+                                            .then(result => {
+                                                wss.clients.forEach(client => {
+                                                    if (client.readyState === WebSocket.OPEN) {
+                                                        client.send(JSON.stringify({
+                                                            type: "gameUpdated",
+                                                            game: result,
+                                                        }));
+                                                    }
+                                                });
+                                            })
+                                            .catch(err => {
+                                                console.log(err);
+                                            });
                                         break;
                                     }
                                 }

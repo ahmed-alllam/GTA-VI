@@ -7,6 +7,8 @@
 
 OnlinePlayer::OnlinePlayer(int boardData[12][16], void *currentLevel, QString username)
 {
+    qDebug () << "online player created with username: "<< username;
+
     this->currentLevel = currentLevel;
     this->id = username;
     this->currPlayer = false;
@@ -127,6 +129,8 @@ void OnlinePlayer::setCoordinates(int x, int y, int direction)
         setPixmap(franklinImaged);
 //        timer->stop();
     }
+
+    qDebug() << "in set coordinates "<< x << y;
 
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
 }
