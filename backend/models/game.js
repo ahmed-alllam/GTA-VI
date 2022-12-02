@@ -5,7 +5,7 @@ const GameSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    // make list of players usernames
+    // make list of players that contains dictionaries of player id and score, and x and y coordinates and direction
     players: {
         type: Array,
     },
