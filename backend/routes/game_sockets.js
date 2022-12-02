@@ -25,6 +25,13 @@ let defaultPositions = [
 // when a new connection is made
 wss.on("connection", ws => {
     // when a message is received
+    // give each player a random id
+    let playerId = Math.floor(Math.random() * 1000000000);
+    ws.playerId = playerId;
+
+    console.log(playerId);
+    console.log(ws.playerId)
+
     ws.on("message", message => {
         // parse the message
         const data = JSON.parse(message);
@@ -44,66 +51,73 @@ wss.on("connection", ws => {
                         if (game) {
                             // check the game is waiting
                             if (game.state === "waiting" || (game.state === "playing" && game.players.length < 4)) {
-                                // check the player is not already in the game
-                                if (game.players.indexOf(data.playerId) === -1) {
-                                    // check game is not full
-                                    if (game.players.length < 4) {
-                                        // add the player to the game
-                                        game.players.push({
-                                            id: data.playerId,
-                                            score: 0,
-                                            x: defaultPositions[game.players.length].x,
-                                            y: defaultPositions[game.players.length].y,
-                                            direction: defaultPositions[game.players.length].direction,
-                                        });
+                                // todo: check the player is not already in the game
 
-
-                                        if (game.players.length >= 2) {
-                                            game.state = "playing";
-                                            // todo: start game
-                                        } else {
-                                            game.state = "waiting";
-                                        }
-
-                                        // save the game
-                                        game
-                                            .save()
-                                            .then(result => {
-                                                // emit the game to the requesting player
-                                                if (game.state === "playing") {
-                                                    wss.clients.forEach(client => {
-                                                        if (client.readyState === WebSocket.OPEN) {
-                                                            client.send(JSON.stringify({
-                                                                type: "gameStarted",
-                                                                game: game
-                                                            }));
-                                                        }
-                                                    });
-                                                } else if (game.state === "waiting") {
-                                                    // if state is waiting, send the game
-                                                    ws.send(JSON.stringify({
-                                                        type: "gameJoined",
-                                                        game: game
-                                                    }));
-                                                }
-                                            })
-                                            .catch(err => {
-                                                console.log(err);
-                                            });
-                                    } else {
-                                        // emit error message
+                                for (let i = 0; i < game.players.length; i++) {
+                                    if (game.players[i].id === data.playerId) {
                                         ws.send(JSON.stringify({
                                             type: "error",
-                                            message: "Game is full",
+                                            message: "Player is already in game",
                                         }));
+                                        return;
                                     }
+                                }
+
+                                // check game is not full
+                                if (game.players.length < 4) {
+                                    // add the player to the game
+                                    game.players.push({
+                                        id: data.playerId,
+                                        score: 0,
+                                        x: defaultPositions[game.players.length].x,
+                                        y: defaultPositions[game.players.length].y,
+                                        direction: defaultPositions[game.players.length].direction,
+                                    });
+
+
+                                    if (game.players.length >= 2) {
+                                        game.state = "playing";
+                                        // todo: start game
+                                    } else {
+                                        game.state = "waiting";
+                                    }
+
+                                    console.log(ws.playerId);
+                                    game.players_ids.push(ws.playerId);
+
+                                    // save the game
+                                    game
+                                        .save()
+                                        .then(result => {
+                                            // emit the game to the requesting player
+                                            if (game.state === "playing") {
+                                                wss.clients.forEach(client => {
+                                                    if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                                        client.send(JSON.stringify({
+                                                            type: "gameStarted",
+                                                            game: game
+                                                        }));
+                                                    }
+                                                });
+                                            } else if (game.state === "waiting") {
+                                                // if state is waiting, send the game
+                                                ws.send(JSON.stringify({
+                                                    type: "gameJoined",
+                                                    game: game
+                                                }));
+                                            }
+                                        })
+                                        .catch(err => {
+                                            console.log(err);
+                                        });
                                 } else {
                                     // emit error message
                                     ws.send(JSON.stringify({
                                         type: "error",
-                                        message: "Player is already in game",
+                                        message: "Game is full",
                                     }));
                                 }
+
                             } else {
                                 // emit error message
                                 ws.send(JSON.stringify({
@@ -151,7 +165,7 @@ wss.on("connection", ws => {
                                         .then(result => {
                                             // emit the game to all players in the same game instance
                                             wss.clients.forEach(client => {
-                                                if (client.readyState === WebSocket.OPEN) {
+                                                if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
                                                     client.send(JSON.stringify({
                                                         type: "game",
                                                         game: result,
@@ -217,7 +231,7 @@ wss.on("connection", ws => {
                                         .then(result => {
                                             // emit the game to all players in the same game instance
                                             wss.clients.forEach(client => {
-                                                if (client.readyState === WebSocket.OPEN) {
+                                                if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
                                                     client.send(JSON.stringify({
                                                         type: "game",
                                                         game: result,
@@ -280,9 +294,9 @@ wss.on("connection", ws => {
                                     if (game.players[i].id === data.playerId) {
                                         // check the player is the current player
                                         // update the players position in the game
-                                        
+
                                         console.log("before" + game.players[i]);
-                                        
+
                                         game.players.set(i, {
                                             id: game.players[i].id,
                                             score: game.players[i].score,
@@ -296,7 +310,7 @@ wss.on("connection", ws => {
                                         game.save()
                                             .then(result => {
                                                 wss.clients.forEach(client => {
-                                                    if (client.readyState === WebSocket.OPEN) {
+                                                    if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
                                                         client.send(JSON.stringify({
                                                             type: "gameUpdated",
                                                             game: result,

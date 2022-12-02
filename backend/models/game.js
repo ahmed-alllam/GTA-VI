@@ -9,6 +9,9 @@ const GameSchema = mongoose.Schema({
     players: {
         type: Array,
     },
+    players_ids: {
+        type: Array,
+    },
     state: {
         type: String,
         // required: true,
