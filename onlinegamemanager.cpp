@@ -157,7 +157,6 @@ void OnlineGameManager::gameUpdated(QJsonObject game)
     }
 
     QJsonArray bullets = game["bullets"].toArray();
-    level->clear_bullets();
     for (int i = 0; i < bullets.size(); i++)
     {
         QJsonObject bullet = bullets[i].toObject();
@@ -165,9 +164,10 @@ void OnlineGameManager::gameUpdated(QJsonObject game)
         int y = bullet["y"].toInt();
         level->add_bullet(x, y);
     }
+    // if the level has a bullet that is not in the bullets list then remove it
+    level->clear_bullets(bullets);
 
     QJsonArray pellets = game["pellets"].toArray();
-    level->clear_pellets();
     for (int i = 0; i < pellets.size(); i++)
     {
         QJsonObject pellet = pellets[i].toObject();
@@ -175,6 +175,7 @@ void OnlineGameManager::gameUpdated(QJsonObject game)
         int y = pellet["y"].toInt();
         level->add_pellet(x, y);
     }
+    level->clear_pellets(pellets);
 }
 
 void OnlineGameManager::anotherPlayerJoined(QJsonObject game)

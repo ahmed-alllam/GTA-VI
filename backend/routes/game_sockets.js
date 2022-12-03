@@ -387,10 +387,13 @@ wss.on("connection", ws => {
                                     .then(result => {
                                         wss.clients.forEach(client => {
                                             if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                                client.send(JSON.stringify({
-                                                    type: "gameUpdated",
-                                                    game: result,
-                                                }));
+                                                // check if the client is not the player who made the move
+                                                if (client.playerId !== ws.playerId) {
+                                                    client.send(JSON.stringify({
+                                                        type: "gameUpdated",
+                                                        game: result,
+                                                    }));
+                                                }
                                             }
                                         });
                                     })
@@ -420,9 +423,9 @@ wss.on("connection", ws => {
                         }));
                     });
                 break;
-                // same but for pellets
+            // same but for pellets
             case "removePellet":
-                    
+
                 Game
                     .findOne({
                         id: data
@@ -441,10 +444,13 @@ wss.on("connection", ws => {
                                     .then(result => {
                                         wss.clients.forEach(client => {
                                             if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                                client.send(JSON.stringify({
-                                                    type: "gameUpdated",
-                                                    game: result,
-                                                }));
+                                                if (client.playerId !== ws.playerId) {
+
+                                                    client.send(JSON.stringify({
+                                                        type: "gameUpdated",
+                                                        game: result,
+                                                    }));
+                                                }
                                             }
                                         });
                                     })
@@ -472,10 +478,10 @@ wss.on("connection", ws => {
                         }));
                     });
                 break;
-                // updateBullets
+            // updateBullets
             case "updateBullets":
                 Game
-                    
+
                     .findOne({
                         id: data
 
@@ -504,10 +510,13 @@ wss.on("connection", ws => {
                                             .then(result => {
                                                 wss.clients.forEach(client => {
                                                     if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                                        client.send(JSON.stringify({
-                                                            type: "gameUpdated",
-                                                            game: result,
-                                                        }));
+                                                        if (client.playerId !== ws.playerId) {
+
+                                                            client.send(JSON.stringify({
+                                                                type: "gameUpdated",
+                                                                game: result,
+                                                            }));
+                                                        }
                                                     }
                                                 });
                                             })
@@ -538,10 +547,10 @@ wss.on("connection", ws => {
                         }));
                     });
                 break;
-                // updateScore
+            // updateScore
             case "updateScore":
                 Game
-                    
+
                     .findOne({
                         id: data
 
@@ -563,15 +572,18 @@ wss.on("connection", ws => {
                                             y: game.players[i].y,
                                             direction: game.players[i].direction,
                                         });
-                                
+
                                         game.save()
                                             .then(result => {
                                                 wss.clients.forEach(client => {
                                                     if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                                        client.send(JSON.stringify({
-                                                            type: "gameUpdated",
-                                                            game: result,
-                                                        }));
+                                                        if (client.playerId !== ws.playerId) {
+
+                                                            client.send(JSON.stringify({
+                                                                type: "gameUpdated",
+                                                                game: result,
+                                                            }));
+                                                        }
                                                     }
                                                 });
                                             })
@@ -635,10 +647,13 @@ wss.on("connection", ws => {
                             .then(result => {
                                 wss.clients.forEach(client => {
                                     if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                        client.send(JSON.stringify({
-                                            type: "gameUpdated",
-                                            game: result,
-                                        }));
+                                        if (client.playerId !== ws.playerId) {
+
+                                            client.send(JSON.stringify({
+                                                type: "gameUpdated",
+                                                game: result,
+                                            }));
+                                        }
                                     }
                                 });
                             })
@@ -666,10 +681,11 @@ wss.on("connection", ws => {
                     change = false;
                     if (game.bullets.length < 3) {
                         change = true;
+                        bullet = defaultBullets[Math.floor(Math.random() * defaultBullets.length)];
                         game.bullets.push({
                             // choose an x and y pair from the list of possible bullet positions
-                            x: defaultBullets[Math.floor(Math.random() * defaultBullets.length)].x,
-                            y: defaultBullets[Math.floor(Math.random() * defaultBullets.length)].y,
+                            x: bullet.x,
+                            y: bullet.y,
                         });
                     }
 
@@ -677,10 +693,11 @@ wss.on("connection", ws => {
                     if (game.pellets.length < 2) {
                         change = true;
                         // add a new pellet
+                        pellet = defaultPellets[Math.floor(Math.random() * defaultPellets.length)];
                         game.pellets.push({
                             // get x and y from the list above
-                            x: defaultPellets[Math.floor(Math.random() * defaultPellets.length)].x,
-                            y: defaultPellets[Math.floor(Math.random() * defaultPellets.length)].y,
+                            x: pellet.x,
+                            y: pellet.y,
                         });
                     }
                     // save the game
@@ -691,10 +708,13 @@ wss.on("connection", ws => {
                                 // emit the game to all players in the same game instance
                                 wss.clients.forEach(client => {
                                     if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                        client.send(JSON.stringify({
-                                            type: "gameUpdated",
-                                            game: result,
-                                        }));
+                                        if (client.playerId !== ws.playerId) {
+
+                                            client.send(JSON.stringify({
+                                                type: "gameUpdated",
+                                                game: result,
+                                            }));
+                                        }
                                     }
                                 });
                             })

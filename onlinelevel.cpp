@@ -321,20 +321,56 @@ void OnlineLevel::updateScore(int pellets) {
     manager->updateScore(pellets);
 }
 
-void OnlineLevel::clear_bullets()
+void OnlineLevel::clear_bullets(QJsonArray bullets)
 {
-    for (int i = 0; i < bullets.size(); i++)
+    // if the bullet is not in the array, remove it from the scene
+    for (int i = 0; i < this->bullets.size(); i++)
     {
-        scene->removeItem(bullets[i]);
+        bool found = false;
+        for (int j = 0; j < bullets.size(); j++)
+        {
+            QJsonObject bullet = bullets[j].toObject();
+            int x = bullet["x"].toInt();
+            int y = bullet["y"].toInt();
+
+            if (this->bullets[i]->x == x && this->bullets[i]->y == y)
+            {
+                found = true;
+                break;
+            }
+        }
+
+        if (!found)
+        {
+            scene->removeItem(this->bullets[i]);
+            this->bullets.removeAt(i);
+        }
     }
-    bullets.clear();
 }
 
-void OnlineLevel::clear_pellets()
+void OnlineLevel::clear_pellets(QJsonArray pellets)
 {
-    for (int i = 0; i < pellets.size(); i++)
+    // same as above but for pellets
+    for (int i = 0; i < this->pellets.size(); i++)
     {
-        scene->removeItem(pellets[i]);
+        bool found = false;
+        for (int j = 0; j < pellets.size(); j++)
+        {
+            QJsonObject pellet = pellets[j].toObject();
+            int x = pellet["x"].toInt();
+            int y = pellet["y"].toInt();
+
+            if (this->pellets[i]->x == x && this->pellets[i]->y == y)
+            {
+                found = true;
+                break;
+            }
+        }
+
+        if (!found)
+        {
+            scene->removeItem(this->pellets[i]);
+            this->pellets.removeAt(i);
+        }
     }
-    pellets.clear();
 }

@@ -37,8 +37,8 @@ public:
     void remove_pellet(int x, int y);
     void updateBullet(int bullets);
     void updateScore(int score);
-    void clear_bullets();
-    void clear_pellets();
+    void clear_bullets(QJsonArray bullets);
+    void clear_pellets(QJsonArray pellets);
     void create_bullets();
     void create_pellets();
     void create_healthbar();
