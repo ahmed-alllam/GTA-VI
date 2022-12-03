@@ -271,5 +271,5 @@ void OnlineGameManager::create_sound()
     player->setAudioOutput(audioOutput);
     player->setLoops(QMediaPlayer::Infinite);
     player->setSource(QUrl("qrc:/assets/sounds/backsound.mp3"));
-    player->play();
+//    player->play();
 }

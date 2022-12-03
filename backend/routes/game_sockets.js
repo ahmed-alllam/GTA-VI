@@ -388,12 +388,12 @@ wss.on("connection", ws => {
                                         wss.clients.forEach(client => {
                                             if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
                                                 // check if the client is not the player who made the move
-                                                if (client.playerId !== ws.playerId) {
+                                                // if (client.playerId !== ws.playerId) {
                                                     client.send(JSON.stringify({
                                                         type: "gameUpdated",
                                                         game: result,
                                                     }));
-                                                }
+                                                // }
                                             }
                                         });
                                     })
@@ -425,7 +425,6 @@ wss.on("connection", ws => {
                 break;
             // same but for pellets
             case "removePellet":
-
                 Game
                     .findOne({
                         id: data
@@ -444,13 +443,13 @@ wss.on("connection", ws => {
                                     .then(result => {
                                         wss.clients.forEach(client => {
                                             if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                                if (client.playerId !== ws.playerId) {
+                                                // if (client.playerId !== ws.playerId) {
 
                                                     client.send(JSON.stringify({
                                                         type: "gameUpdated",
                                                         game: result,
                                                     }));
-                                                }
+                                                // }
                                             }
                                         });
                                     })
@@ -481,10 +480,8 @@ wss.on("connection", ws => {
             // updateBullets
             case "updateBullets":
                 Game
-
                     .findOne({
                         id: data
-
                             .game.gameId
                     })
                     .exec()
@@ -647,13 +644,10 @@ wss.on("connection", ws => {
                             .then(result => {
                                 wss.clients.forEach(client => {
                                     if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                        if (client.playerId !== ws.playerId) {
-
-                                            client.send(JSON.stringify({
-                                                type: "gameUpdated",
-                                                game: result,
-                                            }));
-                                        }
+                                        client.send(JSON.stringify({
+                                            type: "gameUpdated",
+                                            game: result,
+                                        }));
                                     }
                                 });
                             })
@@ -667,7 +661,7 @@ wss.on("connection", ws => {
 
     });
 
-    // every 4000ms, add a new random bullet and pellet to the game and emit the game to all players in the game
+    // every 5000ms, add a new random bullet and pellet to the game and emit the game to all players in the game
     setInterval(() => {
         Game
             .find({
@@ -708,13 +702,10 @@ wss.on("connection", ws => {
                                 // emit the game to all players in the same game instance
                                 wss.clients.forEach(client => {
                                     if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                        if (client.playerId !== ws.playerId) {
-
-                                            client.send(JSON.stringify({
-                                                type: "gameUpdated",
-                                                game: result,
-                                            }));
-                                        }
+                                        client.send(JSON.stringify({
+                                            type: "gameUpdated",
+                                            game: result,
+                                        }));
                                     }
                                 });
                             })
