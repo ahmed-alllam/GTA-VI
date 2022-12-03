@@ -280,8 +280,8 @@ void OnlineLevel::remove_bullet(int x, int y)
     {
         if (bullets[i]->x == x && bullets[i]->y == y)
         {
-            scene->removeItem(bullets[i]);
-            bullets.removeAt(i);
+//            scene->removeItem(bullets[i]);
+//            bullets.removeAt(i);
 
             // emit bullet removal to server
             OnlineGameManager *manager = static_cast<OnlineGameManager *>(gameManager);
@@ -298,8 +298,8 @@ void OnlineLevel::remove_pellet(int x, int y)
     {
         if (pellets[i]->x == x && pellets[i]->y == y)
         {
-            scene->removeItem(pellets[i]);
-            pellets.removeAt(i);
+//            scene->removeItem(pellets[i]);
+//            pellets.removeAt(i);
 
             // emit pellet removal to server
             OnlineGameManager *manager = static_cast<OnlineGameManager *>(gameManager);
@@ -373,4 +373,11 @@ void OnlineLevel::clear_pellets(QJsonArray pellets)
             this->pellets.removeAt(i);
         }
     }
+}
+
+void OnlineLevel::shoot(int x, int y, int direction)
+{
+    // emit signal to server to add bullet
+    OnlineGameManager *manager = static_cast<OnlineGameManager *>(gameManager);
+    manager->shoot(x, y, direction);
 }

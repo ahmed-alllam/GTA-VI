@@ -342,6 +342,13 @@ wss.on("connection", ws => {
                                                 console.log(err);
                                             });
                                         break;
+                                        // co-pilot, is the code above immune to race conditions?
+                                        // if not, how can we fix it?
+                                        // answer: we can use
+                                        // https://mongoosejs.com/docs/api.html#model_Model.findOneAndUpdate
+                                        // to update the game
+                                        // ok, let's do that
+
                                     }
                                 }
                             } else {
@@ -366,6 +373,7 @@ wss.on("connection", ws => {
                             message: "Game not found",
                         }));
                     });
+                
                 break;
             case "removeBullet":
                 // find the game
@@ -579,6 +587,73 @@ wss.on("connection", ws => {
                                                             client.send(JSON.stringify({
                                                                 type: "gameUpdated",
                                                                 game: result,
+                                                            }));
+                                                        }
+                                                    }
+                                                });
+                                            })
+                                            .catch(err => {
+                                                console.log(err);
+                                            });
+                                        break;
+                                    }
+                                }
+                            } else {
+                                ws.send(JSON.stringify({
+                                    type: "error",
+                                    message: "Game is not in progress",
+                                }));
+                            }
+                        } else {
+                            ws.send(JSON.stringify({
+                                type: "error",
+                                message: "Game not found",
+                            }));
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        ws.send(JSON.stringify({
+                            type: "error",
+                            message: "Game not found",
+                        }));
+                    });
+                break;
+            
+            case "shoot":
+                Game
+                    .findOne({
+                        id: data
+                            .game.gameId
+                    })
+                    .exec()
+                    .then(game => {
+                        if (game) {
+                            if (game.state === "playing") {
+                                // set the number of bullets for the player
+                                for (let i = 0; i < game.players.length; i++) {
+                                    if (game.players[i].id === data.playerId) {
+                                        game.players.set(i, {
+                                            id: game.players[i].id,
+                                            score: game.players[i].score,
+                                            bullets: game.players[i].bullets - 1,
+                                            health: game.players[i].health,
+                                            isPowerful: game.players[i].isPowerful,
+                                            x: game.players[i].x,
+                                            y: game.players[i].y,
+                                            direction: game.players[i].direction,
+                                        });
+
+                                        game.save()
+                                            .then(result => {
+                                                wss.clients.forEach(client => {
+                                                    if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                                        if (client.playerId !== ws.playerId) {
+                                                            client.send(JSON.stringify({
+                                                                type: "shoot",
+                                                                x: data.x,
+                                                                y: data.y,
+                                                                direction: data.direction,
                                                             }));
                                                         }
                                                     }

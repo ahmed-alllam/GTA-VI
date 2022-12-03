@@ -139,6 +139,7 @@ void OnlineGameManager::gameStarted(QJsonObject game)
     level->create_players(players);
     gameUpdated(game);
     create_sound();
+    create_healthbar();
 }
 
 void OnlineGameManager::gameUpdated(QJsonObject game)
@@ -154,6 +155,15 @@ void OnlineGameManager::gameUpdated(QJsonObject game)
         int score = player["score"].toInt();
         int bullets = player["bullets"].toInt();
         level->update_player_position(playerId, x, y, direction, score, bullets);
+
+        if (playerId == username)
+        {
+            // change bulletsCounter, and coinsCounter
+            bulletsCounter->setText(QString::number(bullets));
+            coinsCounter->setText(QString::number(score));
+
+            // todo: change number of hearts
+        }
     }
 
     QJsonArray bullets = game["bullets"].toArray();
@@ -178,10 +188,28 @@ void OnlineGameManager::gameUpdated(QJsonObject game)
     level->clear_pellets(pellets);
 }
 
+void OnlineGameManager::shoot(int x, int y, int direction)
+{
+    socket->sendTextMessage(QString("{\"type\":\"shoot\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\",\"x\":%3,\"y\":%4,\"direction\":%5}").arg(game_id).arg(username).arg(x).arg(y).arg(direction));
+    bulletsCounter->setText(QString::number(bulletsCounter->text().toInt() - 1));
+}
+
 void OnlineGameManager::anotherPlayerJoined(QJsonObject game)
 {
     QJsonArray players = game["players"].toArray();
     level->create_players(players);
+}
+
+void OnlineGameManager::shoot_another_bullet(int x, int y, int direction)
+{
+    QMediaPlayer *player = new QMediaPlayer;
+    QAudioOutput *audioOutput = new QAudioOutput;
+    player->setAudioOutput(audioOutput);
+    player->setSource(QUrl("qrc:/assets/sounds/shot.mp3"));
+    player->play();
+
+    FlyingBullet *bullet = new FlyingBullet(level->boardData, x, y, direction, level);
+    scene->addItem(bullet);
 }
 
 void OnlineGameManager::updatePosition(int x, int y, int direction)
@@ -253,7 +281,10 @@ void OnlineGameManager::onTextMessageReceived(QString message)
     {
         emit gameUpdated(json["game"].toObject());
     }
-
+    else if (type == "shoot")
+    {
+        emit shoot_another_bullet(json["x"].toInt(), json["y"].toInt(), json["direction"].toInt());
+    }
     else if (type == "error")
     {
         qDebug() << "Error";
@@ -271,5 +302,72 @@ void OnlineGameManager::create_sound()
     player->setAudioOutput(audioOutput);
     player->setLoops(QMediaPlayer::Infinite);
     player->setSource(QUrl("qrc:/assets/sounds/backsound.mp3"));
-//    player->play();
+    //    player->play();
+}
+
+void OnlineGameManager::create_healthbar()
+{
+    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
+    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
+    int unitWidth = qMin(screenWidth, screenHeight) / 17;
+    int unitHeight = qMin(screenWidth, screenHeight) / 17;
+
+    QGraphicsRectItem *panel = new QGraphicsRectItem(65, 0, 1130, 70);
+    QBrush *brush = new QBrush();
+    brush->setColor(Qt::darkGray);
+    brush->setStyle(Qt::SolidPattern);
+    panel->setBrush(*brush);
+    scene->addItem(panel);
+
+    txt = new QGraphicsTextItem("NORMAL MODE");
+    QFont fonty("Arial", 20, QFont::StyleNormal);
+    txt->setPos(540, 20);
+    txt->setFont(fonty);
+    txt->setDefaultTextColor(Qt::white);
+    scene->addItem(txt);
+
+    /* Creating Hearts */
+    hearts = new QGraphicsPixmapItem[3];
+
+    QPixmap blankImage(":assets/images/extra.png");
+
+    blankImage = blankImage.scaledToWidth(unitWidth);
+    blankImage = blankImage.scaledToHeight(unitHeight);
+    for (int i = 0; i < 3; i++)
+    {
+        hearts[i].setPixmap(blankImage);
+        hearts[i].setPos(80 * (i + 1), 15);
+        scene->addItem(&hearts[i]);
+    }
+
+    QPixmap bulletImage(":assets/images/bullet.png");
+    bulletImage = bulletImage.scaledToWidth(unitWidth);
+    bulletImage = bulletImage.scaledToHeight(unitHeight);
+
+    QGraphicsPixmapItem *bulletItem = new QGraphicsPixmapItem();
+    bulletItem->setPos(300, 15);
+    bulletItem->setPixmap(bulletImage);
+    scene->addItem(bulletItem);
+
+    bulletsCounter = new QGraphicsTextItem("0");
+    bulletsCounter->setPos(360, 20);
+    bulletsCounter->setFont(fonty);
+    bulletsCounter->setDefaultTextColor(Qt::white);
+    scene->addItem(bulletsCounter);
+
+    QPixmap coinImage(":assets/images/coin.png");
+
+    coinImage = coinImage.scaledToWidth(unitWidth);
+    coinImage = coinImage.scaledToHeight(unitHeight);
+
+    QGraphicsPixmapItem *coinItem = new QGraphicsPixmapItem();
+    coinItem->setPos(400, 15);
+    coinItem->setPixmap(coinImage);
+    scene->addItem(coinItem);
+
+    coinsCounter = new QGraphicsTextItem("0");
+    coinsCounter->setPos(460, 20);
+    coinsCounter->setFont(fonty);
+    coinsCounter->setDefaultTextColor(Qt::white);
+    scene->addItem(coinsCounter);
 }

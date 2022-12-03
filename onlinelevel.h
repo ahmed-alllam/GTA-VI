@@ -12,7 +12,7 @@
 
 class OnlineLevel
 {
-private:
+public:
     QTimer *timer;
     QTimer *timer2;
     QGraphicsScene *scene;
@@ -38,6 +38,7 @@ public:
     void updateBullet(int bullets);
     void updateScore(int score);
     void clear_bullets(QJsonArray bullets);
+    void shoot(int x, int y, int direction);
     void clear_pellets(QJsonArray pellets);
     void create_bullets();
     void create_pellets();

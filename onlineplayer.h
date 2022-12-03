@@ -44,6 +44,7 @@ public:
     void setCoordinates(int x, int y, int direction);
     void focus_player();
     void checkCollision();
+    void shoot();
     void add_id();
 public slots:
     void keyPressEvent(QKeyEvent * event);

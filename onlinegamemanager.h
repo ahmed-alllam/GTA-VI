@@ -22,11 +22,19 @@ private:
     QString state;
     OnlineLevel *level;
 public:
+    QGraphicsRectItem **panels;
+    QGraphicsTextItem * txt;
+    QGraphicsTextItem * bulletsCounter;
+    QGraphicsTextItem * coinsCounter;
+    QGraphicsPixmapItem* hearts;
     OnlineGameManager(QGraphicsScene *scene, QString token, QString username);
     void create_game_id_panel();
     void join_game();
+    void shoot();
+    void create_healthbar();   // to create and display the pellet
     void create_new_game();
     void create_game_waiting_panel();
+    void shoot_another_bullet(int x, int y, int direction);
     void gameStarted(QJsonObject game);
     void gameUpdated(QJsonObject json);
     void anotherPlayerJoined(QJsonObject json);

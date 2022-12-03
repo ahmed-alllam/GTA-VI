@@ -7,7 +7,7 @@
 
 OnlinePlayer::OnlinePlayer(int boardData[12][16], void *currentLevel, QString username)
 {
-    qDebug () << "online player created with username: "<< username;
+    qDebug() << "online player created with username: " << username;
 
     this->currentLevel = currentLevel;
     this->id = username;
@@ -104,17 +104,18 @@ OnlinePlayer::OnlinePlayer(int boardData[12][16], void *currentLevel, QString us
     }
 }
 
-
-void OnlinePlayer::add_id() {
+void OnlinePlayer::add_id()
+{
     idText = new QGraphicsTextItem(id);
     idText->setDefaultTextColor(Qt::white);
-//    idText->setFont(QFont("Arial", 20));
+    //    idText->setFont(QFont("Arial", 20));
     idText->setZValue(1);
     scene()->addItem(idText);
-    qDebug () << "id is "<< id;
-    qDebug () << scene();
+    qDebug() << "id is " << id;
+    qDebug() << scene();
 
-    if(idText != nullptr) {
+    if (idText != nullptr)
+    {
         idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
     }
 }
@@ -128,43 +129,46 @@ void OnlinePlayer::setCoordinates(int x, int y, int direction)
     if (direction == 0)
     {
         setPixmap(franklinImager);
-        if(idText != nullptr) {
+        if (idText != nullptr)
+        {
             idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
             // rotate the text
             idText->setRotation(0);
         }
-//        timer->stop();
+        //        timer->stop();
     }
     else if (direction == 1)
     {
         setPixmap(franklinImagel);
-        if(idText != nullptr) {
+        if (idText != nullptr)
+        {
             idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
             idText->setRotation(0);
-
         }
-//        timer->stop();
+        //        timer->stop();
     }
     else if (direction == 2)
     {
         setPixmap(franklinImageu);
-        if(idText != nullptr) {
+        if (idText != nullptr)
+        {
             idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
             idText->setRotation(90);
         }
-//        timer->stop();
+        //        timer->stop();
     }
     else
     {
         setPixmap(franklinImaged);
-        if(idText != nullptr) {
+        if (idText != nullptr)
+        {
             idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
             idText->setRotation(90);
         }
-//        timer->stop();
+        //        timer->stop();
     }
 
-    qDebug() << "in set coordinates "<< x << y;
+    qDebug() << "in set coordinates " << x << y;
 
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
 }
@@ -186,7 +190,8 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
             x--;
             direction = 2;
             setPixmap(franklinImageu);
-            if(idText != nullptr) {
+            if (idText != nullptr)
+            {
                 idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
                 idText->setRotation(90);
             }
@@ -196,7 +201,8 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
             x++;
             direction = 3;
             setPixmap(franklinImaged);
-            if(idText != nullptr) {
+            if (idText != nullptr)
+            {
                 idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
                 idText->setRotation(90);
             }
@@ -206,7 +212,8 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
             y++;
             direction = 0;
             setPixmap(franklinImager);
-            if(idText != nullptr) {
+            if (idText != nullptr)
+            {
                 idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
                 idText->setRotation(0);
             }
@@ -216,7 +223,8 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
             y--;
             direction = 1;
             setPixmap(franklinImagel);
-            if(idText != nullptr) {
+            if (idText != nullptr)
+            {
                 idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
                 idText->setRotation(0);
             }
@@ -224,23 +232,22 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
 
         if (event->key() == Qt::Key_Space)
         {
-            // shoot();
+            shoot();
         }
 
         setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
 
+        manager->updatePosition(x, y, direction);
         checkCollision();
         // if (x == 9 && y == 15)
         // {
         //     manager->win();
         // }
-
-        manager->updatePosition(x, y, direction);
     }
 }
 
-void OnlinePlayer::checkCollision() {
-    OnlineLevel *manager = static_cast<OnlineLevel *>(currentLevel);
+void OnlinePlayer::checkCollision()
+{
     QList<QGraphicsItem *> collision = collidingItems();
 
     for (int i = 0; i < collision.size(); i++)
@@ -249,16 +256,52 @@ void OnlinePlayer::checkCollision() {
         {
             // cast the item to a bullet
             bullet *bullet = dynamic_cast<class bullet *>(collision[i]);
-            manager->remove_bullet(bullet->x, bullet->y);
-            bullets++;
-            manager->updateBullet(bullets);
-        } else if (typeid(*(collision[i])) == typeid(pellet))
+            QTimer::singleShot(500, this, [this, bullet]()
+                               {
+                OnlineLevel *manager = static_cast<OnlineLevel *>(currentLevel);
+                manager->remove_bullet(bullet->x, bullet->y); });
+
+            // make this part after 0.1 seconds
+            QTimer::singleShot(1000, this, [this]()
+                               {
+                OnlineLevel *manager = static_cast<OnlineLevel *>(currentLevel);
+                bullets++;
+                manager->updateBullet(bullets); });
+        }
+        else if (typeid(*(collision[i])) == typeid(pellet))
         {
             pellet *pellet = dynamic_cast<class pellet *>(collision[i]);
-            manager->remove_pellet(pellet->x, pellet->y);
-            score++;
-            manager->updateScore(score);
-        } 
-    }
+            QTimer::singleShot(500, this, [this, pellet]()
+                               {
+                OnlineLevel *manager = static_cast<OnlineLevel *>(currentLevel);
+                manager->remove_pellet(pellet->x, pellet->y); });
 
+            // make this part after 0.1 seconds
+            QTimer::singleShot(1000, this, [this]()
+                               {
+                OnlineLevel *manager = static_cast<OnlineLevel *>(currentLevel);
+                score++;
+            manager->updateScore(score); });
+        }
+    }
+}
+
+void OnlinePlayer::shoot()
+{
+    if (bullets > 0)
+    {
+        bullets--;
+
+        OnlineLevel *manager = static_cast<OnlineLevel *>(currentLevel);
+        manager->shoot(x, y, direction);
+
+        QMediaPlayer *player = new QMediaPlayer;
+        QAudioOutput *audioOutput = new QAudioOutput;
+        player->setAudioOutput(audioOutput);
+        player->setSource(QUrl("qrc:/assets/sounds/shot.mp3"));
+        player->play();
+
+        FlyingBullet *bullet = new FlyingBullet(boardData, x, y, direction, manager);
+        scene()->addItem(bullet);
+    }
 }
