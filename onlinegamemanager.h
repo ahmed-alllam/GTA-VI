@@ -31,6 +31,10 @@ public:
     void gameUpdated(QJsonObject json);
     void anotherPlayerJoined(QJsonObject json);
     void updatePosition(int x, int y, int direction);
+    void remove_bullet(int x, int y);
+    void remove_pellet(int x, int y);
+    void updateBullet(int bullets);
+    void updateScore(int score);
     void onConnected();
     void onDisconnected();
     void onTextMessageReceived(QString message);

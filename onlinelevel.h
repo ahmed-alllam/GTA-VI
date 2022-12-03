@@ -33,6 +33,12 @@ public:
     void updatePosition(int x, int y, int direction);
     void add_bullet(int x, int y);
     void add_pellet(int x, int y);
+    void remove_bullet(int x, int y);
+    void remove_pellet(int x, int y);
+    void updateBullet(int bullets);
+    void updateScore(int score);
+    void clear_bullets();
+    void clear_pellets();
     void create_bullets();
     void create_pellets();
     void create_healthbar();

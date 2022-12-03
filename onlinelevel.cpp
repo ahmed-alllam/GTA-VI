@@ -215,6 +215,8 @@ void OnlineLevel::create_players(QJsonArray playersJSON)
         onlinePlayer->setCoordinates(x, y, direction);
         scene->addItem(onlinePlayer);
         players.append(onlinePlayer);
+        onlinePlayer->add_id();
+        // display the player id above the player image
 
         if (id == this->username)
         {
@@ -227,13 +229,15 @@ void OnlineLevel::create_players(QJsonArray playersJSON)
     }
 }
 
-void OnlineLevel::update_player_position(QString playerId, int x, int y, int direction)
+void OnlineLevel::update_player_position(QString playerId, int x, int y, int direction, int score, int bullets)
 {
     for (int i = 0; i < players.size(); i++)
     {
         if (players[i]->id == playerId && playerId != this->username)
         {
             players[i]->setCoordinates(x, y, direction);
+            players[i]->score = score;
+            players[i]->bullets = bullets;
         }
     }
 }
@@ -268,4 +272,69 @@ void OnlineLevel::add_pellet(int x, int y)
     pellet *pellet = new class pellet(boardData, x, y);
     scene->addItem(pellet);
     pellets.append(pellet);
+}
+
+void OnlineLevel::removeBullet(int x, int y)
+{
+    for (int i = 0; i < bullets.size(); i++)
+    {
+        if (bullets[i]->x == x && bullets[i]->y == y)
+        {
+            scene->removeItem(bullets[i]);
+            bullets.removeAt(i);
+
+            // emit bullet removal to server
+            OnlineGameManager *manager = static_cast<OnlineGameManager *>(gameManager);
+            manager->removeBullet(x, y);
+            return;
+        }
+    }
+}
+
+// same as above but for pellets
+void OnlineLevel::removePellet(int x, int y)
+{
+    for (int i = 0; i < pellets.size(); i++)
+    {
+        if (pellets[i]->x == x && pellets[i]->y == y)
+        {
+            scene->removeItem(pellets[i]);
+            pellets.removeAt(i);
+
+            // emit pellet removal to server
+            OnlineGameManager *manager = static_cast<OnlineGameManager *>(gameManager);
+            manager->removePellet(x, y);
+            return;
+        }
+    }
+}
+
+void OnlineLevel::updateBullets(int bullets) {
+    // emit signal to update the number of bullets
+    OnlineGameManager *manager = static_cast<OnlineGameManager *>(gameManager);
+    manager->updateBullets(bullets);
+}
+
+void OnlineLevel::updatePellets(int pellets) {
+    // emit signal to update the number of pellets
+    OnlineGameManager *manager = static_cast<OnlineGameManager *>(gameManager);
+    manager->updatePellets(pellets);
+}
+
+void OnlineLevel::clear_bullets()
+{
+    for (int i = 0; i < bullets.size(); i++)
+    {
+        scene->removeItem(bullets[i]);
+    }
+    bullets.clear();
+}
+
+void OnlineLevel::clear_pellets()
+{
+    for (int i = 0; i < pellets.size(); i++)
+    {
+        scene->removeItem(pellets[i]);
+    }
+    pellets.clear();
 }

@@ -137,6 +137,7 @@ void OnlineGameManager::gameStarted(QJsonObject game)
     level->add_board_images();
     QJsonArray players = game["players"].toArray();
     level->create_players(players);
+    gameUpdated(game);
     create_sound();
 }
 
@@ -150,10 +151,13 @@ void OnlineGameManager::gameUpdated(QJsonObject game)
         int x = player["x"].toInt();
         int y = player["y"].toInt();
         int direction = player["direction"].toInt();
-        level->update_player_position(playerId, x, y, direction);
+        int score = player["score"].toInt();
+        int bullets = player["bullets"].toInt();
+        level->update_player_position(playerId, x, y, direction, score, bullets);
     }
 
     QJsonArray bullets = game["bullets"].toArray();
+    level->clear_bullets();
     for (int i = 0; i < bullets.size(); i++)
     {
         QJsonObject bullet = bullets[i].toObject();
@@ -163,6 +167,7 @@ void OnlineGameManager::gameUpdated(QJsonObject game)
     }
 
     QJsonArray pellets = game["pellets"].toArray();
+    level->clear_pellets();
     for (int i = 0; i < pellets.size(); i++)
     {
         QJsonObject pellet = pellets[i].toObject();
@@ -183,6 +188,26 @@ void OnlineGameManager::updatePosition(int x, int y, int direction)
     // send the server the new position
     qDebug() << "emitting move with user name " << username << " x: " << x << " y: " << y;
     socket->sendTextMessage(QString("{\"type\":\"move\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\", \"player\":{\"x\":%3,\"y\":%4,\"direction\":%5}}").arg(game_id).arg(username).arg(x).arg(y).arg(direction));
+}
+
+void OnlineGameManager::removeBullet(int x, int y)
+{
+    socket->sendTextMessage(QString("{\"type\":\"removeBullet\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\", \"bullet\":{\"x\":%3,\"y\":%4}}").arg(game_id).arg(username).arg(x).arg(y));
+}
+
+void OnlineGameManager::removePellet(int x, int y)
+{
+    socket->sendTextMessage(QString("{\"type\":\"removePellet\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\", \"pellet\":{\"x\":%3,\"y\":%4}}").arg(game_id).arg(username).arg(x).arg(y));
+}
+
+void OnlineGameManager::updateBullet(int bullets)
+{
+    socket->sendTextMessage(QString("{\"type\":\"updateBullets\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\", \"bullets\":%3").arg(game_id).arg(username).arg(bullets));
+}
+
+void OnlineGameManager::updateScore(int score)
+{
+    socket->sendTextMessage(QString("{\"type\":\"updateScore\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\", \"score\":%3").arg(game_id).arg(username).arg(score));
 }
 
 void OnlineGameManager::onConnected()

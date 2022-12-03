@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QPixmap>
 #include <QGraphicsPixmapItem>
+#include <QGraphicsTextItem>
 
 class OnlinePlayer : public QObject, public QGraphicsPixmapItem
 {
@@ -21,6 +22,7 @@ public:
     int bullets;
     int boardData[12][16];
     void * currentLevel;
+    QGraphicsTextItem *idText;
     QPixmap franklinImagel1;
     QPixmap franklinImagel2;
     QPixmap franklinImageu1;
@@ -41,6 +43,8 @@ public:
     explicit OnlinePlayer(int boardData[12][16], void *currentLevel, QString username);
     void setCoordinates(int x, int y, int direction);
     void focus_player();
+    void checkCollision();
+    void add_id();
 public slots:
     void keyPressEvent(QKeyEvent * event);
 

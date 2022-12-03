@@ -12,6 +12,7 @@ OnlinePlayer::OnlinePlayer(int boardData[12][16], void *currentLevel, QString us
     this->currentLevel = currentLevel;
     this->id = username;
     this->currPlayer = false;
+    this->idText = nullptr;
 
     franklinImagel1 = QPixmap(":assets/images/Franklin model 2 m3.png");
     franklinImagel2 = QPixmap(":assets/images/Franklin model 2 m2.png");
@@ -103,6 +104,21 @@ OnlinePlayer::OnlinePlayer(int boardData[12][16], void *currentLevel, QString us
     }
 }
 
+
+void OnlinePlayer::add_id() {
+    idText = new QGraphicsTextItem(id);
+    idText->setDefaultTextColor(Qt::white);
+//    idText->setFont(QFont("Arial", 20));
+    idText->setZValue(1);
+    scene()->addItem(idText);
+    qDebug () << "id is "<< id;
+    qDebug () << scene();
+
+    if(idText != nullptr) {
+        idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
+    }
+}
+
 void OnlinePlayer::setCoordinates(int x, int y, int direction)
 {
     this->x = x;
@@ -112,21 +128,39 @@ void OnlinePlayer::setCoordinates(int x, int y, int direction)
     if (direction == 0)
     {
         setPixmap(franklinImager);
+        if(idText != nullptr) {
+            idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
+            // rotate the text
+            idText->setRotation(0);
+        }
 //        timer->stop();
     }
     else if (direction == 1)
     {
         setPixmap(franklinImagel);
+        if(idText != nullptr) {
+            idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
+            idText->setRotation(0);
+
+        }
 //        timer->stop();
     }
     else if (direction == 2)
     {
         setPixmap(franklinImageu);
+        if(idText != nullptr) {
+            idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
+            idText->setRotation(90);
+        }
 //        timer->stop();
     }
     else
     {
         setPixmap(franklinImaged);
+        if(idText != nullptr) {
+            idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
+            idText->setRotation(90);
+        }
 //        timer->stop();
     }
 
@@ -151,25 +185,41 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
         {
             x--;
             direction = 2;
-            setPixmap(franklinImageu1);
+            setPixmap(franklinImageu);
+            if(idText != nullptr) {
+                idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
+                idText->setRotation(90);
+            }
         }
         else if (event->key() == Qt::Key_Down && boardData[x + 1][y] >= 0)
         {
             x++;
             direction = 3;
-            setPixmap(franklinImaged1);
+            setPixmap(franklinImaged);
+            if(idText != nullptr) {
+                idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
+                idText->setRotation(90);
+            }
         }
         else if (event->key() == Qt::Key_Right && boardData[x][y + 1] >= 0)
         {
             y++;
             direction = 0;
-            setPixmap(franklinImager1);
+            setPixmap(franklinImager);
+            if(idText != nullptr) {
+                idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
+                idText->setRotation(0);
+            }
         }
         else if (event->key() == Qt::Key_Left && boardData[x][y - 1] >= 0)
         {
             y--;
             direction = 1;
-            setPixmap(franklinImagel1);
+            setPixmap(franklinImagel);
+            if(idText != nullptr) {
+                idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
+                idText->setRotation(0);
+            }
         }
 
         if (event->key() == Qt::Key_Space)
@@ -178,7 +228,8 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
         }
 
         setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
-        // checkCollision();
+
+        checkCollision();
         // if (x == 9 && y == 15)
         // {
         //     manager->win();
@@ -186,4 +237,28 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
 
         manager->updatePosition(x, y, direction);
     }
+}
+
+void OnlinePlayer::checkCollision() {
+    OnlineLevel *manager = static_cast<OnlineLevel *>(currentLevel);
+    QList<QGraphicsItem *> collision = collidingItems();
+
+    for (int i = 0; i < collision.size(); i++)
+    {
+        if (typeid(*(collision[i])) == typeid(bullet))
+        {
+            // cast the item to a bullet
+            bullet *bullet = dynamic_cast<class bullet *>(collision[i]);
+            manager->removeBullet(bullet->x, bullet->y);
+            bullets++;
+            manager->updateBullets(bullets);
+        } else if (typeid(*(collision[i])) == typeid(pellet))
+        {
+            pellet *pellet = dynamic_cast<class pellet *>(collision[i]);
+            manager->removePellet(pellet->x, pellet->y);
+            score++;
+            manager->updateScore(score);
+        } 
+    }
+
 }
