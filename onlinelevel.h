@@ -29,7 +29,7 @@ public:
     void create_board();
     void add_board_images();
     void create_players(QJsonArray players);
-    void update_player_position(QString playerId, int x, int y, int direction);
+    void update_player_position(QString playerId, int x, int y, int direction, int score, int bullets);
     void updatePosition(int x, int y, int direction);
     void add_bullet(int x, int y);
     void add_pellet(int x, int y);

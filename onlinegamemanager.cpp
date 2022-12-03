@@ -190,24 +190,24 @@ void OnlineGameManager::updatePosition(int x, int y, int direction)
     socket->sendTextMessage(QString("{\"type\":\"move\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\", \"player\":{\"x\":%3,\"y\":%4,\"direction\":%5}}").arg(game_id).arg(username).arg(x).arg(y).arg(direction));
 }
 
-void OnlineGameManager::removeBullet(int x, int y)
+void OnlineGameManager::remove_bullet(int x, int y)
 {
     socket->sendTextMessage(QString("{\"type\":\"removeBullet\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\", \"bullet\":{\"x\":%3,\"y\":%4}}").arg(game_id).arg(username).arg(x).arg(y));
 }
 
-void OnlineGameManager::removePellet(int x, int y)
+void OnlineGameManager::remove_pellet(int x, int y)
 {
     socket->sendTextMessage(QString("{\"type\":\"removePellet\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\", \"pellet\":{\"x\":%3,\"y\":%4}}").arg(game_id).arg(username).arg(x).arg(y));
 }
 
 void OnlineGameManager::updateBullet(int bullets)
 {
-    socket->sendTextMessage(QString("{\"type\":\"updateBullets\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\", \"bullets\":%3").arg(game_id).arg(username).arg(bullets));
+    socket->sendTextMessage(QString("{\"type\":\"updateBullets\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\", \"player\":{\"bullets\":%3}}").arg(game_id).arg(username).arg(bullets));
 }
 
 void OnlineGameManager::updateScore(int score)
 {
-    socket->sendTextMessage(QString("{\"type\":\"updateScore\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\", \"score\":%3").arg(game_id).arg(username).arg(score));
+    socket->sendTextMessage(QString("{\"type\":\"updateScore\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\", \"player\":{\"score\":%3}}").arg(game_id).arg(username).arg(score));
 }
 
 void OnlineGameManager::onConnected()

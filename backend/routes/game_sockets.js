@@ -482,7 +482,7 @@ wss.on("connection", ws => {
                             .game.gameId
                     })
                     .exec()
-                    then(game => {
+                    .then(game => {
                         if (game) {
                             if (game.state === "playing") {
                                 // set the number of bullets for the player

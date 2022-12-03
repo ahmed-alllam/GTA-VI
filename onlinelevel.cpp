@@ -274,7 +274,7 @@ void OnlineLevel::add_pellet(int x, int y)
     pellets.append(pellet);
 }
 
-void OnlineLevel::removeBullet(int x, int y)
+void OnlineLevel::remove_bullet(int x, int y)
 {
     for (int i = 0; i < bullets.size(); i++)
     {
@@ -285,14 +285,14 @@ void OnlineLevel::removeBullet(int x, int y)
 
             // emit bullet removal to server
             OnlineGameManager *manager = static_cast<OnlineGameManager *>(gameManager);
-            manager->removeBullet(x, y);
+            manager->remove_bullet(x, y);
             return;
         }
     }
 }
 
 // same as above but for pellets
-void OnlineLevel::removePellet(int x, int y)
+void OnlineLevel::remove_pellet(int x, int y)
 {
     for (int i = 0; i < pellets.size(); i++)
     {
@@ -303,22 +303,22 @@ void OnlineLevel::removePellet(int x, int y)
 
             // emit pellet removal to server
             OnlineGameManager *manager = static_cast<OnlineGameManager *>(gameManager);
-            manager->removePellet(x, y);
+            manager->remove_pellet(x, y);
             return;
         }
     }
 }
 
-void OnlineLevel::updateBullets(int bullets) {
+void OnlineLevel::updateBullet(int bullets) {
     // emit signal to update the number of bullets
     OnlineGameManager *manager = static_cast<OnlineGameManager *>(gameManager);
-    manager->updateBullets(bullets);
+    manager->updateBullet(bullets);
 }
 
-void OnlineLevel::updatePellets(int pellets) {
+void OnlineLevel::updateScore(int pellets) {
     // emit signal to update the number of pellets
     OnlineGameManager *manager = static_cast<OnlineGameManager *>(gameManager);
-    manager->updatePellets(pellets);
+    manager->updateScore(pellets);
 }
 
 void OnlineLevel::clear_bullets()
