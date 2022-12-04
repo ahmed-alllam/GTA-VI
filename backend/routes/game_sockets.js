@@ -334,9 +334,9 @@ wss.on("connection", ws => {
                         id: data
                             .game.gameId
                     }, {
-                        $set: {
-                            "players.$[player].bullets": "players.$[player].bullets - 1"
-                        }
+                        $dec: {
+                            "players.$[player].bullets": 1
+                        },
                     }, {
                         arrayFilters: [{
                             "player.id": data.playerId
@@ -371,18 +371,37 @@ wss.on("connection", ws => {
                             .game.gameId
                     }, {
                         $set: {
-                            "players.$[player].health": "players.$[player].health - 1",
-                            "state": "players.$[player].health === 1 && players.length === 2 ? 'finished' : state",
+                            // "state": "players.$[player].health === 1 && players.length === 2 ? 'finished' : state",
+                            $cond: {
+                                if: {
+                                    $and: [{
+                                        $eq: ["$players.$[player].health", 1]
+                                    }, {
+                                        $eq: [{
+                                            $size: "$players"
+                                        }, 2]
+                                    }]
+                                },
+                                then: "finished",
+                                else: "$state"
+                            }
+                        },
+                        $dec: {
+                            "players.$[player].health": 1
                         },
                         $pull: {
-                            $cond: [{
-                                $eq: ["players.$[player].health", 0]
-                            }, {
-                                players_ids: ws.playerId,
-                                players: {
-                                    id: data.playerId
-                                }
-                            }]
+                            $cond: {
+                                if: {
+                                    $eq: ["$players.$[player].health", 0]
+                                },
+                                then: {
+                                    "players": {
+                                        id: data.playerId
+                                    },
+                                    "players_ids": ws.playerId
+                                },
+                                else: {}
+                            }
                         },
                     }, {
                         arrayFilters: [{
@@ -391,7 +410,7 @@ wss.on("connection", ws => {
                         new: false
                     })
                     .exec()
-                    .then(game => {
+                    .then(result => {
                         // emit the game to all players in the game
                         // if the player with the id health is 0, then the player is dead
                         for (let i = 0; i < game.players.length; i++) {
@@ -496,58 +515,28 @@ wss.on("connection", ws => {
             .findOneAndUpdate({
                 state: "playing",
             }, {
-                $set: {
-                    bullets: {
-                        $cond: {
-                            if: {
-                                $lt: [
-                                    {
-                                        $size: "$bullets"
-                                    },
-                                    3
-                                ]
-                            },
-                            then: {
-                                $push: [
-                                    "$bullets",
-                                    {
-                                        $arrayElemAt: [
-                                            defaultBullets,
-                                            {
-                                                $rand: {}
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            else: "$bullets"
-                        }
+                $push: {
+                    $cond: {
+                        if: {
+                            $lt: [{
+                                $size: "$bullets"
+                            }, 4]
+                        },
+                        then: {
+                            bullets: defaultBullets[Math.floor(Math.random() * defaultBullets.length)]
+                        },
+                        else: {}
                     },
-                    pellets: {
-                        $cond: {
-                            if: {
-                                $lt: [
-                                    {
-                                        $size: "$pellets"
-                                    },
-                                    2
-                                ]
-                            },
-                            then: {
-                                $push: [
-                                    "$pellets",
-                                    {
-                                        $arrayElemAt: [
-                                            defaultPellets,
-                                            {
-                                                $rand: {}
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            else: "$pellets"
-                        }
+                    $cond: {
+                        if: {
+                            $lt: [{
+                                $size: "$pellets"
+                            }, 3]
+                        },
+                        then: {
+                            pellets: defaultPellets[Math.floor(Math.random() * defaultPellets.length)]
+                        },
+                        else: {}
                     }
                 }
             }, {
