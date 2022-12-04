@@ -335,7 +335,7 @@ wss.on("connection", ws => {
                             .game.gameId
                     }, {
                         $set: {
-                            "players.$[player].bullets": data.player.bullets - 1
+                            "players.$[player].bullets": "players.$[player].bullets - 1"
                         }
                     }, {
                         arrayFilters: [{

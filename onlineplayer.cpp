@@ -318,32 +318,21 @@ void OnlinePlayer::checkCollision()
         {
             // cast the item to a bullet
             bullet *bullet = dynamic_cast<class bullet *>(collision[i]);
-            QTimer::singleShot(500, this, [this, bullet]()
-                               {
-                OnlineLevel *manager = static_cast<OnlineLevel *>(currentLevel);
-                manager->remove_bullet(bullet->x, bullet->y); });
 
-            // make this part after 0.1 seconds
-            QTimer::singleShot(1000, this, [this]()
-                               {
                 OnlineLevel *manager = static_cast<OnlineLevel *>(currentLevel);
+                manager->remove_bullet(bullet->x, bullet->y);
                 bullets++;
-                manager->updateBullet(bullets); });
+                manager->updateBullet(bullets);
         }
         else if (typeid(*(collision[i])) == typeid(pellet))
         {
             pellet *pellet = dynamic_cast<class pellet *>(collision[i]);
-            QTimer::singleShot(500, this, [this, pellet]()
-                               {
-                OnlineLevel *manager = static_cast<OnlineLevel *>(currentLevel);
-                manager->remove_pellet(pellet->x, pellet->y); });
 
-            // make this part after 0.1 seconds
-            QTimer::singleShot(1000, this, [this]()
-                               {
                 OnlineLevel *manager = static_cast<OnlineLevel *>(currentLevel);
+                manager->remove_pellet(pellet->x, pellet->y);
+
                 score++;
-            manager->updateScore(score); });
+            manager->updateScore(score);
         }
     }
 }
