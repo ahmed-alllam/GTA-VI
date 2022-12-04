@@ -5,7 +5,7 @@
 #include <set>
 #include <QPair>
 #include <utility>
-#include<stack>
+#include<vector>
 #include <QGraphicsPixmapItem>
 struct  cell2  //used in A_star
 {
@@ -34,7 +34,7 @@ private:
     QPixmap enemy2HLImage;
     QPixmap enemy2HRImage;
 public:
-    enemy2(int boardData[12][16], void * currentLevel);
+    enemy2(int boardData[12][16], void * currentLevel, int w, int h);
     void move();
     int getX();
     int getY();
@@ -44,7 +44,7 @@ public:
     int getHealth();
     std::pair<int,int>bossPosition;
     std::pair<int, int> dest;
-    std::stack<Pair> bossPath;
+    std::vector<Pair> bossPath;
     std::set<pPair> openList;
     bool isValid(int r, int col);
     bool isBlock(int r, int col);

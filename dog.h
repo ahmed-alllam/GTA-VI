@@ -38,7 +38,7 @@ private:
     QPixmap enemy1LImage;
     QPixmap enemy1RImage;
 public:
-    dog(int boardData[12][16], void * gameManager);
+    dog(int boardData[12][16], void * gameManager, int w, int h);
     void move();
     int getX();
     int getY();

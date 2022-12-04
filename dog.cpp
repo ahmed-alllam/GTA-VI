@@ -10,15 +10,13 @@
 #define INF 9999
 
 
-dog::dog(int boardData[12][16], void * gameManager)
+dog::dog(int boardData[12][16], void * gameManager, int w, int h):
+unitWidth(w),
+unitHeight(h)
 {
     this->currentLevel = currentLevel;
     while(!bossPath.empty())
     {bossPath.pop();}
-    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
-    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    unitWidth = qMin(screenWidth, screenHeight) / 12;
-    unitHeight = qMin(screenWidth, screenHeight) / 12;
 
     QPixmap enemy4LImage(":assets/images/dog4L.png");
     QPixmap enemy4RImage(":assets/images/dog4R.png");

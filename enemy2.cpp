@@ -10,32 +10,18 @@
 #define INF 9999
 
 
-enemy2::enemy2(int boardData[12][16], void * currentLevel)
+enemy2::enemy2(int boardData[12][16], void * currentLevel, int w, int h):
+unitWidth(w),
+unitHeight(h)
 {
     this->currentLevel = currentLevel;
     while(!bossPath.empty())
-    {bossPath.pop();}
+    {bossPath.pop_back();}
 
-    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
-    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    unitWidth = qMin(screenWidth, screenHeight) / 12;
-    unitHeight = qMin(screenWidth, screenHeight) / 12;
     QPixmap enemy2FLImage(":assets/images/GangsterFL.png");
-    QPixmap enemy2FRImage(":assets/images/GangsterFR.png");
-    QPixmap enemy2HLImage(":assets/images/GangsterHL.png");
-    QPixmap enemy2HRImage(":assets/images/GangsterHR.png");
 
     enemy2FLImage = enemy2FLImage.scaledToWidth(unitWidth);
     enemy2FLImage = enemy2FLImage.scaledToHeight(unitHeight);
-
-    enemy2FRImage = enemy2FRImage.scaledToWidth(unitWidth);
-    enemy2FRImage = enemy2FRImage.scaledToHeight(unitHeight);
-
-    enemy2HLImage = enemy2HLImage.scaledToWidth(unitWidth);
-    enemy2HLImage = enemy2HLImage.scaledToHeight(unitHeight);
-
-    enemy2HRImage = enemy2HRImage.scaledToWidth(unitWidth);
-    enemy2HRImage = enemy2HRImage.scaledToHeight(unitHeight);
 
     setPixmap(enemy2FLImage);
     health = 2;
@@ -53,41 +39,57 @@ enemy2::enemy2(int boardData[12][16], void * currentLevel)
 }
 
 void enemy2::move(){
+
+    qDebug() << bossPath.size() << "  1"<<'\n';
     if(!bossPath.empty())
             {
-              if(x==bossPath.top().first&&y+1==bossPath.top().second)
+              if(x==bossPath[bossPath.size()-1].first&&y+1==bossPath[bossPath.size()-1].second)
               {
                  checkCollision();
                  if(health == 2)
                  {
+                     QPixmap enemy2FRImage(":assets/images/GangsterFR.png");
+                     enemy2FRImage = enemy2FRImage.scaledToWidth(unitWidth);
+                     enemy2FRImage = enemy2FRImage.scaledToHeight(unitHeight);
                      setPixmap(enemy2FRImage);
                  }
                  else if(health == 1)
                  {
+                     QPixmap enemy2HRImage(":assets/images/GangsterHR.png");
+                     enemy2HRImage = enemy2HRImage.scaledToWidth(unitWidth);
+                     enemy2HRImage = enemy2HRImage.scaledToHeight(unitHeight);
                      setPixmap(enemy2HRImage);
                  }
               }
-              else if(x==bossPath.top().first&&y-1==bossPath.top().second)
+              else if(x==bossPath[bossPath.size()-1].first&&y-1==bossPath[bossPath.size()-1].second)
               {
                   checkCollision();
                   if(health == 2)
                   {
+                      QPixmap enemy2FLImage(":assets/images/GangsterFL.png");
+                      enemy2FLImage = enemy2FLImage.scaledToWidth(unitWidth);
+                      enemy2FLImage = enemy2FLImage.scaledToHeight(unitHeight);
                       setPixmap(enemy2FLImage);
                   }
                   else if(health == 1)
                   {
+                      QPixmap enemy2HLImage(":assets/images/GangsterHL.png");
+                      enemy2HLImage = enemy2HLImage.scaledToWidth(unitWidth);
+                      enemy2HLImage = enemy2HLImage.scaledToHeight(unitHeight);
                       setPixmap(enemy2HLImage);
                   }
               }
-              bossPosition.first=bossPath.top().first;
-              bossPosition.second=bossPath.top().second;
-              bossPath.pop();
+              bossPosition.first=bossPath[bossPath.size()-1].first;
+              bossPosition.second=bossPath[bossPath.size()-1].second;
+              bossPath.pop_back();
               setXandY(bossPosition.first, bossPosition.second);
               checkCollision();
               return;
             }
     else
-            aStarSearch();
+    {
+        aStarSearch();
+    }
 }
 
 void enemy2::checkCollision(){
@@ -96,6 +98,8 @@ void enemy2::checkCollision(){
     {
         if (typeid(*(colliding_items[i])) == typeid(Franklin))
         {
+            while(!bossPath.empty())
+            {bossPath.pop_back();}
             level * manager = static_cast<level *>(currentLevel);
             manager->player_hit();
         }
@@ -136,6 +140,9 @@ void enemy2::reduceHealth()
 
 void enemy2::aStarSearch()
 {
+
+    while(!bossPath.empty())
+    {bossPath.pop_back();}
  // initialize closed list (2D array)
  for(int i=0;i<12;i++)
     {
@@ -333,10 +340,10 @@ void enemy2:: tracePath( Pair destn)
     int r = destn.first;
     int col = destn.second;
     while(!bossPath.empty())
-            bossPath.pop();
+            bossPath.pop_back();
     while (!(cellDetails[r][col].parent_i == r && cellDetails[r][col].parent_j == col))
     {
-            bossPath.push(std::make_pair(r, col));
+            bossPath.push_back(std::make_pair(r, col));
             int temp_row = cellDetails[r][col].parent_i;
             int temp_col = cellDetails[r][col].parent_j;
             r = temp_row;

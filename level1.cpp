@@ -190,21 +190,28 @@ void level1::create_player()
 
     timer = new QTimer();
     QObject::connect(timer, &QTimer::timeout, franklin, &Franklin::focus_player);
-    timer->start(350);
+    timer->start(300);
 }
 
 void level1::create_enemies()
 {
-    enemy1 = new class enemy1(boardData, this);
+    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
+    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
+    int unitWidth = qMin(screenWidth, screenHeight) / 12;
+    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+
+   enemy1 = new class enemy1(boardData, this, unitWidth, unitHeight);
     scene->addItem(enemy1);
 
-    enemy2 = new class enemy2(boardData, this);
+    enemy2 = new class enemy2(boardData, this, unitWidth, unitHeight);
     scene->addItem(enemy2);
 
     timer2 = new QTimer();
+    timer3 = new QTimer();
     QObject::connect(timer2, &QTimer::timeout, enemy1, &enemy1::move);
-    QObject::connect(timer2, &QTimer::timeout, enemy2, &enemy2::move);
+    QObject::connect(timer3, &QTimer::timeout, enemy2, &enemy2::move);
     timer2->start(500);
+    timer3->start(400);
 }
 
 void level1::create_bullets()
@@ -367,9 +374,15 @@ void level1::restart_game()
 void level1::player_hit()
 {
     if (enemy1 != nullptr)
+    {
         enemy1->setXandY(9, 8);
+        enemy1->aStarSearch();
+    }
     if (enemy2 != nullptr)
+    {
         enemy2->setXandY(3, 11);
+        enemy2->aStarSearch();
+    }
 
     franklin->hit();
 }

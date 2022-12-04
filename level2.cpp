@@ -193,7 +193,11 @@ void level2::create_player()
 
 void level2::create_enemies()
 {
-    enemy1 = new class dog (boardData, this);
+    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
+    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
+    int unitWidth = qMin(screenWidth, screenHeight) / 12;
+    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+    enemy1 = new class dog (boardData, this, unitWidth, unitHeight);
     scene->addItem(enemy1);
 
     timer2 = new QTimer();

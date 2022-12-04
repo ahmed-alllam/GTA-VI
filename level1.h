@@ -18,6 +18,7 @@ class level1 : public level
 private:
     QTimer *timer;
     QTimer *timer2;
+    QTimer *timer3;
     QGraphicsScene *scene;
     void * gameManager;
     Franklin *franklin;
