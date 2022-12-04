@@ -400,5 +400,5 @@ void GameManager::exit()
     QString program = qApp->arguments()[0];
     QStringList arguments = qApp->arguments().mid(1);
     qApp->quit();
-//    QProcess::startDetached(program, arguments);
+    QProcess::startDetached(program, arguments);
 }

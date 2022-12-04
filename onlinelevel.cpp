@@ -378,6 +378,20 @@ void OnlineLevel::clear_pellets(QJsonArray pellets)
     }
 }
 
+void OnlineLevel::remove_player(QString id) {
+    for (int i = 0; i < players.size(); i++)
+    {
+        if (players[i]->id == id)
+        {
+            scene->removeItem(players[i]);
+            scene->removeItem(players[i]->healthBar);
+            scene->removeItem(players[i]->idText);
+            players.removeAt(i);
+            break;
+        }
+    }
+}
+
 void OnlineLevel::shoot(int x, int y, int direction)
 {
     // emit signal to server to add bullet
@@ -388,6 +402,6 @@ void OnlineLevel::shoot(int x, int y, int direction)
 
 void OnlineLevel::player_hit(int health) {
     OnlineGameManager *manager = static_cast<OnlineGameManager *>(gameManager);
-    manager->remove_heart(health);
     manager->player_hit(health);
+    manager->remove_heart(health);
 }

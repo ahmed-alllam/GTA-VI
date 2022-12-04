@@ -44,6 +44,7 @@ public:
     void create_pellets();
     void create_healthbar();
     void remove_bullets();
+    void remove_player(QString id);
     void updateCounters();
     void restart_game();
     void updateModeTxt();

@@ -121,7 +121,7 @@ void OnlinePlayer::add_id()
     idText = new QGraphicsTextItem(id);
     idText->setDefaultTextColor(Qt::white);
     //    idText->setFont(QFont("Arial", 20));
-    idText->setZValue(1);
+//    idText->setZValue(1);
     scene()->addItem(idText);
     qDebug() << "id is " << id;
     qDebug() << scene();
@@ -135,11 +135,20 @@ void OnlinePlayer::add_id()
 void OnlinePlayer::add_health_bar() {
     healthBar = new QProgressBar();
     healthBar->setMaximum(3);
+    healthBar->setMinimum(0);
     healthBar->setValue(3);
-    healthBar->setGeometry(x, y - 10, 50, 10);
-    healthBar->setStyleSheet("QProgressBar::chunk {background-color: #FF0000;}");
-    healthBar->setAlignment(Qt::AlignCenter);
-    healthBar->setFormat("Health: %v");
+    healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
+    // make the chunk of the health bar that is filled in red
+    // add nice border radius to the health bar
+    // make the chunck of the health bar take its full width and height
+    // and lastly, make the health bar transparent
+    // also make the chuck begin at the right side of the health bar
+
+    healthBar->setStyleSheet("QProgressBar::chunk {background-color: red; border-radius: 5px;}"
+                             "QProgressBar {border: 1px solid grey; border-radius: 5px; background-color: transparent;}");
+
+//    healthBar->setAlignment(Qt::AlignCenter);
+    healthBar->setFormat("");
     scene()->addWidget(healthBar);
 }
 
@@ -158,8 +167,8 @@ void OnlinePlayer::setCoordinates(int x, int y, int direction)
             // rotate the text
             idText->setRotation(0);
 
-            healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
             healthBar->setOrientation(Qt::Horizontal);
+            healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
         }
         //        timer->stop();
     }
@@ -171,8 +180,8 @@ void OnlinePlayer::setCoordinates(int x, int y, int direction)
             idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
             idText->setRotation(0);
 
-            healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
             healthBar->setOrientation(Qt::Horizontal);
+            healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
         }
         //        timer->stop();
     }
@@ -184,8 +193,8 @@ void OnlinePlayer::setCoordinates(int x, int y, int direction)
             idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
             idText->setRotation(90);
 
+            healthBar->setOrientation(Qt::Vertical);
                 healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
-                healthBar->setOrientation(Qt::Vertical);
         }
         //        timer->stop();
     }
@@ -197,8 +206,8 @@ void OnlinePlayer::setCoordinates(int x, int y, int direction)
             idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
             idText->setRotation(90);
 
+            healthBar->setOrientation(Qt::Vertical);
                 healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
-                healthBar->setOrientation(Qt::Vertical);
         }
         //        timer->stop();
     }
@@ -230,8 +239,9 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
                 idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
                 idText->setRotation(90);
 
-                healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
                 healthBar->setOrientation(Qt::Vertical);
+
+                healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
 
             }
         }
@@ -245,8 +255,9 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
                 idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
                 idText->setRotation(90);
 
-                healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
                 healthBar->setOrientation(Qt::Vertical);
+
+                healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
 
             }
         }
@@ -260,8 +271,9 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
                 idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
                 idText->setRotation(0);
 
+                healthBar->setOrientation(Qt::Horizontal);
+
             healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
-            healthBar->setOrientation(Qt::Horizontal);
             }
         }
         else if (event->key() == Qt::Key_Left && boardData[x][y - 1] >= 0)
@@ -274,8 +286,9 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
                 idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
                 idText->setRotation(0);
 
+                healthBar->setOrientation(Qt::Horizontal);
+
             healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
-            healthBar->setOrientation(Qt::Horizontal);
             }
         }
 

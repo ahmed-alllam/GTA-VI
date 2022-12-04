@@ -211,9 +211,44 @@ void OnlineGameManager::remove_heart(int health) {
 
     if (health == 0)
     {
-//        manager->game_over();
-//        timer2->stop();
+       game_over();
     }
+}
+
+void OnlineGameManager::game_over()
+{
+    qDebug() << "Game Over";
+    state = "gameOver";
+
+    // close after 0.1 
+    QTimer::singleShot(100, this, [this]()
+    {
+        socket->close();
+    });
+
+    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
+    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
+    for (size_t i = 0, n = scene->items().size(); i < n; i++)
+    {
+        scene->items()[i]->setEnabled(false);
+    }
+
+    drawPanel(screenWidth / 3 - 20, screenHeight / 3 - 20, 400, 400, Qt::lightGray, 1);
+
+    /* Gmae Over Text*/
+    QGraphicsTextItem *overText = new QGraphicsTextItem("Game Over");
+    QFont fonty("Arial", 20, QFont::StyleNormal);
+    overText->setPos(screenWidth / 3 + 100, screenHeight / 3 + 80);
+    overText->setFont(fonty);
+    scene->addItem(overText);
+
+    QPushButton *quit;
+    quit = new QPushButton("Restart again");
+    quit->setGeometry(screenWidth / 3 + 100, screenHeight / 3 + 250, 100, 50);
+    scene->addWidget(quit);
+
+    QObject::connect(quit, &QPushButton::clicked, [=]()
+                     { exit(); });
 }
 
 void OnlineGameManager::anotherPlayerJoined(QJsonObject game)
@@ -269,6 +304,95 @@ void OnlineGameManager::onConnected()
 void OnlineGameManager::onDisconnected()
 {
     qDebug() << "Disconnected";
+
+    if(state == "gameOver" || state == "gameWon")
+          return;
+
+    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
+    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
+    for (size_t i = 0, n = scene->items().size(); i < n; i++)
+    {
+        scene->items()[i]->setEnabled(false);
+    }
+
+    drawPanel(screenWidth / 3 - 20, screenHeight / 3 - 20, 400, 400, Qt::lightGray, 1);
+
+    /* Gmae Over Text*/
+    QGraphicsTextItem *overText = new QGraphicsTextItem("Network Error, Please Try and Join Again");
+    QFont fonty("Arial", 20, QFont::StyleNormal);
+    overText->setPos(screenWidth / 3 + 100, screenHeight / 3 + 80);
+    overText->setFont(fonty);
+    scene->addItem(overText);
+
+    QPushButton *quit;
+    quit = new QPushButton("Quit");
+    quit->setGeometry(screenWidth / 3 + 100, screenHeight / 3 + 250, 100, 50);
+    scene->addWidget(quit);
+
+    QObject::connect(quit, &QPushButton::clicked, [=]()
+                     { exit(); });
+}
+
+void OnlineGameManager::exit()
+{
+    QString program = qApp->arguments()[0];
+    QStringList arguments = qApp->arguments().mid(1);
+    qApp->quit();
+    QProcess::startDetached(program, arguments);
+}
+
+QGraphicsRectItem *OnlineGameManager::drawPanel(int x, int y, int width, int height, QColor color, double opacity)
+{
+    // draws a panel at the specified location with the specified properties
+
+    QGraphicsRectItem *panel = new QGraphicsRectItem(x, y, width, height);
+    QBrush brush;
+    brush.setStyle(Qt::SolidPattern);
+    brush.setColor(color);
+    panel->setBrush(brush);
+    panel->setOpacity(opacity);
+    scene->addItem(panel);
+
+    return panel;
+}
+
+void OnlineGameManager::gameWon() {
+    state = "gameWon";
+
+    // close after 0.1 
+    QTimer::singleShot(100, this, [this]()
+    {
+        socket->close();
+    });
+
+    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
+    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
+    for (size_t i = 0, n = scene->items().size(); i < n; i++)
+    {
+        scene->items()[i]->setEnabled(false);
+    }
+
+    drawPanel(screenWidth / 3 - 20, screenHeight / 3 - 20, 400, 400, Qt::lightGray, 1);
+
+    /* Gmae Over Text*/
+    QGraphicsTextItem *overText = new QGraphicsTextItem("You Won!");
+    QFont fonty("Arial", 20, QFont::StyleNormal);
+    overText->setPos(screenWidth / 3 + 100, screenHeight / 3 + 80);
+    overText->setFont(fonty);
+    scene->addItem(overText);
+
+    QPushButton *quit;
+    quit = new QPushButton("Play again");
+    quit->setGeometry(screenWidth / 3 + 100, screenHeight / 3 + 250, 100, 50);
+    scene->addWidget(quit);
+
+    QObject::connect(quit, &QPushButton::clicked, [=]()
+                     { exit(); });
+}
+
+void OnlineGameManager::playerDied(QString id) {
+    // remove the player with the same id from the level
+    level->remove_player(id);
 }
 
 void OnlineGameManager::onTextMessageReceived(QString message)
@@ -306,6 +430,10 @@ void OnlineGameManager::onTextMessageReceived(QString message)
     else if (type == "shoot")
     {
         emit shoot_another_bullet(json["x"].toInt(), json["y"].toInt(), json["direction"].toInt());
+    } else if (type == "playerDied") {
+        emit playerDied(json["player"].toString());
+    } else if(type == "gameWon") {
+        emit gameWon();
     }
     else if (type == "error")
     {

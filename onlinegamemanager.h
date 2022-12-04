@@ -30,9 +30,14 @@ public:
     OnlineGameManager(QGraphicsScene *scene, QString token, QString username);
     void create_game_id_panel();
     void join_game();
+    QGraphicsRectItem * drawPanel(int x, int y, int width, int height, QColor color, double opacity);
     void shoot(int x, int y, int direction);
     void create_healthbar();   // to create and display the pellet
     void create_new_game();
+    void exit();
+    void game_over();
+    void playerDied(QString id);
+    void gameWon();
     void player_hit(int health);
     void remove_heart(int health);
     void create_game_waiting_panel();
