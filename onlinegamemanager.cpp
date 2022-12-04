@@ -217,6 +217,10 @@ void OnlineGameManager::remove_heart(int health) {
 
 void OnlineGameManager::game_over()
 {
+    if(state != "gameJoined")
+        return;
+
+
     qDebug() << "Game Over";
     state = "gameOver";
 
@@ -352,6 +356,9 @@ QGraphicsRectItem *OnlineGameManager::drawPanel(int x, int y, int width, int hei
 }
 
 void OnlineGameManager::gameWon() {
+    if(state != "gameJoined")
+        return;
+
     state = "gameWon";
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
@@ -448,7 +455,7 @@ void OnlineGameManager::create_sound()
     player->setAudioOutput(audioOutput);
     player->setLoops(QMediaPlayer::Infinite);
     player->setSource(QUrl("qrc:/assets/sounds/backsound.mp3"));
-    //    player->play();
+        player->play();
 }
 
 void OnlineGameManager::create_healthbar()
