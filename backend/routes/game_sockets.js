@@ -543,7 +543,8 @@ wss.on("connection", ws => {
                 new: true,
             })
             .exec()
-            .then(result => {
+            .then(err, result => {
+                console.log(result);
                 result.forEach(game => {
                     wss.clients.forEach(client => {
                         if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
@@ -554,8 +555,7 @@ wss.on("connection", ws => {
                         }
                     });
                 });
-            }
-            )
+            })
             .catch(err => {
                 console.log(err);
             }

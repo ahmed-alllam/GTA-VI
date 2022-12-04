@@ -116,7 +116,9 @@ void OnlineFlyingBullet::move()
                     player->hit();
                     manager2->player_hit(player->health);
                 }
-                scene()->removeItem(this);
+                if(scene() != nullptr) {
+                    scene()->removeItem(this);
+                }
                 delete this;
                 return;
             }
