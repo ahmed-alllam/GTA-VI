@@ -334,8 +334,8 @@ wss.on("connection", ws => {
                         id: data
                             .game.gameId
                     }, {
-                        $dec: {
-                            "players.$[player].bullets": 1
+                        $inc: {
+                            "players.$[player].bullets": -1
                         },
                     }, {
                         arrayFilters: [{
@@ -386,8 +386,8 @@ wss.on("connection", ws => {
                                 else: "$state"
                             }
                         },
-                        $dec: {
-                            "players.$[player].health": 1
+                        $inc: {
+                            "players.$[player].health": -1
                         },
                         $pull: {
                             $cond: {
