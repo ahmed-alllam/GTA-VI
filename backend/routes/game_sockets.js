@@ -511,57 +511,65 @@ wss.on("connection", ws => {
 
     // every 3000ms, add a new random bullet and pellet to the game and emit the game to all players in the game
     setInterval(() => {
+        // update all games with state "playing" and send the updated game to all players in the game
+        // the update must be in a single query
+        // it has to be atomic
+
         Game
-            .updateMany({
+            .find({
                 state: "playing",
-            }, {
-                $push: {
-                    $cond: {
-                        if: {
-                            $lt: [{
-                                $size: "$bullets"
-                            }, 4]
-                        },
-                        then: {
-                            bullets: defaultBullets[Math.floor(Math.random() * defaultBullets.length)]
-                        },
-                        else: {}
-                    },
-                    $cond: {
-                        if: {
-                            $lt: [{
-                                $size: "$pellets"
-                            }, 3]
-                        },
-                        then: {
-                            pellets: defaultPellets[Math.floor(Math.random() * defaultPellets.length)]
-                        },
-                        else: {}
-                    }
-                }
-            }, {
-                new: true,
             })
             .exec()
-            .then(result => {
-                console.log(JSON.stringify(result));
-                console.log(result);
-                // result.forEach(game => {
-                //     wss.clients.forEach(client => {
-                //         if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                //             client.send(JSON.stringify({
-                //                 type: "gameUpdated",
-                //                 game: game,
-                //             }));
-                //         }
-                //     });
-                // });
+            .then(games => {
+                games.forEach(game => {
+                    // add a new bullet
+                    // check if number of bullets is less than 3
+                    change = false;
+                    if (game.bullets.length < 3) {
+                        change = true;
+                        bullet = defaultBullets[Math.floor(Math.random() * defaultBullets.length)];
+                        game.bullets.push({
+                            // choose an x and y pair from the list of possible bullet positions
+                            x: bullet.x,
+                            y: bullet.y,
+                        });
+                    }
+
+                    // check if number of pellets is less than 2
+                    if (game.pellets.length < 2) {
+                        change = true;
+                        // add a new pellet
+                        pellet = defaultPellets[Math.floor(Math.random() * defaultPellets.length)];
+                        game.pellets.push({
+                            // get x and y from the list above
+                            x: pellet.x,
+                            y: pellet.y,
+                        });
+                    }
+                    // save the game
+                    if (change) {
+                        game
+                            .save()
+                            .then(result => {
+                                // emit the game to all players in the same game instance
+                                wss.clients.forEach(client => {
+                                    if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                        client.send(JSON.stringify({
+                                            type: "gameUpdated",
+                                            game: result,
+                                        }));
+                                    }
+                                });
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+                    }
+                });
             })
             .catch(err => {
                 console.log(err);
-            }
-            );
-
+            });
     }, 3000);
 
     ws.send('Hi there, I am a WebSocket server');
