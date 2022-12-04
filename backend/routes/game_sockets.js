@@ -56,759 +56,322 @@ wss.on("connection", ws => {
         switch (data.type) {
             // when a player joins a game
             case "joinGame":
-                // find the game
                 Game
-                    .findOne({
+                    .findOneAndUpdate({
                         id: data
                             .game.gameId
+                    }, {
+                        $push: {
+                            players: {
+                                id: data.playerId,
+                                score: 0,
+                                bullets: 0,
+                                health: 3,
+                                x: defaultPositions[game.players.length].x,
+                                y: defaultPositions[game.players.length].y,
+                                direction: defaultPositions[game.players.length].direction,
+                            }
+                        },
+                        $push: {
+                            players_ids: ws.playerId
+                        }
+
+                    }, {
+                        new: true
                     })
                     .exec()
                     .then(game => {
-                        // check the game exists
-                        if (game) {
-                            // check the game is waiting
-                            if (game.state === "waiting" || (game.state === "playing" && game.players.length < 4)) {
-                                // todo: check the player is not already in the game
-
-                                for (let i = 0; i < game.players.length; i++) {
-                                    if (game.players[i].id === data.playerId) {
-                                        ws.send(JSON.stringify({
-                                            type: "error",
-                                            message: "Player is already in game",
-                                        }));
-                                        return;
-                                    }
-                                }
-
-                                // check game is not full
-                                if (game.players.length < 4) {
-                                    // add the player to the game
-                                    game.players.push({
-                                        id: data.playerId,
-                                        score: 0,
-                                        bullet: 0,
-                                        health: 3,
-                                        x: defaultPositions[game.players.length].x,
-                                        y: defaultPositions[game.players.length].y,
-                                        direction: defaultPositions[game.players.length].direction,
-                                    });
-
-
-                                    if (game.players.length >= 2) {
-                                        game.state = "playing";
-                                        // todo: start game
-                                    } else {
-                                        game.state = "waiting";
-                                    }
-
-                                    console.log(ws.playerId);
-                                    game.players_ids.push(ws.playerId);
-
-                                    // save the game
-                                    game
-                                        .save()
-                                        .then(result => {
-                                            // emit the game to the requesting player
-                                            if (game.state === "playing") {
-                                                wss.clients.forEach(client => {
-                                                    if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                                        client.send(JSON.stringify({
-                                                            type: "gameStarted",
-                                                            game: game
-                                                        }));
-                                                    }
-                                                });
-                                            } else if (game.state === "waiting") {
-                                                // if state is waiting, send the game
-                                                ws.send(JSON.stringify({
-                                                    type: "gameJoined",
-                                                    game: game
-                                                }));
-                                            }
-                                        })
-                                        .catch(err => {
-                                            console.log(err);
-                                        });
-                                } else {
-                                    // emit error message
-                                    ws.send(JSON.stringify({
-                                        type: "error",
-                                        message: "Game is full",
-                                    }));
-                                }
-
-                            } else {
-                                // emit error message
-                                ws.send(JSON.stringify({
-                                    type: "error",
-                                    message: "Game is not waiting",
+                        // emit the game to all players in the game
+                        wss.clients.forEach(client => {
+                            if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                client.send(JSON.stringify({
+                                    type: "gameJoined",
+                                    game: game
                                 }));
                             }
-                        } else {
-                            // emit error message
-                            ws.send(JSON.stringify({
-                                type: "error",
-                                message: "Game not found",
-                            }));
-                        }
+                        });
                     })
                     .catch(err => {
                         console.log(err);
-                        ws.send(JSON.stringify({
-                            type: "error",
-                            message: "An error ecurred " + err.message,
-                        }));
                     });
                 break;
-            // when a player leaves a game
-            case "leaveGame":
-                // find the game
-                Game
-                    .findOne({
-                        id: data
-                            .game.gameId
-                    })
-                    .exec()
-                    .then(game => {
-                        // check the game exists
-                        if (game) {
-                            // check the game is waiting
-                            if (game.state === "waiting") {
-                                // check the player is in the game
-                                if (game.players.indexOf(data.playerId) !== -1) {
-                                    // remove the player from the game
-                                    game.players.splice(game.players.indexOf(data.playerId), 1);
-                                    // save the game
-                                    game
-                                        .save()
-                                        .then(result => {
-                                            // emit the game to all players in the same game instance
-                                            wss.clients.forEach(client => {
-                                                if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                                    client.send(JSON.stringify({
-                                                        type: "game",
-                                                        game: result,
-                                                    }));
-                                                }
-                                            });
-                                        })
-                                        .catch(err => {
-                                            console.log(err);
-                                        });
-                                } else {
-                                    // emit error message
-                                    ws.send(JSON.stringify({
-                                        type: "error",
-                                        message: "Player is not in game",
-                                    }));
-                                }
-                            } else {
-                                // emit error message
-                                ws.send(JSON.stringify({
-                                    type: "error",
-                                    message: "Game is not waiting",
-                                }));
-                            }
-                        } else {
-                            // emit error message
-                            ws.send(JSON.stringify({
-                                type: "error",
-                                message: "Game not found",
-                            }));
-                        }
-                    })
-                    .catch(err => {
-                        console.log(err);
-                        ws.send(JSON.stringify({
-                            type: "error",
-                            message: "Game not found",
-                        }));
-                    });
-                break;
-            // when a player updates a game
-            case "updateGame":
-                // find the game
-                Game
-                    .findOne({
-                        id: data
-                            .game.gameId
-                    })
-                    .exec()
-                    .then(game => {
-                        // check the game exists
-                        if (game) {
-                            // check the game is waiting
-                            if (game.state === "waiting") {
-                                // check the player is in the game
-                                if (game.players.indexOf(data.playerId) !== -1) {
-                                    // update the game
-                                    game.name = data.game.name;
-                                    game.state = data.game.state;
-                                    // save the game
-                                    game
-                                        .save()
-                                        .then(result => {
-                                            // emit the game to all players in the same game instance
-                                            wss.clients.forEach(client => {
-                                                if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                                    client.send(JSON.stringify({
-                                                        type: "game",
-                                                        game: result,
-                                                    }));
-                                                }
-                                            });
-                                        })
-                                        .catch(err => {
-                                            console.log(err);
-                                        });
-                                } else {
-                                    // emit error message
-
-                                    ws.send(JSON.stringify({
-                                        type: "error",
-                                        message: "Player is not in game",
-                                    }));
-                                }
-                            } else {
-                                // emit error message
-                                ws.send(JSON.stringify({
-                                    type: "error",
-                                    message: "Game is not waiting",
-                                }));
-                            }
-                        } else {
-                            // emit error message
-                            ws.send(JSON.stringify({
-                                type: "error",
-                                message: "Game not found",
-                            }));
-                        }
-                    })
-                    .catch(err => {
-                        console.log(err);
-                        ws.send(JSON.stringify({
-                            type: "error",
-                            message: "Game not found",
-                        }));
-                    });
-                break;
-                // end  todo
-                c
             // when player makes a move
             case "move":
                 // find the game
                 Game
-                    .findOne({
+                    .findOneAndUpdate({
                         id: data
+
                             .game.gameId
+                    }, {
+                        $set: {
+                            "players.$[player].x": data.player.x,
+                            "players.$[player].y": data.player.y,
+                            "players.$[player].direction": data.player.direction,
+                        }
+                    }, {
+                        arrayFilters: [{
+                            "player.id": data.playerId
+                        }],
+                        new: true
                     })
                     .exec()
                     .then(game => {
-                        // check the game exists
-                        if (game) {
-                            // check the game is in progress
-                            if (game.state === "playing") {
-                                // loop over the players and check if one had the same id as the player who made the move
-                                for (let i = 0; i < game.players.length; i++) {
-                                    if (game.players[i].id === data.playerId) {
-                                        // check the player is the current player
-                                        // update the players position in the game
-
-                                        console.log("before" + game.players[i]);
-
-                                        game.players.set(i, {
-                                            id: game.players[i].id,
-                                            score: game.players[i].score,
-                                            bullets: game.players[i].bullets,
-                                            health: game.players[i].health,
-                                            isPowerful: game.players[i].isPowerful,
-                                            x: data.player.x,
-                                            y: data.player.y,
-                                            direction: data.player.direction,
-                                        });
-
-                                        console.log("after" + game.players[i]);
-
-                                        game.save()
-                                            .then(result => {
-                                                wss.clients.forEach(client => {
-                                                    if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                                        client.send(JSON.stringify({
-                                                            type: "gameUpdated",
-                                                            game: result,
-                                                        }));
-                                                    }
-                                                });
-                                            })
-                                            .catch(err => {
-                                                console.log(err);
-                                            });
-                                        break;
-                                        // co-pilot, is the code above immune to race conditions?
-                                        // if not, how can we fix it?
-                                        // answer: we can use
-                                        // https://mongoosejs.com/docs/api.html#model_Model.findOneAndUpdate
-                                        // to update the game
-                                        // ok, let's do that
-
-                                    }
-                                }
-                            } else {
-                                // emit error message
-                                ws.send(JSON.stringify({
-                                    type: "error",
-                                    message: "Game is not in progress",
+                        // emit the game to all players in the game
+                        wss.clients.forEach(client => {
+                            if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                client.send(JSON.stringify({
+                                    type: "gameUpdated",
+                                    game: game
                                 }));
                             }
-                        } else {
-                            // emit error message
-                            ws.send(JSON.stringify({
-                                type: "error",
-                                message: "Game not found",
-                            }));
-                        }
+                        });
                     })
                     .catch(err => {
                         console.log(err);
-                        ws.send(JSON.stringify({
-                            type: "error",
-                            message: "Game not found",
-                        }));
                     });
-                
                 break;
             case "removeBullet":
-                // find the game
                 Game
-                    .findOne({
+                    .findOneAndUpdate({
                         id: data
+
                             .game.gameId
+                    }, {
+                        // remove 
+                        $pull: {
+                            "bullets": { x: data.bullet.x, y: data.bullet.y }
+                        }
+                    }, {
+                        new: true
                     })
                     .exec()
                     .then(game => {
-                        // check the game exists
-                        if (game) {
-                            // check the game is in progress
-                            if (game.state === "playing") {
-                                // remove the bullet with the x and y coordinates
-                                game.bullets = game.bullets.filter(bullet => bullet.x !== data.bullet.x && bullet.y !== data.bullet.y);
-
-                                game.save()
-                                    .then(result => {
-                                        wss.clients.forEach(client => {
-                                            if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                                // check if the client is not the player who made the move
-                                                // if (client.playerId !== ws.playerId) {
-                                                    client.send(JSON.stringify({
-                                                        type: "gameUpdated",
-                                                        game: result,
-                                                    }));
-                                                // }
-                                            }
-                                        });
-                                    })
-                                    .catch(err => {
-                                        console.log(err);
-                                    });
-                            } else {
-                                // emit error message
-                                ws.send(JSON.stringify({
-                                    type: "error",
-                                    message: "Game is not in progress",
+                        // emit the game to all players in the game
+                        wss.clients.forEach(client => {
+                            if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                client.send(JSON.stringify({
+                                    type: "gameUpdated",
+                                    game: game
                                 }));
                             }
-                        } else {
-                            // emit error message
-                            ws.send(JSON.stringify({
-                                type: "error",
-                                message: "Game not found",
-                            }));
-                        }
+                        });
                     })
                     .catch(err => {
                         console.log(err);
-                        ws.send(JSON.stringify({
-                            type: "error",
-                            message: "Game not found",
-                        }));
                     });
+
+
+
                 break;
             // same but for pellets
             case "removePellet":
                 Game
-                    .findOne({
+                    .findOneAndUpdate({
                         id: data
-
                             .game.gameId
+                    }, {
+                        $pull: {
+                            "pellets": { x: data.pellet.x, y: data.pellet.y }
+                        }
+                    }, {
+                        new: true
                     })
                     .exec()
-
                     .then(game => {
-                        if (game) {
-                            if (game.state === "playing") {
-                                game.pellets = game.pellets.filter(pellet => pellet.x !== data.pellet.x && pellet.y !== data.pellet.y);
-
-                                game.save()
-
-                                    .then(result => {
-                                        wss.clients.forEach(client => {
-                                            if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                                // if (client.playerId !== ws.playerId) {
-
-                                                    client.send(JSON.stringify({
-                                                        type: "gameUpdated",
-                                                        game: result,
-                                                    }));
-                                                // }
-                                            }
-                                        });
-                                    })
-                                    .catch(err => {
-                                        console.log(err);
-                                    });
-                            } else {
-                                ws.send(JSON.stringify({
-                                    type: "error",
-                                    message: "Game is not in progress",
+                        // emit the game to all players in the game
+                        wss.clients.forEach(client => {
+                            if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                client.send(JSON.stringify({
+                                    type: "gameUpdated",
+                                    game: game
                                 }));
                             }
-                        } else {
-                            ws.send(JSON.stringify({
-                                type: "error",
-                                message: "Game not found",
-                            }));
-                        }
+                        });
                     })
                     .catch(err => {
                         console.log(err);
-                        ws.send(JSON.stringify({
-                            type: "error",
-                            message: "Game not found",
-                        }));
                     });
+
+
                 break;
             // updateBullets
             case "updateBullets":
+                // update the bullets that player has
                 Game
-                    .findOne({
+                    .findOneAndUpdate({
                         id: data
                             .game.gameId
+                    }, {
+                        $set: {
+                            "players.$[player].bullets": data.player.bullets
+                        }
+                    }, {
+                        arrayFilters: [{
+                            "player.id": data.playerId
+                        }],
+                        new: true
                     })
                     .exec()
                     .then(game => {
-                        if (game) {
-                            if (game.state === "playing") {
-                                // set the number of bullets for the player
-                                for (let i = 0; i < game.players.length; i++) {
-                                    if (game.players[i].id === data.playerId) {
-                                        game.players.set(i, {
-                                            id: game.players[i].id,
-                                            score: game.players[i].score,
-                                            bullets: data.player.bullets,
-                                            health: game.players[i].health,
-                                            isPowerful: game.players[i].isPowerful,
-                                            x: game.players[i].x,
-                                            y: game.players[i].y,
-                                            direction: game.players[i].direction,
-                                        });
-
-                                        game.save()
-
-                                            .then(result => {
-                                                wss.clients.forEach(client => {
-                                                    if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                                        if (client.playerId !== ws.playerId) {
-
-                                                            client.send(JSON.stringify({
-                                                                type: "gameUpdated",
-                                                                game: result,
-                                                            }));
-                                                        }
-                                                    }
-                                                });
-                                            })
-                                            .catch(err => {
-                                                console.log(err);
-                                            });
-                                        break;
-                                    }
-                                }
-                            } else {
-                                ws.send(JSON.stringify({
-                                    type: "error",
-                                    message: "Game is not in progress",
+                        // emit the game to all players in the game
+                        wss.clients.forEach(client => {
+                            if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                client.send(JSON.stringify({
+                                    type: "gameUpdated",
+                                    game: game
                                 }));
                             }
-                        } else {
-                            ws.send(JSON.stringify({
-                                type: "error",
-                                message: "Game not found",
-                            }));
-                        }
+                        });
                     })
                     .catch(err => {
                         console.log(err);
-                        ws.send(JSON.stringify({
-                            type: "error",
-                            message: "Game not found",
-                        }));
                     });
+
                 break;
             // updateScore
             case "updateScore":
+                // update the score of the player
                 Game
-
-                    .findOne({
+                    .findOneAndUpdate({
                         id: data
-
                             .game.gameId
+                    }, {
+                        $set: {
+                            "players.$[player].score": data.player.score
+                        }
+                    }, {
+                        arrayFilters: [{
+                            "player.id": data.playerId
+                        }],
+                        new: true
                     })
                     .exec()
                     .then(game => {
-                        if (game) {
-                            if (game.state === "playing") {
-                                // set the score for the player
-                                for (let i = 0; i < game.players.length; i++) {
-                                    if (game.players[i].id === data.playerId) {
-                                        game.players.set(i, {
-                                            id: game.players[i].id,
-                                            score: data.player.score,
-                                            bullets: game.players[i].bullets,
-                                            health: game.players[i].health,
-                                            x: game.players[i].x,
-                                            y: game.players[i].y,
-                                            direction: game.players[i].direction,
-                                        });
-
-                                        game.save()
-                                            .then(result => {
-                                                wss.clients.forEach(client => {
-                                                    if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                                        if (client.playerId !== ws.playerId) {
-
-                                                            client.send(JSON.stringify({
-                                                                type: "gameUpdated",
-                                                                game: result,
-                                                            }));
-                                                        }
-                                                    }
-                                                });
-                                            })
-                                            .catch(err => {
-                                                console.log(err);
-                                            });
-                                        break;
-                                    }
-                                }
-                            } else {
-                                ws.send(JSON.stringify({
-                                    type: "error",
-                                    message: "Game is not in progress",
+                        // emit the game to all players in the game
+                        wss.clients.forEach(client => {
+                            if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                client.send(JSON.stringify({
+                                    type: "gameUpdated",
+                                    game: game
                                 }));
                             }
-                        } else {
-                            ws.send(JSON.stringify({
-                                type: "error",
-                                message: "Game not found",
-                            }));
-                        }
+                        });
                     })
                     .catch(err => {
                         console.log(err);
-                        ws.send(JSON.stringify({
-                            type: "error",
-                            message: "Game not found",
-                        }));
                     });
+
                 break;
-            
+
             case "shoot":
                 Game
-                    .findOne({
+                    .findOneAndUpdate({
                         id: data
                             .game.gameId
+                    }, {
+                        $set: {
+                            "players.$[player].bullets": data.player.bullets - 1
+                        }
+                    }, {
+                        arrayFilters: [{
+                            "player.id": data.playerId
+                        }],
+                        new: true
                     })
                     .exec()
                     .then(game => {
-                        if (game) {
-                            if (game.state === "playing") {
-                                // set the number of bullets for the player
-                                for (let i = 0; i < game.players.length; i++) {
-                                    if (game.players[i].id === data.playerId) {
-                                        game.players.set(i, {
-                                            id: game.players[i].id,
-                                            score: game.players[i].score,
-                                            bullets: game.players[i].bullets - 1,
-                                            health: game.players[i].health,
-                                            isPowerful: game.players[i].isPowerful,
-                                            x: game.players[i].x,
-                                            y: game.players[i].y,
-                                            direction: game.players[i].direction,
-                                        });
-
-                                        game.save()
-                                            .then(result => {
-                                                wss.clients.forEach(client => {
-                                                    if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                                        if (client.playerId !== ws.playerId) {
-                                                            client.send(JSON.stringify({
-                                                                type: "shoot",
-                                                                x: data.x,
-                                                                y: data.y,
-                                                                direction: data.direction,
-                                                            }));
-                                                        }
-                                                    }
-                                                });
-                                            })
-                                            .catch(err => {
-                                                console.log(err);
-                                            });
-                                        break;
-                                    }
+                        // emit the game to all players in the game
+                        wss.clients.forEach(client => {
+                            if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                if (client.playerId !== ws.playerId) {
+                                    client.send(JSON.stringify({
+                                        type: "shoot",
+                                        x: data.x,
+                                        y: data.y,
+                                        direction: data.direction,
+                                    }));
                                 }
-                            } else {
-                                ws.send(JSON.stringify({
-                                    type: "error",
-                                    message: "Game is not in progress",
-                                }));
                             }
-                        } else {
-                            ws.send(JSON.stringify({
-                                type: "error",
-                                message: "Game not found",
-                            }));
-                        }
+                        });
                     })
                     .catch(err => {
                         console.log(err);
-                        ws.send(JSON.stringify({
-                            type: "error",
-                            message: "Game not found",
-                        }));
                     });
                 break;
-            
+
             case "playerHit":
                 Game
-                    .findOne({
+                    .findOneAndUpdate({
                         id: data
-
                             .game.gameId
+                    }, {
+                        $set: {
+                            "players.$[player].health": "players.$[player].health - 1",
+                            "state": "players.$[player].health === 1 && players.length === 2 ? 'finished' : state",
+                        },
+                        $pull: {
+                            $cond: [{
+                                $eq: ["players.$[player].health", 0]
+                            }, {
+                                players_ids: ws.playerId,
+                                players: {
+                                    id: data.playerId
+                                }
+                            }]
+                        },
+                    }, {
+                        arrayFilters: [{
+                            "player.id": data.playerId
+                        }],
+                        new: false
                     })
                     .exec()
                     .then(game => {
-                        if (game) {
-                            if (game.state === "playing") {
-                                // set the health for the player
-                                for (let i = 0; i < game.players.length; i++) {
-                                    if (game.players[i].id === data.playerId) {
-                                        // there are three cases:
-                                        // 1. the player' health is 0, then the player is dead
-                                        // 1A. the player is the second player, then the first player wins
-                                        // 1B. the player is not the last one alive, then the game continues with removing the player
-                                        // 2. the player' health is above 0, then the player is not dead
-
-                                    
-                                        if (game.players[i].health === 1) {
-                                            // the player is dead
-                                            // check if the player is the second player
-                                            // remove the player from the game
-                                            game.players.splice(i, 1);
-                                            game.players_ids.splice(game.players_ids.indexOf(ws.playerId), 1);
-
-                                            if (game.players.length === 1) {
-                                                // the player is the second player
-                                                // the first player wins
-                                                // update the game 
-                                                game.state = "finished";
-
-                                                game.save()
-                                                    .then(result => {
-                                                        wss.clients.forEach(client => {
-                                                            if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                                                if(game.players_ids[0] === client.playerId) {
-                                                                    client.send(JSON.stringify({
-                                                                        type: "gameWon",
-                                                                        game: result,
-                                                                    }));
-                                                                }
-                                                            }
-                                                        });
-                                                    }).catch(err => {
-                                                        console.log(err);
-                                                    });
-                                            } else {
-                                                // the player is not the second player
-                                                // the game continues
-                                                game.save()
-                                                    .then(result => {
-                                                        wss.clients.forEach(client => {
-                                                            if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                                                client.send(JSON.stringify({
-                                                                    type: "playerDied",
-                                                                    player: data.playerId,
-                                                                }));
-                                                            }
-                                                        });
-                                                    }).catch(err => {
-                                                        console.log(err);
-                                                    });
-
-                                            } 
-
-                                        } else {
-                                            // the player is not dead
-                                            // update the player's health
-                                            game.players.set(i, {
-                                                id: game.players[i].id,
-                                                score: game.players[i].score,
-                                                bullets: game.players[i].bullets,
-                                                health: game.players[i].health - 1,
-                                                isPowerful: game.players[i].isPowerful,
-                                                x: game.players[i].x,
-                                                y: game.players[i].y,
-                                                direction: game.players[i].direction,
-                                            });
-
-                                            game.save()
-                                                .then(result => {
-                                                    wss.clients.forEach(client => {
-                                                        if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                                            client.send(JSON.stringify({
-                                                                type: "gameUpdate",
-                                                                game: result,
-                                                            }));
-                                                        }
-                                                    });
-                                                }).catch(err => {
-                                                    console.log(err);
-                                                });
-                                        }
-
+                        // emit the game to all players in the game
+                        // if the player with the id health is 0, then the player is dead
+                        for (let i = 0; i < game.players.length; i++) {
+                            if (game.players[i].id === data.playerId) {
+                                if (game.players[i].health === 1) {
+                                    if (game.players.length === 2) {
+                                        wss.clients.forEach(client => {
+                                            if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                                if (ws.playerId != client.playerId) {
+                                                    client.send(JSON.stringify({
+                                                        type: "gameWon",
+                                                        game: result,
+                                                    }));
+                                                }
+                                            }
+                                        });
+                                    } else {
+                                        wss.clients.forEach(client => {
+                                            if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                                client.send(JSON.stringify({
+                                                    type: "playerDied",
+                                                    player: data.playerId,
+                                                }));
+                                            }
+                                        });
                                     }
+                                } else {
+                                    wss.clients.forEach(client => {
+                                        if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                            client.send(JSON.stringify({
+                                                type: "gameUpdate",
+                                                game: result,
+                                            }));
+                                        }
+                                    });
                                 }
-                            } else {
-                                ws.send(JSON.stringify({
-                                    type: "error",
-                                    message: "Game is not in progress",
-                                }));
                             }
-                        } else {
-                            ws.send(JSON.stringify({
-                                type: "error",
-                                message: "Game not found",
-                            }));
                         }
                     })
                     .catch(err => {
                         console.log(err);
-                        ws.send(JSON.stringify({
-                            type: "error",
-                            message: "Game not found",
-                        }));
                     });
-                break;            
+
+                break;
             default:
                 break;
         }
@@ -816,107 +379,136 @@ wss.on("connection", ws => {
 
     ws.on("close", () => {
         console.log("Client disconnected");
-        // remove the player from the players array in the games he is in
-        // his playerid is included in the players_ids array
+
         Game
-            .find({
+            .findOneAndUpdate({
                 players_ids: ws.playerId
+            }, {
+                $pull: {
+                    players_ids: ws.playerId
+                }
+            }, {
+                new: true
             })
             .exec()
-            .then(games => {
-                games.forEach(game => {
-                    game.players_ids = game.players_ids.filter(playerId => playerId !== ws.playerId);
-                    // check if the game is empty
-                    if (game.players_ids.length === 0) {
-                        // delete the game
-                        game
-                            .remove()
-                            .then(result => {
-                                console.log("Game deleted");
-                            })
-                            .catch(err => {
-                                console.log(err);
+            .then(game => {
+                if (game.players_ids.length === 0) {
+                    // delete the game
+                    game
+                        .remove()
+                        .then(result => {
+                            console.log("Game deleted");
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                } else {
+                    game.save()
+                        .then(result => {
+                            wss.clients.forEach(client => {
+                                if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                    client.send(JSON.stringify({
+                                        type: "gameUpdated",
+                                        game: result,
+                                    }));
+                                }
                             });
-                    } else {
-                        game.save()
-                            .then(result => {
-                                wss.clients.forEach(client => {
-                                    if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                        client.send(JSON.stringify({
-                                            type: "gameUpdated",
-                                            game: result,
-                                        }));
-                                    }
-                                });
-                            })
-                            .catch(err => {
-                                console.log(err);
-                            });
-                    }
-                });
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                }
             }
             )
-
-    });
-
-    // every 5000ms, add a new random bullet and pellet to the game and emit the game to all players in the game
-    setInterval(() => {
-        Game
-            .find({
-                state: "playing",
-            })
-            .exec()
-            .then(games => {
-                games.forEach(game => {
-                    // add a new bullet
-                    // check if number of bullets is less than 3
-                    change = false;
-                    if (game.bullets.length < 3) {
-                        change = true;
-                        bullet = defaultBullets[Math.floor(Math.random() * defaultBullets.length)];
-                        game.bullets.push({
-                            // choose an x and y pair from the list of possible bullet positions
-                            x: bullet.x,
-                            y: bullet.y,
-                        });
-                    }
-
-                    // check if number of pellets is less than 2
-                    if (game.pellets.length < 2) {
-                        change = true;
-                        // add a new pellet
-                        pellet = defaultPellets[Math.floor(Math.random() * defaultPellets.length)];
-                        game.pellets.push({
-                            // get x and y from the list above
-                            x: pellet.x,
-                            y: pellet.y,
-                        });
-                    }
-                    // save the game
-                    if (change) {
-                        game
-                            .save()
-                            .then(result => {
-                                // emit the game to all players in the same game instance
-                                wss.clients.forEach(client => {
-                                    if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                        client.send(JSON.stringify({
-                                            type: "gameUpdated",
-                                            game: result,
-                                        }));
-                                    }
-                                });
-                            })
-                            .catch(err => {
-                                console.log(err);
-                            });
-                    }
-                });
-            })
             .catch(err => {
                 console.log(err);
-            });
-    }, 5000);
+            }
+            );
+    });
+
+    // every 3000ms, add a new random bullet and pellet to the game and emit the game to all players in the game
+    setInterval(() => {
+        Game
+            .findOneAndUpdate({
+                state: "playing",
+            }, {
+                $set: {
+                    bullets: {
+                        $cond: {
+                            if: {
+                                $lt: [
+                                    {
+                                        $size: "$bullets"
+                                    },
+                                    3
+                                ]
+                            },
+                            then: {
+                                $push: [
+                                    "$bullets",
+                                    {
+                                        $arrayElemAt: [
+                                            defaultBullets,
+                                            {
+                                                $rand: {}
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            else: "$bullets"
+                        }
+                    },
+                    pellets: {
+                        $cond: {
+                            if: {
+                                $lt: [
+                                    {
+                                        $size: "$pellets"
+                                    },
+                                    2
+                                ]
+                            },
+                            then: {
+                                $push: [
+                                    "$pellets",
+                                    {
+                                        $arrayElemAt: [
+                                            defaultPellets,
+                                            {
+                                                $rand: {}
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            else: "$pellets"
+                        }
+                    }
+                }
+            }, {
+                new: true,
+            })
+            .exec()
+            .then(game => {
+                if (game) {
+                    wss.clients.forEach(client => {
+                        if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                            client.send(JSON.stringify({
+                                type: "gameUpdated",
+                                game: game,
+                            }));
+                        }
+                    });
+                }
+            }
+            )
+            .catch(err => {
+                console.log(err);
+            }
+            );
+
+    }, 3000);
 
     ws.send('Hi there, I am a WebSocket server');
 });

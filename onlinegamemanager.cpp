@@ -376,6 +376,13 @@ void OnlineGameManager::gameWon() {
 
     QObject::connect(quit, &QPushButton::clicked, [=]()
                      { exit(); });
+
+    // make all player in level have 0 health
+    for (size_t i = 0, n = level->players.size(); i < n; i++)
+    {
+        level->players[i]->health = 0;
+        level->players[i]->healthBar->setValue(0);
+    }
 }
 
 void OnlineGameManager::playerDied(QString id) {
