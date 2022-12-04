@@ -118,8 +118,8 @@ void OnlineFlyingBullet::move()
                 }
                 if(scene() != nullptr) {
                     scene()->removeItem(this);
+                    delete this;
                 }
-                delete this;
                 return;
             }
         }
@@ -128,16 +128,20 @@ void OnlineFlyingBullet::move()
     // check if bullet is out of bounds
     if (x < 0 || x > 11 || y < 0 || y > 15)
     {
-        scene()->removeItem(this);
-        delete this;
+        if(scene() != nullptr) {
+            scene()->removeItem(this);
+            delete this;
+        }
         return;
     }
 
     // check if bullet hit a wall
     if (boardData[x][y] < 0)
     {
-        scene()->removeItem(this);
-        delete this;
+        if(scene() != nullptr) {
+            scene()->removeItem(this);
+            delete this;
+        }
         return;
     }
 
