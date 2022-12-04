@@ -384,7 +384,7 @@ void OnlineLevel::remove_player(QString id) {
         if (players[i]->id == id)
         {
             scene->removeItem(players[i]);
-            scene->removeItem(players[i]->healthBar);
+            players[i]->healthBar->setVisible(false);
             scene->removeItem(players[i]->idText);
             players.removeAt(i);
             break;

@@ -220,12 +220,6 @@ void OnlineGameManager::game_over()
     qDebug() << "Game Over";
     state = "gameOver";
 
-    // close after 0.1 
-    QTimer::singleShot(100, this, [this]()
-    {
-        socket->close();
-    });
-
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
     for (size_t i = 0, n = scene->items().size(); i < n; i++)
@@ -358,12 +352,6 @@ QGraphicsRectItem *OnlineGameManager::drawPanel(int x, int y, int width, int hei
 
 void OnlineGameManager::gameWon() {
     state = "gameWon";
-
-    // close after 0.1 
-    QTimer::singleShot(100, this, [this]()
-    {
-        socket->close();
-    });
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
