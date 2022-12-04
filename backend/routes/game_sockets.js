@@ -442,6 +442,12 @@ wss.on("connection", ws => {
                                 } else {
                                     wss.clients.forEach(client => {
                                         if (client.readyState === WebSocket.OPEN && result.players_ids.includes(client.playerId)) {
+                                            result.players.forEach(player => {
+                                                if (player.id === client.playerId) {
+                                                    player.health--;
+                                                }
+                                            });
+
                                             client.send(JSON.stringify({
                                                 type: "gameUpdate",
                                                 game: result,
