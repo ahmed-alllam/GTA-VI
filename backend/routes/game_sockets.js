@@ -368,23 +368,26 @@ wss.on("connection", ws => {
                 Game
                     .findOneAndUpdate({
                         id: data
-                            .game.gameId
+                            .game.gameId,
+                        state: "playing"
                     }, {
                         $set: {
                             // "state": "players.$[player].health === 1 && players.length === 2 ? 'finished' : state",
-                            $cond: {
-                                if: {
-                                    $and: [{
-                                        $eq: ["$players.$[player].health", 1]
-                                    }, {
-                                        $eq: [{
-                                            $size: "$players"
-                                        }, 2]
-                                    }]
+                            state: {
+                                $cond: {
+                                    if: {
+                                        $and: [{
+                                            $eq: ["$players.$[player].health", 1]
+                                        }, {
+                                            $eq: [{
+                                                $size: "$players"
+                                            }, 2]
+                                        }]
+                                    },
+                                    then: "finished",
+                                    else: "$state"
                                 },
-                                then: "finished",
-                                else: "$state"
-                            }
+                            },
                         },
                         $inc: {
                             "players.$[player].health": -1
@@ -514,7 +517,6 @@ wss.on("connection", ws => {
         // update all games with state "playing" and send the updated game to all players in the game
         // the update must be in a single query
         // it has to be atomic
-
         Game
             .find({
                 state: "playing",

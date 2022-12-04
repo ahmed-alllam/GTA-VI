@@ -333,6 +333,7 @@ void OnlineGameManager::exit()
     QStringList arguments = qApp->arguments().mid(1);
     qApp->quit();
     QProcess::startDetached(program, arguments);
+    // todo
 }
 
 QGraphicsRectItem *OnlineGameManager::drawPanel(int x, int y, int width, int height, QColor color, double opacity)
