@@ -413,12 +413,12 @@ wss.on("connection", ws => {
                     .then(result => {
                         // emit the game to all players in the game
                         // if the player with the id health is 0, then the player is dead
-                        for (let i = 0; i < game.players.length; i++) {
-                            if (game.players[i].id === data.playerId) {
-                                if (game.players[i].health === 1) {
-                                    if (game.players.length === 2) {
+                        for (let i = 0; i < result.players.length; i++) {
+                            if (result.players[i].id === data.playerId) {
+                                if (result.players[i].health === 1) {
+                                    if (result.players.length === 2) {
                                         wss.clients.forEach(client => {
-                                            if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                            if (client.readyState === WebSocket.OPEN && result.players_ids.includes(client.playerId)) {
                                                 if (ws.playerId != client.playerId) {
                                                     client.send(JSON.stringify({
                                                         type: "gameWon",
@@ -429,7 +429,7 @@ wss.on("connection", ws => {
                                         });
                                     } else {
                                         wss.clients.forEach(client => {
-                                            if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                            if (client.readyState === WebSocket.OPEN && result.players_ids.includes(client.playerId)) {
                                                 client.send(JSON.stringify({
                                                     type: "playerDied",
                                                     player: data.playerId,
@@ -439,7 +439,7 @@ wss.on("connection", ws => {
                                     }
                                 } else {
                                     wss.clients.forEach(client => {
-                                        if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                        if (client.readyState === WebSocket.OPEN && result.players_ids.includes(client.playerId)) {
                                             client.send(JSON.stringify({
                                                 type: "gameUpdate",
                                                 game: result,
@@ -512,7 +512,7 @@ wss.on("connection", ws => {
     // every 3000ms, add a new random bullet and pellet to the game and emit the game to all players in the game
     setInterval(() => {
         Game
-            .findOneAndUpdate({
+            .updateMany({
                 state: "playing",
             }, {
                 $push: {
