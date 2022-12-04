@@ -546,11 +546,14 @@ wss.on("connection", ws => {
             .then(game => {
                 if (game) {
                     wss.clients.forEach(client => {
-                        if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                            client.send(JSON.stringify({
-                                type: "gameUpdated",
-                                game: game,
-                            }));
+                        if (client.readyState === WebSocket.OPEN) {
+                            console.log(game.players_ids + " " + game.id);
+                            if (game.players_ids != undefined && game.players_ids.includes(client.playerId)) {
+                                client.send(JSON.stringify({
+                                    type: "gameUpdated",
+                                    game: game,
+                                }));
+                            }
                         }
                     });
                 }
