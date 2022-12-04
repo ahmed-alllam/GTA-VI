@@ -368,8 +368,8 @@ wss.on("connection", ws => {
                 Game
                     .findOne({
                         id: data
-
-                            .game.gameId
+                            .game.gameId,
+                            state: "playing"
                     })
                     .exec()
                     .then(game => {
