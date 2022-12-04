@@ -5,6 +5,7 @@
 #include <QPixmap>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsTextItem>
+#include <QProgressBar>
 
 class OnlinePlayer : public QObject, public QGraphicsPixmapItem
 {
@@ -22,6 +23,7 @@ public:
     int bullets;
     int boardData[12][16];
     void * currentLevel;
+    QProgressBar *healthBar;
     QGraphicsTextItem *idText;
     QPixmap franklinImagel1;
     QPixmap franklinImagel2;
@@ -46,6 +48,8 @@ public:
     void checkCollision();
     void shoot();
     void add_id();
+    void hit();
+    void add_health_bar();
 public slots:
     void keyPressEvent(QKeyEvent * event);
 

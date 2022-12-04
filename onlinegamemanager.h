@@ -30,9 +30,11 @@ public:
     OnlineGameManager(QGraphicsScene *scene, QString token, QString username);
     void create_game_id_panel();
     void join_game();
-    void shoot();
+    void shoot(int x, int y, int direction);
     void create_healthbar();   // to create and display the pellet
     void create_new_game();
+    void player_hit(int health);
+    void remove_heart(int health);
     void create_game_waiting_panel();
     void shoot_another_bullet(int x, int y, int direction);
     void gameStarted(QJsonObject game);

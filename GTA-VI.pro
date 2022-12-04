@@ -31,6 +31,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     franklin.cpp \
+    onlineflyingbullet.cpp \
     onlinegamemanager.cpp \
     onlinelevel.cpp \
     onlineplayer.cpp \
@@ -52,6 +53,7 @@ HEADERS += \
     log_in.h \
     mainwindow.h \
     franklin.h \
+    onlineflyingbullet.h \
     onlinegamemanager.h \
     onlinelevel.h \
     onlineplayer.h \

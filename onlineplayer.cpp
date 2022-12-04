@@ -4,6 +4,13 @@
 #include <QGuiApplication>
 #include "onlinelevel.h"
 #include <QKeyEvent>
+#include <QMessageBox>
+#include <QSoundEffect>
+#include <QAudioFormat>
+#include <QMediaPlayer>
+#include <QAudioOutput>
+#include "level.h"
+#include "onlineflyingbullet.h"
 
 OnlinePlayer::OnlinePlayer(int boardData[12][16], void *currentLevel, QString username)
 {
@@ -102,6 +109,11 @@ OnlinePlayer::OnlinePlayer(int boardData[12][16], void *currentLevel, QString us
             this->boardData[i][j] = boardData[i][j];
         }
     }
+
+    // display a health bar above each player
+    // the health bar is a QProgressBar
+    // it should have a value synchronized with the player's health
+    // it should be displayed above the player's head
 }
 
 void OnlinePlayer::add_id()
@@ -120,6 +132,17 @@ void OnlinePlayer::add_id()
     }
 }
 
+void OnlinePlayer::add_health_bar() {
+    healthBar = new QProgressBar();
+    healthBar->setMaximum(3);
+    healthBar->setValue(3);
+    healthBar->setGeometry(x, y - 10, 50, 10);
+    healthBar->setStyleSheet("QProgressBar::chunk {background-color: #FF0000;}");
+    healthBar->setAlignment(Qt::AlignCenter);
+    healthBar->setFormat("Health: %v");
+    scene()->addWidget(healthBar);
+}
+
 void OnlinePlayer::setCoordinates(int x, int y, int direction)
 {
     this->x = x;
@@ -134,6 +157,9 @@ void OnlinePlayer::setCoordinates(int x, int y, int direction)
             idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
             // rotate the text
             idText->setRotation(0);
+
+            healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
+            healthBar->setOrientation(Qt::Horizontal);
         }
         //        timer->stop();
     }
@@ -144,6 +170,9 @@ void OnlinePlayer::setCoordinates(int x, int y, int direction)
         {
             idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
             idText->setRotation(0);
+
+            healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
+            healthBar->setOrientation(Qt::Horizontal);
         }
         //        timer->stop();
     }
@@ -154,6 +183,9 @@ void OnlinePlayer::setCoordinates(int x, int y, int direction)
         {
             idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
             idText->setRotation(90);
+
+                healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
+                healthBar->setOrientation(Qt::Vertical);
         }
         //        timer->stop();
     }
@@ -164,6 +196,9 @@ void OnlinePlayer::setCoordinates(int x, int y, int direction)
         {
             idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
             idText->setRotation(90);
+
+                healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
+                healthBar->setOrientation(Qt::Vertical);
         }
         //        timer->stop();
     }
@@ -194,6 +229,10 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
             {
                 idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
                 idText->setRotation(90);
+
+                healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
+                healthBar->setOrientation(Qt::Vertical);
+
             }
         }
         else if (event->key() == Qt::Key_Down && boardData[x + 1][y] >= 0)
@@ -205,6 +244,10 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
             {
                 idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
                 idText->setRotation(90);
+
+                healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
+                healthBar->setOrientation(Qt::Vertical);
+
             }
         }
         else if (event->key() == Qt::Key_Right && boardData[x][y + 1] >= 0)
@@ -216,6 +259,9 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
             {
                 idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
                 idText->setRotation(0);
+
+            healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
+            healthBar->setOrientation(Qt::Horizontal);
             }
         }
         else if (event->key() == Qt::Key_Left && boardData[x][y - 1] >= 0)
@@ -227,6 +273,9 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
             {
                 idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
                 idText->setRotation(0);
+
+            healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
+            healthBar->setOrientation(Qt::Horizontal);
             }
         }
 
@@ -301,7 +350,12 @@ void OnlinePlayer::shoot()
         player->setSource(QUrl("qrc:/assets/sounds/shot.mp3"));
         player->play();
 
-        FlyingBullet *bullet = new FlyingBullet(boardData, x, y, direction, manager);
+        OnlineFlyingBullet *bullet = new OnlineFlyingBullet(boardData, x, y, direction, manager, this->id, this->id);
         scene()->addItem(bullet);
     }
+}
+
+void OnlinePlayer::hit() {
+    health--;
+    healthBar->setValue(health);
 }

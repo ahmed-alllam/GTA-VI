@@ -216,6 +216,7 @@ void OnlineLevel::create_players(QJsonArray playersJSON)
         scene->addItem(onlinePlayer);
         players.append(onlinePlayer);
         onlinePlayer->add_id();
+        onlinePlayer->add_health_bar();
         // display the player id above the player image
 
         if (id == this->username)
@@ -229,7 +230,7 @@ void OnlineLevel::create_players(QJsonArray playersJSON)
     }
 }
 
-void OnlineLevel::update_player_position(QString playerId, int x, int y, int direction, int score, int bullets)
+void OnlineLevel::update_player_position(QString playerId, int x, int y, int direction, int score, int bullets, int health)
 {
     for (int i = 0; i < players.size(); i++)
     {
@@ -238,6 +239,8 @@ void OnlineLevel::update_player_position(QString playerId, int x, int y, int dir
             players[i]->setCoordinates(x, y, direction);
             players[i]->score = score;
             players[i]->bullets = bullets;
+            players[i]->health = health;
+            players[i]->healthBar->setValue(health);
         }
     }
 }
@@ -380,4 +383,11 @@ void OnlineLevel::shoot(int x, int y, int direction)
     // emit signal to server to add bullet
     OnlineGameManager *manager = static_cast<OnlineGameManager *>(gameManager);
     manager->shoot(x, y, direction);
+}
+
+
+void OnlineLevel::player_hit(int health) {
+    OnlineGameManager *manager = static_cast<OnlineGameManager *>(gameManager);
+    manager->remove_heart(health);
+    manager->player_hit(health);
 }

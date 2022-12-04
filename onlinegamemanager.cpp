@@ -36,6 +36,8 @@
 #include <qmovie.h>
 #include <QMovie>
 
+#include "onlineflyingbullet.h"
+
 OnlineGameManager::OnlineGameManager(QGraphicsScene *scene, QString token, QString username)
 {
     this->token = token;
@@ -137,9 +139,9 @@ void OnlineGameManager::gameStarted(QJsonObject game)
     level->add_board_images();
     QJsonArray players = game["players"].toArray();
     level->create_players(players);
+    create_healthbar();
     gameUpdated(game);
     create_sound();
-    create_healthbar();
 }
 
 void OnlineGameManager::gameUpdated(QJsonObject game)
@@ -153,14 +155,15 @@ void OnlineGameManager::gameUpdated(QJsonObject game)
         int y = player["y"].toInt();
         int direction = player["direction"].toInt();
         int score = player["score"].toInt();
+        int health = player["health"].toInt();
         int bullets = player["bullets"].toInt();
-        level->update_player_position(playerId, x, y, direction, score, bullets);
+        level->update_player_position(playerId, x, y, direction, score, bullets, health);
 
         if (playerId == username)
         {
             // change bulletsCounter, and coinsCounter
-            bulletsCounter->setText(QString::number(bullets));
-            coinsCounter->setText(QString::number(score));
+            bulletsCounter->setPlainText(QString::number(bullets));
+            coinsCounter->setPlainText(QString::number(score));
 
             // todo: change number of hearts
         }
@@ -191,7 +194,26 @@ void OnlineGameManager::gameUpdated(QJsonObject game)
 void OnlineGameManager::shoot(int x, int y, int direction)
 {
     socket->sendTextMessage(QString("{\"type\":\"shoot\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\",\"x\":%3,\"y\":%4,\"direction\":%5}").arg(game_id).arg(username).arg(x).arg(y).arg(direction));
-    bulletsCounter->setText(QString::number(bulletsCounter->text().toInt() - 1));
+    bulletsCounter->setPlainText(QString::number(bulletsCounter->toPlainText().toInt() - 1));
+}
+
+
+void OnlineGameManager::player_hit(int health) {
+    // emit the new health of the player to the socket
+    socket->sendTextMessage(QString("{\"type\":\"playerHit\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\"}").arg(game_id).arg(username));
+}
+
+void OnlineGameManager::remove_heart(int health) {
+    if (health >= 0)
+    {
+        scene->removeItem(&(hearts[health]));
+    }
+
+    if (health == 0)
+    {
+//        manager->game_over();
+//        timer2->stop();
+    }
 }
 
 void OnlineGameManager::anotherPlayerJoined(QJsonObject game)
@@ -208,7 +230,7 @@ void OnlineGameManager::shoot_another_bullet(int x, int y, int direction)
     player->setSource(QUrl("qrc:/assets/sounds/shot.mp3"));
     player->play();
 
-    FlyingBullet *bullet = new FlyingBullet(level->boardData, x, y, direction, level);
+    OnlineFlyingBullet *bullet = new OnlineFlyingBullet(level->boardData, x, y, direction, level, "", username);
     scene->addItem(bullet);
 }
 
