@@ -369,7 +369,6 @@ wss.on("connection", ws => {
                     .findOneAndUpdate({
                         id: data
                             .game.gameId,
-                        state: "playing"
                     }, {
                         $set: {
                             // "state": "players.$[player].health === 1 && players.length === 2 ? 'finished' : state",
