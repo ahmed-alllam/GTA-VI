@@ -366,102 +366,124 @@ wss.on("connection", ws => {
 
             case "playerHit":
                 Game
-                    .findOneAndUpdate({
+                    .findOne({
                         id: data
-                            .game.gameId,
-                    }, {
-                        $set: {
-                            // "state": "players.$[player].health === 1 && players.length === 2 ? 'finished' : state",
-                            state: {
-                                $cond: {
-                                    if: {
-                                        $and: [{
-                                            $eq: ["$players.$[player].health", 1]
-                                        }, {
-                                            $eq: [{
-                                                $size: "$players"
-                                            }, 2]
-                                        }]
-                                    },
-                                    then: "finished",
-                                    else: "$state"
-                                },
-                            },
-                        },
-                        $inc: {
-                            "players.$[player].health": -1
-                        },
-                        $pull: {
-                            $cond: {
-                                if: {
-                                    $eq: ["$players.$[player].health", 0]
-                                },
-                                then: {
-                                    "players": {
-                                        id: data.playerId
-                                    },
-                                    "players_ids": ws.playerId
-                                },
-                                else: {}
-                            }
-                        },
-                    }, {
-                        arrayFilters: [{
-                            "player.id": data.playerId
-                        }],
-                        new: false
+
+                            .game.gameId
                     })
                     .exec()
-                    .then(result => {
-                        // emit the game to all players in the game
-                        // if the player with the id health is 0, then the player is dead
-                        for (let i = 0; i < result.players.length; i++) {
-                            if (result.players[i].id === data.playerId) {
-                                if (result.players[i].health === 1) {
-                                    if (result.players.length === 2) {
-                                        wss.clients.forEach(client => {
-                                            if (client.readyState === WebSocket.OPEN && result.players_ids.includes(client.playerId)) {
-                                                if (ws.playerId != client.playerId) {
-                                                    client.send(JSON.stringify({
-                                                        type: "gameWon",
-                                                        game: result,
-                                                    }));
-                                                }
-                                            }
-                                        });
-                                    } else {
-                                        wss.clients.forEach(client => {
-                                            if (client.readyState === WebSocket.OPEN && result.players_ids.includes(client.playerId)) {
-                                                client.send(JSON.stringify({
-                                                    type: "playerDied",
-                                                    player: data.playerId,
-                                                }));
-                                            }
-                                        });
-                                    }
-                                } else {
-                                    wss.clients.forEach(client => {
-                                        if (client.readyState === WebSocket.OPEN && result.players_ids.includes(client.playerId)) {
-                                            result.players.forEach(player => {
-                                                if (player.id === client.playerId) {
-                                                    player.health--;
-                                                }
+                    .then(game => {
+                        if (game) {
+                            if (game.state === "playing") {
+                                // set the health for the player
+                                for (let i = 0; i < game.players.length; i++) {
+                                    if (game.players[i].id === data.playerId) {
+                                        // there are three cases:
+                                        // 1. the player' health is 0, then the player is dead
+                                        // 1A. the player is the second player, then the first player wins
+                                        // 1B. the player is not the last one alive, then the game continues with removing the player
+                                        // 2. the player' health is above 0, then the player is not dead
+
+                                    
+                                        if (game.players[i].health === 1) {
+                                            // the player is dead
+                                            // check if the player is the second player
+                                            // remove the player from the game
+                                            game.players.splice(i, 1);
+                                            game.players_ids.splice(game.players_ids.indexOf(data.playerId), 1);
+
+                                            if (game.players.length === 1) {
+                                                // the player is the second player
+                                                // the first player wins
+                                                // update the game 
+                                                game.state = "finished";
+
+                                                game.save()
+                                                    .then(result => {
+                                                        wss.clients.forEach(client => {
+                                                            if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                                                if(game.players_ids[0] === client.playerId) {
+                                                                    client.send(JSON.stringify({
+                                                                        type: "gameWon",
+                                                                        game: result,
+                                                                    }));
+                                                                }
+                                                            }
+                                                        });
+                                                    }).catch(err => {
+                                                        console.log(err);
+                                                    });
+                                            } else {
+                                                // the player is not the second player
+                                                // the game continues
+                                                game.save()
+                                                    .then(result => {
+                                                        wss.clients.forEach(client => {
+                                                            if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                                                client.send(JSON.stringify({
+                                                                    type: "playerDied",
+                                                                    player: data.playerId,
+                                                                }));
+                                                            }
+                                                        });
+                                                    }).catch(err => {
+                                                        console.log(err);
+                                                    });
+
+                                            } 
+
+                                        } else {
+                                            // the player is not dead
+                                            // update the player's health
+                                            game.players.set(i, {
+                                                id: game.players[i].id,
+                                                score: game.players[i].score,
+                                                bullets: game.players[i].bullets,
+                                                health: game.players[i].health - 1,
+                                                isPowerful: game.players[i].isPowerful,
+                                                x: game.players[i].x,
+                                                y: game.players[i].y,
+                                                direction: game.players[i].direction,
                                             });
 
-                                            client.send(JSON.stringify({
-                                                type: "gameUpdate",
-                                                game: result,
-                                            }));
+                                            game.save()
+                                                .then(result => {
+                                                    wss.clients.forEach(client => {
+                                                        if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                                            client.send(JSON.stringify({
+                                                                type: "gameUpdate",
+                                                                game: result,
+                                                            }));
+                                                        }
+                                                    });
+                                                }).catch(err => {
+                                                    console.log(err);
+                                                });
                                         }
-                                    });
+
+                                        break;
+                                    }
                                 }
+                            } else {
+                                ws.send(JSON.stringify({
+                                    type: "error",
+                                    message: "Game is not in progress",
+                                }));
                             }
+                        } else {
+                            ws.send(JSON.stringify({
+                                type: "error",
+                                message: "Game not found",
+                            }));
                         }
                     })
                     .catch(err => {
                         console.log(err);
+                        ws.send(JSON.stringify({
+                            type: "error",
+                            message: "Game not found",
+                        }));
                     });
-
                 break;
             default:
                 break;
