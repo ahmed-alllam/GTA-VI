@@ -217,9 +217,8 @@ void OnlineGameManager::remove_heart(int health) {
 
 void OnlineGameManager::game_over()
 {
-    if(state != "gameJoined")
+    if(state != "gameStarted")
         return;
-
 
     qDebug() << "Game Over";
     state = "gameOver";
@@ -356,7 +355,7 @@ QGraphicsRectItem *OnlineGameManager::drawPanel(int x, int y, int width, int hei
 }
 
 void OnlineGameManager::gameWon() {
-    if(state != "gameJoined")
+    if(state != "gameStarted")
         return;
 
     state = "gameWon";
