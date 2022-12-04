@@ -70,6 +70,8 @@ FlyingBullet::FlyingBullet(int boardData[12][16], int x, int y, int direction, v
     timer = new QTimer();
     QObject::connect(timer, &QTimer::timeout, this, &FlyingBullet::move);
     timer->start(50);
+
+    move();
 }
 
 void FlyingBullet::move()

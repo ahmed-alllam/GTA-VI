@@ -74,6 +74,8 @@ OnlineFlyingBullet::OnlineFlyingBullet(int boardData[12][16], int x, int y, int 
     timer = new QTimer();
     QObject::connect(timer, &QTimer::timeout, this, &OnlineFlyingBullet::move);
     timer->start(50);
+
+    move();
 }
 
 void OnlineFlyingBullet::move()
@@ -104,9 +106,13 @@ void OnlineFlyingBullet::move()
         if (typeid(*colliding_items[i]) == typeid(OnlinePlayer))
         {
             OnlinePlayer * player = static_cast<OnlinePlayer *>(colliding_items[i]);
+            qDebug() << "hit 1 " <<  player->id << source_player;
 
             if(player->id != source_player) {
+                qDebug() << "hit 2 " << player->id << currPLayer;
+
                 if( player->id == currPLayer) {
+                    qDebug()<< " hit 3 ";
                     player->hit();
                     manager2->player_hit(player->health);
                 }
