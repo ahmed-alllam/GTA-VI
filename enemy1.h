@@ -49,9 +49,9 @@ public:
     bool isValid(int r, int col);
     bool isBlock(int r, int col);
     int H_Calculation(int r, int col, Pair destn);
-    void tracePath(Pair destn);
+    std::vector<Pair> tracePath(Pair destn);
     bool isDestination(int r, int col, Pair destn);
-    void aStarSearch();
+    std::vector<Pair> aStarSearch();
 
 signals:
 

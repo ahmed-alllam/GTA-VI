@@ -211,7 +211,7 @@ void level1::create_enemies()
     QObject::connect(timer2, &QTimer::timeout, enemy1, &enemy1::move);
     QObject::connect(timer3, &QTimer::timeout, enemy2, &enemy2::move);
     timer2->start(500);
-    timer3->start(400);
+    timer3->start(500);
 }
 
 void level1::create_bullets()
@@ -378,10 +378,18 @@ void level1::player_hit()
         enemy1->setXandY(9, 8);
         enemy1->aStarSearch();
     }
+    else
+    {
+        timer2->stop();
+    }
     if (enemy2 != nullptr)
     {
         enemy2->setXandY(3, 11);
         enemy2->aStarSearch();
+    }
+    else
+    {
+        timer3->stop();
     }
 
     franklin->hit();
@@ -398,10 +406,12 @@ void level1::enemy_hit(QGraphicsItem *enemy)
             if (enemy2 == nullptr)
             {
                 open_gate();
+                timer2->stop();
+                timer3->stop();
             }
             scene->removeItem(enemy1);
             enemy1 = nullptr;
-            delete enemy1;
+           // delete enemy1;
         }
     }
     else if (typeid(*enemy) == typeid(class enemy2) && enemy2 != nullptr)
@@ -412,10 +422,12 @@ void level1::enemy_hit(QGraphicsItem *enemy)
             if (enemy1 == nullptr)
             {
                 open_gate();
+                timer2->stop();
+                timer3->stop();
             }
             scene->removeItem(enemy2);
             enemy2 = nullptr;
-            delete enemy2;
+//            delete enemy2;
         }
     }
 }

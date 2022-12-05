@@ -40,7 +40,7 @@ unitHeight(h)
 
 void enemy2::move(){
 
-    qDebug() << bossPath.size() << "  1"<<'\n';
+    qDebug() << bossPath.size() << "  2"<<'\n';
     if(!bossPath.empty())
             {
               if(x==bossPath[bossPath.size()-1].first&&y+1==bossPath[bossPath.size()-1].second)
@@ -88,7 +88,7 @@ void enemy2::move(){
             }
     else
     {
-        aStarSearch();
+        bossPath = aStarSearch();
     }
 }
 
@@ -138,13 +138,11 @@ void enemy2::reduceHealth()
     this->health--;
 }
 
-void enemy2::aStarSearch()
-{
-
-    while(!bossPath.empty())
+std::vector<Pair> enemy2::aStarSearch()
+{    while(!bossPath.empty())
     {bossPath.pop_back();}
- // initialize closed list (2D array)
- for(int i=0;i<12;i++)
+//  initialize closed list (2D array)
+    for(int i=0;i<12;i++)
     {
         for(int j=0;j<16;j++)
         {
@@ -198,9 +196,9 @@ void enemy2::aStarSearch()
             {
                 cellDetails[i - 1][j].parent_i = i; // Set the Parent of the destination cell
                 cellDetails[i - 1][j].parent_j = j;
-                tracePath( dest);
+                bossPath = tracePath( dest);
                 foundOpst = true;
-                return;
+                return bossPath;
             }
             else if (!(closedList[i - 1][j]) && !(isBlock( i - 1, j)))
             {
@@ -228,9 +226,9 @@ void enemy2::aStarSearch()
                 // Set the Parent of the destination cell
                 cellDetails[i + 1][j].parent_i = i;
                 cellDetails[i + 1][j].parent_j = j;
-                tracePath(dest);
+                bossPath = tracePath(dest);
                 foundOpst = true;
-                return;
+                return bossPath;
             }
 
             else if (!closedList[i + 1][j] && !isBlock( i + 1, j))
@@ -260,9 +258,9 @@ void enemy2::aStarSearch()
             {
                 cellDetails[i][j + 1].parent_i = i;
                 cellDetails[i][j + 1].parent_j = j;
-                tracePath(dest);
+                bossPath = tracePath(dest);
                 foundOpst = true;
-                return;
+                return bossPath;
             }
 
             else if (!closedList[i][j + 1] && !isBlock(i, j + 1))
@@ -291,9 +289,9 @@ void enemy2::aStarSearch()
                 // Set the Parent of the destination cell
                 cellDetails[i][j - 1].parent_i = i;
                 cellDetails[i][j - 1].parent_j = j;
-                tracePath( dest);
+                bossPath = tracePath( dest);
                 foundOpst = true;
-                return;
+                return bossPath;
             }
             else if (!closedList[i][j - 1] && !isBlock( i, j - 1) == true)
             {
@@ -314,7 +312,7 @@ void enemy2::aStarSearch()
             }
         }
     }
-    return;
+    return bossPath;
 }
 
 bool enemy2:: isValid(int r, int col) // in the range of the data
@@ -335,7 +333,7 @@ int enemy2::H_Calculation(int r, int col, Pair destn) // return the estimation d
 }
 // // will be changed and make the boss move according to the sequence of steps
 
-void enemy2:: tracePath( Pair destn)
+std::vector<Pair> enemy2:: tracePath( Pair destn)
 {
     int r = destn.first;
     int col = destn.second;
@@ -344,6 +342,13 @@ void enemy2:: tracePath( Pair destn)
     while (!(cellDetails[r][col].parent_i == r && cellDetails[r][col].parent_j == col))
     {
             bossPath.push_back(std::make_pair(r, col));
+            if(cellDetails[r][col].parent_i<0||cellDetails[r][col].parent_j<0)
+                 break;
+            if(cellDetails[r][col].parent_i>20||cellDetails[r][col].parent_j>20)
+                 break;
+            if(cellDetails[cellDetails[r][col].parent_i][cellDetails[r][col].parent_j].parent_i==r&&cellDetails[cellDetails[r][col].parent_i][cellDetails[r][col].parent_j].parent_j==col)
+                 break;
+            qDebug()<<"2 " <<cellDetails[r][col].parent_i<< "\t"<<cellDetails[r][col].parent_j <<"\n";
             int temp_row = cellDetails[r][col].parent_i;
             int temp_col = cellDetails[r][col].parent_j;
             r = temp_row;
@@ -361,7 +366,7 @@ void enemy2:: tracePath( Pair destn)
 //        r = temp_r;
 //        col = temp_col;
 //    }
-    return;
+    return bossPath;
 }
 
 bool enemy2::isDestination(int r, int col, Pair destn) // to check whether enemy reached (its destination) the player or not

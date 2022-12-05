@@ -16,40 +16,11 @@ unitHeight(h)
 {
     this->currentLevel = currentLevel;
     while(!bossPath.empty())
-    {bossPath.pop();}
+    {bossPath.pop_back();}
 
     QPixmap enemy4LImage(":assets/images/dog4L.png");
-    QPixmap enemy4RImage(":assets/images/dog4R.png");
-    QPixmap enemy3LImage(":assets/images/dog3L.png");
-    QPixmap enemy3RImage(":assets/images/dog3R.png");
-    QPixmap enemy2LImage(":assets/images/dog2L.png");
-    QPixmap enemy2RImage(":assets/images/dog2R.png");
-    QPixmap enemy1LImage(":assets/images/dog1L.png");
-    QPixmap enemy1RImage(":assets/images/dog1R.png");
-
     enemy4LImage = enemy4LImage.scaledToWidth(unitWidth);
     enemy4LImage = enemy4LImage.scaledToHeight(unitHeight);
-
-    enemy4RImage = enemy4RImage.scaledToWidth(unitWidth);
-    enemy4RImage = enemy4RImage.scaledToHeight(unitHeight);
-
-    enemy3LImage = enemy3LImage.scaledToWidth(unitWidth);
-    enemy3LImage = enemy3LImage.scaledToHeight(unitHeight);
-
-    enemy3RImage = enemy3RImage.scaledToWidth(unitWidth);
-    enemy3RImage = enemy3RImage.scaledToHeight(unitHeight);
-
-    enemy2LImage = enemy2LImage.scaledToWidth(unitWidth);
-    enemy2LImage = enemy2LImage.scaledToHeight(unitHeight);
-
-    enemy2RImage = enemy2RImage.scaledToWidth(unitWidth);
-    enemy2RImage = enemy2RImage.scaledToHeight(unitHeight);
-
-    enemy1LImage = enemy1LImage.scaledToWidth(unitWidth);
-    enemy1LImage = enemy1LImage.scaledToHeight(unitHeight);
-
-    enemy1RImage = enemy1RImage.scaledToWidth(unitWidth);
-    enemy1RImage = enemy1RImage.scaledToHeight(unitHeight);
 
     setPixmap(enemy4LImage);
     health = 4;
@@ -70,55 +41,79 @@ void dog::move()
 {
     if(!bossPath.empty())
             {
-              if(x==bossPath.top().first&&y+1==bossPath.top().second)
+              if(x==bossPath[bossPath.size()-1].first&&y+1==bossPath[bossPath.size()-1].second)
               {
                  checkCollision();
-                 switch (health) {
-                 case 4:
+                 if(health == 4)
+                 {
+                     QPixmap enemy4RImage(":assets/images/dog4R.png");
+                     enemy4RImage = enemy4RImage.scaledToWidth(unitWidth);
+                     enemy4RImage = enemy4RImage.scaledToHeight(unitHeight);
                      setPixmap(enemy4RImage);
-                     break;
-                 case 3:
+                 }
+                 else if(health == 3)
+                 {
+                     QPixmap enemy3RImage(":assets/images/dog3R.png");
+                     enemy3RImage = enemy3RImage.scaledToWidth(unitWidth);
+                     enemy3RImage = enemy3RImage.scaledToHeight(unitHeight);
                      setPixmap(enemy3RImage);
-                     break;
-                 case 2:
+                 }
+                 else if(health == 2)
+                 {
+                     QPixmap enemy2RImage(":assets/images/dog2R.png");
+                     enemy2RImage = enemy2RImage.scaledToWidth(unitWidth);
+                     enemy2RImage = enemy2RImage.scaledToHeight(unitHeight);
                      setPixmap(enemy2RImage);
-                     break;
-                 case 1:
+                 }
+                 else if(health == 1)
+                 {
+                     QPixmap enemy1RImage(":assets/images/dog1R.png");
+                     enemy1RImage = enemy1RImage.scaledToWidth(unitWidth);
+                     enemy1RImage = enemy1RImage.scaledToHeight(unitHeight);
                      setPixmap(enemy1RImage);
-                     break;
-                 default:
-                     break;
                  }
               }
-              else if(x==bossPath.top().first&&y-1==bossPath.top().second)
+              else if(x==bossPath[bossPath.size()-1].first&&y-1==bossPath[bossPath.size()-1].second)
               {
                   checkCollision();
-                  switch (health) {
-                  case 4:
+                  if(health == 4)
+                  {
+                      QPixmap enemy4LImage(":assets/images/dog4L.png");
+                      enemy4LImage = enemy4LImage.scaledToWidth(unitWidth);
+                      enemy4LImage = enemy4LImage.scaledToHeight(unitHeight);
                       setPixmap(enemy4LImage);
-                      break;
-                  case 3:
+                  }
+                  else if(health == 3)
+                  {
+                      QPixmap enemy3LImage(":assets/images/dog3L.png");
+                      enemy3LImage = enemy3LImage.scaledToWidth(unitWidth);
+                      enemy3LImage = enemy3LImage.scaledToHeight(unitHeight);
                       setPixmap(enemy3LImage);
-                      break;
-                  case 2:
+                  }
+                  else if(health == 2)
+                  {
+                      QPixmap enemy2LImage(":assets/images/dog2L.png");
+                      enemy2LImage = enemy2LImage.scaledToWidth(unitWidth);
+                      enemy2LImage = enemy2LImage.scaledToHeight(unitHeight);
                       setPixmap(enemy2LImage);
-                      break;
-                  case 1:
+                  }
+                  else if(health == 1)
+                  {
+                      QPixmap enemy1LImage(":assets/images/dog1L.png");
+                      enemy1LImage = enemy1LImage.scaledToWidth(unitWidth);
+                      enemy1LImage = enemy1LImage.scaledToHeight(unitHeight);
                       setPixmap(enemy1LImage);
-                      break;
-                  default:
-                      break;
                   }
               }
-              bossPosition.first=bossPath.top().first;
-              bossPosition.second=bossPath.top().second;
-              bossPath.pop();
+              bossPosition.first=bossPath[bossPath.size()-1].first;
+              bossPosition.second=bossPath[bossPath.size()-1].second;
+              bossPath.pop_back();
               setXandY(bossPosition.first, bossPosition.second);
               checkCollision();
               return;
             }
     else
-            aStarSearch();
+            bossPath = aStarSearch();
 }
 
 void dog::checkCollision()
@@ -129,7 +124,7 @@ void dog::checkCollision()
         if (typeid(*(colliding_items[i])) == typeid(Franklin))
         {
             while(!bossPath.empty())
-            {bossPath.pop();}
+            {bossPath.pop_back();}
             level *manager = static_cast<level *>(currentLevel);
             manager->player_hit();
         }
@@ -163,8 +158,10 @@ void dog::reduceHealth()
     this->health--;
 }
 
-void dog::aStarSearch()
+std::vector<Pair> dog::aStarSearch()
 {
+    while(!bossPath.empty())
+    {bossPath.pop_back();}
 //  initialize closed list (2D array)
     for(int i=0;i<12;i++)
     {
@@ -220,9 +217,9 @@ void dog::aStarSearch()
             {
                 cellDetails[i - 1][j].parent_i = i; // Set the Parent of the destination cell
                 cellDetails[i - 1][j].parent_j = j;
-                tracePath( dest);
+                bossPath = tracePath( dest);
                 foundOpst = true;
-                return;
+                return bossPath;
             }
             else if (!(closedList[i - 1][j]) && !(isBlock( i - 1, j)))
             {
@@ -250,9 +247,9 @@ void dog::aStarSearch()
                 // Set the Parent of the destination cell
                 cellDetails[i + 1][j].parent_i = i;
                 cellDetails[i + 1][j].parent_j = j;
-                tracePath(dest);
+                bossPath = tracePath(dest);
                 foundOpst = true;
-                return;
+                return bossPath;
             }
 
             else if (!closedList[i + 1][j] && !isBlock( i + 1, j))
@@ -282,9 +279,9 @@ void dog::aStarSearch()
             {
                 cellDetails[i][j + 1].parent_i = i;
                 cellDetails[i][j + 1].parent_j = j;
-                tracePath(dest);
+                bossPath = tracePath(dest);
                 foundOpst = true;
-                return;
+                return bossPath;
             }
 
             else if (!closedList[i][j + 1] && !isBlock(i, j + 1))
@@ -313,9 +310,9 @@ void dog::aStarSearch()
                 // Set the Parent of the destination cell
                 cellDetails[i][j - 1].parent_i = i;
                 cellDetails[i][j - 1].parent_j = j;
-                tracePath( dest);
+                bossPath = tracePath( dest);
                 foundOpst = true;
-                return;
+                return bossPath;
             }
             else if (!closedList[i][j - 1] && !isBlock( i, j - 1) == true)
             {
@@ -336,7 +333,7 @@ void dog::aStarSearch()
             }
         }
     }
-    return;
+    return bossPath;
 }
 
 bool dog:: isValid(int r, int col) // in the range of the data
@@ -357,15 +354,22 @@ int dog::H_Calculation(int r, int col, Pair destn) // return the estimation dist
 }
 // // will be changed and make the boss move according to the sequence of steps
 
-void dog:: tracePath( Pair destn)
+std::vector<Pair> dog:: tracePath( Pair destn)
 {
     int r = destn.first;
     int col = destn.second;
     while(!bossPath.empty())
-            bossPath.pop();
+            bossPath.pop_back();
+
     while (!(cellDetails[r][col].parent_i == r && cellDetails[r][col].parent_j == col))
     {
-            bossPath.push(std::make_pair(r, col));
+        bossPath.push_back(std::make_pair(r, col));
+        if(cellDetails[r][col].parent_i<0||cellDetails[r][col].parent_j<0)
+             break;
+        if(cellDetails[r][col].parent_i>20||cellDetails[r][col].parent_j>20)
+             break;
+        if(cellDetails[cellDetails[r][col].parent_i][cellDetails[r][col].parent_j].parent_i==r&&cellDetails[cellDetails[r][col].parent_i][cellDetails[r][col].parent_j].parent_j==col)
+             break;
             int temp_row = cellDetails[r][col].parent_i;
             int temp_col = cellDetails[r][col].parent_j;
             r = temp_row;
@@ -383,7 +387,7 @@ void dog:: tracePath( Pair destn)
 //        r = temp_r;
 //        col = temp_col;
 //    }
-    return;
+    return bossPath;
 }
 
 bool dog::isDestination(int r, int col, Pair destn) // to check whether enemy reached (its destination) the player or not
