@@ -18,8 +18,8 @@ void level1::add_board_images()
 {
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+    int unitWidth = qMin(screenWidth, screenHeight) / 13;
+    int unitHeight = qMin(screenWidth, screenHeight) / 13;
 
     QPixmap blankImage(":assets/images/blank.png");
 
@@ -197,8 +197,8 @@ void level1::create_enemies()
 {
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+    int unitWidth = qMin(screenWidth, screenHeight) / 13;
+    int unitHeight = qMin(screenWidth, screenHeight) / 13;
 
    enemy1 = new class enemy1(boardData, this, unitWidth, unitHeight);
     scene->addItem(enemy1);

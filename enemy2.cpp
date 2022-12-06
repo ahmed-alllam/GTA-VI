@@ -106,10 +106,10 @@ void enemy2::checkCollision(){
 }
 
 void enemy2::setXandY(int x, int y) {
-    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
-    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+//    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
+//    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
+//    int unitWidth = qMin(screenWidth, screenHeight) / 13;
+//    int unitHeight = qMin(screenWidth, screenHeight) / 13;
 
     this->x = x;
     this->y = y;

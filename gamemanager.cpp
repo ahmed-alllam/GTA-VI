@@ -94,8 +94,8 @@ void GameManager::create_healthbar()
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
     int unitWidth = qMin(screenWidth, screenHeight) / 17;
     int unitHeight = qMin(screenWidth, screenHeight) / 17;
-    int unitWidth2 = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight2 = qMin(screenWidth, screenHeight) / 12;
+    int unitWidth2 = qMin(screenWidth, screenHeight) / 13;
+    int unitHeight2 = qMin(screenWidth, screenHeight) / 13;
 
     QGraphicsRectItem *panel = new QGraphicsRectItem(65, 0, 1130, 70);
     QBrush *brush = new QBrush();

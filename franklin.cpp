@@ -36,8 +36,8 @@ Franklin::Franklin(int boardData[12][16], void *currentLevel)
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    unitWidth = qMin(screenWidth, screenHeight) / 12;
-    unitHeight = qMin(screenWidth, screenHeight) / 12;
+    unitWidth = qMin(screenWidth, screenHeight) / 13;
+    unitHeight = qMin(screenWidth, screenHeight) / 13;
 
     franklinImagel1 = franklinImagel1.scaledToWidth(unitWidth);
     franklinImagel1 = franklinImagel1.scaledToHeight(unitHeight);
@@ -407,7 +407,7 @@ void Franklin::checkCollision()
             // manager->activate_mode();   //displaying the progress bar
 
             connect(timer, &QTimer::timeout, this, &Franklin::setPowerful2False);
-            timer->start(120000);
+            timer->start(10000);
             //            QTimer::singleShot(10000, this, SLOT(setPowerful(false)));
             (collision[i])->setVisible(false);
         }
@@ -420,7 +420,7 @@ void Franklin::checkCollision()
             //   manager->activate_mode();   //displaying the progress bar
 
             connect(timer, &QTimer::timeout, this, &Franklin::setDrunk2False);
-            timer->start(60000);
+            timer->start(10000);
             //            QTimer::singleShot(10000, this, SLOT(setIsDrunk(false)));
             (collision[i])->setVisible(false);
         }

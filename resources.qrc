@@ -66,5 +66,13 @@
         <file>Board 2.txt</file>
         <file>Board 3.txt</file>
         <file>Maze online.txt</file>
+        <file>assets/images/dog1L.png</file>
+        <file>assets/images/dog1R.png</file>
+        <file>assets/images/dog2L.png</file>
+        <file>assets/images/dog2R.png</file>
+        <file>assets/images/dog3L.png</file>
+        <file>assets/images/dog3R.png</file>
+        <file>assets/images/dog4L.png</file>
+        <file>assets/images/dog4R.png</file>
     </qresource>
 </RCC>

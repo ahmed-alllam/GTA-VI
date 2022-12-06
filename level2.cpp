@@ -16,8 +16,8 @@ void level2::add_board_images()
 {
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+    int unitWidth = qMin(screenWidth, screenHeight) / 13;
+    int unitHeight = qMin(screenWidth, screenHeight) / 13;
 
     QPixmap blankImage(":assets/images/blank.png");
 
@@ -195,8 +195,8 @@ void level2::create_enemies()
 {
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+    int unitWidth = qMin(screenWidth, screenHeight) / 13;
+    int unitHeight = qMin(screenWidth, screenHeight) / 13;
     enemy1 = new class dog (boardData, this, unitWidth, unitHeight);
     scene->addItem(enemy1);
 
