@@ -40,7 +40,6 @@ unitHeight(h)
 
 void enemy2::move(){
 
-    qDebug() << bossPath.size() << "  2"<<'\n';
     if(!bossPath.empty())
             {
               if(x==bossPath[bossPath.size()-1].first&&y+1==bossPath[bossPath.size()-1].second)

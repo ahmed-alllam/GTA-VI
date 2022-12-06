@@ -7,15 +7,21 @@
 #include<QObject>
 #include "qobjectdefs.h"
 #include "level.h"
+#include <QAudioFormat>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 class GameManager: public QObject
 {
 
 private:
     level *currentLevel;
     int levelNum;
+    bool win;
     QTimer *timer;  // game over checker
     QTimer *timer2; // the last stage checker
     QTimer *timer3; // win checker
+    QMediaPlayer *player = new QMediaPlayer;
+    QAudioOutput *audioOutput = new QAudioOutput;
 public slots:
 
 void restart_game();

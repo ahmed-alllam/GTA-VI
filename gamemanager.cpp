@@ -10,9 +10,6 @@
 #include <QApplication>
 #include <QGuiApplication>
 #include <QGraphicsScene>
-#include <QAudioFormat>
-#include <QMediaPlayer>
-#include <QAudioOutput>
 #include <QLabel>
 #include <QPushButton>
 #include <QProgressBar>
@@ -55,8 +52,6 @@ void GameManager::create_board() // to create and display the board
 
 void GameManager::create_sound() // to create and display the sound
 {
-    QMediaPlayer *player = new QMediaPlayer;
-    QAudioOutput *audioOutput = new QAudioOutput;
     player->setAudioOutput(audioOutput);
     player->setLoops(QMediaPlayer::Infinite);
     player->setSource(QUrl("qrc:/assets/sounds/backsound.mp3"));
@@ -275,6 +270,7 @@ void GameManager::game_over()
     overText->setFont(fonty);
     scene->addItem(overText);
 
+    win = false;
     QPushButton *p = new QPushButton;
     p->setText("PLAY AGAIN");
     p->setGeometry(screenWidth / 3 + 40, screenHeight / 3 + 250, 100, 50);
@@ -315,6 +311,8 @@ void GameManager::Win()
     overText->setFont(fonty);
     scene->addItem(overText);
 
+    win = true;
+
     QPushButton *p = new QPushButton;
     if(levelNum != 3)
         p->setText("NEXT LEVEL");
@@ -347,21 +345,28 @@ void GameManager::restart_game()
     {
         scene->items()[i]->setEnabled(true);
     }
-
+    player->stop();
     currentLevel->restart_game();
     delete currentLevel;
-
-    if (levelNum == 1)
+    if(win)
     {
-        levelNum++;
-        currentLevel = new level2(this, scene);
+        if (levelNum == 1)
+        {
+            levelNum++;
+            currentLevel = new level2(this, scene);
+        }
+        else if (levelNum == 2)
+        {
+            levelNum++;
+            currentLevel = new level2(this, scene);
+        }
+        else if (levelNum == 3)
+        {
+            levelNum = 1;
+            currentLevel = new level1(this, scene);
+        }
     }
-    else if (levelNum == 2)
-    {
-        levelNum++;
-        currentLevel = new level2(this, scene);
-    }
-    else if (levelNum == 3)
+    else
     {
         levelNum = 1;
         currentLevel = new level1(this, scene);
