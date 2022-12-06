@@ -401,7 +401,7 @@ wss.on("connection", ws => {
                                                 game.save()
                                                     .then(result => {
                                                         wss.clients.forEach(client => {
-                                                            console.log("in player hit game finished" + client.playerId);
+                                                            console.log("in player hit game finished" + client.playerId + " " + game.players_ids + " " + old_ids);
                                                             if (client.readyState === WebSocket.OPEN && old_ids.includes(client.playerId)) {
                                                                 // get the winner id
                                                                 if(ws.playerId === client.playerId) {
