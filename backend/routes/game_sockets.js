@@ -390,6 +390,7 @@ wss.on("connection", ws => {
                                             // check if the player is the second player
                                             // remove the player from the game
                                             game.players.splice(i, 1);
+                                            old_ids = game.players_ids;
                                             game.players_ids.splice(game.players_ids.indexOf(data.playerId), 1);
 
                                             if (game.players.length === 1) {
@@ -400,16 +401,16 @@ wss.on("connection", ws => {
                                                 game.save()
                                                     .then(result => {
                                                         wss.clients.forEach(client => {
-                                                            if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                                            if (client.readyState === WebSocket.OPEN && old_ids.includes(client.playerId)) {
                                                                 // get the winner id
-                                                                if(result.players_ids[0] === client.playerId) {
+                                                                if(ws.playerId === client.playerId) {
                                                                     client.send(JSON.stringify({
-                                                                        type: "gameWon",
+                                                                        type: "gameLost",
                                                                         game: result,
                                                                     }));
                                                                 } else {
                                                                     client.send(JSON.stringify({
-                                                                        type: "gameLost",
+                                                                        type: "gameWon",
                                                                         game: result,
                                                                     }));
                                                                 }
@@ -424,7 +425,7 @@ wss.on("connection", ws => {
                                                 game.save()
                                                     .then(result => {
                                                         wss.clients.forEach(client => {
-                                                            if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
+                                                            if (client.readyState === WebSocket.OPEN && old_ids.includes(client.playerId)) {
                                                                 client.send(JSON.stringify({
                                                                     type: "playerDied",
                                                                     player: data.playerId,

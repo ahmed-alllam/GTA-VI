@@ -315,7 +315,7 @@ void OnlineGameManager::onDisconnected()
     drawPanel(screenWidth / 3 - 20, screenHeight / 3 - 20, 400, 400, Qt::lightGray, 1);
 
     /* Gmae Over Text*/
-    QGraphicsTextItem *overText = new QGraphicsTextItem("Network Error, Please Try and Join Again");
+    QGraphicsTextItem *overText = new QGraphicsTextItem("Disconnected");
     QFont fonty("Arial", 20, QFont::StyleNormal);
     overText->setPos(screenWidth / 3 + 100, screenHeight / 3 + 80);
     overText->setFont(fonty);
@@ -394,6 +394,10 @@ void OnlineGameManager::gameWon() {
 
 void OnlineGameManager::playerDied(QString id) {
     // remove the player with the same id from the level
+    if(id == username) {
+        game_over();
+    }
+
     level->remove_player(id);
 }
 
