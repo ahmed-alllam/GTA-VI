@@ -13,6 +13,19 @@ OnlineLevel::OnlineLevel(void *gameManager, QGraphicsScene *scene, QString usern
     this->scene = scene;
     this->username = username;
     this->game_id = game_id;
+
+
+    // display the game id on the right side of the screen
+    QGraphicsTextItem *game_id_text = new QGraphicsTextItem();
+    game_id_text->setPlainText("Game ID: " + game_id);
+    // font big
+    // make the text white
+    game_id_text->setDefaultTextColor(Qt::white);
+    QFont fonty("Arial", 20, QFont::StyleNormal);
+    game_id_text->setZValue(1);
+    game_id_text->setPos(540, 20);
+    game_id_text->setFont(fonty);
+    scene->addItem(game_id_text);
 }
 
 void OnlineLevel::add_board_images()

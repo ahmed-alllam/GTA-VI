@@ -397,14 +397,19 @@ wss.on("connection", ws => {
                                                 // the first player wins
                                                 // update the game 
                                                 game.state = "finished";
-
                                                 game.save()
                                                     .then(result => {
                                                         wss.clients.forEach(client => {
                                                             if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
-                                                                if(game.players_ids[0] === client.playerId) {
+                                                                // get the winner id
+                                                                if(result.players_ids[0] === client.playerId) {
                                                                     client.send(JSON.stringify({
                                                                         type: "gameWon",
+                                                                        game: result,
+                                                                    }));
+                                                                } else {
+                                                                    client.send(JSON.stringify({
+                                                                        type: "gameLost",
                                                                         game: result,
                                                                     }));
                                                                 }

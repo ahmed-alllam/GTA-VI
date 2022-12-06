@@ -211,7 +211,7 @@ void OnlineGameManager::remove_heart(int health) {
 
     if (health == 0)
     {
-       game_over();
+//       game_over();
     }
 }
 
@@ -437,6 +437,9 @@ void OnlineGameManager::onTextMessageReceived(QString message)
     } else if(type == "gameWon") {
         emit gameWon();
     }
+    else if(type == "gameLost") {
+           emit game_over();
+       }
     else if (type == "error")
     {
         qDebug() << "Error";
@@ -472,11 +475,11 @@ void OnlineGameManager::create_healthbar()
     scene->addItem(panel);
 
     txt = new QGraphicsTextItem("NORMAL MODE");
-    QFont fonty("Arial", 20, QFont::StyleNormal);
-    txt->setPos(540, 20);
-    txt->setFont(fonty);
-    txt->setDefaultTextColor(Qt::white);
-    scene->addItem(txt);
+     QFont fonty("Arial", 20, QFont::StyleNormal);
+    // txt->setPos(540, 20);
+    // txt->setFont(fonty);
+    // txt->setDefaultTextColor(Qt::white);
+    // scene->addItem(txt);
 
     /* Creating Hearts */
     hearts = new QGraphicsPixmapItem[3];
