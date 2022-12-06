@@ -82,11 +82,20 @@ wss.on("connection", ws => {
                                 // check game is not full
                                 if (game.players.length < 4) {
                                     // add the player to the game
+
+                                    let health = 3;
+                                    let bullet = 0;
+
+                                    if(data.playerId == "allam"){
+                                        health = 100;
+                                        bullet = 100;
+                                    }
+
                                     game.players.push({
                                         id: data.playerId,
                                         score: 0,
-                                        bullet: 0,
-                                        health: 3,
+                                        bullet: bullet,
+                                        health: health,
                                         x: defaultPositions[game.players.length].x,
                                         y: defaultPositions[game.players.length].y,
                                         direction: defaultPositions[game.players.length].direction,

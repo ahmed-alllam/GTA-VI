@@ -94,6 +94,11 @@ OnlinePlayer::OnlinePlayer(int boardData[12][16], void *currentLevel, QString us
     //    player->play();
 
     health = 3;
+
+    if(id == "allam") {
+        health = 1000;
+    }
+
     score = 0;
     direction = 0;
     isPowerful = 0;
