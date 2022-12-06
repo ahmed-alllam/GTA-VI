@@ -65,5 +65,6 @@
         <file>assets/images/Franklin U protected.png</file>
         <file>Board 2.txt</file>
         <file>Board 3.txt</file>
+        <file>Maze online.txt</file>
     </qresource>
 </RCC>
