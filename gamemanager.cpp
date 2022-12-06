@@ -366,16 +366,17 @@ void GameManager::restart_game()
         levelNum = 1;
         currentLevel = new level1(this, scene);
     }
+    this->launch_game();
 
-    create_board();
-    add_board_images();
-    create_player();
-    close_gate();
-    create_enemies();
-    create_bullets();
-    create_pellets();
-    create_healthbar();
-    updateCounters();
+//    create_board();
+//    add_board_images();
+//    create_player();
+//    close_gate();
+//    create_enemies();
+//    create_bullets();
+//    create_pellets();
+//    create_healthbar();
+//    updateCounters();
 }
 
 //void GameManager::Next_level()

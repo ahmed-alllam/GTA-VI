@@ -411,7 +411,7 @@ void level1::enemy_hit(QGraphicsItem *enemy)
             }
             scene->removeItem(enemy1);
             enemy1 = nullptr;
-           // delete enemy1;
+            delete enemy1;
         }
     }
     else if (typeid(*enemy) == typeid(class enemy2) && enemy2 != nullptr)
@@ -427,7 +427,7 @@ void level1::enemy_hit(QGraphicsItem *enemy)
             }
             scene->removeItem(enemy2);
             enemy2 = nullptr;
-//            delete enemy2;
+            delete enemy2;
         }
     }
 }

@@ -169,7 +169,7 @@ void level2::add_board_images()
 
 void level2::create_board()
 {
-    QFile file(":Maze.txt");
+    QFile file(":Board 2.txt");
     file.open(QIODevice::ReadOnly);
     QTextStream stream(&file);
     QString temp;
@@ -188,7 +188,7 @@ void level2::create_player()
 
     timer = new QTimer();
     QObject::connect(timer, &QTimer::timeout, franklin, &Franklin::focus_player);
-    timer->start(350);
+    timer->start(300);
 }
 
 void level2::create_enemies()
@@ -246,7 +246,7 @@ void level2::create_pellets()
     pellets.push_back(pellet1);
     pellets.push_back(pellet2);
 
-    drunk = new class Drunk(boardData, 1, 3);
+    drunk = new class Drunk(boardData, 2, 1);
 
     for (int i = 0; i < pellets.size(); i++)
     {
@@ -282,7 +282,7 @@ void level2::updateModeTxt()
 
 void level2::open_gate()
 {
-    boardData[9][15] = 50;
+    boardData[10][15] = 50;
     franklin->editboard(50);
     GameManager *manager = static_cast<GameManager *>(gameManager);
     manager->open_gate();
@@ -290,7 +290,7 @@ void level2::open_gate()
 
 void level2::close_gate()
 {
-    boardData[9][15] = -50;
+    boardData[10][15] = -50;
     franklin->editboard(-50);
 }
 
@@ -365,7 +365,7 @@ void level2::restart_game()
 void level2::player_hit()
 {
     if (enemy1 != nullptr)
-        enemy1->setXandY(9, 8);
+        enemy1->setXandY(1, 1);
 
     franklin->hit();
 }
