@@ -63,5 +63,10 @@
         <file>assets/images/Franklin U m1.png</file>
         <file>assets/images/Franklin U m2.png</file>
         <file>assets/images/Franklin U protected.png</file>
+        <file>assets/images/button.png</file>
+        <file>assets/images/time-bomb.png</file>
+        <file>assets/images/coins.png</file>
+        <file>assets/images/energy-drink.png</file>
+        <file>assets/images/extra-health.png</file>
     </qresource>
 </RCC>

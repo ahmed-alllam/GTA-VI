@@ -1,7 +1,7 @@
 QT       += core gui
 QT += core
 QT += widgets
-#QT += multimedia   //disabeld
+#QT += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,6 +13,7 @@ CONFIG += c++17
 
 SOURCES += \
     Drunk.cpp \
+    bomb.cpp \
     bullet.cpp \
     dog.cpp \
     enemy1.cpp \
@@ -32,6 +33,7 @@ SOURCES += \
 
 HEADERS += \
     Drunk.h \
+    bomb.h \
     bullet.h \
     dog.h \
     enemy1.h \

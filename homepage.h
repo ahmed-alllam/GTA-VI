@@ -28,6 +28,8 @@ private slots:
 
      void on_Sign_clicked();
 
+     void on_marketButton_clicked();
+
 private:
     Ui::homepage *ui;
     QList<QString> user;

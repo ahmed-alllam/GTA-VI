@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QSaveFile>
 
+#include<mainwindow.h> //added
 homepage::homepage(GameManager *gameManager, QGraphicsScene *scene)
 {
     ui = new Ui::homepage;
@@ -117,5 +118,14 @@ void homepage::on_Sign_clicked()
     }
     ui->user->setText("");
     ui->pass->setText("");
+}
+
+
+void homepage::on_marketButton_clicked()
+{
+    MainWindow * main =new MainWindow;
+    main->show();
+
+
 }
 
