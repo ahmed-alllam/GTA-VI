@@ -391,7 +391,7 @@ wss.on("connection", ws => {
                                             // remove the player from the game
                                             game.players.splice(i, 1);
                                             old_ids = game.players_ids;
-                                            game.players_ids.splice(game.players_ids.indexOf(data.playerId), 1);
+                                            game.players_ids.splice(game.players_ids.indexOf(ws.playerId), 1);
 
                                             if (game.players.length === 1) {
                                                 // the player is the second player
@@ -512,7 +512,7 @@ wss.on("connection", ws => {
             })
             .exec()
             .then(game => {
-                if (game.players_ids == null || game.players_ids.length === 0) {
+                if (game.players_ids != null || game.players_ids.length === 0) {
                     // delete the game
                     game
                         .remove()
