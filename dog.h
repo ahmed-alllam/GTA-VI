@@ -27,8 +27,8 @@ private:
     void * currentLevel;
     cell3 cellDetails[12][16];
     bool closedList[12][16];
-    int unitWidth;
-    int unitHeight;
+    const int unitWidth;
+    const int unitHeight;
     QPixmap enemy4LImage;
     QPixmap enemy4RImage;
     QPixmap enemy3LImage;
