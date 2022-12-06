@@ -14,7 +14,7 @@ dog::dog(int boardData[12][16], void * gameManager, int w, int h):
 unitWidth(w),
 unitHeight(h)
 {
-    this->currentLevel = currentLevel;
+    this->currentLevel = gameManager;
     while(!bossPath.empty())
     {bossPath.pop_back();}
 
@@ -196,7 +196,7 @@ std::vector<Pair> dog::aStarSearch()
     cellDetails[i][j].parent_j = j;
 
 
-//    // Put the starting cell on the open list and set its'f' as 0
+////    // Put the starting cell on the open list and set its'f' as 0
     openList.insert(make_pair(0, std::make_pair(i, j)));
     bool foundOpst = false; // the destination is not reached.
     while (!openList.empty())
@@ -335,6 +335,8 @@ std::vector<Pair> dog::aStarSearch()
     }
     return bossPath;
 }
+
+
 
 bool dog:: isValid(int r, int col) // in the range of the data
 {

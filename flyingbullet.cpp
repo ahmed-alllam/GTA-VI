@@ -101,8 +101,10 @@ void FlyingBullet::move()
     {
         if (typeid(*colliding_items[i]) == typeid(enemy1) || typeid(*colliding_items[i]) == typeid(enemy2))
         {
-            scene()->removeItem(this);
-            delete this;
+            if(scene() != nullptr) {
+                scene()->removeItem(this);
+                delete this;
+            }
             manager2->enemy_hit(colliding_items[i]);
             return;
         }
@@ -111,16 +113,20 @@ void FlyingBullet::move()
     // check if bullet is out of bounds
     if (x < 0 || x > 11 || y < 0 || y > 15)
     {
-        scene()->removeItem(this);
-        delete this;
+        if(scene() != nullptr) {
+            scene()->removeItem(this);
+            delete this;
+        }
         return;
     }
 
     // check if bullet hit a wall
     if (boardData[x][y] < 0)
     {
-        scene()->removeItem(this);
-        delete this;
+        if(scene() != nullptr) {
+            scene()->removeItem(this);
+            delete this;
+        }
         return;
     }
 
