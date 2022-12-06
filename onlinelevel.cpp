@@ -249,6 +249,7 @@ void OnlineLevel::update_player_position(QString playerId, int x, int y, int dir
     {
         if (players[i]->id == playerId && playerId != this->username)
         {
+            qDebug() << "updating pos " <<players[i]->id << " curr health " << players[i]->health << " " << health;
             players[i]->setCoordinates(x, y, direction);
             players[i]->score = score;
             players[i]->bullets = bullets;

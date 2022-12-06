@@ -401,6 +401,7 @@ wss.on("connection", ws => {
                                                 game.save()
                                                     .then(result => {
                                                         wss.clients.forEach(client => {
+                                                            console.log("in player hit game finished" + client.playerId);
                                                             if (client.readyState === WebSocket.OPEN && old_ids.includes(client.playerId)) {
                                                                 // get the winner id
                                                                 if(ws.playerId === client.playerId) {
@@ -457,7 +458,7 @@ wss.on("connection", ws => {
                                                     wss.clients.forEach(client => {
                                                         if (client.readyState === WebSocket.OPEN && game.players_ids.includes(client.playerId)) {
                                                             client.send(JSON.stringify({
-                                                                type: "gameUpdate",
+                                                                type: "gameUpdated",
                                                                 game: result,
                                                             }));
                                                         }
@@ -511,7 +512,7 @@ wss.on("connection", ws => {
             })
             .exec()
             .then(game => {
-                if (game.players_ids.length === 0) {
+                if (game.players_ids == null || game.players_ids.length === 0) {
                     // delete the game
                     game
                         .remove()
