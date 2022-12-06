@@ -390,7 +390,8 @@ wss.on("connection", ws => {
                                             // check if the player is the second player
                                             // remove the player from the game
                                             game.players.splice(i, 1);
-                                            old_ids = game.players_ids;
+                                            // copy the game.players_ids array into a new array
+                                            let old_ids = game.players_ids.slice();
                                             game.players_ids.splice(game.players_ids.indexOf(ws.playerId), 1);
 
                                             if (game.players.length === 1) {
@@ -401,7 +402,7 @@ wss.on("connection", ws => {
                                                 game.save()
                                                     .then(result => {
                                                         wss.clients.forEach(client => {
-                                                            console.log("in player hit game finished" + client.playerId + " " + game.players_ids + " " + old_ids);
+                                                            console.log("in player hit game finished" + client.playerId + " " + game.players_ids + " " + old_ids + " " + game.players_ids.includes(client.playerId) + " " + old_ids.includes(client.playerId) + " " + ws.playerId);
                                                             if (client.readyState === WebSocket.OPEN && old_ids.includes(client.playerId)) {
                                                                 // get the winner id
                                                                 if(ws.playerId === client.playerId) {
