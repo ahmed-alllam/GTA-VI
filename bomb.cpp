@@ -42,7 +42,7 @@ bomb::bomb(int boardData[12][16], int x, int y, void *manager)
     bombimage = bombimage.scaledToWidth(unitWidth);
     bombimage = bombimage.scaledToHeight(unitHeight);
 
-    setPixmap(bombimage);
+    setPixmap(bombimage);// that line causes an issue in the counter of bombs
 
     this->x = x;
     this->y = y;

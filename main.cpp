@@ -6,15 +6,12 @@
 #include <QFile>
 #include <QTextStream>
 #include <QGraphicsPixmapItem>
-#include "gamemanager.h"
+#include "homepage.h"
 #include <QDir>
 #include <QTimer>
 #include <QDebug>
 #include <QApplication>
 #include <QGuiApplication>
-//#include <QAudioFormat>
-//#include <QMediaPlayer>
-//#include <QAudioOutput>
 
 
 int main(int argc, char *argv[])
@@ -34,7 +31,9 @@ int main(int argc, char *argv[])
     QBrush brush(QColor(0x335f3f));
     view.setBackgroundBrush(brush);
 
-    GameManager gameManager(scene);
+
+    homepage *home = new homepage(scene);
+    scene->addWidget(home);
 
     view.setScene(scene);
 

@@ -7,6 +7,7 @@
 #include <QTimer>
 #include "enemy1.h"
 #include "enemy2.h"
+#include "dog.h"
 #include "level.h"
 #include "gamemanager.h"
 
@@ -19,8 +20,8 @@ FlyingBullet::FlyingBullet(int boardData[12][16], int x, int y, int direction, v
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+    int unitWidth = qMin(screenWidth, screenHeight) / 13;
+    int unitHeight = qMin(screenWidth, screenHeight) / 13;
     int unitHeight2 = qMin(screenWidth, screenHeight) / 17;
 
     bulletImageu = bulletImageu.scaledToWidth(unitHeight2);
@@ -70,6 +71,8 @@ FlyingBullet::FlyingBullet(int boardData[12][16], int x, int y, int direction, v
     timer = new QTimer();
     QObject::connect(timer, &QTimer::timeout, this, &FlyingBullet::move);
     timer->start(50);
+
+    move();
 }
 
 void FlyingBullet::move()
@@ -97,10 +100,12 @@ void FlyingBullet::move()
 
     for (int i = 0; i < colliding_items.size(); i++)
     {
-        if (typeid(*colliding_items[i]) == typeid(enemy1) || typeid(*colliding_items[i]) == typeid(enemy2))
+        if (typeid(*colliding_items[i]) == typeid(enemy1) || typeid(*colliding_items[i]) == typeid(enemy2) || typeid(*colliding_items[i]) == typeid(dog))
         {
-            scene()->removeItem(this);
-            delete this;
+            if(scene() != nullptr) {
+                scene()->removeItem(this);
+                delete this;
+            }
             manager2->enemy_hit(colliding_items[i]);
             return;
         }
@@ -109,24 +114,28 @@ void FlyingBullet::move()
     // check if bullet is out of bounds
     if (x < 0 || x > 11 || y < 0 || y > 15)
     {
-        scene()->removeItem(this);
-        delete this;
+        if(scene() != nullptr) {
+            scene()->removeItem(this);
+            delete this;
+        }
         return;
     }
 
     // check if bullet hit a wall
     if (boardData[x][y] < 0)
     {
-        scene()->removeItem(this);
-        delete this;
+        if(scene() != nullptr) {
+            scene()->removeItem(this);
+            delete this;
+        }
         return;
     }
 
     // move bullet
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+    int unitWidth = qMin(screenWidth, screenHeight) / 13;
+    int unitHeight = qMin(screenWidth, screenHeight) / 13;
 
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
 }

@@ -12,7 +12,7 @@ class Log_in : public QDialog
     Q_OBJECT
 
 public:
-    explicit Log_in(QWidget *parent = nullptr, QList<QString> *u = nullptr, QList<QString> *p = nullptr);
+    explicit Log_in(QWidget *parent = nullptr);
     ~Log_in();
 
 private slots:
@@ -20,8 +20,6 @@ private slots:
 
 private:
     Ui::Log_in *ui;
-    QList<QString> *user;
-    QList<QString> *pass;
 };
 
 #endif // LOG_IN_H

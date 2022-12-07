@@ -37,8 +37,8 @@ Franklin::Franklin(int boardData[12][16], void *currentLevel)
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    unitWidth = qMin(screenWidth, screenHeight) / 12;
-    unitHeight = qMin(screenWidth, screenHeight) / 12;
+    unitWidth = qMin(screenWidth, screenHeight) / 13;
+    unitHeight = qMin(screenWidth, screenHeight) / 13;
 
     franklinImagel1 = franklinImagel1.scaledToWidth(unitWidth);
     franklinImagel1 = franklinImagel1.scaledToHeight(unitHeight);
@@ -130,8 +130,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 2;
                 setPixmap(franklinImageu1);
 
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(5);
+//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+//                timer->start(200);
             }
             else if (event->key() == Qt::Key_Down && boardData[x + 1][y] >= 0)
             {
@@ -139,8 +139,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 3;
                 setPixmap(franklinImaged1);
 
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(5);
+//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+//                timer->start(200);
             }
             else if (event->key() == Qt::Key_Right && boardData[x][y + 1] >= 0)
             {
@@ -148,8 +148,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 0;
                 setPixmap(franklinImager1);
 
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(5);
+//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+//                timer->start(200);
                 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
             else if (event->key() == Qt::Key_Left && boardData[x][y - 1] >= 0)
@@ -158,9 +158,9 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 1;
                 setPixmap(franklinImagel1);
 
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(5);
-                //                QTimer::singleShot(2000, this, SLOT(Move()));
+//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+//                timer->start(200);
+//                                QTimer::singleShot(2000, this, SLOT(Move()));
             }
         }
         else
@@ -171,8 +171,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 3;
                 setPixmap(franklinImaged1);
 
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(5);
+//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+//                timer->start(200);
             }
             else if (event->key() == Qt::Key_Down && boardData[x - 1][y] >= 0)
             {
@@ -181,7 +181,7 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 setPixmap(franklinImageu1);
 
                 connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(5);
+                timer->start(200);
             }
             else if (event->key() == Qt::Key_Left && boardData[x][y + 1] >= 0)
             {
@@ -189,8 +189,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 0;
                 setPixmap(franklinImager1);
 
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(5);
+//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+//                timer->start(200);
                 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
             else if (event->key() == Qt::Key_Right && boardData[x][y - 1] >= 0)
@@ -199,8 +199,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 1;
                 setPixmap(franklinImagel1);
 
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(5);
+//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+//                timer->start(200);
                 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
         }
@@ -463,7 +463,7 @@ void Franklin::checkCollision()
             // manager->activate_mode();   //displaying the progress bar
 
             connect(timer, &QTimer::timeout, this, &Franklin::setPowerful2False);
-            timer->start(120000);
+            timer->start(10000);
             //            QTimer::singleShot(10000, this, SLOT(setPowerful(false)));
             (collision[i])->setVisible(false);
         }
@@ -476,7 +476,7 @@ void Franklin::checkCollision()
             //   manager->activate_mode();   //displaying the progress bar
 
             connect(timer, &QTimer::timeout, this, &Franklin::setDrunk2False);
-            timer->start(60000);
+            timer->start(10000);
             //            QTimer::singleShot(10000, this, SLOT(setIsDrunk(false)));
             (collision[i])->setVisible(false);
         }
@@ -499,11 +499,14 @@ void Franklin::hit()
         manager->create_bullets();
         manager->updateCounters();
         setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
+<<<<<<< HEAD
 //        QMediaPlayer *player = new QMediaPlayer;
 //        QAudioOutput *audioOutput = new QAudioOutput;
 //        player->setAudioOutput(audioOutput);
 //        player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
 //        player->play();
+=======
+>>>>>>> ecb694eb3bf972aa38b0772229449ba5de7a1133
     }
     else
     {

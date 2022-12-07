@@ -4,15 +4,21 @@
 #include <QObject>
 #include <QSaveFile>
 
-Log_in::Log_in(QWidget *parent, QList<QString> *u, QList<QString> *p) :
-    QDialog(parent),
-    user(u),
-    pass(p),
-    ui(new Ui::Log_in)
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QUrl>
+#include <QUrlQuery>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QByteArray>
+
+
+Log_in::Log_in(QWidget *parent) : QDialog(parent),
+                                  ui(new Ui::Log_in)
 {
     ui->setupUi(this);
     ui->pass->setEchoMode(QLineEdit::Password);
-    ui->pass_2->setEchoMode(QLineEdit::Password);
 }
 
 Log_in::~Log_in()
@@ -23,59 +29,70 @@ Log_in::~Log_in()
 void Log_in::on_Log_clicked()
 {
     ui->errorLabel->setVisible(false);
-    bool flag = true;
     QString username = ui->user->text();
     QString password = ui->pass->text();
-    QString conf_password = ui->pass_2->text();
-    if(username == "")
+    if (username == "")
     {
         ui->errorLabel->setText("Please enter your username");
         ui->errorLabel->setVisible(true);
     }
-    else if(password == "")
+    else if (password == "")
     {
         ui->errorLabel->setText("Please enter the password");
         ui->errorLabel->setVisible(true);
     }
-    else if(conf_password == "")
-    {
-        ui->errorLabel->setText("Please enter the confirmation for password");
-        ui->errorLabel->setVisible(true);
-    }
+
+
     else
     {
-    for (int i = 0; i < user->length(); i++) {
-        if (user->at(i) == username) {
-            flag = false;
-            ui->errorLabel->setText("This user already exist");
-            ui->errorLabel->setVisible(true);
-        }
-    }
-    if(flag)
-    {
-        if (password == conf_password)
-        {
-        user->append(username);
-        pass->append(password);
-        QFile acc("Accounts.txt");
-        acc.open(QIODevice::WriteOnly);
-        QTextStream stream(&acc);
-        stream << username << "\n";
-        stream << password;
-        acc.close();
+        // now we need to send request to server to sign up the user
+        // and then we need to receive the response from server
+        // and then we need to check if the response is 200
+        // base url: https://gta-vi-backend1.onrender.com
+        // post request: /signup
 
-        ui->errorLabel->setText("This user is added, now you can log in");
+        QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+        QNetworkRequest request;
+        request.setUrl(QUrl("https://gta-vi-backend1.onrender.com/signup"));
+        request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+        QJsonObject json;
+        json["username"] = username;
+        json["password"] = password;
+
+        QJsonDocument doc(json);
+        QByteArray data = doc.toJson();
+
+        QNetworkReply *reply = manager->post(request, data);
+
+        // now we need to connect the reply to a function
+        // so that we can receive the response from server
+        // and then we can check if the response is 200
+
+        ui->errorLabel->setText("Loading...");
         ui->errorLabel->setVisible(true);
-        }
-        else
-        {
-            ui->errorLabel->setText("The two passwords does not match");
-            ui->errorLabel->setVisible(true);
-        }
+
+        connect(reply, &QNetworkReply::finished, [=]() {
+            int status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+
+            if (reply->error() || status != 201)
+            {
+                ui->errorLabel->setVisible(true);
+
+                if(status == 409) {
+                    ui->errorLabel->setText("User already exists");
+                } else {
+                    ui->errorLabel->setText("Network error");
+                }
+            }
+            else
+            {
+                ui->errorLabel->setText("User created successfully");
+                ui->errorLabel->setVisible(true);
+            }
+        });
     }
-    }
+
     ui->user->setText("");
     ui->pass->setText("");
-    ui->pass_2->setText("");
 }
-

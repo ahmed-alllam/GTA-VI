@@ -1,6 +1,7 @@
 #include "gamemanager.h"
 #include "level1.h"
-
+#include "level2.h"
+#include "level3.h"
 #include <QGraphicsPixmapItem>
 #include "homepage.h"
 #include <QDir>
@@ -9,9 +10,11 @@
 #include <QApplication>
 #include <QGuiApplication>
 #include <QGraphicsScene>
-//#include <QAudioFormat>
-//#include <QMediaPlayer>
-//#include <QAudioOutput>
+
+#include <QAudioFormat>
+#include <QMediaPlayer>
+#include <QAudioOutput>
+
 #include <QLabel>
 #include <QPushButton>
 #include <QProgressBar>
@@ -26,10 +29,6 @@
 GameManager::GameManager(QGraphicsScene *scene)
 {
     this->scene = scene;
-
-    homepage *home = new homepage(this, scene);
-    scene->addWidget(home);
-
     levelNum = 1;
     currentLevel = new level1(this, scene);
 
@@ -42,14 +41,13 @@ void GameManager::launch_game()
     create_player();
     create_enemies();
 
-    //create_sound();
+    create_sound();
     create_bullets();
     create_bombs();
 
     create_pellets();
     create_healthbar();
 
-    qDebug()<<"launching game tmam"; // testing
 }
 
 void GameManager::add_board_images()
@@ -62,15 +60,16 @@ void GameManager::create_board() // to create and display the board
     currentLevel->create_board();
 }
 
-//void GameManager::create_sound() // to create and display the sound
-//{
-//    QMediaPlayer *player = new QMediaPlayer;
-//    QAudioOutput *audioOutput = new QAudioOutput;
-//    player->setAudioOutput(audioOutput);
-//    player->setLoops(QMediaPlayer::Infinite);
-//    player->setSource(QUrl("qrc:/assets/sounds/backsound.mp3"));
-//    player->play();
-//}
+
+
+void GameManager::create_sound() // to create and display the sound
+{
+    player->setAudioOutput(audioOutput);
+    player->setLoops(QMediaPlayer::Infinite);
+    player->setSource(QUrl("qrc:/assets/sounds/backsound.mp3"));
+    player->play();
+}
+
 
 void GameManager::create_player()
 {
@@ -118,8 +117,8 @@ void GameManager::create_healthbar()
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
     int unitWidth = qMin(screenWidth, screenHeight) / 17;
     int unitHeight = qMin(screenWidth, screenHeight) / 17;
-    int unitWidth2 = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight2 = qMin(screenWidth, screenHeight) / 12;
+    int unitWidth2 = qMin(screenWidth, screenHeight) / 13;
+    int unitHeight2 = qMin(screenWidth, screenHeight) / 13;
 
     QGraphicsRectItem *panel = new QGraphicsRectItem(65, 0, 1130, 70);
     QBrush *brush = new QBrush();
@@ -314,6 +313,7 @@ void GameManager::game_over()
     overText->setFont(fonty);
     scene->addItem(overText);
 
+    win = false;
     QPushButton *p = new QPushButton;
     p->setText("PLAY AGAIN");
     p->setGeometry(screenWidth / 3 + 40, screenHeight / 3 + 250, 100, 50);
@@ -354,9 +354,13 @@ void GameManager::Win()
     overText->setFont(fonty);
     scene->addItem(overText);
 
+    win = true;
+
     QPushButton *p = new QPushButton;
-    p->setText("NEXT LEVEL");
-    levelNum++;
+    if(levelNum != 3)
+        p->setText("NEXT LEVEL");
+    else
+        p->setText("PLAY AGAIN");
     p->setGeometry(screenWidth / 3 + 40, screenHeight / 3 + 250, 100, 50);
     // update the level
     // level =
@@ -384,9 +388,34 @@ void GameManager::restart_game()
     {
         scene->items()[i]->setEnabled(true);
     }
-
+    player->stop();
     currentLevel->restart_game();
     delete currentLevel;
+    if(win)
+    {
+        if (levelNum == 1)
+        {
+            levelNum++;
+            currentLevel = new level2(this, scene);
+        }
+        else if (levelNum == 2)
+        {
+            levelNum++;
+            currentLevel = new level3(this, scene);
+        }
+        else if (levelNum == 3)
+        {
+            levelNum = 1;
+            currentLevel = new level1(this, scene);
+        }
+    }
+    else
+    {
+        levelNum = 1;
+        currentLevel = new level1(this, scene);
+    }
+    this->launch_game();
+
 
     if (levelNum == 1)
     {
@@ -416,7 +445,26 @@ void GameManager::restart_game()
     create_pellets();
     create_healthbar();
     updateCounters();
+
+
 }
+
+//void GameManager::Next_level()
+//{
+//    if (levelNum == 1)
+//    {
+//        delete currentLevel;
+//        levelNum++;
+//        currentLevel = new level2(this, scene);
+//    }
+//    else if (levelNum == 2)
+//    {
+//        delete currentLevel;
+//        levelNum++;
+//        currentLevel = new level3(this, scene);
+//    }
+//    launch_game();
+//}
 
 void GameManager::exit()
 {

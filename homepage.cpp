@@ -5,25 +5,29 @@
 #include <QObject>
 #include <QSaveFile>
 
+
 #include<mainwindow.h> //added
 homepage::homepage(GameManager *gameManager, QGraphicsScene *scene)
+
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QUrl>
+#include <QUrlQuery>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QByteArray>
+
+#include "gamemanager.h"
+#include "onlinegamemanager.h"
+
+
 {
     ui = new Ui::homepage;
     ui->setupUi(this);
 
-    QFile acc("Accounts.txt");
-    acc.open(QIODevice::ReadOnly);
-    QTextStream stream(&acc);
-    QString u;
-    QString p;
-    while(!stream.atEnd())
-    {
-         stream >> u;
-         stream >> p;
-         qDebug() << u;
-         user.append(u);
-         pass.append(p);
-    }
+    this->scene = scene;
+
     ui->pass->setEchoMode(QLineEdit::Password);
     ui->OnlineButton->setVisible(false);
     ui->pushButton->setVisible(false);
@@ -48,10 +52,9 @@ homepage::homepage(GameManager *gameManager, QGraphicsScene *scene)
     scene3->addPixmap(t);
     ui->graphicsView_3->setScene(scene3);
 
+    QObject::connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(start_story_mode()), Qt::QueuedConnection);
+    QObject::connect(ui->OnlineButton, SIGNAL(clicked()), this, SLOT(start_online_mode()), Qt::QueuedConnection);
 
-
-    this->gameManager = gameManager;
-    QObject::connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(exit()), Qt::QueuedConnection);
 }
 
 homepage::~homepage()
@@ -59,23 +62,25 @@ homepage::~homepage()
     delete ui;
 }
 
-void homepage::exit()
+void homepage::start_story_mode()
 {
-    if (this->gameManager != nullptr) {
-        this->gameManager->launch_game();
+    GameManager * manager = new GameManager(scene);
+    deleteLater();
+    manager->launch_game();
+}
 
-        // delete all the ui widgets without using close() or deleteLater()
-        deleteLater();
-    }
+void homepage::start_online_mode() {
+    OnlineGameManager * manager = new OnlineGameManager(scene, token, username);
+    deleteLater();
+//    manager->launch_game();
 }
 
 void homepage::on_Log_clicked()
 {
-    Log_in dialog(this, &user, &pass);
+    Log_in dialog(this);
     dialog.setModal(true);
     dialog.exec();
 }
-
 
 void homepage::on_Sign_clicked()
 {
@@ -83,42 +88,107 @@ void homepage::on_Sign_clicked()
     bool flag = true;
     QString username = ui->user->text();
     QString password = ui->pass->text();
-    if(username == "")
+    if (username == "")
     {
         ui->errorLabel->setText("Please enter your username");
         ui->errorLabel->setVisible(true);
     }
-    else if(password == "")
+    else if (password == "")
     {
         ui->errorLabel->setText("Please enter the password");
         ui->errorLabel->setVisible(true);
     }
     else
     {
-    for (int i = 0; i < user.length(); i++) {
-        if (user[i] == username) {
-            flag = false;
-            if (pass[i] == password) {
+        // for (int i = 0; i < user.length(); i++)
+        // {
+        //     if (user[i] == username)
+        //     {
+        //         flag = false;
+        //         if (pass[i] == password)
+        //         {
+        //             ui->OnlineButton->setVisible(true);
+        //             ui->marketButton->setVisible(true);
+        //             ui->pushButton->setVisible(true);
+        //             ui->errorLabel->setText("Welcome " + username + ",");
+        //             ui->errorLabel->setVisible(true);
+        //         }
+        //         else
+        //         {
+        //             ui->errorLabel->setText("Incorrect password");
+        //             ui->errorLabel->setVisible(true);
+        //         }
+        //     }
+        // }
+        // if (flag)
+        // {
+        //     ui->errorLabel->setText("User not found");
+        //     ui->errorLabel->setVisible(true);
+        // }
+    
+        // now, connect to the server with base url https://gta-vi-backend1.onrender.com
+        // and send a post request to /signin with username and password as json
+        // if the response is 200, then the user is signed in
+        // if the response is 401, then the user is not signed in
+
+        // start coding the QT networking code here
+        // use the following code to send a post request
+        ui->errorLabel->setText("Loading...");
+        ui->errorLabel->setVisible(true);
+
+        QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+        QNetworkRequest request;
+        request.setUrl(QUrl("https://gta-vi-backend1.onrender.com/signin"));
+        request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+        QJsonObject json;
+        json["username"] = username;
+        json["password"] = password;
+        QJsonDocument doc(json);
+        QByteArray bytes = doc.toJson();
+        QNetworkReply *reply = manager->post(request, bytes);
+        connect(reply, &QNetworkReply::finished, this, [=]() {
+            qDebug() << reply->error();
+            // get status code
+            int status_code = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+            if (reply->error() == QNetworkReply::NoError && status_code == 200)
+            {
+                // the user is signed in
                 ui->OnlineButton->setVisible(true);
                 ui->marketButton->setVisible(true);
                 ui->pushButton->setVisible(true);
                 ui->errorLabel->setText("Welcome " + username + ",");
                 ui->errorLabel->setVisible(true);
-                } else {
-                ui->errorLabel->setText("Incorrect password");
-                ui->errorLabel->setVisible(true);
-                }
+
+                // take the JWT token from the response and store it in a variable
+                // so that you can use it in the online game manager
+                // you can use the following code to get the JWT token
+                QByteArray response_data = reply->readAll();
+                QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
+                QJsonObject json_obj = json_doc.object();
+                QString jwt_token = json_obj["token"].toString();
+                qDebug() << jwt_token;
+                this->token = jwt_token;
+                this->username = username;
             }
-        }
-        if (flag)
-        {
-        ui->errorLabel->setText("User not found");
-        ui->errorLabel->setVisible(true);
-        }
+            else if (status_code == 401 || status_code == 400) {
+                ui->errorLabel->setText("Incorrect credentials");
+                ui->errorLabel->setVisible(true);
+            }
+            else
+            {
+                ui->errorLabel->setText("Network error occured");
+                ui->errorLabel->setVisible(true);
+            }
+        });
+
+        // print loading message in errorLabel
+
+        // end of networking code
     }
     ui->user->setText("");
     ui->pass->setText("");
 }
+
 
 
 void homepage::on_marketButton_clicked()

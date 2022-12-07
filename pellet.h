@@ -7,7 +7,7 @@
 class pellet : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
-private:
+public:
     int x;
     int y;
     int boardData[12][16];

@@ -10,8 +10,8 @@ pellet::pellet(int boardData[12][16], int x, int y)
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+    int unitWidth = qMin(screenWidth, screenHeight) / 13;
+    int unitHeight = qMin(screenWidth, screenHeight) / 13;
 
     pelletImage = pelletImage.scaledToWidth(unitWidth);
     pelletImage = pelletImage.scaledToHeight(unitHeight);

@@ -1,7 +1,12 @@
 QT       += core gui
 QT += core
 QT += widgets
-#QT += multimedia
+#here
+QT += multimedia
+QT += network
+QT += uitools
+QT += websockets
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -29,7 +34,11 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     franklin.cpp \
-    pellet.cpp
+    onlineflyingbullet.cpp \
+    onlinegamemanager.cpp \
+    onlinelevel.cpp \
+    onlineplayer.cpp \
+    pellet.cpp \
 
 HEADERS += \
     Drunk.h \
@@ -48,12 +57,18 @@ HEADERS += \
     log_in.h \
     mainwindow.h \
     franklin.h \
+    onlineflyingbullet.h \
+    onlinegamemanager.h \
+    onlinelevel.h \
+    onlineplayer.h \
     pellet.h
 
 FORMS += \
     homepage.ui \
     log_in.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    onlinegameid.ui \
+    onlinegamewaiting.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -61,4 +76,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    resources.qrc
+    resources.qrc \
+    ui.qrc
+

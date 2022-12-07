@@ -63,10 +63,24 @@
         <file>assets/images/Franklin U m1.png</file>
         <file>assets/images/Franklin U m2.png</file>
         <file>assets/images/Franklin U protected.png</file>
+<<<<<<< HEAD
         <file>assets/images/button.png</file>
         <file>assets/images/time-bomb.png</file>
         <file>assets/images/coins.png</file>
         <file>assets/images/energy-drink.png</file>
         <file>assets/images/extra-health.png</file>
+=======
+        <file>Board 2.txt</file>
+        <file>Board 3.txt</file>
+        <file>Maze online.txt</file>
+        <file>assets/images/dog1L.png</file>
+        <file>assets/images/dog1R.png</file>
+        <file>assets/images/dog2L.png</file>
+        <file>assets/images/dog2R.png</file>
+        <file>assets/images/dog3L.png</file>
+        <file>assets/images/dog3R.png</file>
+        <file>assets/images/dog4L.png</file>
+        <file>assets/images/dog4R.png</file>
+>>>>>>> ecb694eb3bf972aa38b0772229449ba5de7a1133
     </qresource>
 </RCC>

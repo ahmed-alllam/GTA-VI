@@ -2,7 +2,6 @@
 #define HOMEPAGE_H
 
 #include <QMainWindow>
-#include "gamemanager.h"
 #include <QGraphicsScene.h>
 #include <QGraphicsView>
 
@@ -13,16 +12,18 @@ class homepage;
 class homepage : public QMainWindow
 {
     Q_OBJECT
-private:
-    GameManager *gameManager;
-
-
 public:
-    explicit homepage(GameManager *gameManager, QGraphicsScene *scene);
+    explicit homepage(QGraphicsScene *scene);
     ~homepage();
 
+private:
+    QGraphicsScene *scene;
+    QString token;
+    QString username;
+
 private slots:
-     void exit();
+     void start_story_mode();
+     void start_online_mode();
 
      void on_Log_clicked();
 
@@ -32,8 +33,6 @@ private slots:
 
 private:
     Ui::homepage *ui;
-    QList<QString> user;
-    QList<QString> pass;
 };
 
 #endif // HOMEPAGE_H

@@ -52,7 +52,7 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>460</x>
+      <x>480</x>
       <y>450</y>
       <width>251</width>
       <height>51</height>
@@ -60,7 +60,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>28</pointsize>
+      <pointsize>22</pointsize>
      </font>
     </property>
     <property name="styleSheet">
@@ -82,7 +82,7 @@ background-color: transparent</string>
     </property>
     <property name="font">
      <font>
-      <pointsize>22</pointsize>
+      <pointsize>16</pointsize>
      </font>
     </property>
     <property name="styleSheet">
@@ -104,7 +104,7 @@ color:green;background-color:white;</string>
     </property>
     <property name="font">
      <font>
-      <pointsize>22</pointsize>
+      <pointsize>16</pointsize>
      </font>
     </property>
     <property name="styleSheet">
@@ -124,6 +124,12 @@ color:green;background-color:white;</string>
       <height>192</height>
      </rect>
     </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
    </widget>
    <widget class="QTextBrowser" name="textBrowser_3">
     <property name="enabled">
@@ -139,6 +145,7 @@ color:green;background-color:white;</string>
     </property>
     <property name="font">
      <font>
+      <pointsize>7</pointsize>
       <kerning>false</kerning>
      </font>
     </property>
@@ -151,6 +158,12 @@ color:green;background-color:white;</string>
     <property name="lineWidth">
      <number>0</number>
     </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
     <property name="lineWrapColumnOrWidth">
      <number>0</number>
     </property>
@@ -159,7 +172,7 @@ color:green;background-color:white;</string>
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 hr { height: 1px; border-width: 0; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;Kirollos Ehab&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;(The Design Manager)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
@@ -177,10 +190,10 @@ hr { height: 1px; border-width: 0; }
      </rect>
     </property>
     <property name="verticalScrollBarPolicy">
-     <enum>Qt::ScrollBarAsNeeded</enum>
+     <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
     <property name="horizontalScrollBarPolicy">
-     <enum>Qt::ScrollBarAsNeeded</enum>
+     <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
    </widget>
    <widget class="QTextBrowser" name="textBrowser_4">
@@ -197,6 +210,7 @@ hr { height: 1px; border-width: 0; }
     </property>
     <property name="font">
      <font>
+      <pointsize>7</pointsize>
       <kerning>false</kerning>
      </font>
     </property>
@@ -209,6 +223,12 @@ hr { height: 1px; border-width: 0; }
     <property name="lineWidth">
      <number>0</number>
     </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
     <property name="lineWrapColumnOrWidth">
      <number>0</number>
     </property>
@@ -217,7 +237,7 @@ hr { height: 1px; border-width: 0; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 hr { height: 1px; border-width: 0; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;Ahmed Allam&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;(The Backend Developer)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
@@ -232,10 +252,10 @@ hr { height: 1px; border-width: 0; }
      </rect>
     </property>
     <property name="verticalScrollBarPolicy">
-     <enum>Qt::ScrollBarAsNeeded</enum>
+     <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
     <property name="horizontalScrollBarPolicy">
-     <enum>Qt::ScrollBarAsNeeded</enum>
+     <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
    </widget>
    <widget class="QTextBrowser" name="textBrowser_5">
@@ -252,6 +272,7 @@ hr { height: 1px; border-width: 0; }
     </property>
     <property name="font">
      <font>
+      <pointsize>7</pointsize>
       <kerning>false</kerning>
      </font>
     </property>
@@ -264,6 +285,12 @@ hr { height: 1px; border-width: 0; }
     <property name="lineWidth">
      <number>0</number>
     </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
     <property name="lineWrapColumnOrWidth">
      <number>0</number>
     </property>
@@ -272,7 +299,7 @@ hr { height: 1px; border-width: 0; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 hr { height: 1px; border-width: 0; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;Eslam Tawfik&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;(The Frontend Developer)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
@@ -288,7 +315,7 @@ hr { height: 1px; border-width: 0; }
     </property>
     <property name="font">
      <font>
-      <pointsize>20</pointsize>
+      <pointsize>16</pointsize>
      </font>
     </property>
     <property name="styleSheet">
@@ -309,7 +336,7 @@ hr { height: 1px; border-width: 0; }
     </property>
     <property name="font">
      <font>
-      <pointsize>20</pointsize>
+      <pointsize>16</pointsize>
      </font>
     </property>
     <property name="styleSheet">
@@ -322,7 +349,7 @@ hr { height: 1px; border-width: 0; }
    <widget class="QPushButton" name="Sign">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>240</x>
       <y>230</y>
       <width>131</width>
       <height>41</height>
@@ -339,7 +366,7 @@ color:green;background-color:white;</string>
    <widget class="QPushButton" name="Log">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>240</x>
       <y>350</y>
       <width>131</width>
       <height>41</height>
@@ -358,13 +385,13 @@ color:green;background-color:white;</string>
      <rect>
       <x>20</x>
       <y>350</y>
-      <width>181</width>
+      <width>211</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <pointsize>12</pointsize>
      </font>
     </property>
     <property name="styleSheet">
@@ -379,7 +406,7 @@ color:green;background-color:white;</string>
      <rect>
       <x>180</x>
       <y>170</y>
-      <width>201</width>
+      <width>221</width>
       <height>31</height>
      </rect>
     </property>
@@ -397,7 +424,7 @@ color:black
      <rect>
       <x>180</x>
       <y>130</y>
-      <width>201</width>
+      <width>221</width>
       <height>31</height>
      </rect>
     </property>
@@ -412,7 +439,7 @@ color:black
      <rect>
       <x>20</x>
       <y>240</y>
-      <width>191</width>
+      <width>211</width>
       <height>31</height>
      </rect>
     </property>
@@ -439,7 +466,7 @@ color:black
     </property>
     <property name="font">
      <font>
-      <pointsize>22</pointsize>
+      <pointsize>16</pointsize>
      </font>
     </property>
     <property name="styleSheet">

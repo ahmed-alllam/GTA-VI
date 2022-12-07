@@ -18,8 +18,8 @@ void level1::add_board_images()
 {
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+    int unitWidth = qMin(screenWidth, screenHeight) / 13;
+    int unitHeight = qMin(screenWidth, screenHeight) / 13;
 
     QPixmap blankImage(":assets/images/blank.png");
 
@@ -190,21 +190,28 @@ void level1::create_player()
 
     timer = new QTimer();
     QObject::connect(timer, &QTimer::timeout, franklin, &Franklin::focus_player);
-    timer->start(350);
+    timer->start(300);
 }
 
 void level1::create_enemies()
 {
-    enemy1 = new class enemy1(boardData, this);
+    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
+    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
+    int unitWidth = qMin(screenWidth, screenHeight) / 13;
+    int unitHeight = qMin(screenWidth, screenHeight) / 13;
+
+   enemy1 = new class enemy1(boardData, this, unitWidth, unitHeight);
     scene->addItem(enemy1);
 
-    enemy2 = new class enemy2(boardData, this);
+    enemy2 = new class enemy2(boardData, this, unitWidth, unitHeight);
     scene->addItem(enemy2);
 
     timer2 = new QTimer();
+    timer3 = new QTimer();
     QObject::connect(timer2, &QTimer::timeout, enemy1, &enemy1::move);
-    QObject::connect(timer2, &QTimer::timeout, enemy2, &enemy2::move);
-    timer2->start(400);
+    QObject::connect(timer3, &QTimer::timeout, enemy2, &enemy2::move);
+    timer2->start(500);
+    timer3->start(500);
 }
 
 void level1::create_bullets()
@@ -348,7 +355,6 @@ void level1::remove_heart()
 
     if (health == 0)
     {
-
         manager->game_over();
         timer2->stop();
     }
@@ -399,9 +405,23 @@ void level1::restart_game()
 void level1::player_hit()
 {
     if (enemy1 != nullptr)
+    {
         enemy1->setXandY(9, 8);
+        enemy1->aStarSearch();
+    }
+    else
+    {
+        timer2->stop();
+    }
     if (enemy2 != nullptr)
+    {
         enemy2->setXandY(3, 11);
+        enemy2->aStarSearch();
+    }
+    else
+    {
+        timer3->stop();
+    }
 
     franklin->hit();
 }
@@ -417,6 +437,8 @@ void level1::enemy_hit(QGraphicsItem *enemy)
             if (enemy2 == nullptr)
             {
                 open_gate();
+                timer2->stop();
+                timer3->stop();
             }
             scene->removeItem(enemy1);
             enemy1 = nullptr;
@@ -431,6 +453,8 @@ void level1::enemy_hit(QGraphicsItem *enemy)
             if (enemy1 == nullptr)
             {
                 open_gate();
+                timer2->stop();
+                timer3->stop();
             }
             scene->removeItem(enemy2);
             enemy2 = nullptr;
@@ -448,4 +472,15 @@ void level1::win()
     GameManager *manager = static_cast<GameManager *>(gameManager);
     manager->Win();
     timer2->stop();
+}
+
+void level1::getData(int data[12][16])
+{
+    data = boardData;
+}
+
+void level1::getDest(int& i, int& j)
+{
+    i = franklin->getX();
+    j = franklin->getY();
 }

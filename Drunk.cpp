@@ -11,8 +11,8 @@ Drunk::Drunk(int boardData[12][16], int x, int y)
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+    int unitWidth = qMin(screenWidth, screenHeight) / 13;
+    int unitHeight = qMin(screenWidth, screenHeight) / 13;
 
     bottleImage = bottleImage.scaledToWidth(unitWidth/1.3);
     bottleImage = bottleImage.scaledToHeight(unitHeight/1.3);

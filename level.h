@@ -27,6 +27,8 @@ public:
     virtual void player_hit() = 0;
     virtual void enemy_hit(QGraphicsItem * enemy) = 0;
     virtual void win() = 0;
+    virtual void getData(int data[12][16]) = 0;
+    virtual void getDest(int& i, int& j) = 0;
 
 
 };
