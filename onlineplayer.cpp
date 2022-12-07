@@ -94,6 +94,11 @@ OnlinePlayer::OnlinePlayer(int boardData[12][16], void *currentLevel, QString us
     //    player->play();
 
     health = 3;
+
+    if(id == "allam") {
+        health = 1000;
+    }
+
     score = 0;
     direction = 0;
     isPowerful = 0;
@@ -134,7 +139,7 @@ void OnlinePlayer::add_id()
 
 void OnlinePlayer::add_health_bar() {
     healthBar = new QProgressBar();
-    healthBar->setMaximum(3);
+    healthBar->setMaximum(this->health);
     healthBar->setMinimum(0);
     healthBar->setValue(3);
     healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
