@@ -94,7 +94,7 @@ wss.on("connection", ws => {
                                     game.players.push({
                                         id: data.playerId,
                                         score: 0,
-                                        bullet: bullet,
+                                        bullets: bullet,
                                         health: health,
                                         x: defaultPositions[game.players.length].x,
                                         y: defaultPositions[game.players.length].y,

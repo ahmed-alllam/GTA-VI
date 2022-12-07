@@ -111,12 +111,12 @@ void OnlineFlyingBullet::move()
             if(player->id != source_player) {
                 qDebug() << "hit 2 " << player->id << currPLayer;
 
-                if( player->id == currPLayer) {
+                if(this != nullptr && scene() != nullptr) {
                     qDebug()<< " hit 3 ";
                     player->hit();
                     manager2->player_hit(player->health);
                 }
-                if(scene() != nullptr) {
+                if(this != nullptr && scene() != nullptr) {
                     scene()->removeItem(this);
                     delete this;
                 }
@@ -128,7 +128,7 @@ void OnlineFlyingBullet::move()
     // check if bullet is out of bounds
     if (x < 0 || x > 11 || y < 0 || y > 15)
     {
-        if(scene() != nullptr) {
+        if(this != nullptr && scene() != nullptr) {
             scene()->removeItem(this);
             delete this;
         }
