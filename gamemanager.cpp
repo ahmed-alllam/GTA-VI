@@ -358,7 +358,7 @@ void GameManager::restart_game()
         else if (levelNum == 2)
         {
             levelNum++;
-            currentLevel = new level2(this, scene);
+            currentLevel = new level3(this, scene);
         }
         else if (levelNum == 3)
         {

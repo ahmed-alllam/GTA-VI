@@ -365,7 +365,14 @@ void level2::restart_game()
 void level2::player_hit()
 {
     if (enemy1 != nullptr)
+    {
         enemy1->setXandY(1, 1);
+        enemy1->aStarSearch();
+    }
+    else
+    {
+        timer2->stop();
+    }
 
     franklin->hit();
 }
