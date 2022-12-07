@@ -13,9 +13,11 @@ public:
     virtual void create_player() = 0;
     virtual void create_enemies() = 0;
     virtual void create_bullets() = 0;
+    virtual void create_bombs() = 0;
     virtual void create_pellets() = 0;
     virtual void create_healthbar() = 0;
     virtual void remove_bullets() = 0;
+    virtual void remove_bombs() = 0;
     virtual void open_gate() = 0;
     virtual void close_gate() = 0;
     virtual void updateCounters() = 0;
@@ -25,6 +27,7 @@ public:
     virtual void player_hit() = 0;
     virtual void enemy_hit(QGraphicsItem * enemy) = 0;
     virtual void win() = 0;
+
 
 };
 

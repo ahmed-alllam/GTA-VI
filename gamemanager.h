@@ -1,4 +1,4 @@
-#ifndef GAMEMANAGER_H
+ #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
 
 #include <QString>
@@ -29,9 +29,10 @@ public:
     QGraphicsTextItem * txt;
     QGraphicsTextItem * bulletsCounter;
     QGraphicsTextItem * coinsCounter;
+    QGraphicsTextItem * bombsCounter;//bombs
     QGraphicsPixmapItem* hearts;
-    QMovie *gate;// added
-    QMovie* movie; // added
+    QMovie *gate;
+    QMovie* movie;
     GameManager(QGraphicsScene *scene);
     void launch_game();
     void create_player();    // create and dispaly players
@@ -42,6 +43,8 @@ public:
     void create_sound();     // to create and display the sound
     void create_bullets();   // to create and display the bullets
     void remove_bullets();
+    void create_bombs();
+    void remove_bombs();
     void create_pellets();   // to create and display the pellet
     void create_healthbar();   // to create and display the pellet
     void remove_heart();

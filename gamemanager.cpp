@@ -32,6 +32,7 @@ GameManager::GameManager(QGraphicsScene *scene)
 
     levelNum = 1;
     currentLevel = new level1(this, scene);
+
 }
 
 void GameManager::launch_game()
@@ -40,10 +41,15 @@ void GameManager::launch_game()
     add_board_images();
     create_player();
     create_enemies();
+
     //create_sound();
     create_bullets();
+    create_bombs();
+
     create_pellets();
     create_healthbar();
+
+    qDebug()<<"launching game tmam"; // testing
 }
 
 void GameManager::add_board_images()
@@ -86,6 +92,16 @@ void GameManager::remove_bullets()
     currentLevel->remove_bullets();
 }
 
+void GameManager::create_bombs()
+{
+    currentLevel->create_bombs();
+}
+
+void GameManager::remove_bombs()
+{
+    currentLevel->remove_bombs();
+}
+
 void GameManager::create_pellets()
 {
     currentLevel->create_pellets();
@@ -114,7 +130,7 @@ void GameManager::create_healthbar()
 
     txt = new QGraphicsTextItem("NORMAL MODE");
     QFont fonty("Arial", 20, QFont::StyleNormal);
-    txt->setPos(540, 20);
+    txt->setPos(740, 20);
     txt->setFont(fonty);
     txt->setDefaultTextColor(Qt::white);
     scene->addItem(txt);
@@ -171,6 +187,26 @@ void GameManager::create_healthbar()
     coinsCounter->setFont(fonty);
     coinsCounter->setDefaultTextColor(Qt::white);
     scene->addItem(coinsCounter);
+
+    //bomb image & countre place
+    //if the weapon is available the below section appears
+
+
+    QPixmap bombImage(":/assets/images/time-bomb.png");
+    bombImage = bombImage.scaledToWidth(unitWidth);
+    bombImage = bombImage.scaledToHeight(unitHeight);
+
+    QGraphicsPixmapItem *bombItem = new QGraphicsPixmapItem();
+    bombItem->setPos(500, 15);
+    bombItem->setPixmap(bombImage);
+    scene->addItem(bombItem);
+
+    bombsCounter = new QGraphicsTextItem("0");
+    bombsCounter->setPos(560, 20);
+    bombsCounter->setFont(fonty);
+    bombsCounter->setDefaultTextColor(Qt::white);
+    scene->addItem(bombsCounter);
+
 
     /*Drunk and label part */
 
@@ -376,6 +412,7 @@ void GameManager::restart_game()
     close_gate();
     create_enemies();
     create_bullets();
+    create_bombs();
     create_pellets();
     create_healthbar();
     updateCounters();

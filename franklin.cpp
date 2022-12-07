@@ -9,6 +9,7 @@
 #include <enemy2.h>
 #include <pellet.h>
 #include <bullet.h>
+#include<bomb.h>
 #include <Drunk.h>
 #include <QMessageBox>
 //#include <QSoundEffect>
@@ -101,6 +102,7 @@ Franklin::Franklin(int boardData[12][16], void *currentLevel)
     isPowerful = 0;
     drunk = 0;
     bullets = 0;
+    bombs=0; //added
     x = 5;
     y = 7;
 
@@ -266,6 +268,12 @@ void Franklin::keyPressEvent(QKeyEvent *event)
         shoot();
     }
 
+
+    if(event->key()== Qt::Key_S)    //added -> putting the bomb.
+    {
+        BOMB();
+    }
+
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
     checkCollision();
     if (x == 9 && y == 15)
@@ -356,6 +364,48 @@ void Franklin::shoot()
     }
 }
 
+void Franklin::BOMB() //releasing the bomb
+{
+    if(bombs>0)
+    {
+        qDebug()<<"number of bombs: "<<bombs;
+        bombs--;
+        level *manager = static_cast<level *>(currentLevel);
+        manager->updateCounters();
+
+        bomb* released_bomb= new bomb(boardData,x,y,manager);
+        scene()->addItem(released_bomb);
+        qDebug()<<"number of bombs: "<<bombs;
+
+         //leave the bomb in that place in the screen
+//        QPixmap bombImage(":/assets/images/time-bomb.png");
+
+//        bombImage = bombImage.scaledToWidth(unitWidth/1.1);
+//        bombImage = bombImage.scaledToHeight(unitHeight/1.1);
+
+//        QGraphicsPixmapItem *bombItem = new QGraphicsPixmapItem();
+//        bombItem->setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
+//        bombItem->setPixmap(bombImage);
+//        scene()->addItem(bombItem);
+
+//        QList<QGraphicsItem *> colliding_items = collidingItems();
+//        level *manager2 = static_cast<level *>(manager);
+//        for (int i = 0; i < colliding_items.size(); i++)
+//        {
+//            if (typeid(*colliding_items[i]) == typeid(enemy1) || typeid(*colliding_items[i]) == typeid(enemy2))
+//            {
+//                qDebug()<<"collision";
+//                scene()->removeItem(bombItem);
+//                delete bombItem;
+//                manager2->enemy_hit(colliding_items[i]);
+//                return;
+//            }
+//        }
+//    }
+    }
+    qDebug()<<"number of bombs: "<<bombs;
+}
+
 void Franklin::checkCollision()
 {
     level *manager = static_cast<level *>(currentLevel);
@@ -386,6 +436,12 @@ void Franklin::checkCollision()
                 timer->start(1000);
             }
             bullets++;
+            manager->updateCounters();
+            (collision[i])->setVisible(false);
+        }
+        else if (typeid(*(collision[i])) == typeid(bomb))
+        {
+            bombs++;
             manager->updateCounters();
             (collision[i])->setVisible(false);
         }
@@ -465,6 +521,11 @@ int Franklin::getCoinsCount()
 int Franklin::getBulletsCount()
 {
     return this->bullets;
+}
+
+int Franklin::getBombsCount()
+{
+    return this->bombs;
 }
 
 void Franklin::setPowerful(bool isPowerful)

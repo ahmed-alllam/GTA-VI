@@ -227,6 +227,19 @@ void level1::create_bullets()
     }
 }
 
+void level1::create_bombs()
+{
+    bomb *bomb1 = new class bomb(boardData, 8, 1);
+   bomb *bomb2 = new class bomb(boardData, 5, 11);
+   bombs.clear();
+   bombs.push_back(bomb1);
+  bombs.push_back(bomb2);
+   scene->addItem(bombs[0]);
+   scene->addItem(bombs[1]);
+
+
+}
+
 void level1::remove_bullets()
 {
     for (int i = 0; i < bullets.size(); i++)
@@ -236,6 +249,19 @@ void level1::remove_bullets()
             scene->removeItem(bullets[i]);
             delete bullets[i];
             bullets[i] = nullptr;
+        }
+    }
+}
+
+void level1::remove_bombs()
+{
+    for (int i = 0; i < bombs.size(); i++)
+    {
+        if (bombs[i] != nullptr)
+        {
+            scene->removeItem(bombs[i]);
+            delete bombs[i];
+            bombs[i] = nullptr;
         }
     }
 }
@@ -302,6 +328,10 @@ void level1::updateCounters()
 
     if (manager->bulletsCounter != nullptr)
         manager->bulletsCounter->setPlainText(QString::number(franklin->getBulletsCount()));
+
+    if (manager->bombsCounter != nullptr)
+        manager->bombsCounter->setPlainText(QString::number(franklin->getBombsCount()));
+
     if (manager->coinsCounter != nullptr)
         manager->coinsCounter->setPlainText(QString::number(franklin->getCoinsCount()));
 }
@@ -334,14 +364,15 @@ void level1::restart_game()
 
     // remove bullets
     bullets.clear();
-
+    //remove bombs
+    bombs.clear();
     // remove pellets
     pellets.clear();
     drunk = nullptr;
 
     for (int i = 0; i < items.size(); i++)
     {
-        if (typeid(*items[i]) == typeid(QGraphicsProxyWidget) || typeid(*items[i]) == typeid(QGraphicsTextItem) || typeid(*items[i]) == typeid(QPushButton) || typeid(*items[i]) == typeid(QGraphicsRectItem) || typeid(*items[i]) == typeid(bullet) || typeid(*items[i]) == typeid(class Franklin) || typeid(*items[i]) == typeid(class enemy1) || typeid(*items[i]) == typeid(class enemy2) || typeid(*items[i]) == typeid(class Drunk) || typeid(*items[i]) == typeid(class pellet) || typeid(*items[i]) == typeid(class FlyingBullet))
+        if (typeid(*items[i]) == typeid(QGraphicsProxyWidget) || typeid(*items[i]) == typeid(QGraphicsTextItem) || typeid(*items[i]) == typeid(QPushButton) || typeid(*items[i]) == typeid(QGraphicsRectItem) || typeid(*items[i]) == typeid(bullet) || typeid(*items[i]) == typeid(bomb) || typeid(*items[i]) == typeid(class Franklin) || typeid(*items[i]) == typeid(class enemy1) || typeid(*items[i]) == typeid(class enemy2) || typeid(*items[i]) == typeid(class Drunk) || typeid(*items[i]) == typeid(class pellet) || typeid(*items[i]) == typeid(class FlyingBullet))
         {
             scene->removeItem(items[i]);
             delete items[i];
