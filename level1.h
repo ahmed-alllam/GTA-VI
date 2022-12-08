@@ -57,6 +57,8 @@ public:
     virtual void getData(int data[12][16]);
     virtual void getDest(int& i, int& j);
 
+    virtual void delete_released_bomb(int,int); // added
+
 };
 
 #endif // LEVEL1_H

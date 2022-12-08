@@ -372,8 +372,10 @@ void Franklin::BOMB() //releasing the bomb
         level *manager = static_cast<level *>(currentLevel);
         manager->updateCounters();
 
-        bomb* released_bomb= new bomb(boardData,x,y,direction,manager);
-        scene()->addItem(released_bomb);
+        //bomb* released_bomb= new bomb(boardData,x,y,direction,manager); //commented temporarily
+        bomb*released_bomb= new bomb(boardData,x,y,direction,manager);
+        released_bombs.push_back(released_bomb);
+        scene()->addItem(released_bombs[0]);
 
 
          //leave the bomb in that place in the screen
@@ -586,4 +588,16 @@ int Franklin::getY()
 void Franklin::editboard(int x)
 {
     boardData[9][15] = x;
+}
+void Franklin::delete_released_bomb(int x, int y)
+{
+//    for(int i=0;i<franklin->released_bombs.size();i++)   // to check which bomb has been touched
+//    {
+//        if(x==franklin->released_bombs[])
+//    }
+    scene()->removeItem(released_bombs[0]);
+    delete released_bombs[0];
+
+
+
 }

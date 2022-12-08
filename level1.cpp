@@ -485,3 +485,12 @@ void level1::getDest(int& i, int& j)
     i = franklin->getX();
     j = franklin->getY();
 }
+
+void level1::delete_released_bomb(int x, int y)
+{
+//    for(int i=0;i<franklin->released_bombs.size();i++)   // to check which bomb has been touched
+//    {
+//        if(x==franklin->released_bombs[])
+//    }
+ franklin->delete_released_bomb(x,y);
+}

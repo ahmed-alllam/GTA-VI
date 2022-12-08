@@ -3,7 +3,7 @@
 
 #ifndef FRANKLIN_H
 #define FRANKLIN_H
-
+#include"bomb.h"
 #include <QObject>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsItem>
@@ -65,6 +65,9 @@ public:
     int getCoinsCount();
     void editboard(int x);
     QTimer *timer = new QTimer(this);
+    QList<bomb*> released_bombs;
+
+    void delete_released_bomb(int,int);
 public slots:
     void keyPressEvent(QKeyEvent * event);
 };
