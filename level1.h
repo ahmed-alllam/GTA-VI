@@ -27,11 +27,12 @@ private:
     enemy2 *enemy2;
     QList<bullet*> bullets;
     QList<pellet*> pellets;
-    QList<bomb*> bombs; //adding bombs
+
     Drunk *drunk;
     int boardData[12][16];
     QGraphicsPixmapItem **boardItems;
 public:
+    QList<bomb*> bombs; //adding bombs   // put it in public for now
     level1(void * gameManager, QGraphicsScene *scene);
     virtual void create_board();
     virtual void add_board_images();

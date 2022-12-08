@@ -107,7 +107,7 @@ void GameManager::create_healthbar()
 
     txt = new QGraphicsTextItem("NORMAL MODE");
     QFont fonty("Arial", 20, QFont::StyleNormal);
-    txt->setPos(540, 20);
+    txt->setPos(740, 20);
     txt->setFont(fonty);
     txt->setDefaultTextColor(Qt::white);
     scene->addItem(txt);
@@ -164,6 +164,23 @@ void GameManager::create_healthbar()
     coinsCounter->setFont(fonty);
     coinsCounter->setDefaultTextColor(Qt::white);
     scene->addItem(coinsCounter);
+
+    //for the bomb
+    QPixmap bombImage(":assets/images/time-bomb.png");
+    bombImage = bombImage.scaledToWidth(unitWidth);
+    bombImage = bombImage.scaledToHeight(unitHeight);
+
+    QGraphicsPixmapItem *bombItem = new QGraphicsPixmapItem();
+    bombItem->setPos(500, 15);
+    bombItem->setPixmap(bombImage);
+    scene->addItem(bombItem);
+
+    bombsCounter = new QGraphicsTextItem("0");
+    bombsCounter->setPos(560, 20);
+    bombsCounter->setFont(fonty);
+    bombsCounter->setDefaultTextColor(Qt::white);
+    scene->addItem(bombsCounter);
+
 
     /*Drunk and label part */
 

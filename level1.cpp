@@ -271,6 +271,7 @@ void level1::remove_bombs()
             bombs[i] = nullptr;
         }
     }
+
 }
 
 void level1::create_pellets()
@@ -330,7 +331,7 @@ void level1::close_gate()
 }
 
 void level1::updateCounters()
-{/*
+{
     GameManager *manager = static_cast<GameManager *>(gameManager);
 
     if (manager->bulletsCounter != nullptr)
@@ -340,7 +341,7 @@ void level1::updateCounters()
         manager->bombsCounter->setPlainText(QString::number(franklin->getBombsCount()));
 
     if (manager->coinsCounter != nullptr)
-        manager->coinsCounter->setPlainText(QString::number(franklin->getCoinsCount()));*/
+        manager->coinsCounter->setPlainText(QString::number(franklin->getCoinsCount()));
 }
 
 void level1::remove_heart()

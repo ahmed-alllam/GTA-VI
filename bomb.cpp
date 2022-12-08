@@ -15,8 +15,8 @@ bomb::bomb(int boardData[12][16], int x, int y)
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+    int unitWidth = qMin(screenWidth, screenHeight) / 13;
+    int unitHeight = qMin(screenWidth, screenHeight) / 13;
 
     bombimage = bombimage.scaledToWidth(unitWidth);
     bombimage = bombimage.scaledToHeight(unitHeight);
@@ -38,16 +38,17 @@ bomb::bomb(int boardData[12][16], int x, int y, void *manager)
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
     int unitWidth = qMin(screenWidth, screenHeight) / 12;
   int unitHeight = qMin(screenWidth, screenHeight) / 12;
+  int unitHeight2 = qMin(screenWidth, screenHeight) / 17;
 
-    bombimage = bombimage.scaledToWidth(unitWidth);
-    bombimage = bombimage.scaledToHeight(unitHeight);
+    bombimage = bombimage.scaledToWidth(unitHeight2);
+    bombimage = bombimage.scaledToHeight(unitHeight2);
 
     setPixmap(bombimage);// that line causes an issue in the counter of bombs
 
     this->x = x;
     this->y = y;
     this->manager= manager;
-    setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
+    setPos( y * unitWidth,  x * unitHeight);
     for (int i = 0; i < 12; i++)
     {
         for (int j = 0; j < 16; j++)
@@ -55,7 +56,7 @@ bomb::bomb(int boardData[12][16], int x, int y, void *manager)
             this->boardData[i][j] = boardData[i][j];
         }
     }
-
+    //waiting_to_bomb();
 }
 
 //bool bomb::is_available()
