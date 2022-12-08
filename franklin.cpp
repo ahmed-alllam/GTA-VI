@@ -375,7 +375,6 @@ void Franklin::BOMB() //releasing the bomb
 
         bomb* released_bomb= new bomb(boardData,x,y,manager);
         scene()->addItem(released_bomb);
-        qDebug()<<"number of bombs: "<<bombs;
 
          //leave the bomb in that place in the screen
 //        QPixmap bombImage(":/assets/images/time-bomb.png");
@@ -403,7 +402,7 @@ void Franklin::BOMB() //releasing the bomb
 //        }
 //    }
     }
-    qDebug()<<"number of bombs: "<<bombs;
+
 }
 
 void Franklin::checkCollision()

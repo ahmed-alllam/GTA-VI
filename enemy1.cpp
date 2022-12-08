@@ -7,6 +7,7 @@
 #include <QTimer>
 #include "gamemanager.h"
 #include "level.h"
+#include"bomb.h"
 #define INF 9999
 
 enemy1::enemy1(int boardData[12][16], void *currentLevel, int w, int h):
@@ -117,6 +118,13 @@ void enemy1::checkCollision()
             level *manager = static_cast<level *>(currentLevel);
             manager->player_hit();
             bossPath = aStarSearch();
+        }
+        if(typeid(*(colliding_items[i]))== typeid(bomb))    //when colliding with the bomb
+        {
+            level *manager = static_cast<level *>(currentLevel);
+            level *manager2 = static_cast<level *>(manager);
+            manager->enemy_hit(this);
+            qDebug()<<"collides with enemy";
         }
     }
 }
