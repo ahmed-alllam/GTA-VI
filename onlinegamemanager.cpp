@@ -387,8 +387,10 @@ void OnlineGameManager::gameWon() {
     // make all player in level have 0 health
     for (size_t i = 0, n = level->players.size(); i < n; i++)
     {
+        if(level->players[i]->id != username) {
         level->players[i]->health = 0;
         level->players[i]->healthBar->setValue(0);
+        }
     }
 }
 
