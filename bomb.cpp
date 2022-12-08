@@ -50,27 +50,24 @@ bomb::bomb(int boardData[12][16], int x, int y,int direction, void *manager)
     this->x = x;
     this->y = y;
     this->manager= manager;
-    if (direction == 0 && boardData[y+1][x]>0)  //should  check if there is a block
+    if (direction == 0 /*&& boardData[y+1][x]>0*/)  //should  check if there is a block
     {
-        setPos( unitWidth + (y+1) * unitWidth, unitHeight + x * unitHeight);
+        y++;
     }
-    else if (direction == 1 && boardData[y-1][x]>0)
+    else if (direction == 1 /*&& boardData[y-1][x]>0*/)
     {
-        setPos( unitWidth + (y-1) * unitWidth, unitHeight + x * unitHeight);
+        y--;
     }
-    else if (direction == 2 && boardData[y][x+1]>0)
+    else if (direction == 2 /*&& boardData[y][x+1]>0*/)
     {
-      setPos( unitWidth + y * unitWidth, unitHeight + (x-1) * unitHeight);
+      x--;
     }
-    else if(direction==3 && boardData[y][x-1]>0)
+    else /*if(direction==3 /*&& boardData[y][x-1]>0)*/
     {
-      setPos( unitWidth + y * unitWidth, unitHeight + (x+1) * unitHeight);
-    }else
-    {
-        setPos( unitWidth + y * unitWidth, unitHeight + (x+1) * unitHeight);
+      x++;
     }
 
-
+    setPos( unitWidth + y * unitWidth, unitHeight + x * unitHeight);
     for (int i = 0; i < 12; i++)
     {
         for (int j = 0; j < 16; j++)

@@ -479,11 +479,6 @@ void level3::create_bombs()
 }
 void level3::delete_released_bomb(int x, int y)
 {
-//    for(int i=0;i<franklin->released_bombs.size();i++)   // to check which bomb has been touched
-//    {
-//        if(x==franklin->released_bombs[])
-//    }
-    delete franklin->released_bombs[0];
-    scene->removeItem(franklin->released_bombs[0]);
+franklin->delete_released_bomb(x,y);
 
 }

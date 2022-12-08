@@ -125,7 +125,6 @@ void enemy1::checkCollision()
             level *manager2 = static_cast<level *>(manager);
 
             manager->enemy_hit(this);
-            qDebug()<<"collides with enemy";
             manager->delete_released_bomb(getX(),getY());
         }
     }

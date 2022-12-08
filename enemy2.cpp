@@ -103,6 +103,14 @@ void enemy2::checkCollision(){
             manager->player_hit();
             bossPath = aStarSearch();
         }
+        if(typeid(*(colliding_items[i]))== typeid(bomb))    //when colliding with the bomb
+        {
+            level *manager = static_cast<level *>(currentLevel);
+            level *manager2 = static_cast<level *>(manager);
+
+            manager->enemy_hit(this);
+            manager->delete_released_bomb(getX(),getY());
+        }
     }
 }
 

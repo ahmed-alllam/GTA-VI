@@ -374,7 +374,7 @@ void Franklin::BOMB() //releasing the bomb
 
         //bomb* released_bomb= new bomb(boardData,x,y,direction,manager); //commented temporarily
         bomb*released_bomb= new bomb(boardData,x,y,direction,manager);
-        released_bombs.push_back(released_bomb);
+        released_bombs.push_front(released_bomb);
         scene()->addItem(released_bombs[0]);
 
 
