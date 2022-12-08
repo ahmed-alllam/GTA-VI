@@ -39,6 +39,7 @@ unitHeight(h)
 
 void dog::move()
 {
+    checkCollision();
     if(!bossPath.empty())
             {
               if(x==bossPath[bossPath.size()-1].first&&y+1==bossPath[bossPath.size()-1].second)
@@ -127,6 +128,7 @@ void dog::checkCollision()
             {bossPath.pop_back();}
             level *manager = static_cast<level *>(currentLevel);
             manager->player_hit();
+            bossPath = aStarSearch();
         }
     }
 }
@@ -362,21 +364,24 @@ std::vector<Pair> dog:: tracePath( Pair destn)
     int col = destn.second;
     while(!bossPath.empty())
             bossPath.pop_back();
-
-    while (!(cellDetails[r][col].parent_i == r && cellDetails[r][col].parent_j == col))
-    {
-        bossPath.push_back(std::make_pair(r, col));
+    Pair next_node;
+    next_node.first = cellDetails[r][col].parent_i;
+    next_node.second = cellDetails[r][col].parent_j;
+    do {
+        bossPath.push_back(next_node);
         if(cellDetails[r][col].parent_i<0||cellDetails[r][col].parent_j<0)
              break;
         if(cellDetails[r][col].parent_i>20||cellDetails[r][col].parent_j>20)
              break;
         if(cellDetails[cellDetails[r][col].parent_i][cellDetails[r][col].parent_j].parent_i==r&&cellDetails[cellDetails[r][col].parent_i][cellDetails[r][col].parent_j].parent_j==col)
              break;
+            next_node.first = cellDetails[r][col].parent_i;
+            next_node.second = cellDetails[r][col].parent_j;
             int temp_row = cellDetails[r][col].parent_i;
             int temp_col = cellDetails[r][col].parent_j;
             r = temp_row;
             col = temp_col;
-    }
+    }while (!(cellDetails[r][col].parent_i == r && cellDetails[r][col].parent_j == col));
 //    while (!((cellDetails[r][col].parent_i == r && cellDetails[r][col].parent_j == col)))
 //    {
 //        bossPath.push(std::make_pair(r, col));
