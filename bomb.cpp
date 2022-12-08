@@ -50,11 +50,11 @@ bomb::bomb(int boardData[12][16], int x, int y,int direction, void *manager)
     this->x = x;
     this->y = y;
     this->manager= manager;
-    if (direction == 0 && boardData[y+1][x]>0)
+    if (direction == 0 && boardData[y+1][x]>0)  //should  check if there is a block
     {
         setPos( unitWidth + (y+1) * unitWidth, unitHeight + x * unitHeight);
     }
-    else if (direction == 1 /*&& boardData[y-1][x]>0*/)
+    else if (direction == 1 && boardData[y-1][x]>0)
     {
         setPos( unitWidth + (y-1) * unitWidth, unitHeight + x * unitHeight);
     }
