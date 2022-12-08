@@ -32,8 +32,8 @@ void OnlineLevel::add_board_images()
 {
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 12;
-    int unitHeight = qMin(screenWidth, screenHeight) / 12;
+    int unitWidth = qMin(screenWidth, screenHeight) / 13;
+    int unitHeight = qMin(screenWidth, screenHeight) / 13;
 
     QPixmap blankImage(":assets/images/blank.png");
 
