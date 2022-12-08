@@ -134,7 +134,7 @@ void OnlinePlayer::add_id()
 
 void OnlinePlayer::add_health_bar() {
     healthBar = new QProgressBar();
-    healthBar->setMaximum(this->health);
+    healthBar->setMaximum(3);
     healthBar->setMinimum(0);
     healthBar->setValue(3);
     healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
