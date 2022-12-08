@@ -17,6 +17,8 @@ public:
 
 private slots:
     void on_ExitButton_clicked();
+    void on_Buy_bomb_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

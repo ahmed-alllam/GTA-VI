@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include"bomb.h"
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -46,5 +46,14 @@ MainWindow::~MainWindow()
 void MainWindow::on_ExitButton_clicked()
 {
     this->close();
+}
+
+
+void MainWindow::on_Buy_bomb_clicked()
+{
+    qDebug()<<"status: "<<bomb::is_available();
+    bomb::make_available();
+    qDebug()<<"status: "<<bomb::is_available();
+
 }
 

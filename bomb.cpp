@@ -8,9 +8,12 @@
 #include "enemy2.h"
 #include "level.h"
 #include "gamemanager.h"
+
+bool bomb::available=false;
 bomb::bomb(int boardData[12][16], int x, int y)
 {
-    //available=false;
+
+
     QPixmap bombimage(":/assets/images/time-bomb.png");
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
@@ -81,10 +84,15 @@ bomb::bomb(int boardData[12][16], int x, int y,int direction, void *manager)
 }
 
 
-//bool bomb::is_available()
-//{
-//    return available;
-//}
+bool bomb::is_available()
+{
+    return available;
+}
+
+void bomb::make_available()
+{
+    available = true;
+}
 
 void bomb::waiting_to_bomb()
 {
