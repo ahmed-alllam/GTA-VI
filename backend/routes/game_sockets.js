@@ -82,7 +82,6 @@ wss.on("connection", ws => {
                                 // check game is not full
                                 if (game.players.length < 4) {
                                     // add the player to the game
-
                                     game.players.push({
                                         id: data.playerId,
                                         score: 0,

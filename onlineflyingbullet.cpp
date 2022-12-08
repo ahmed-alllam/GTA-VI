@@ -23,8 +23,8 @@ OnlineFlyingBullet::OnlineFlyingBullet(int boardData[12][16], int x, int y, int 
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 13;
-    int unitHeight = qMin(screenWidth, screenHeight) / 13;
+    int unitWidth = qMin(screenWidth, screenHeight) / 12;
+    int unitHeight = qMin(screenWidth, screenHeight) / 12;
     int unitHeight2 = qMin(screenWidth, screenHeight) / 17;
 
     bulletImageu = bulletImageu.scaledToWidth(unitHeight2);
@@ -111,12 +111,12 @@ void OnlineFlyingBullet::move()
             if(player->id != source_player) {
                 qDebug() << "hit 2 " << player->id << currPLayer;
 
-                if(this != nullptr && scene() != nullptr) {
+                if( player->id == currPLayer) {
                     qDebug()<< " hit 3 ";
                     player->hit();
                     manager2->player_hit(player->health);
                 }
-                if(this != nullptr && scene() != nullptr) {
+                if(scene() != nullptr) {
                     scene()->removeItem(this);
                     delete this;
                 }
@@ -128,7 +128,7 @@ void OnlineFlyingBullet::move()
     // check if bullet is out of bounds
     if (x < 0 || x > 11 || y < 0 || y > 15)
     {
-        if(this != nullptr && scene() != nullptr) {
+        if(scene() != nullptr) {
             scene()->removeItem(this);
             delete this;
         }
@@ -148,8 +148,8 @@ void OnlineFlyingBullet::move()
     // move bullet
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 13;
-    int unitHeight = qMin(screenWidth, screenHeight) / 13;
+    int unitWidth = qMin(screenWidth, screenHeight) / 12;
+    int unitHeight = qMin(screenWidth, screenHeight) / 12;
 
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
 }

@@ -34,8 +34,8 @@ OnlinePlayer::OnlinePlayer(int boardData[12][16], void *currentLevel, QString us
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    unitWidth = qMin(screenWidth, screenHeight) / 13;
-    unitHeight = qMin(screenWidth, screenHeight) / 13;
+    unitWidth = qMin(screenWidth, screenHeight) / 12;
+    unitHeight = qMin(screenWidth, screenHeight) / 12;
 
     franklinImagel1 = franklinImagel1.scaledToWidth(unitWidth);
     franklinImagel1 = franklinImagel1.scaledToHeight(unitHeight);
@@ -134,7 +134,7 @@ void OnlinePlayer::add_id()
 
 void OnlinePlayer::add_health_bar() {
     healthBar = new QProgressBar();
-    healthBar->setMaximum(this->health);
+    healthBar->setMaximum(3);
     healthBar->setMinimum(0);
     healthBar->setValue(3);
     healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
