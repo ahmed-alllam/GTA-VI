@@ -268,11 +268,14 @@ void Franklin::keyPressEvent(QKeyEvent *event)
         shoot();
     }
 
-
-    if(event->key()== Qt::Key_S)    //added -> putting the bomb.
+    if(bomb::is_available()) // check if available first
     {
-        BOMB();
+        if(event->key()== Qt::Key_S)
+        {
+            BOMB();
+        }
     }
+
 
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
     checkCollision();
