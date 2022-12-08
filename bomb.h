@@ -18,7 +18,7 @@ private:
     //static bool available; //buyed or not
 public:
     bomb(int boardData[12][16], int x, int y);
-    bomb(int boardData[12][16], int x, int y,void *manager );
+    bomb(int boardData[12][16], int x, int y,int direction,void *manager );
     //static bool is_available();
     void waiting_to_bomb();
     //virtual ~bomb() {};

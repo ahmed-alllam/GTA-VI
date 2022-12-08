@@ -368,13 +368,13 @@ void Franklin::BOMB() //releasing the bomb
 {
     if(bombs>0)
     {
-        qDebug()<<"number of bombs: "<<bombs;
         bombs--;
         level *manager = static_cast<level *>(currentLevel);
         manager->updateCounters();
 
-        bomb* released_bomb= new bomb(boardData,x,y,manager);
+        bomb* released_bomb= new bomb(boardData,x,y,direction,manager);
         scene()->addItem(released_bomb);
+
 
          //leave the bomb in that place in the screen
 //        QPixmap bombImage(":/assets/images/time-bomb.png");
