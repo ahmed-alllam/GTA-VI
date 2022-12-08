@@ -32,7 +32,7 @@ bomb::bomb(int boardData[12][16], int x, int y)
 bomb::bomb(int boardData[12][16], int x, int y, void *manager)
 {
 
-   QPixmap bombimage(":/assets/images/coin.png");
+   QPixmap bombimage(":/assets/images/time-bomb.png");
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();

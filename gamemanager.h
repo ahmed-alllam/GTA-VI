@@ -33,6 +33,7 @@ public:
     QGraphicsTextItem * txt;
     QGraphicsTextItem * bulletsCounter;
     QGraphicsTextItem * coinsCounter;
+    QGraphicsTextItem * bombsCounter;//bombs
     QGraphicsPixmapItem* hearts;
     QMovie *gate;// added
     QMovie* movie; // added
@@ -52,6 +53,8 @@ public:
     void updateCounters();
     void Win();
 //    void Next_level();
+    void create_bombs();
+    void remove_bombs();
     QGraphicsRectItem* drawPanel(int x, int y, int width, int height, QColor color, double opacity);
 //    void restart_game();
     void game_over();

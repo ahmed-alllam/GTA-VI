@@ -36,6 +36,7 @@ void GameManager::launch_game()
     create_enemies();
     create_sound();
     create_bullets();
+     create_bombs();
     create_pellets();
     create_healthbar();
 }
@@ -400,7 +401,15 @@ void GameManager::restart_game()
 //    }
 //    launch_game();
 //}
+void GameManager::create_bombs()
+{
+    currentLevel->create_bombs();
+}
 
+void GameManager::remove_bombs()
+{
+    currentLevel->remove_bombs();
+}
 void GameManager::exit()
 {
     QString program = qApp->arguments()[0];
