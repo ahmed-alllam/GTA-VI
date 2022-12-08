@@ -52,12 +52,10 @@ public:
     virtual void player_hit();
     virtual void enemy_hit(QGraphicsItem * enemy);
     virtual void win();
-<<<<<<< HEAD
 
-=======
     virtual void getData(int data[12][16]);
     virtual void getDest(int& i, int& j);
->>>>>>> ecb694eb3bf972aa38b0772229449ba5de7a1133
+
 };
 
 #endif // LEVEL1_H

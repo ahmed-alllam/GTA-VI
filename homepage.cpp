@@ -7,8 +7,6 @@
 
 
 #include<mainwindow.h> //added
-homepage::homepage(GameManager *gameManager, QGraphicsScene *scene)
-
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
@@ -21,7 +19,7 @@ homepage::homepage(GameManager *gameManager, QGraphicsScene *scene)
 #include "gamemanager.h"
 #include "onlinegamemanager.h"
 
-
+homepage::homepage(QGraphicsScene *scene)
 {
     ui = new Ui::homepage;
     ui->setupUi(this);

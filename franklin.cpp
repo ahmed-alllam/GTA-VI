@@ -12,10 +12,10 @@
 #include<bomb.h>
 #include <Drunk.h>
 #include <QMessageBox>
-//#include <QSoundEffect>
-//#include <QAudioFormat>
-//#include <QMediaPlayer>
-//#include <QAudioOutput>
+#include <QSoundEffect>
+#include <QAudioFormat>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 #include "level.h"
 #include "flyingbullet.h"
 
@@ -499,14 +499,13 @@ void Franklin::hit()
         manager->create_bullets();
         manager->updateCounters();
         setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
-<<<<<<< HEAD
-//        QMediaPlayer *player = new QMediaPlayer;
-//        QAudioOutput *audioOutput = new QAudioOutput;
-//        player->setAudioOutput(audioOutput);
-//        player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
-//        player->play();
-=======
->>>>>>> ecb694eb3bf972aa38b0772229449ba5de7a1133
+
+        QMediaPlayer *player = new QMediaPlayer;
+        QAudioOutput *audioOutput = new QAudioOutput;
+        player->setAudioOutput(audioOutput);
+        player->setSource(QUrl("qrc:/assets/sounds/Ah Shit Here We Go Again.mp3"));
+        player->play();
+
     }
     else
     {

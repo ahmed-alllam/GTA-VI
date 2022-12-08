@@ -1,7 +1,7 @@
 QT       += core gui
 QT += core
 QT += widgets
-#here
+
 QT += multimedia
 QT += network
 QT += uitools
