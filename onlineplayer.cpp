@@ -34,8 +34,8 @@ OnlinePlayer::OnlinePlayer(int boardData[12][16], void *currentLevel, QString us
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    unitWidth = qMin(screenWidth, screenHeight) / 13;
-    unitHeight = qMin(screenWidth, screenHeight) / 13;
+    unitWidth = qMin(screenWidth, screenHeight) / 12;
+    unitHeight = qMin(screenWidth, screenHeight) / 12;
 
     franklinImagel1 = franklinImagel1.scaledToWidth(unitWidth);
     franklinImagel1 = franklinImagel1.scaledToHeight(unitHeight);
