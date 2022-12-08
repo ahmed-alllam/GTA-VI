@@ -10,6 +10,7 @@
 #include "bullet.h"
 #include "pellet.h"
 #include "Drunk.h"
+#include"bomb.h"
 #include <QObject>
 
 class level2 : public level
@@ -23,6 +24,7 @@ private:
     dog *enemy1;
     QList<bullet*> bullets;
     QList<pellet*> pellets;
+    QList<bomb*> bombs; //adding bombs
     Drunk *drunk;
     int boardData[12][16];
     QGraphicsPixmapItem **boardItems;
@@ -33,9 +35,11 @@ public:
     virtual void create_player();
     virtual void create_enemies();
     virtual void create_bullets();
+    virtual void create_bombs(); //creating bombs
     virtual void create_pellets();
     virtual void create_healthbar();
     virtual void remove_bullets();
+    virtual void remove_bombs();
     virtual void open_gate();
     virtual void close_gate();
     virtual void updateCounters();

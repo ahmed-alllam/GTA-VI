@@ -451,3 +451,29 @@ void level3::getDest(int& i, int& j)
     i = franklin->getX();
     j = franklin->getY();
 }
+
+void level3::remove_bombs()
+{
+    for (int i = 0; i < bombs.size(); i++)
+    {
+        if (bombs[i] != nullptr)
+        {
+            scene->removeItem(bombs[i]);
+            delete bombs[i];
+            bombs[i] = nullptr;
+        }
+    }
+}
+
+void level3::create_bombs()
+{
+    bomb *bomb1 = new class bomb(boardData, 8, 1);
+   bomb *bomb2 = new class bomb(boardData, 5, 11);
+   bombs.clear();
+   bombs.push_back(bomb1);
+  bombs.push_back(bomb2);
+   scene->addItem(bombs[0]);
+   scene->addItem(bombs[1]);
+
+
+}

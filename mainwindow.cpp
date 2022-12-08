@@ -7,7 +7,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     
     ui->setupUi(this);
-//
 //   ui->label->setText("300");
 //
 //    ui->ExitButton->setIcon( QIcon(":/assets/images/button.png"));
@@ -35,10 +34,17 @@ MainWindow::MainWindow(QWidget *parent)
 //
 //    ui->coins_image1->setPixmap( QPixmap(":/assets/images/coins.png"));
 //    ui->coins_image1->setScaledContents(true);
+
    }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+
+//void MainWindow::on_ExitButton_clicked()
+//{
+//    this->close();
+//}
 

@@ -5,6 +5,8 @@
 #include <QObject>
 #include <QSaveFile>
 
+
+#include<mainwindow.h> //added
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
@@ -16,7 +18,6 @@
 
 #include "gamemanager.h"
 #include "onlinegamemanager.h"
-
 
 homepage::homepage(QGraphicsScene *scene)
 {
@@ -185,3 +186,14 @@ void homepage::on_Sign_clicked()
     ui->user->setText("");
     ui->pass->setText("");
 }
+
+
+
+void homepage::on_marketButton_clicked()
+{
+    MainWindow * main =new MainWindow;
+    main->show();
+
+
+}
+

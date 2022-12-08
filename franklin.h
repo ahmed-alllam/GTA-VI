@@ -23,6 +23,7 @@ private:
     int x;
     int y;
     int bullets;
+    int bombs;
     int boardData[12][16];
     void * currentLevel;
     QPixmap franklinImagel1;
@@ -56,9 +57,11 @@ public:
     int getY();
     int getHealth();
     void shoot();
+    void BOMB();
     void Move();
     void hit();
     int getBulletsCount();
+    int getBombsCount(); // added
     int getCoinsCount();
     void editboard(int x);
     QTimer *timer = new QTimer(this);
