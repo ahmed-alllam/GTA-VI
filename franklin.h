@@ -3,7 +3,7 @@
 
 #ifndef FRANKLIN_H
 #define FRANKLIN_H
-
+#include"bomb.h"
 #include <QObject>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsItem>
@@ -23,6 +23,7 @@ private:
     int x;
     int y;
     int bullets;
+    int powerful_bullets;
     int bombs;
     int boardData[12][16];
     void * currentLevel;
@@ -65,8 +66,13 @@ public:
     int getCoinsCount();
     void editboard(int x);
     QTimer *timer = new QTimer(this);
+    QList<bomb*> released_bombs;
+
+    void delete_released_bomb(int,int);
+    void powerful_shoot();
 public slots:
     void keyPressEvent(QKeyEvent * event);
+
 };
 
 #endif // FRANKLIN_H

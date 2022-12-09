@@ -29,7 +29,7 @@ public:
     virtual void win() = 0;
     virtual void getData(int data[12][16]) = 0;
     virtual void getDest(int& i, int& j) = 0;
-
+virtual void  delete_released_bomb(int,int)=0; // added
 
 };
 

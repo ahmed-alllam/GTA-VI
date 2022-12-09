@@ -36,7 +36,8 @@ void GameManager::launch_game()
     create_enemies();
     create_sound();
     create_bullets();
-     create_bombs();
+    if(bomb::is_available())
+        create_bombs();
     create_pellets();
     create_healthbar();
 }
@@ -165,21 +166,24 @@ void GameManager::create_healthbar()
     coinsCounter->setDefaultTextColor(Qt::white);
     scene->addItem(coinsCounter);
 
-    //for the bomb
-    QPixmap bombImage(":assets/images/time-bomb.png");
-    bombImage = bombImage.scaledToWidth(unitWidth);
-    bombImage = bombImage.scaledToHeight(unitHeight);
+    if(bomb::is_available())  //checking availablity
+    {
+        QPixmap bombImage(":assets/images/time-bomb.png");
+        bombImage = bombImage.scaledToWidth(unitWidth);
+        bombImage = bombImage.scaledToHeight(unitHeight);
 
-    QGraphicsPixmapItem *bombItem = new QGraphicsPixmapItem();
-    bombItem->setPos(500, 15);
-    bombItem->setPixmap(bombImage);
-    scene->addItem(bombItem);
+        QGraphicsPixmapItem *bombItem = new QGraphicsPixmapItem();
+        bombItem->setPos(500, 15);
+        bombItem->setPixmap(bombImage);
+        scene->addItem(bombItem);
 
-    bombsCounter = new QGraphicsTextItem("0");
-    bombsCounter->setPos(560, 20);
-    bombsCounter->setFont(fonty);
-    bombsCounter->setDefaultTextColor(Qt::white);
-    scene->addItem(bombsCounter);
+        bombsCounter = new QGraphicsTextItem("0");
+        bombsCounter->setPos(560, 20);
+        bombsCounter->setFont(fonty);
+        bombsCounter->setDefaultTextColor(Qt::white);
+        scene->addItem(bombsCounter);
+
+    }
 
 
     /*Drunk and label part */
@@ -240,6 +244,11 @@ void GameManager::open_gate()
 void GameManager::close_gate()
 {
     currentLevel->close_gate();
+}
+
+void GameManager::delete_released_bomb(int a, int b)
+{
+currentLevel->delete_released_bomb(a,b);
 }
 
 void GameManager::updateCounters()

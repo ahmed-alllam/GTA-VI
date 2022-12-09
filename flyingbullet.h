@@ -17,8 +17,9 @@ private:
     QTimer *timer;
 public:
     FlyingBullet(int boardData[12][16], int x, int y, int direction, void *manager);
+   FlyingBullet(int boardData[12][16], int x, int y, int direction, void *manager, QString type);
     ~FlyingBullet();
-    void move();
+    void move(bool is_powerful);
 };
 
 #endif // FLYINGBULLET_H

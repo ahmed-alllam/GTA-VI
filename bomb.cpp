@@ -8,9 +8,12 @@
 #include "enemy2.h"
 #include "level.h"
 #include "gamemanager.h"
+
+bool bomb::available=false;
 bomb::bomb(int boardData[12][16], int x, int y)
 {
-    //available=false;
+
+
     QPixmap bombimage(":/assets/images/time-bomb.png");
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
@@ -23,21 +26,23 @@ bomb::bomb(int boardData[12][16], int x, int y)
 
     setPixmap(bombimage);
 
+
     this->x = x;
     this->y = y;
 
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
+
 }
 
-bomb::bomb(int boardData[12][16], int x, int y, void *manager)
+bomb::bomb(int boardData[12][16], int x, int y,int direction, void *manager)
 {
 
    QPixmap bombimage(":/assets/images/time-bomb.png");
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-    int unitWidth = qMin(screenWidth, screenHeight) / 12;
-  int unitHeight = qMin(screenWidth, screenHeight) / 12;
+    int unitWidth = qMin(screenWidth, screenHeight) / 13;
+  int unitHeight = qMin(screenWidth, screenHeight) / 13;
   int unitHeight2 = qMin(screenWidth, screenHeight) / 17;
 
     bombimage = bombimage.scaledToWidth(unitHeight2);
@@ -48,7 +53,24 @@ bomb::bomb(int boardData[12][16], int x, int y, void *manager)
     this->x = x;
     this->y = y;
     this->manager= manager;
-    setPos( y * unitWidth,  x * unitHeight);
+    if (direction == 0 /*&& boardData[y+1][x]>0*/)  //should  check if there is a block
+    {
+        y++;
+    }
+    else if (direction == 1 /*&& boardData[y-1][x]>0*/)
+    {
+        y--;
+    }
+    else if (direction == 2 /*&& boardData[y][x+1]>0*/)
+    {
+      x--;
+    }
+    else /*if(direction==3 /*&& boardData[y][x-1]>0)*/
+    {
+      x++;
+    }
+
+    setPos( unitWidth + y * unitWidth, unitHeight + x * unitHeight);
     for (int i = 0; i < 12; i++)
     {
         for (int j = 0; j < 16; j++)
@@ -57,32 +79,40 @@ bomb::bomb(int boardData[12][16], int x, int y, void *manager)
         }
     }
     //waiting_to_bomb();
+
+
 }
 
-//bool bomb::is_available()
-//{
-//    return available;
-//}
 
-void bomb::waiting_to_bomb()
+bool bomb::is_available()
 {
-    QList<QGraphicsItem *> colliding_items = collidingItems();
-    level *manager2 = static_cast<level *>(manager);
-
-    for (int i = 0; i < colliding_items.size(); i++)
-    {
-        if (typeid(*colliding_items[i]) == typeid(enemy1) || typeid(*colliding_items[i]) == typeid(enemy2))
-        {
-            scene()->removeItem(this);
-            delete this;
-            manager2->enemy_hit(colliding_items[i]);
-            return;
-        }
-    }
+    return available;
 }
 
-//bomb::~bomb()
-//{
+void bomb::make_available()
+{
+    available = true;
+}
 
+//void bomb::waiting_to_bomb()
+//{
+//    QList<QGraphicsItem *> colliding_items = collidingItems();
+//    level *manager2 = static_cast<level *>(manager);
+
+//    for (int i = 0; i < colliding_items.size(); i++)
+//    {
+//        if (typeid(*colliding_items[i]) == typeid(enemy1) || typeid(*colliding_items[i]) == typeid(enemy2))
+//        {
+//            scene()->removeItem(this);
+//            delete this;
+//            manager2->enemy_hit(colliding_items[i]);
+//            return;
+//        }
+//    }
 //}
+
+////bomb::~bomb()
+////{
+
+////}
 

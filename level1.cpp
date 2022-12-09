@@ -216,17 +216,35 @@ void level1::create_enemies()
 
 void level1::create_bullets()
 {
-    bullet *bullet1 = new class bullet(boardData, 1, 1);
-    bullet *bullet2 = new class bullet(boardData, 10, 14);
-    bullet *bullet3 = new class bullet(boardData, 10, 1);
-    bullet *bullet4 = new class bullet(boardData, 1, 14);
+    if(bullet::is_available())//if he buyied powerful bullet, put it in the map
+    {
+        bullet *bullet1 = new class bullet(boardData, 1, 1);
+        bullet *bullet2 = new class bullet(boardData, 10, 14);
+        bullet *bullet3 = new class bullet(boardData, 10, 1);
+        bullet *powerful= new class bullet(boardData,1,14,"tawfik el gamed");
 
-    bullets.clear();
+        bullets.clear();
 
-    bullets.push_back(bullet1);
-    bullets.push_back(bullet2);
-    bullets.push_back(bullet3);
-    bullets.push_back(bullet4);
+        bullets.push_back(bullet1);
+        bullets.push_back(bullet2);
+        bullets.push_back(bullet3);
+        bullets.push_back(powerful);
+
+    }else
+    {
+        bullet *bullet1 = new class bullet(boardData, 1, 1);
+        bullet *bullet2 = new class bullet(boardData, 10, 14);
+        bullet *bullet3 = new class bullet(boardData, 10, 1);
+        bullet *bullet4 = new class bullet(boardData, 1, 14);
+
+        bullets.clear();
+
+        bullets.push_back(bullet1);
+        bullets.push_back(bullet2);
+        bullets.push_back(bullet3);
+        bullets.push_back(bullet4);
+    }
+
 
     for (int i = 0; i < bullets.size(); i++)
     {
@@ -333,7 +351,6 @@ void level1::close_gate()
 void level1::updateCounters()
 {
     GameManager *manager = static_cast<GameManager *>(gameManager);
-
     if (manager->bulletsCounter != nullptr)
         manager->bulletsCounter->setPlainText(QString::number(franklin->getBulletsCount()));
 
@@ -486,4 +503,9 @@ void level1::getDest(int& i, int& j)
     j = franklin->getY();
 
     qDebug () << "In level1 getDest i: " << i << " j: " << j;
+}
+
+void level1::delete_released_bomb(int x, int y)
+{
+ franklin->delete_released_bomb(x,y);
 }

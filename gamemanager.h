@@ -61,6 +61,7 @@ public:
     void activate_mode();
     void open_gate();
     void close_gate();
+    void delete_released_bomb(int,int);
 };
 
 #endif // GAMEMANAGER_H

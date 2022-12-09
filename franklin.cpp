@@ -102,6 +102,7 @@ Franklin::Franklin(int boardData[12][16], void *currentLevel)
     isPowerful = 0;
     drunk = 0;
     bullets = 0;
+    powerful_bullets=0;
     bombs=0; //added
     x = 5;
     y = 7;
@@ -268,11 +269,22 @@ void Franklin::keyPressEvent(QKeyEvent *event)
         shoot();
     }
 
-
-    if(event->key()== Qt::Key_S)    //added -> putting the bomb.
+    if(bomb::is_available()) // check if available first
     {
-        BOMB();
+        if(event->key()== Qt::Key_S)
+        {
+            BOMB();
+        }
     }
+
+    if(bullet::is_available())
+    {
+        if(event->key()== Qt::Key_D)
+        {
+            powerful_shoot();
+        }
+    }
+
 
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
     checkCollision();
@@ -368,13 +380,15 @@ void Franklin::BOMB() //releasing the bomb
 {
     if(bombs>0)
     {
-        qDebug()<<"number of bombs: "<<bombs;
         bombs--;
         level *manager = static_cast<level *>(currentLevel);
         manager->updateCounters();
 
-        bomb* released_bomb= new bomb(boardData,x,y,manager);
-        scene()->addItem(released_bomb);
+        //bomb* released_bomb= new bomb(boardData,x,y,direction,manager); //commented temporarily
+        bomb*released_bomb= new bomb(boardData,x,y,direction,manager);
+        released_bombs.push_front(released_bomb);
+        scene()->addItem(released_bombs[0]);
+
 
          //leave the bomb in that place in the screen
 //        QPixmap bombImage(":/assets/images/time-bomb.png");
@@ -421,7 +435,6 @@ void Franklin::checkCollision()
         }
         else if (typeid(*(collision[i])) == typeid(bullet))
         {
-
             if (direction == 1)
             {
                 setPixmap(franklinImagell);
@@ -434,6 +447,8 @@ void Franklin::checkCollision()
                 connect(timer, &QTimer::timeout, this, &Franklin::Move);
                 timer->start(1000);
             }
+            //if this is a powerful bullet -> powerful_pullets +1;
+
             bullets++;
             manager->updateCounters();
             (collision[i])->setVisible(false);
@@ -586,4 +601,34 @@ int Franklin::getY()
 void Franklin::editboard(int x)
 {
     boardData[9][15] = x;
+}
+void Franklin::delete_released_bomb(int x, int y)
+{
+//    for(int i=0;i<franklin->released_bombs.size();i++)   // to check which bomb has been touched
+//    {
+//        if(x==franklin->released_bombs[])
+//    }
+    scene()->removeItem(released_bombs[0]);
+    delete released_bombs[0];
+
+
+
+}
+
+void Franklin::powerful_shoot()
+{
+    if (bullets > 0)
+    {
+
+        //powerful_bullets--;
+        bullets--;
+
+        // put sound if you want here
+
+        level *manager = static_cast<level *>(currentLevel);
+        manager->updateCounters();
+
+        FlyingBullet *pwr = new FlyingBullet(boardData, x, y, direction, manager,"we want to declare");
+        scene()->addItem(pwr);
+    }
 }
