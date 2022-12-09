@@ -129,6 +129,13 @@ void enemy1::checkCollision()
         {
             while(!bossPath.empty())
             {bossPath.pop_back();}
+
+            QMediaPlayer *player = new QMediaPlayer;
+            QAudioOutput *audioOutput = new QAudioOutput;
+            player->setAudioOutput(audioOutput);
+            player->setSource(QUrl("qrc:/assets/sounds/Evil Laugh.mp3"));
+            player->play();
+
             level *manager = static_cast<level *>(currentLevel);
             manager->player_hit();
             bossPath = getPath();
@@ -137,6 +144,12 @@ void enemy1::checkCollision()
         {
             level *manager = static_cast<level *>(currentLevel);
             level *manager2 = static_cast<level *>(manager);
+
+            QMediaPlayer *player = new QMediaPlayer;
+            QAudioOutput *audioOutput = new QAudioOutput;
+            player->setAudioOutput(audioOutput);
+            player->setSource(QUrl("qrc:/assets/sounds/Hurt.mp3"));
+            player->play();
 
             manager->enemy_hit(this);
             manager->delete_released_bomb(getX(),getY());
