@@ -203,15 +203,9 @@ void level1::create_enemies()
    enemy1 = new class enemy1(boardData, this, unitWidth, unitHeight);
     scene->addItem(enemy1);
 
-    enemy2 = new class enemy2(boardData, this, unitWidth, unitHeight);
-    // scene->addItem(enemy2);
-
     timer2 = new QTimer();
-    timer3 = new QTimer();
     QObject::connect(timer2, &QTimer::timeout, enemy1, &enemy1::move);
-    QObject::connect(timer3, &QTimer::timeout, enemy2, &enemy2::move);
     timer2->start(500);
-    timer3->start(500);
 }
 
 void level1::create_bullets()
@@ -351,6 +345,9 @@ void level1::close_gate()
 void level1::updateCounters()
 {
     GameManager *manager = static_cast<GameManager *>(gameManager);
+    qDebug() << "in update counters bullets "<< manager->bulletsCounter << " " << QString::number(franklin->getBulletsCount());
+    qDebug() << "in update counters bombs " << manager->bombsCounter << " " << QString::number(franklin->getBombsCount());
+    qDebug() << "in update counters coins "<< manager->coinsCounter << " " << QString::number(franklin->getCoinsCount());
     if (manager->bulletsCounter != nullptr)
         manager->bulletsCounter->setPlainText(QString::number(franklin->getBulletsCount()));
 
@@ -384,7 +381,6 @@ void level1::restart_game()
 
     franklin = nullptr;
     enemy1 = nullptr;
-    enemy2 = nullptr;
 
     // remove bullets
     bullets.clear();
@@ -396,7 +392,7 @@ void level1::restart_game()
 
     for (int i = 0; i < items.size(); i++)
     {
-        if (typeid(*items[i]) == typeid(QGraphicsProxyWidget) || typeid(*items[i]) == typeid(QGraphicsTextItem) || typeid(*items[i]) == typeid(QPushButton) || typeid(*items[i]) == typeid(QGraphicsRectItem) || typeid(*items[i]) == typeid(bullet) || typeid(*items[i]) == typeid(bomb) || typeid(*items[i]) == typeid(class Franklin) || typeid(*items[i]) == typeid(class enemy1) || typeid(*items[i]) == typeid(class enemy2) || typeid(*items[i]) == typeid(class Drunk) || typeid(*items[i]) == typeid(class pellet) || typeid(*items[i]) == typeid(class FlyingBullet))
+        if (typeid(*items[i]) == typeid(QGraphicsProxyWidget) || typeid(*items[i]) == typeid(QGraphicsTextItem) || typeid(*items[i]) == typeid(QPushButton) || typeid(*items[i]) == typeid(QGraphicsRectItem) || typeid(*items[i]) == typeid(bullet) || typeid(*items[i]) == typeid(bomb) || typeid(*items[i]) == typeid(class Franklin) || typeid(*items[i]) == typeid(class enemy1) || typeid(*items[i]) == typeid(class Drunk) || typeid(*items[i]) == typeid(class pellet) || typeid(*items[i]) == typeid(class FlyingBullet))
         {
             scene->removeItem(items[i]);
             delete items[i];
@@ -431,15 +427,6 @@ void level1::player_hit()
     {
         timer2->stop();
     }
-    if (enemy2 != nullptr)
-    {
-        enemy2->setXandY(3, 11);
-        enemy2->aStarSearch();
-    }
-    else
-    {
-        timer3->stop();
-    }
 
     franklin->hit();
 }
@@ -452,31 +439,12 @@ void level1::enemy_hit(QGraphicsItem *enemy)
         enemy1->reduceHealth();
         if (enemy1->getHealth() == 0)
         {
-            if (enemy2 == nullptr)
-            {
-                open_gate();
-                timer2->stop();
-                timer3->stop();
-            }
+
+            open_gate();
+            timer2->stop();
             scene->removeItem(enemy1);
             enemy1 = nullptr;
             delete enemy1;
-        }
-    }
-    else if (typeid(*enemy) == typeid(class enemy2) && enemy2 != nullptr)
-    {
-        enemy2->reduceHealth();
-        if (enemy2->getHealth() == 0)
-        {
-            if (enemy1 == nullptr)
-            {
-                open_gate();
-                timer2->stop();
-                timer3->stop();
-            }
-            scene->removeItem(enemy2);
-            enemy2 = nullptr;
-            delete enemy2;
         }
     }
 }

@@ -26,6 +26,7 @@ GameManager::GameManager(QGraphicsScene *scene)
     this->scene = scene;
     levelNum = 1;
     currentLevel = new level1(this, scene);
+    create_sound();
 }
 
 void GameManager::launch_game()
@@ -34,7 +35,6 @@ void GameManager::launch_game()
     add_board_images();
     create_player();
     create_enemies();
-    create_sound();
     create_bullets();
     if(bomb::is_available())
         create_bombs();
@@ -177,7 +177,6 @@ void GameManager::create_healthbar()
         bombItem->setPixmap(bombImage);
         scene->addItem(bombItem);
 
-        bombsCounter = new QGraphicsTextItem("0");
         bombsCounter->setPos(560, 20);
         bombsCounter->setFont(fonty);
         bombsCounter->setDefaultTextColor(Qt::white);
@@ -185,7 +184,7 @@ void GameManager::create_healthbar()
 
     }
 
-
+    bombsCounter = new QGraphicsTextItem("0");
     /*Drunk and label part */
 
     scene->addWidget(lab);
@@ -372,9 +371,9 @@ void GameManager::restart_game()
     {
         scene->items()[i]->setEnabled(true);
     }
-    player->stop();
     currentLevel->restart_game();
     delete currentLevel;
+    qDebug() << "win : " << win << " level num " << levelNum;
     if(win)
     {
         if (levelNum == 1)

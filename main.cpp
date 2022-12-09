@@ -15,6 +15,8 @@
 
 int main(int argc, char *argv[])
 {
+    try {
+
     QApplication a(argc, argv);
     QGraphicsView view;
     QGraphicsScene *scene = new QGraphicsScene();
@@ -37,6 +39,11 @@ int main(int argc, char *argv[])
     view.setScene(scene);
 
     view.show();
-    return a.exec();
+    a.exec();
+
+    } catch (std::exception &e) {
+        qDebug() << e.what();
+    }
+    return 0;
 }
 

@@ -7,7 +7,7 @@
 #include "level.h"
 #include "franklin.h"
 #include "dog.h"
-#include "enemy2.h"
+#include "enemy1.h"
 #include "bullet.h"
 #include "pellet.h"
 #include "Drunk.h"
@@ -50,7 +50,7 @@ private:
     void * gameManager;
     Franklin *franklin;
     dog *enemy1;
-    class enemy2 *enemy2;
+    class enemy1 *enemy2;
     QList<bullet*> bullets;
     QList<pellet*> pellets;
     QList<bomb*> bombs; //adding bombs

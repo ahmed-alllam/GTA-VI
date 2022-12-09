@@ -6,7 +6,6 @@
 #include <QGuiApplication>
 #include <QTimer>
 #include "enemy1.h"
-#include "enemy2.h"
 #include "dog.h"
 #include "level.h"
 #include "gamemanager.h"
@@ -171,7 +170,7 @@ void FlyingBullet::move(bool is_powerful)
 
     for (int i = 0; i < colliding_items.size(); i++)
     {
-        if (typeid(*colliding_items[i]) == typeid(enemy1) || typeid(*colliding_items[i]) == typeid(enemy2) || typeid(*colliding_items[i]) == typeid(dog))
+        if (typeid(*colliding_items[i]) == typeid(enemy1) || typeid(*colliding_items[i]) == typeid(dog))
         {
             if(scene() != nullptr) {
                 scene()->removeItem(this);

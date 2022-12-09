@@ -201,13 +201,13 @@ void level3::create_enemies()
     enemy1 = new class dog (boardData, this, unitWidth, unitHeight);
     scene->addItem(enemy1);
 
-    enemy2 = new class enemy2(boardData, this, unitWidth, unitHeight);
+    enemy2 = new class enemy1(boardData, this, unitWidth, unitHeight);
     scene->addItem(enemy2);
 
     timer2 = new QTimer();
     timer3 = new QTimer();
     QObject::connect(timer2, &QTimer::timeout, enemy1, &dog::move);
-    QObject::connect(timer3, &QTimer::timeout, enemy2, &enemy2::move);
+    QObject::connect(timer3, &QTimer::timeout, enemy2, &enemy1::move);
     timer2->start(250);
     timer3->start(500);
 }
@@ -367,6 +367,11 @@ void level3::restart_game()
         boardItems[i] = nullptr;
     }
 
+    timer->stop();
+    timer2->stop();
+    timer3->stop();
+
+
 }
 
 void level3::player_hit()
@@ -383,7 +388,7 @@ void level3::player_hit()
     if (enemy2 != nullptr)
     {
         enemy2->setXandY(3, 11);
-        enemy2->aStarSearch();
+        enemy2->getPath();
     }
     else
     {
@@ -412,7 +417,7 @@ void level3::enemy_hit(QGraphicsItem *enemy)
             delete enemy1;
         }
     }
-    else if (typeid(*enemy) == typeid(class enemy2) && enemy2 != nullptr)
+    else if (typeid(*enemy) == typeid(class enemy1) && enemy2 != nullptr)
     {
         enemy2->reduceHealth();
         if (enemy2->getHealth() == 0)
