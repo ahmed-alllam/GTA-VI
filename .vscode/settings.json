@@ -66,6 +66,7 @@
         "vector": "cpp",
         "fstream": "cpp",
         "valarray": "cpp",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "queue": "cpp"
     }
 }

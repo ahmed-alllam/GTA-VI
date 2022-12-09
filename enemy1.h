@@ -6,6 +6,7 @@
 #include <QPair>
 #include <utility>
 #include<vector>
+// include pair
 #include <QGraphicsPixmapItem>
 struct  cell1  //used in A_star
 {
@@ -48,10 +49,10 @@ public:
     std::set<pPair> openList;
     bool isValid(int r, int col);
     bool isBlock(int r, int col);
-    int H_Calculation(int r, int col, Pair destn);
+    int H_Calculation(int r, int col);
     std::vector<Pair> tracePath(Pair destn);
     bool isDestination(int r, int col, Pair destn);
-    std::vector<Pair> aStarSearch();
+    std::vector<Pair> getPath();
 
 signals:
 

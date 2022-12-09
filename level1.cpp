@@ -204,7 +204,7 @@ void level1::create_enemies()
     scene->addItem(enemy1);
 
     enemy2 = new class enemy2(boardData, this, unitWidth, unitHeight);
-    scene->addItem(enemy2);
+    // scene->addItem(enemy2);
 
     timer2 = new QTimer();
     timer3 = new QTimer();
@@ -408,7 +408,7 @@ void level1::player_hit()
     if (enemy1 != nullptr)
     {
         enemy1->setXandY(9, 8);
-        enemy1->aStarSearch();
+        enemy1->getPath();
     }
     else
     {
@@ -484,4 +484,6 @@ void level1::getDest(int& i, int& j)
 {
     i = franklin->getX();
     j = franklin->getY();
+
+    qDebug () << "In level1 getDest i: " << i << " j: " << j;
 }
