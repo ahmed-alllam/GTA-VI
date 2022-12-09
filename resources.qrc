@@ -30,7 +30,6 @@
         <file>assets/images/coin.png</file>
         <file>assets/images/2right2.png</file>
         <file>assets/sounds/Ah Shit Here We Go Again.mp3</file>
-        <file>assets/sounds/Dog.mp3</file>
         <file>assets/sounds/shot.mp3</file>
         <file>assets/sounds/backsound.mp3</file>
         <file>assets/sounds/Ah Shit Here We Go Again.wav</file>
@@ -88,5 +87,9 @@
         <file>assets/images/powerfull-bulletsL.png</file>
         <file>assets/images/powerfull-bulletsR.png</file>
         <file>assets/images/powerfull-bulletsU.png</file>
+        <file>assets/sounds/Dog att.mp3</file>
+        <file>assets/sounds/Dog cry.mp3</file>
+        <file>assets/sounds/Evil Laugh.mp3</file>
+        <file>assets/sounds/Hurt.mp3</file>
     </qresource>
 </RCC>

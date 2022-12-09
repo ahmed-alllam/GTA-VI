@@ -130,8 +130,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 2;
                 setPixmap(franklinImageu1);
 
-//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-//                timer->start(200);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(300);
             }
             else if (event->key() == Qt::Key_Down && boardData[x + 1][y] >= 0)
             {
@@ -139,8 +139,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 3;
                 setPixmap(franklinImaged1);
 
-//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-//                timer->start(200);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(300);
             }
             else if (event->key() == Qt::Key_Right && boardData[x][y + 1] >= 0)
             {
@@ -148,8 +148,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 0;
                 setPixmap(franklinImager1);
 
-//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-//                timer->start(200);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(300);
                 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
             else if (event->key() == Qt::Key_Left && boardData[x][y - 1] >= 0)
@@ -158,8 +158,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 1;
                 setPixmap(franklinImagel1);
 
-//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-//                timer->start(200);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(300);
 //                                QTimer::singleShot(2000, this, SLOT(Move()));
             }
         }
@@ -171,8 +171,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 3;
                 setPixmap(franklinImaged1);
 
-//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-//                timer->start(200);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(300);
             }
             else if (event->key() == Qt::Key_Down && boardData[x - 1][y] >= 0)
             {
@@ -181,7 +181,7 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 setPixmap(franklinImageu1);
 
                 connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(200);
+                timer->start(300);
             }
             else if (event->key() == Qt::Key_Left && boardData[x][y + 1] >= 0)
             {
@@ -189,8 +189,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 0;
                 setPixmap(franklinImager1);
 
-//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-//                timer->start(200);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(300);
                 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
             else if (event->key() == Qt::Key_Right && boardData[x][y - 1] >= 0)
@@ -199,8 +199,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 1;
                 setPixmap(franklinImagel1);
 
-//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-//                timer->start(200);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(300);
                 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
         }
@@ -361,11 +361,11 @@ void Franklin::shoot()
 
         bullets--;
 
-//        QMediaPlayer *player = new QMediaPlayer;
-//        QAudioOutput *audioOutput = new QAudioOutput;
-//        player->setAudioOutput(audioOutput);
-//        player->setSource(QUrl("qrc:/assets/sounds/shot.mp3"));
-//        player->play();
+        QMediaPlayer *player = new QMediaPlayer;
+        QAudioOutput *audioOutput = new QAudioOutput;
+        player->setAudioOutput(audioOutput);
+        player->setSource(QUrl("qrc:/assets/sounds/shot.mp3"));
+        player->play();
 
         level *manager = static_cast<level *>(currentLevel);
         manager->updateCounters();
