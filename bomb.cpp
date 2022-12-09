@@ -5,7 +5,6 @@
 #include <QGuiApplication>
 #include <QTimer>
 #include "enemy1.h"
-#include "enemy2.h"
 #include "level.h"
 #include "gamemanager.h"
 

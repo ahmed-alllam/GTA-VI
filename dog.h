@@ -47,15 +47,9 @@ public:
     void checkCollision();
     int getHealth();
     std::pair<int,int>bossPosition;
-    std::pair<int, int> dest;
     std::vector<Pair> bossPath;
-    std::set<pPair> openList;
-    bool isValid(int r, int col);
-    bool isBlock(int r, int col);
-    int H_Calculation(int r, int col, Pair destn);
-    std::vector<Pair> tracePath(Pair destn);
-    bool isDestination(int r, int col, Pair destn);
-    std::vector<Pair> aStarSearch();
+    int H_Calculation(int r, int col);
+    std::vector<Pair> getPath();
 
 signals:
 

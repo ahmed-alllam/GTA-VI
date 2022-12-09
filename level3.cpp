@@ -370,8 +370,6 @@ void level3::restart_game()
     timer->stop();
     timer2->stop();
     timer3->stop();
-
-
 }
 
 void level3::player_hit()
@@ -379,7 +377,7 @@ void level3::player_hit()
     if (enemy1 != nullptr)
     {
         enemy1->setXandY(1, 1);
-        enemy1->aStarSearch();
+        enemy1->getPath();
     }
     else
     {

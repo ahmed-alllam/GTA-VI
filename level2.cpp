@@ -367,7 +367,7 @@ void level2::player_hit()
     if (enemy1 != nullptr)
     {
         enemy1->setXandY(1, 1);
-        enemy1->aStarSearch();
+        enemy1->getPath();
     }
     else
     {

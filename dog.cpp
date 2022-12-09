@@ -7,13 +7,19 @@
 #include <QTimer>
 #include "gamemanager.h"
 #include "level.h"
+#include <vector>
+#include <queue>
+
 #define INF 9999
 
+using namespace std;
 
 dog::dog(int boardData[12][16], void * gameManager, int w, int h):
 unitWidth(w),
 unitHeight(h)
 {
+    bossPath = vector<pair<int,int>>();
+
     this->currentLevel = gameManager;
     while(!bossPath.empty())
     {bossPath.pop_back();}
@@ -114,7 +120,7 @@ void dog::move()
               return;
             }
     else
-            bossPath = aStarSearch();
+            bossPath = getPath();
 }
 
 void dog::checkCollision()
@@ -128,8 +134,9 @@ void dog::checkCollision()
             {bossPath.pop_back();}
             level *manager = static_cast<level *>(currentLevel);
             manager->player_hit();
-            bossPath = aStarSearch();
+            bossPath = getPath();
         }
+
         if(typeid(*(colliding_items[i]))== typeid(bomb))    //when colliding with the bomb
         {
             level *manager = static_cast<level *>(currentLevel);
@@ -168,244 +175,95 @@ void dog::reduceHealth()
     this->health--;
 }
 
-std::vector<Pair> dog::aStarSearch()
+int dog::H_Calculation(int x, int y)
 {
-    while(!bossPath.empty())
-    {bossPath.pop_back();}
-//  initialize closed list (2D array)
-    for(int i=0;i<12;i++)
-    {
-        for(int j=0;j<16;j++)
-        {
-            closedList[i][j]=0;
-        }
-    }
+    int playerX = 0;
+    int playerY = 0;
 
-//    // Declare a 2D array of structure to hold the details
-    int i, j;
-
-    for (int k = 0; k < 12; k++)
-    {
-        for (int a = 0; a < 16; a++)
-        {
-            cellDetails[k][a].f = INF;
-            cellDetails[k][a].g = INF;
-            cellDetails[k][a].h = INF;
-            cellDetails[k][a].parent_i = -1;
-            cellDetails[k][a].parent_j = -1;
-        }
-    }
-    i = x;
-    j = y;
     level *manager = static_cast<level *>(currentLevel);
-    manager->getDest(dest.first, dest.second);
-    cellDetails[i][j].f = 0;
-    cellDetails[i][j].g = 0;
-    cellDetails[i][j].h = 0;
-    cellDetails[i][j].parent_i = i;
-    cellDetails[i][j].parent_j = j;
+    manager->getDest(playerX, playerY);
+
+    return abs(x - playerX) + abs(y - playerY);
+}
 
 
-////    // Put the starting cell on the open list and set its'f' as 0
-    openList.insert(make_pair(0, std::make_pair(i, j)));
-    bool foundOpst = false; // the destination is not reached.
-    while (!openList.empty())
-    {
-        pPair p = *openList.begin(); // Remove this vertex from the open list
-        openList.erase(openList.begin());
-        i = p.second.first;
-        j = p.second.second;
-        closedList[i][j] = true; // Add this vertex to the closed list
+vector<pair<int, int>> dog::getPath() {
+    int playerX = 0;
+    int playerY = 0;
 
-        // Cell-->Popped Cell (i, j)
-        //(4 directions ) N -->  North (i-1, j) S -->  South (i+1, j) E -->  East (i, j+1) W -->  West (i, j-1)
-        int gNew, hNew, fNew; // To store the 'g', 'h' and 'f' of the 4 successors
+    level *manager = static_cast<level *>(currentLevel);
+    manager->getDest(playerX, playerY);
 
-        if (isValid(i - 1, j) == true) // north
-        {
-            if (isDestination(i - 1, j, dest) == true)
-            {
-                cellDetails[i - 1][j].parent_i = i; // Set the Parent of the destination cell
-                cellDetails[i - 1][j].parent_j = j;
-                bossPath = tracePath( dest);
-                foundOpst = true;
-                return bossPath;
-            }
-            else if (!(closedList[i - 1][j]) && !(isBlock( i - 1, j)))
-            {
-                gNew = cellDetails[i][j].g + 1;
-                hNew = H_Calculation(i - 1, j, dest);
-                fNew = gNew + hNew;
-                if (cellDetails[i - 1][j].f == INF || cellDetails[i - 1][j].f > fNew)
-                {
-                    openList.insert(make_pair(fNew, std::make_pair(i - 1, j)));
+    vector<vector<int>> distance(12, vector<int>(16, 0));
+    vector<vector<int>> parent(12, vector<int>(16, 0));
+    vector<vector<bool>> visited(12, vector<bool>(16, false));
 
-                    // Update the details of this cell
-                    cellDetails[i - 1][j].f = fNew;
-                    cellDetails[i - 1][j].g = gNew;
-                    cellDetails[i - 1][j].h = hNew;
-                    cellDetails[i - 1][j].parent_i = i;
-                    cellDetails[i - 1][j].parent_j = j;
-                }
-            }
-        }
-        if (isValid(i + 1, j) == true) //(South)
-        {
-            // If the destination cell is the same as the  current successor
-            if (isDestination(i + 1, j, dest) == true)
-            {
-                // Set the Parent of the destination cell
-                cellDetails[i + 1][j].parent_i = i;
-                cellDetails[i + 1][j].parent_j = j;
-                bossPath = tracePath(dest);
-                foundOpst = true;
-                return bossPath;
-            }
-
-            else if (!closedList[i + 1][j] && !isBlock( i + 1, j))
-            {
-                gNew = cellDetails[i][j].g + 1;
-                hNew = H_Calculation(i + 1, j, dest);
-                fNew = gNew + hNew;
-
-                if (cellDetails[i + 1][j].f == INF || cellDetails[i + 1][j].f > fNew)
-                {
-                    openList.insert(make_pair(
-                        fNew, std::make_pair(i + 1, j)));
-                    // Update the details of this cell
-                    cellDetails[i + 1][j].f = fNew;
-                    cellDetails[i + 1][j].g = gNew;
-                    cellDetails[i + 1][j].h = hNew;
-                    cellDetails[i + 1][j].parent_i = i;
-                    cellDetails[i + 1][j].parent_j = j;
-                }
-            }
-        }
-
-        if (isValid(i, j + 1) == true) // east
-        {
-            if (isDestination(i, j + 1, dest) == true) // Set the Parent of the destination cell
-
-            {
-                cellDetails[i][j + 1].parent_i = i;
-                cellDetails[i][j + 1].parent_j = j;
-                bossPath = tracePath(dest);
-                foundOpst = true;
-                return bossPath;
-            }
-
-            else if (!closedList[i][j + 1] && !isBlock(i, j + 1))
-            {
-                gNew = cellDetails[i][j].g + 1;
-                hNew = H_Calculation(i, j + 1, dest);
-                fNew = gNew + hNew;
-                if (cellDetails[i][j + 1].f == INF || cellDetails[i][j + 1].f > fNew)
-                {
-                    openList.insert(make_pair(
-                        fNew, std::make_pair(i, j + 1)));
-                    // Update the details of this cell
-                    cellDetails[i][j + 1].f = fNew;
-                    cellDetails[i][j + 1].g = gNew;
-                    cellDetails[i][j + 1].h = hNew;
-                    cellDetails[i][j + 1].parent_i = i;
-                    cellDetails[i][j + 1].parent_j = j;
-                }
-            }
-        }
-
-        if (isValid(i, j - 1) == true) // west
-        {
-            if (isDestination(i, j - 1, dest) == true)
-            {
-                // Set the Parent of the destination cell
-                cellDetails[i][j - 1].parent_i = i;
-                cellDetails[i][j - 1].parent_j = j;
-                bossPath = tracePath( dest);
-                foundOpst = true;
-                return bossPath;
-            }
-            else if (!closedList[i][j - 1] && !isBlock( i, j - 1) == true)
-            {
-                gNew = cellDetails[i][j].g + 1;
-                hNew = H_Calculation(i, j - 1, dest);
-                fNew = gNew + hNew;
-                if (cellDetails[i][j - 1].f == INF || cellDetails[i][j - 1].f > fNew)
-                {
-                    openList.insert(std::make_pair(
-                        fNew, std::make_pair(i, j - 1)));
-
-                    cellDetails[i][j - 1].f = fNew;
-                    cellDetails[i][j - 1].g = gNew;
-                    cellDetails[i][j - 1].h = hNew;
-                    cellDetails[i][j - 1].parent_i = i;
-                    cellDetails[i][j - 1].parent_j = j;
-                }
-            }
+    for (int i = 0; i < 12; i++) {
+        for (int j = 0; j < 16; j++) {
+            distance[i][j] = 1000000;
         }
     }
-    return bossPath;
+
+    distance[x][y] = 0;
+    parent[x][y] = -1;
+
+    priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, greater<pair<int, pair<int, int>>>> pq;
+    pq.push({0, {x, y}});
+
+    while (!pq.empty()) {
+        pair<int, pair<int, int>> current = pq.top();
+        pq.pop();
+
+        int currentX = current.second.first;
+        int currentY = current.second.second;
+
+        if (visited[currentX][currentY]) {
+            continue;
+        }
+
+        visited[currentX][currentY] = true;
+
+        if (currentX == playerX && currentY == playerY) {
+            break;
+        }
+
+        int dx[4] = {-1, 1, 0, 0};
+        int dy[4] = {0, 0, -1, 1};
+
+        for (int i = 0; i < 4; i++) {
+            int newX = currentX + dx[i];
+            int newY = currentY + dy[i];
+
+            if (newX >= 0 && newX < 12 && newY >= 0 && newY < 16 && !visited[newX][newY] && boardData[newX][newY] > 0) {
+                if (distance[newX][newY] > distance[currentX][currentY] + 1) {
+                    distance[newX][newY] = distance[currentX][currentY] + 1;
+                    parent[newX][newY] = i + 1;
+                    pq.push({distance[newX][newY] + H_Calculation(newX, newY), {newX, newY}});
+                }
+            }
+        }
+
+
+    }
+
+    vector<pair<int, int>> path;
+    int currentX = playerX;
+    int currentY = playerY;
+
+    while (parent[currentX][currentY] != -1) {
+        path.push_back({currentX, currentY});
+        if (parent[currentX][currentY] == 1) {
+            currentX++;
+        } else if (parent[currentX][currentY] == 2) {
+            currentX--;
+        } else if (parent[currentX][currentY] == 3) {
+            currentY++;
+        } else if (parent[currentX][currentY] == 4) {
+            currentY--;
+        }
+    }
+
+    path.push_back({currentX, currentY});
+    return path;
 }
 
-
-
-bool dog:: isValid(int r, int col) // in the range of the data
-{
-    return ((r < 12) && (col < 16));
-}
-
-//// if the cell is block +we might use it depends on the enemy lma netfeq
-bool dog:: isBlock(int r, int col)
-{
-    return (boardData[r][col] <0);
-}
-
-
-int dog::H_Calculation(int r, int col, Pair destn) // return the estimation distance using the rule of difference between two points
-{
-    return (sqrt((r - destn.first) * (r - destn.first) + (col - destn.second) * (col - destn.second)));
-}
-// // will be changed and make the boss move according to the sequence of steps
-
-std::vector<Pair> dog:: tracePath( Pair destn)
-{
-    int r = destn.first;
-    int col = destn.second;
-    while(!bossPath.empty())
-            bossPath.pop_back();
-    Pair next_node;
-    next_node.first = cellDetails[r][col].parent_i;
-    next_node.second = cellDetails[r][col].parent_j;
-    do {
-        bossPath.push_back(next_node);
-        if(cellDetails[r][col].parent_i<0||cellDetails[r][col].parent_j<0)
-             break;
-        if(cellDetails[r][col].parent_i>20||cellDetails[r][col].parent_j>20)
-             break;
-        if(cellDetails[cellDetails[r][col].parent_i][cellDetails[r][col].parent_j].parent_i==r&&cellDetails[cellDetails[r][col].parent_i][cellDetails[r][col].parent_j].parent_j==col)
-             break;
-            next_node.first = cellDetails[r][col].parent_i;
-            next_node.second = cellDetails[r][col].parent_j;
-            int temp_row = cellDetails[r][col].parent_i;
-            int temp_col = cellDetails[r][col].parent_j;
-            r = temp_row;
-            col = temp_col;
-    }while (!(cellDetails[r][col].parent_i == r && cellDetails[r][col].parent_j == col));
-//    while (!((cellDetails[r][col].parent_i == r && cellDetails[r][col].parent_j == col)))
-//    {
-//        bossPath.push(std::make_pair(r, col));
-//        if(cellDetails[r][col].parent_i==-1||cellDetails[r][col].parent_j==-1)
-//            break;
-//        if(cellDetails[cellDetails[r][col].parent_i][cellDetails[r][col].parent_j].parent_i==r&&cellDetails[cellDetails[r][col].parent_i][cellDetails[r][col].parent_j].parent_j==col)
-//            break;
-//        int temp_r = cellDetails[r][col].parent_i;
-//        int temp_col = cellDetails[r][col].parent_j;
-//        r = temp_r;
-//        col = temp_col;
-//    }
-    return bossPath;
-}
-
-bool dog::isDestination(int r, int col, Pair destn) // to check whether enemy reached (its destination) the player or not
-{
- return (r == destn.first && col == destn.second); // collision
-}

@@ -6,7 +6,6 @@
 #include <QGuiApplication>
 #include <QTimer>
 #include "enemy1.h"
-#include "enemy2.h"
 #include "onlinelevel.h"
 #include "gamemanager.h"
 #include "onlineplayer.h"
