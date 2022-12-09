@@ -19,8 +19,7 @@
 }
 
 QGraphicsView{
- border-radius: 10px;
-
+    border-radius: 50%;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -131,19 +130,35 @@ border-radius: 20px;
     </property>
    </widget>
    <widget class="QGraphicsView" name="graphicsView">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>530</y>
-      <width>201</width>
-      <height>192</height>
+      <x>130</x>
+      <y>511</y>
+      <width>220</width>
+      <height>220</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+background-color: transparent;</string>
     </property>
     <property name="verticalScrollBarPolicy">
      <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
     <property name="horizontalScrollBarPolicy">
      <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="backgroundBrush">
+     <brush brushstyle="NoBrush">
+      <color alpha="0">
+       <red>0</red>
+       <green>0</green>
+       <blue>0</blue>
+      </color>
+     </brush>
     </property>
    </widget>
    <widget class="QTextBrowser" name="textBrowser_3">
@@ -152,8 +167,8 @@ border-radius: 20px;
     </property>
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>740</y>
+      <x>110</x>
+      <y>750</y>
       <width>256</width>
       <height>61</height>
      </rect>
@@ -201,10 +216,14 @@ hr { height: 1px; border-width: 0; }
     <property name="geometry">
      <rect>
       <x>435</x>
-      <y>530</y>
-      <width>201</width>
-      <height>192</height>
+      <y>511</y>
+      <width>220</width>
+      <height>220</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+background-color: transparent;</string>
     </property>
     <property name="verticalScrollBarPolicy">
      <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -219,8 +238,8 @@ hr { height: 1px; border-width: 0; }
     </property>
     <property name="geometry">
      <rect>
-      <x>410</x>
-      <y>740</y>
+      <x>420</x>
+      <y>750</y>
       <width>256</width>
       <height>61</height>
      </rect>
@@ -265,10 +284,14 @@ hr { height: 1px; border-width: 0; }
     <property name="geometry">
      <rect>
       <x>740</x>
-      <y>530</y>
-      <width>231</width>
-      <height>192</height>
+      <y>511</y>
+      <width>220</width>
+      <height>220</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+background-color: transparent;</string>
     </property>
     <property name="verticalScrollBarPolicy">
      <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -284,7 +307,7 @@ hr { height: 1px; border-width: 0; }
     <property name="geometry">
      <rect>
       <x>730</x>
-      <y>740</y>
+      <y>750</y>
       <width>256</width>
       <height>61</height>
      </rect>
