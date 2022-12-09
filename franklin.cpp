@@ -102,6 +102,7 @@ Franklin::Franklin(int boardData[12][16], void *currentLevel)
     isPowerful = 0;
     drunk = 0;
     bullets = 0;
+    powerful_bullets=0;
     bombs=0; //added
     x = 5;
     y = 7;
@@ -276,6 +277,14 @@ void Franklin::keyPressEvent(QKeyEvent *event)
         }
     }
 
+    if(bullet::is_available())
+    {
+        if(event->key()== Qt::Key_D)
+        {
+            powerful_shoot();
+        }
+    }
+
 
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
     checkCollision();
@@ -426,7 +435,6 @@ void Franklin::checkCollision()
         }
         else if (typeid(*(collision[i])) == typeid(bullet))
         {
-
             if (direction == 1)
             {
                 setPixmap(franklinImagell);
@@ -439,6 +447,8 @@ void Franklin::checkCollision()
                 connect(timer, &QTimer::timeout, this, &Franklin::Move);
                 timer->start(1000);
             }
+            //if this is a powerful bullet -> powerful_pullets +1;
+
             bullets++;
             manager->updateCounters();
             (collision[i])->setVisible(false);
@@ -603,4 +613,22 @@ void Franklin::delete_released_bomb(int x, int y)
 
 
 
+}
+
+void Franklin::powerful_shoot()
+{
+    if (bullets > 0)
+    {
+
+        //powerful_bullets--;
+        bullets--;
+
+        // put sound if you want here
+
+        level *manager = static_cast<level *>(currentLevel);
+        manager->updateCounters();
+
+        FlyingBullet *pwr = new FlyingBullet(boardData, x, y, direction, manager,"we want to declare");
+        scene()->addItem(pwr);
+    }
 }

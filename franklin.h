@@ -23,6 +23,7 @@ private:
     int x;
     int y;
     int bullets;
+    int powerful_bullets;
     int bombs;
     int boardData[12][16];
     void * currentLevel;
@@ -68,8 +69,10 @@ public:
     QList<bomb*> released_bombs;
 
     void delete_released_bomb(int,int);
+    void powerful_shoot();
 public slots:
     void keyPressEvent(QKeyEvent * event);
+
 };
 
 #endif // FRANKLIN_H

@@ -94,25 +94,25 @@ void bomb::make_available()
     available = true;
 }
 
-void bomb::waiting_to_bomb()
-{
-    QList<QGraphicsItem *> colliding_items = collidingItems();
-    level *manager2 = static_cast<level *>(manager);
-
-    for (int i = 0; i < colliding_items.size(); i++)
-    {
-        if (typeid(*colliding_items[i]) == typeid(enemy1) || typeid(*colliding_items[i]) == typeid(enemy2))
-        {
-            scene()->removeItem(this);
-            delete this;
-            manager2->enemy_hit(colliding_items[i]);
-            return;
-        }
-    }
-}
-
-//bomb::~bomb()
+//void bomb::waiting_to_bomb()
 //{
+//    QList<QGraphicsItem *> colliding_items = collidingItems();
+//    level *manager2 = static_cast<level *>(manager);
 
+//    for (int i = 0; i < colliding_items.size(); i++)
+//    {
+//        if (typeid(*colliding_items[i]) == typeid(enemy1) || typeid(*colliding_items[i]) == typeid(enemy2))
+//        {
+//            scene()->removeItem(this);
+//            delete this;
+//            manager2->enemy_hit(colliding_items[i]);
+//            return;
+//        }
+//    }
 //}
+
+////bomb::~bomb()
+////{
+
+////}
 

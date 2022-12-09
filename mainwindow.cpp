@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include"bomb.h"
+#include"bullet.h"
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -10,16 +11,15 @@ MainWindow::MainWindow(QWidget *parent)
    ui->label->setText("300");
 
     ui->ExitButton->setIcon( QIcon(":/assets/images/button.png"));
-
     ui->ExitButton->setIconSize(QSize(65, 65));
 
     ui->bomb_label->setPixmap( QPixmap(":/assets/images/time-bomb.png"));
-
     ui->bomb_label->setScaledContents(true);
 
+    ui->pwerfulbullet_label->setPixmap(QPixmap(":/assets/images/powerfull-bulletsU.png"));
+    ui->pwerfulbullet_label->setScaledContents(true);
 
     ui->coins_image->setPixmap( QPixmap(":/assets/images/coins.png"));
-
     ui->coins_image->setScaledContents(true);
 
     ui->health_image->setPixmap( QPixmap(":/assets/images/extra-health.png"));
@@ -55,5 +55,13 @@ void MainWindow::on_Buy_bomb_clicked()
     bomb::make_available();
     qDebug()<<"status: "<<bomb::is_available();
 
+}
+
+
+void MainWindow::on_Buy_powerfulbullet_clicked()
+{
+    qDebug()<<"status: "<<bullet::is_available();
+    bullet::make_available();
+    qDebug()<<"status: "<<bullet::is_available();
 }
 
