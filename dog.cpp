@@ -48,9 +48,18 @@ void dog::move()
     checkCollision();
     if(!bossPath.empty())
             {
-              if(x==bossPath[bossPath.size()-1].first&&y+1==bossPath[bossPath.size()-1].second)
+        if(x==bossPath[bossPath.size()-1].first&&y+1==bossPath[bossPath.size()-1].second)
+        {
+           checkCollision();
+           direction = 1;
+        }
+        else if(x==bossPath[bossPath.size()-1].first&&y-1==bossPath[bossPath.size()-1].second)
+        {
+            checkCollision();
+            direction = 0;
+        }
+              if(direction == 1)
               {
-                 checkCollision();
                  if(health == 4)
                  {
                      QPixmap enemy4RImage(":assets/images/dog4R.png");
@@ -80,9 +89,8 @@ void dog::move()
                      setPixmap(enemy1RImage);
                  }
               }
-              else if(x==bossPath[bossPath.size()-1].first&&y-1==bossPath[bossPath.size()-1].second)
+              else if (direction == 0)
               {
-                  checkCollision();
                   if(health == 4)
                   {
                       QPixmap enemy4LImage(":assets/images/dog4L.png");

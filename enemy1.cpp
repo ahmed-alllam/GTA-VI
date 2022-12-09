@@ -64,24 +64,16 @@ void enemy1::move()
               if(x==bossPath[bossPath.size()-1].first&&y+1==bossPath[bossPath.size()-1].second)
               {
                  checkCollision();
-                 if(health == 2)
-                 {
-                     QPixmap enemy1FRImage(":assets/images/GangsterFR.png");
-                     enemy1FRImage = enemy1FRImage.scaledToWidth(unitWidth);
-                     enemy1FRImage = enemy1FRImage.scaledToHeight(unitHeight);
-                     setPixmap(enemy1FRImage);
-                 }
-                 else if(health == 1)
-                 {
-                     QPixmap enemy1HRImage(":assets/images/GangsterHR.png");
-                     enemy1HRImage = enemy1HRImage.scaledToWidth(unitWidth);
-                     enemy1HRImage = enemy1HRImage.scaledToHeight(unitHeight);
-                     setPixmap(enemy1HRImage);
-                 }
+                 direction = 1;
               }
               else if(x==bossPath[bossPath.size()-1].first&&y-1==bossPath[bossPath.size()-1].second)
               {
                   checkCollision();
+                  direction = 0;
+              }
+              if (direction == 0)
+              {
+
                   if(health == 2)
                   {
                       QPixmap enemy1FLImage(":assets/images/GangsterFL.png");
@@ -95,6 +87,24 @@ void enemy1::move()
                       enemy1HLImage = enemy1HLImage.scaledToWidth(unitWidth);
                       enemy1HLImage = enemy1HLImage.scaledToHeight(unitHeight);
                       setPixmap(enemy1HLImage);
+                  }
+              }
+              else if (direction == 1)
+              {
+
+                  if(health == 2)
+                  {
+                      QPixmap enemy1FRImage(":assets/images/GangsterFR.png");
+                      enemy1FRImage = enemy1FRImage.scaledToWidth(unitWidth);
+                      enemy1FRImage = enemy1FRImage.scaledToHeight(unitHeight);
+                      setPixmap(enemy1FRImage);
+                  }
+                  else if(health == 1)
+                  {
+                      QPixmap enemy1HRImage(":assets/images/GangsterHR.png");
+                      enemy1HRImage = enemy1HRImage.scaledToWidth(unitWidth);
+                      enemy1HRImage = enemy1HRImage.scaledToHeight(unitHeight);
+                      setPixmap(enemy1HRImage);
                   }
               }
               bossPosition.first=bossPath[bossPath.size()-1].first;
