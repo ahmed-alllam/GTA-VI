@@ -22,6 +22,7 @@ SOURCES += \
     bullet.cpp \
     dog.cpp \
     enemy1.cpp \
+    flying_powerful_bullet.cpp \
     flyingbullet.cpp \
     gamemanager.cpp \
     homepage.cpp \
@@ -38,6 +39,7 @@ SOURCES += \
     onlinelevel.cpp \
     onlineplayer.cpp \
     pellet.cpp \
+    powerful_bullet.cpp
 
 HEADERS += \
     Drunk.h \
@@ -45,6 +47,7 @@ HEADERS += \
     bullet.h \
     dog.h \
     enemy1.h \
+    flying_powerful_bullet.h \
     flyingbullet.h \
     gamemanager.h \
     homepage.h \
@@ -59,7 +62,8 @@ HEADERS += \
     onlinegamemanager.h \
     onlinelevel.h \
     onlineplayer.h \
-    pellet.h
+    pellet.h \
+    powerful_bullet.h
 
 FORMS += \
     homepage.ui \

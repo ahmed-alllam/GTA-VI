@@ -1,7 +1,6 @@
 #include "level1.h"
 #include "gamemanager.h"
 #include "flyingbullet.h"
-
 #include <QGuiApplication>
 #include <QFile>
 #include <QGraphicsProxyWidget>
@@ -210,21 +209,22 @@ void level1::create_enemies()
 
 void level1::create_bullets()
 {
-    if(bullet::is_available())//if he buyied powerful bullet, put it in the map
+
+    if(powerful_bullet::is_available())//if he buyied powerful bullet, put it in the map
     {
         bullet *bullet1 = new class bullet(boardData, 1, 1);
         bullet *bullet2 = new class bullet(boardData, 10, 14);
         bullet *bullet3 = new class bullet(boardData, 10, 1);
-        bullet *powerful= new class bullet(boardData,1,14,"tawfik el gamed");
 
+        powerful_bullet *powerful= new class powerful_bullet(boardData,1,14);
+        powerful_bullets.clear();
+        powerful_bullets.push_back(powerful);
         bullets.clear();
-
         bullets.push_back(bullet1);
         bullets.push_back(bullet2);
         bullets.push_back(bullet3);
-        bullets.push_back(powerful);
 
-    }else
+    } else
     {
         bullet *bullet1 = new class bullet(boardData, 1, 1);
         bullet *bullet2 = new class bullet(boardData, 10, 14);
@@ -240,9 +240,14 @@ void level1::create_bullets()
     }
 
 
+
     for (int i = 0; i < bullets.size(); i++)
     {
         scene->addItem(bullets[i]);
+    }
+    for (int i = 0; i < powerful_bullets.size(); i++)
+    {
+        scene->addItem(powerful_bullets[i]);
     }
 }
 
@@ -268,6 +273,15 @@ void level1::remove_bullets()
             scene->removeItem(bullets[i]);
             delete bullets[i];
             bullets[i] = nullptr;
+        }
+    }
+    for (int i = 0; i < powerful_bullets.size(); i++)
+    {
+        if (powerful_bullets[i] != nullptr)
+        {
+            scene->removeItem(powerful_bullets[i]);
+            delete powerful_bullets[i];
+            powerful_bullets[i] = nullptr;
         }
     }
 }
@@ -384,6 +398,7 @@ void level1::restart_game()
 
     // remove bullets
     bullets.clear();
+    powerful_bullets.clear();
     //remove bombs
     bombs.clear();
     // remove pellets
@@ -392,7 +407,7 @@ void level1::restart_game()
 
     for (int i = 0; i < items.size(); i++)
     {
-        if (typeid(*items[i]) == typeid(QGraphicsProxyWidget) || typeid(*items[i]) == typeid(QGraphicsTextItem) || typeid(*items[i]) == typeid(QPushButton) || typeid(*items[i]) == typeid(QGraphicsRectItem) || typeid(*items[i]) == typeid(bullet) || typeid(*items[i]) == typeid(bomb) || typeid(*items[i]) == typeid(class Franklin) || typeid(*items[i]) == typeid(class enemy1) || typeid(*items[i]) == typeid(class Drunk) || typeid(*items[i]) == typeid(class pellet) || typeid(*items[i]) == typeid(class FlyingBullet))
+        if (typeid(*items[i]) == typeid(QGraphicsProxyWidget) || typeid(*items[i]) == typeid(QGraphicsTextItem) || typeid(*items[i]) == typeid(QPushButton) || typeid(*items[i]) == typeid(QGraphicsRectItem) || typeid(*items[i]) == typeid(bullet) || typeid(*items[i]) == typeid(powerful_bullet)|| typeid(*items[i]) == typeid(bomb) || typeid(*items[i]) == typeid(class Franklin) || typeid(*items[i]) == typeid(class enemy1) || typeid(*items[i]) == typeid(class Drunk) || typeid(*items[i]) == typeid(class pellet) || typeid(*items[i]) == typeid(class FlyingBullet))
         {
             scene->removeItem(items[i]);
             delete items[i];

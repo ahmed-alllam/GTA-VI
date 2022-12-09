@@ -214,21 +214,34 @@ void level3::create_enemies()
 
 void level3::create_bullets()
 {
-    bullet *bullet1 = new class bullet(boardData, 1, 1);
-    bullet *bullet2 = new class bullet(boardData, 10, 14);
-    bullet *bullet3 = new class bullet(boardData, 10, 1);
-    bullet *bullet4 = new class bullet(boardData, 1, 14);
 
-    bullets.clear();
-
-    bullets.push_back(bullet1);
-    bullets.push_back(bullet2);
-    bullets.push_back(bullet3);
-    bullets.push_back(bullet4);
-
-    for (int i = 0; i < bullets.size(); i++)
+    if(powerful_bullet::is_available())//if he buyied powerful bullet, put it in the map
     {
-        scene->addItem(bullets[i]);
+        bullet *bullet1 = new class bullet(boardData, 1, 1);
+        bullet *bullet2 = new class bullet(boardData, 10, 14);
+        bullet *bullet3 = new class bullet(boardData, 10, 1);
+
+        powerful_bullet *powerful= new class powerful_bullet(boardData,1,14);
+        powerful_bullets.clear();
+        powerful_bullets.push_back(powerful);
+        bullets.clear();
+        bullets.push_back(bullet1);
+        bullets.push_back(bullet2);
+        bullets.push_back(bullet3);
+
+    } else
+    {
+        bullet *bullet1 = new class bullet(boardData, 1, 1);
+        bullet *bullet2 = new class bullet(boardData, 10, 14);
+        bullet *bullet3 = new class bullet(boardData, 10, 1);
+        bullet *bullet4 = new class bullet(boardData, 1, 14);
+
+        bullets.clear();
+
+        bullets.push_back(bullet1);
+        bullets.push_back(bullet2);
+        bullets.push_back(bullet3);
+        bullets.push_back(bullet4);
     }
 }
 
@@ -241,6 +254,15 @@ void level3::remove_bullets()
             scene->removeItem(bullets[i]);
             delete bullets[i];
             bullets[i] = nullptr;
+        }
+    }
+    for (int i = 0; i < powerful_bullets.size(); i++)
+    {
+        if (powerful_bullets[i] != nullptr)
+        {
+            scene->removeItem(powerful_bullets[i]);
+            delete powerful_bullets[i];
+            powerful_bullets[i] = nullptr;
         }
     }
 }
@@ -338,7 +360,7 @@ void level3::restart_game()
 
     // remove bullets
     bullets.clear();
-
+    powerful_bullets.clear();
     // remove pellets
     pellets.clear();
     drunk = nullptr;

@@ -11,6 +11,7 @@
 #include "pellet.h"
 #include "Drunk.h"
 #include"bomb.h"
+#include"powerful_bullet.h"
 #include <QObject>
 
 class level2 : public level
@@ -23,6 +24,7 @@ private:
     Franklin *franklin;
     dog *enemy1;
     QList<bullet*> bullets;
+    QList<powerful_bullet*> powerful_bullets;
     QList<pellet*> pellets;
     QList<bomb*> bombs; //adding bombs
     Drunk *drunk;

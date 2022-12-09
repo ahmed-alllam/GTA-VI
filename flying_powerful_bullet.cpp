@@ -1,5 +1,4 @@
-#include "flyingbullet.h"
-
+#include "flying_powerful_bullet.h"
 #include <QGraphicsScene>
 #include <QKeyEvent>
 #include <QList>
@@ -10,12 +9,12 @@
 #include "level.h"
 #include "gamemanager.h"
 
-FlyingBullet::FlyingBullet(int boardData[12][16], int x, int y, int direction, void *manager)
+flying_powerful_bullet::flying_powerful_bullet(int boardData[12][16], int x, int y, int direction, void *manager)
 {
-    QPixmap bulletImageu(":assets/images/bullet.png");
-    QPixmap bulletImager(":assets/images/bulletR.png");
-    QPixmap bulletImagel(":assets/images/bulletL.png");
-    QPixmap bulletImaged(":assets/images/bulletD.png");
+    QPixmap bulletImageu(":/assets/images/powerfull-bulletsU.png");
+    QPixmap bulletImager(":/assets/images/powerfull-bulletsR.png");
+    QPixmap bulletImagel(":/assets/images/powerfull-bulletsL.png");
+    QPixmap bulletImaged(":/assets/images/powerfull-bulletsD.png");
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
@@ -68,78 +67,15 @@ FlyingBullet::FlyingBullet(int boardData[12][16], int x, int y, int direction, v
     }
 
     timer = new QTimer();
-    QObject::connect(timer, &QTimer::timeout, this, &FlyingBullet::move);
+    QObject::connect(timer, &QTimer::timeout, this, &flying_powerful_bullet::move);
     timer->start(50);
 
     move();
+
 }
 
-//FlyingBullet::FlyingBullet(int boardData[12][16], int x, int y, int direction, void *manager, QString type)
-//{
-//    QPixmap bulletImageu(":/assets/images/powerfull-bulletsU.png");
-//    QPixmap bulletImager(":/assets/images/powerfull-bulletsR.png");
-//    QPixmap bulletImagel(":/assets/images/powerfull-bulletsL.png");
-//    QPixmap bulletImaged(":/assets/images/powerfull-bulletsD.png");
 
-//    int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
-//    int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
-//    int unitWidth = qMin(screenWidth, screenHeight) / 13;
-//    int unitHeight = qMin(screenWidth, screenHeight) / 13;
-//    int unitHeight2 = qMin(screenWidth, screenHeight) / 17;
-
-//    bulletImageu = bulletImageu.scaledToWidth(unitHeight2);
-//    bulletImageu = bulletImageu.scaledToHeight(unitHeight2);
-
-//    bulletImaged = bulletImaged.scaledToWidth(unitHeight2);
-//    bulletImaged = bulletImaged.scaledToHeight(unitHeight2);
-
-//    bulletImager = bulletImager.scaledToWidth(unitHeight2);
-//    bulletImager = bulletImager.scaledToHeight(unitHeight2);
-
-//    bulletImagel = bulletImagel.scaledToWidth(unitHeight2);
-//    bulletImagel = bulletImagel.scaledToHeight(unitHeight2);
-
-//    if (direction == 0)
-//    {
-//        setPixmap(bulletImager);
-//    }
-//    else if (direction == 1)
-//    {
-//        setPixmap(bulletImagel);
-//    }
-//    else if (direction == 2)
-//    {
-//        setPixmap(bulletImageu);
-//    }
-//    else if (direction == 3)
-//    {
-//        setPixmap(bulletImaged);
-//    }
-
-//    this->x = x;
-//    this->y = y;
-//    this->direction = direction;
-//    this->manager = manager;
-
-//    setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
-
-//    for (int i = 0; i < 12; i++)
-//    {
-//        for (int j = 0; j < 16; j++)
-//        {
-//            this->boardData[i][j] = boardData[i][j];
-//        }
-//    }
-
-//    timer = new QTimer();
-//    QObject::connect(timer, &QTimer::timeout, this, &FlyingBullet::move);
-//    timer->start(50);
-
-//    move();
-//}
-
-
-void FlyingBullet::move()
+void flying_powerful_bullet::move()
 {
     // move bullet depending on direction
     if (direction == 0)
@@ -170,7 +106,9 @@ void FlyingBullet::move()
                 scene()->removeItem(this);
                 delete this;
             }
-                manager2->enemy_hit(colliding_items[i]);
+
+            manager2->enemy_hit(colliding_items[i]);
+            manager2->enemy_hit(colliding_items[i]);
 
             return;
         }
@@ -205,8 +143,11 @@ void FlyingBullet::move()
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
 }
 
-FlyingBullet::~FlyingBullet()
+
+
+flying_powerful_bullet::~flying_powerful_bullet()
 {
     if (timer != nullptr)
         delete timer;
 }
+

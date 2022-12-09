@@ -17,6 +17,8 @@
 #include <QAudioOutput>
 #include "level.h"
 #include "flyingbullet.h"
+#include"powerful_bullet.h"
+#include"flying_powerful_bullet.h"
 
 Franklin::Franklin(int boardData[12][16], void *currentLevel)
 {
@@ -276,7 +278,7 @@ void Franklin::keyPressEvent(QKeyEvent *event)
         }
     }
 
-    if(bullet::is_available())
+    if(powerful_bullet::is_available())
     {
         if(event->key()== Qt::Key_D)
         {
@@ -447,6 +449,24 @@ void Franklin::checkCollision()
             bullets++;
             manager->updateCounters();
             (collision[i])->setVisible(false);
+        }else if (typeid(*(collision[i])) == typeid(powerful_bullet))
+        {
+            if (direction == 1)
+            {
+                setPixmap(franklinImagell);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(1000);
+            }
+            else
+            {
+                setPixmap(franklinImagerr);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(1000);
+            }
+
+            powerful_bullets++;
+            manager->updateCounters();
+            (collision[i])->setVisible(false);
         }
         else if (typeid(*(collision[i])) == typeid(bomb))
         {
@@ -605,18 +625,18 @@ void Franklin::delete_released_bomb(int x, int y)
 
 void Franklin::powerful_shoot()
 {
-    if (bullets > 0)
+    if (powerful_bullets > 0)
     {
 
         //powerful_bullets--;
-        bullets--;
+        powerful_bullets--;
 
         // put sound if you want here
 
         level *manager = static_cast<level *>(currentLevel);
         manager->updateCounters();
 
-        FlyingBullet *pwr = new FlyingBullet(boardData, x, y, direction, manager,"we want to declare");
+        flying_powerful_bullet *pwr = new flying_powerful_bullet(boardData, x, y, direction, manager);
         scene()->addItem(pwr);
     }
 }

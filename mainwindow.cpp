@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include"bomb.h"
-#include"bullet.h"
+#include"powerful_bullet.h"
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -60,8 +60,8 @@ void MainWindow::on_Buy_bomb_clicked()
 
 void MainWindow::on_Buy_powerfulbullet_clicked()
 {
-    qDebug()<<"status: "<<bullet::is_available();
-    bullet::make_available();
-    qDebug()<<"status: "<<bullet::is_available();
+    qDebug()<<"status: "<<powerful_bullet::is_available();
+    powerful_bullet::make_available();
+    qDebug()<<"status: "<<powerful_bullet::is_available();
 }
 
