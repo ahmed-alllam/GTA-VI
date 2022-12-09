@@ -18,7 +18,7 @@
  border-radius: 10px;
 }
 
-QGraphicsView{
+QGraphicsView {
  border-radius: 10px;
 
 }</string>
