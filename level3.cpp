@@ -468,7 +468,7 @@ void level3::remove_bombs()
 void level3::create_bombs()
 {
     bomb *bomb1 = new class bomb(boardData, 8, 1);
-   bomb *bomb2 = new class bomb(boardData, 5, 11);
+   bomb *bomb2 = new class bomb(boardData, 3,12 );
    bombs.clear();
    bombs.push_back(bomb1);
   bombs.push_back(bomb2);
