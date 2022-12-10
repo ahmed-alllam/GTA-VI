@@ -12,6 +12,7 @@
 #include "Drunk.h"
 #include"bomb.h"
 #include"powerful_bullet.h"
+#include"extra_life.h"
 #include <QObject>
 
 class level2 : public level
@@ -55,6 +56,8 @@ public:
     virtual void getDest(int& i, int& j);
 
    virtual void delete_released_bomb(int,int); // added
+    virtual void create_extra_life();
+    virtual void new_heart();
 };
 
 #endif // LEVEL2_H

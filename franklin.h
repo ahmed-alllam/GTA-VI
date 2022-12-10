@@ -68,6 +68,7 @@ public:
     void editboard(int x);
     QTimer *timer = new QTimer(this);
     QList<released_bomb*> released_bombs;
+    bool extra_consumed=false;  //check if he used the extra  life before
 
     void delete_released_bomb(int,int);
     void powerful_shoot();

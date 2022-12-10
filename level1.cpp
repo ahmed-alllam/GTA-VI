@@ -360,6 +360,7 @@ void level1::updateCounters()
     qDebug() << "in update counters bullets "<< manager->bulletsCounter << " " << QString::number(franklin->getBulletsCount());
     qDebug() << "in update counters bombs " << manager->bombsCounter << " " << QString::number(franklin->getBombsCount());
     qDebug() << "in update counters coins "<< manager->coinsCounter << " " << QString::number(franklin->getCoinsCount());
+
     if (manager->bulletsCounter != nullptr)
         manager->bulletsCounter->setPlainText(QString::number(franklin->getBulletsCount()));
 
@@ -488,5 +489,23 @@ void level1::getDest(int& i, int& j)
 
 void level1::delete_released_bomb(int x, int y)
 {
- franklin->delete_released_bomb(x,y);
+    franklin->delete_released_bomb(x,y);
+}
+
+void level1::create_extra_life()
+{
+    GameManager *manager = static_cast<GameManager *>(gameManager);
+    int health = franklin->getHealth()-1;
+qDebug()<<"health1: "<<health;
+    if (health >= 0)
+    {
+        scene->addItem(&(manager->hearts[health]));
+    }
+qDebug()<<"health2: "<<health;
+}
+
+void level1::new_heart()
+{
+    extra_life *extra= new extra_life(boardData,6,1);
+    scene->addItem(extra);
 }

@@ -1,5 +1,4 @@
 // make the class for the franklin
-
 #include "franklin.h"
 #include <QGraphicsScene>
 #include <QKeyEvent>
@@ -19,6 +18,8 @@
 #include "flyingbullet.h"
 #include"powerful_bullet.h"
 #include"flying_powerful_bullet.h"
+
+#include"extra_life.h"
 
 Franklin::Franklin(int boardData[12][16], void *currentLevel)
 {
@@ -449,6 +450,14 @@ void Franklin::checkCollision()
             manager->updateCounters();
             (collision[i])->setVisible(false);
         }
+        else if (typeid(*(collision[i])) == typeid(extra_life))
+        {
+            qDebug()<<"health0: "<<health;
+            health++;
+            manager->create_extra_life();
+            (collision[i])->setVisible(false);
+            qDebug()<<"health3: "<<health;
+        }
         else if (typeid(*(collision[i])) == typeid(pellet))
         {
             if (direction == 1)
@@ -491,11 +500,15 @@ void Franklin::checkCollision()
 void Franklin::hit()
 {
     level *manager = static_cast<level *>(currentLevel);
-
     if (!getIsPowerful())
     {
         this->health--;
         manager->remove_heart();
+        if(health==2 && !extra_consumed && extra_life::is_available())  //checking to add the extra heart
+        {
+            extra_consumed=true;
+            manager->new_heart();
+        }
         this->x = 5;
         this->y = 7;
         bullets = 0;

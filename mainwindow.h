@@ -21,6 +21,8 @@ private slots:
 
     void on_Buy_powerfulbullet_clicked();
 
+    void on_Buy_health_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

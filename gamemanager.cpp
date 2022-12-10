@@ -250,12 +250,14 @@ void GameManager::close_gate()
 
 void GameManager::delete_released_bomb(int a, int b)
 {
-currentLevel->delete_released_bomb(a,b);
+    currentLevel->delete_released_bomb(a,b);
 }
+
 
 void GameManager::updateCounters()
 {
     currentLevel->updateCounters();
+
 }
 
 void GameManager::remove_heart()

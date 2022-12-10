@@ -12,6 +12,7 @@
 #include "pellet.h"
 #include "Drunk.h"
 #include"bomb.h"
+#include"extra_life.h"
 #include"powerful_bullet.h"
 #include <QObject>
 
@@ -42,6 +43,8 @@ public:
     virtual void getDest(int& i, int& j);
 
     virtual void delete_released_bomb(int,int); // added
+    virtual void create_extra_life();
+    virtual void new_heart();
 
 private:
     QTimer *timer;

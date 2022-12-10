@@ -22,6 +22,7 @@ SOURCES += \
     bullet.cpp \
     dog.cpp \
     enemy1.cpp \
+    extra_life.cpp \
     flying_powerful_bullet.cpp \
     flyingbullet.cpp \
     gamemanager.cpp \
@@ -48,6 +49,7 @@ HEADERS += \
     bullet.h \
     dog.h \
     enemy1.h \
+    extra_life.h \
     flying_powerful_bullet.h \
     flyingbullet.h \
     gamemanager.h \

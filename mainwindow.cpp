@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include"bomb.h"
 #include"powerful_bullet.h"
+#include"extra_life.h"
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -51,9 +52,7 @@ void MainWindow::on_ExitButton_clicked()
 
 void MainWindow::on_Buy_bomb_clicked()
 {
-    qDebug()<<"status: "<<bomb::is_available();
     bomb::make_available();
-    qDebug()<<"status: "<<bomb::is_available();
 
 }
 
@@ -61,5 +60,12 @@ void MainWindow::on_Buy_bomb_clicked()
 void MainWindow::on_Buy_powerfulbullet_clicked()
 {
     powerful_bullet::make_available();
+}
+
+
+void MainWindow::on_Buy_health_clicked()
+{       qDebug()<<extra_life::is_available();
+     extra_life::make_available();
+        qDebug()<<extra_life::is_available();
 }
 

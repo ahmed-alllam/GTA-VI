@@ -30,6 +30,8 @@ public:
     virtual void getData(int data[12][16]) = 0;
     virtual void getDest(int& i, int& j) = 0;
 virtual void  delete_released_bomb(int,int)=0; // added
+    virtual void create_extra_life()=0;
+    virtual void new_heart()=0;
 
 };
 

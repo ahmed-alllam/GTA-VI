@@ -1,19 +1,17 @@
-#include "bomb.h"
+#include "extra_life.h"
 #include <QGraphicsScene>
 #include <QKeyEvent>
 #include <QList>
 #include <QGuiApplication>
 #include <QTimer>
-//#include "enemy1.h"
-//#include "level.h"
-//#include "gamemanager.h"
+#include <QtGlobal>
+bool extra_life::available=false;
 
-bool bomb::available=false;
-bomb::bomb(int boardData[12][16], int x, int y)
+extra_life::extra_life(int boardData[12][16], int x, int y)
 {
 
 
-    QPixmap bombimage(":/assets/images/time-bomb.png");
+    QPixmap bombimage(":/assets/images/extra-health.png");
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
@@ -25,7 +23,6 @@ bomb::bomb(int boardData[12][16], int x, int y)
 
     setPixmap(bombimage);
 
-
     this->x = x;
     this->y = y;
 
@@ -33,14 +30,12 @@ bomb::bomb(int boardData[12][16], int x, int y)
 
 }
 
-
-
-bool bomb::is_available()
+bool extra_life::is_available()
 {
     return available;
 }
 
-void bomb::make_available()
+void extra_life::make_available()
 {
     available = true;
 }
