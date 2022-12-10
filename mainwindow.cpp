@@ -60,8 +60,6 @@ void MainWindow::on_Buy_bomb_clicked()
 
 void MainWindow::on_Buy_powerfulbullet_clicked()
 {
-    qDebug()<<"status: "<<powerful_bullet::is_available();
     powerful_bullet::make_available();
-    qDebug()<<"status: "<<powerful_bullet::is_available();
 }
 

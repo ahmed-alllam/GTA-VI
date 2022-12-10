@@ -4,6 +4,7 @@
 #ifndef FRANKLIN_H
 #define FRANKLIN_H
 #include"bomb.h"
+#include"released_bomb.h"
 #include <QObject>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsItem>
@@ -66,7 +67,7 @@ public:
     int getCoinsCount();
     void editboard(int x);
     QTimer *timer = new QTimer(this);
-    QList<bomb*> released_bombs;
+    QList<released_bomb*> released_bombs;
 
     void delete_released_bomb(int,int);
     void powerful_shoot();

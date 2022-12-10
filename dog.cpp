@@ -48,9 +48,18 @@ void dog::move()
     checkCollision();
     if(!bossPath.empty())
             {
-              if(x==bossPath[bossPath.size()-1].first&&y+1==bossPath[bossPath.size()-1].second)
+        if(x==bossPath[bossPath.size()-1].first&&y+1==bossPath[bossPath.size()-1].second)
+        {
+           checkCollision();
+           direction = 1;
+        }
+        else if(x==bossPath[bossPath.size()-1].first&&y-1==bossPath[bossPath.size()-1].second)
+        {
+            checkCollision();
+            direction = 0;
+        }
+              if(direction == 1)
               {
-                 checkCollision();
                  if(health == 4)
                  {
                      QPixmap enemy4RImage(":assets/images/dog4R.png");
@@ -80,9 +89,8 @@ void dog::move()
                      setPixmap(enemy1RImage);
                  }
               }
-              else if(x==bossPath[bossPath.size()-1].first&&y-1==bossPath[bossPath.size()-1].second)
+              else if (direction == 0)
               {
-                  checkCollision();
                   if(health == 4)
                   {
                       QPixmap enemy4LImage(":assets/images/dog4L.png");
@@ -132,15 +140,27 @@ void dog::checkCollision()
         {
             while(!bossPath.empty())
             {bossPath.pop_back();}
+
+            QMediaPlayer *player = new QMediaPlayer;
+            QAudioOutput *audioOutput = new QAudioOutput;
+            player->setAudioOutput(audioOutput);
+            player->setSource(QUrl("qrc:/assets/sounds/Dog att.mp3"));
+            player->play();
+
             level *manager = static_cast<level *>(currentLevel);
             manager->player_hit();
             bossPath = getPath();
         }
-
-        if(typeid(*(colliding_items[i]))== typeid(bomb))    //when colliding with the bomb
+        if(typeid(*(colliding_items[i]))== typeid(released_bomb))    //when colliding with the bomb
         {
             level *manager = static_cast<level *>(currentLevel);
             level *manager2 = static_cast<level *>(manager);
+
+            QMediaPlayer *player = new QMediaPlayer;
+            QAudioOutput *audioOutput = new QAudioOutput;
+            player->setAudioOutput(audioOutput);
+            player->setSource(QUrl("qrc:/assets/sounds/Dog cry.mp3"));
+            player->play();
 
             manager->enemy_hit(this);
             manager->delete_released_bomb(getX(),getY());

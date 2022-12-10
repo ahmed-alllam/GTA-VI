@@ -34,24 +34,50 @@ homepage::homepage(QGraphicsScene *scene)
     QGraphicsScene *scene1 = new QGraphicsScene();
     QGraphicsScene *scene2 = new QGraphicsScene();
     QGraphicsScene *scene3 = new QGraphicsScene();
+
+
     QPixmap k(":assets/images/kiro.png");
-    k = k.scaledToWidth(200);
-    k = k.scaledToHeight(200);
-    QPixmap a(":assets/images/allam.png");
-    a = a.scaledToWidth(200);
-    a = a.scaledToHeight(200);
-    QPixmap t(":assets/images/tawfiq.png");
-    t = t.scaledToWidth(200);
-    t = t.scaledToHeight(200);
+    k = k.scaled(200, 200, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    QBitmap kk(200, 200);
+    kk.fill(Qt::color0);
+    QPainter p(&kk);
+    p.setRenderHint(QPainter::Antialiasing);
+    p.setBrush(Qt::color1);
+    p.drawRoundedRect( 0, 0, 200, 200, 100, 100);
+    k.setMask(kk);
     scene1->addPixmap(k);
-    ui->graphicsView->setScene(scene1);
+
+
+    QPixmap a(":assets/images/allam.png");
+    a = a.scaled(200, 200, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    QBitmap aa(200, 200);
+    aa.fill(Qt::color0);
+    QPainter pp(&aa);
+    pp.setRenderHint(QPainter::Antialiasing);
+    pp.setBrush(Qt::color1);
+    pp.drawRoundedRect( 0, 0, 200, 200, 100, 100);
+    a.setMask(aa);
     scene2->addPixmap(a);
-    ui->graphicsView_2->setScene(scene2);
+
+    QPixmap t(":assets/images/tawfiq.png");
+    t = t.scaled(200, 200, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    QBitmap tt(200, 200);
+    tt.fill(Qt::color0);
+    QPainter ppp(&tt);
+    ppp.setRenderHint(QPainter::Antialiasing);
+    ppp.setBrush(Qt::color1);
+    ppp.drawRoundedRect( 0, 0, 200, 200, 100, 100);
+    t.setMask(tt);
     scene3->addPixmap(t);
+
+
+    ui->graphicsView->setScene(scene1);
+    ui->graphicsView_2->setScene(scene2);
     ui->graphicsView_3->setScene(scene3);
 
     QObject::connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(start_story_mode()), Qt::QueuedConnection);
     QObject::connect(ui->OnlineButton, SIGNAL(clicked()), this, SLOT(start_online_mode()), Qt::QueuedConnection);
+
 
 }
 

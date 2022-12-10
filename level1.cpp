@@ -260,8 +260,6 @@ void level1::create_bombs()
   bombs.push_back(bomb2);
    scene->addItem(bombs[0]);
    scene->addItem(bombs[1]);
-
-
 }
 
 void level1::remove_bullets()

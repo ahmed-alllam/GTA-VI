@@ -8,6 +8,7 @@
 #include "gamemanager.h"
 #include "level.h"
 #include"bomb.h"
+#include"released_bomb.h"
 #include <queue>
 #define INF 9999
 
@@ -64,24 +65,16 @@ void enemy1::move()
               if(x==bossPath[bossPath.size()-1].first&&y+1==bossPath[bossPath.size()-1].second)
               {
                  checkCollision();
-                 if(health == 2)
-                 {
-                     QPixmap enemy1FRImage(":assets/images/GangsterFR.png");
-                     enemy1FRImage = enemy1FRImage.scaledToWidth(unitWidth);
-                     enemy1FRImage = enemy1FRImage.scaledToHeight(unitHeight);
-                     setPixmap(enemy1FRImage);
-                 }
-                 else if(health == 1)
-                 {
-                     QPixmap enemy1HRImage(":assets/images/GangsterHR.png");
-                     enemy1HRImage = enemy1HRImage.scaledToWidth(unitWidth);
-                     enemy1HRImage = enemy1HRImage.scaledToHeight(unitHeight);
-                     setPixmap(enemy1HRImage);
-                 }
+                 direction = 1;
               }
               else if(x==bossPath[bossPath.size()-1].first&&y-1==bossPath[bossPath.size()-1].second)
               {
                   checkCollision();
+                  direction = 0;
+              }
+              if (direction == 0)
+              {
+
                   if(health == 2)
                   {
                       QPixmap enemy1FLImage(":assets/images/GangsterFL.png");
@@ -95,6 +88,24 @@ void enemy1::move()
                       enemy1HLImage = enemy1HLImage.scaledToWidth(unitWidth);
                       enemy1HLImage = enemy1HLImage.scaledToHeight(unitHeight);
                       setPixmap(enemy1HLImage);
+                  }
+              }
+              else if (direction == 1)
+              {
+
+                  if(health == 2)
+                  {
+                      QPixmap enemy1FRImage(":assets/images/GangsterFR.png");
+                      enemy1FRImage = enemy1FRImage.scaledToWidth(unitWidth);
+                      enemy1FRImage = enemy1FRImage.scaledToHeight(unitHeight);
+                      setPixmap(enemy1FRImage);
+                  }
+                  else if(health == 1)
+                  {
+                      QPixmap enemy1HRImage(":assets/images/GangsterHR.png");
+                      enemy1HRImage = enemy1HRImage.scaledToWidth(unitWidth);
+                      enemy1HRImage = enemy1HRImage.scaledToHeight(unitHeight);
+                      setPixmap(enemy1HRImage);
                   }
               }
               bossPosition.first=bossPath[bossPath.size()-1].first;
@@ -119,14 +130,27 @@ void enemy1::checkCollision()
         {
             while(!bossPath.empty())
             {bossPath.pop_back();}
+
+            QMediaPlayer *player = new QMediaPlayer;
+            QAudioOutput *audioOutput = new QAudioOutput;
+            player->setAudioOutput(audioOutput);
+            player->setSource(QUrl("qrc:/assets/sounds/Evil Laugh.mp3"));
+            player->play();
+
             level *manager = static_cast<level *>(currentLevel);
             manager->player_hit();
             bossPath = getPath();
         }
-        if(typeid(*(colliding_items[i]))== typeid(bomb))    //when colliding with the bomb
+        if(typeid(*(colliding_items[i]))== typeid(released_bomb))    //when colliding with the bomb
         {
             level *manager = static_cast<level *>(currentLevel);
             level *manager2 = static_cast<level *>(manager);
+
+            QMediaPlayer *player = new QMediaPlayer;
+            QAudioOutput *audioOutput = new QAudioOutput;
+            player->setAudioOutput(audioOutput);
+            player->setSource(QUrl("qrc:/assets/sounds/Hurt.mp3"));
+            player->play();
 
             manager->enemy_hit(this);
             manager->delete_released_bomb(getX(),getY());

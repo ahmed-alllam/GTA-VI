@@ -40,6 +40,7 @@ void GameManager::launch_game()
         create_bombs();
     create_pellets();
     create_healthbar();
+    qDebug()<<"launch el game tmam";
 }
 
 void GameManager::add_board_images()
@@ -177,6 +178,7 @@ void GameManager::create_healthbar()
         bombItem->setPixmap(bombImage);
         scene->addItem(bombItem);
 
+        bombsCounter= new QGraphicsTextItem("0");
         bombsCounter->setPos(560, 20);
         bombsCounter->setFont(fonty);
         bombsCounter->setDefaultTextColor(Qt::white);
@@ -184,7 +186,7 @@ void GameManager::create_healthbar()
 
     }
 
-    bombsCounter = new QGraphicsTextItem("0");
+
     /*Drunk and label part */
 
     scene->addWidget(lab);
@@ -193,6 +195,7 @@ void GameManager::create_healthbar()
 
     gate->start();
     gate->setPaused(true);
+
 }
 
 void GameManager::activate_mode() // displaying the progress bar

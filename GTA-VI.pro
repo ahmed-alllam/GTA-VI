@@ -39,7 +39,8 @@ SOURCES += \
     onlinelevel.cpp \
     onlineplayer.cpp \
     pellet.cpp \
-    powerful_bullet.cpp
+    powerful_bullet.cpp \
+    released_bomb.cpp
 
 HEADERS += \
     Drunk.h \
@@ -63,7 +64,8 @@ HEADERS += \
     onlinelevel.h \
     onlineplayer.h \
     pellet.h \
-    powerful_bullet.h
+    powerful_bullet.h \
+    released_bomb.h
 
 FORMS += \
     homepage.ui \

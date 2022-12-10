@@ -132,8 +132,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 2;
                 setPixmap(franklinImageu1);
 
-//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-//                timer->start(200);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(300);
             }
             else if (event->key() == Qt::Key_Down && boardData[x + 1][y] >= 0)
             {
@@ -141,8 +141,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 3;
                 setPixmap(franklinImaged1);
 
-//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-//                timer->start(200);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(300);
             }
             else if (event->key() == Qt::Key_Right && boardData[x][y + 1] >= 0)
             {
@@ -150,8 +150,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 0;
                 setPixmap(franklinImager1);
 
-//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-//                timer->start(200);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(300);
                 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
             else if (event->key() == Qt::Key_Left && boardData[x][y - 1] >= 0)
@@ -160,8 +160,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 1;
                 setPixmap(franklinImagel1);
 
-//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-//                timer->start(200);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(300);
 //                                QTimer::singleShot(2000, this, SLOT(Move()));
             }
         }
@@ -173,8 +173,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 3;
                 setPixmap(franklinImaged1);
 
-//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-//                timer->start(200);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(300);
             }
             else if (event->key() == Qt::Key_Down && boardData[x - 1][y] >= 0)
             {
@@ -183,7 +183,7 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 setPixmap(franklinImageu1);
 
                 connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(200);
+                timer->start(300);
             }
             else if (event->key() == Qt::Key_Left && boardData[x][y + 1] >= 0)
             {
@@ -191,8 +191,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 0;
                 setPixmap(franklinImager1);
 
-//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-//                timer->start(200);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(300);
                 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
             else if (event->key() == Qt::Key_Right && boardData[x][y - 1] >= 0)
@@ -201,8 +201,8 @@ void Franklin::keyPressEvent(QKeyEvent *event)
                 direction = 1;
                 setPixmap(franklinImagel1);
 
-//                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-//                timer->start(200);
+                connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                timer->start(300);
                 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
         }
@@ -363,11 +363,11 @@ void Franklin::shoot()
 
         bullets--;
 
-//        QMediaPlayer *player = new QMediaPlayer;
-//        QAudioOutput *audioOutput = new QAudioOutput;
-//        player->setAudioOutput(audioOutput);
-//        player->setSource(QUrl("qrc:/assets/sounds/shot.mp3"));
-//        player->play();
+        QMediaPlayer *player = new QMediaPlayer;
+        QAudioOutput *audioOutput = new QAudioOutput;
+        player->setAudioOutput(audioOutput);
+        player->setSource(QUrl("qrc:/assets/sounds/shot.mp3"));
+        player->play();
 
         level *manager = static_cast<level *>(currentLevel);
         manager->updateCounters();
@@ -381,41 +381,16 @@ void Franklin::BOMB() //releasing the bomb
 {
     if(bombs>0)
     {
+        qDebug()<<"number of released before"<<released_bombs.size();
         bombs--;
         level *manager = static_cast<level *>(currentLevel);
         manager->updateCounters();
+        released_bomb *released= new released_bomb(boardData,x,y,direction,manager);
+        released_bombs.push_back(released);
+        qDebug()<<"released bomb : "<<x<<" , "<<y;
+        scene()->addItem(released_bombs[released_bombs.size()-1]);
+        qDebug()<<"number of released after"<<released_bombs.size();
 
-        //bomb* released_bomb= new bomb(boardData,x,y,direction,manager); //commented temporarily
-        bomb*released_bomb= new bomb(boardData,x,y,direction,manager);
-        released_bombs.push_front(released_bomb);
-        scene()->addItem(released_bombs[0]);
-
-
-         //leave the bomb in that place in the screen
-//        QPixmap bombImage(":/assets/images/time-bomb.png");
-
-//        bombImage = bombImage.scaledToWidth(unitWidth/1.1);
-//        bombImage = bombImage.scaledToHeight(unitHeight/1.1);
-
-//        QGraphicsPixmapItem *bombItem = new QGraphicsPixmapItem();
-//        bombItem->setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
-//        bombItem->setPixmap(bombImage);
-//        scene()->addItem(bombItem);
-
-//        QList<QGraphicsItem *> colliding_items = collidingItems();
-//        level *manager2 = static_cast<level *>(manager);
-//        for (int i = 0; i < colliding_items.size(); i++)
-//        {
-//            if (typeid(*colliding_items[i]) == typeid(enemy1) || typeid(*colliding_items[i]) == typeid(enemy2))
-//            {
-//                qDebug()<<"collision";
-//                scene()->removeItem(bombItem);
-//                delete bombItem;
-//                manager2->enemy_hit(colliding_items[i]);
-//                return;
-//            }
-//        }
-//    }
     }
 
 }
@@ -612,14 +587,18 @@ void Franklin::editboard(int x)
 }
 void Franklin::delete_released_bomb(int x, int y)
 {
-//    for(int i=0;i<franklin->released_bombs.size();i++)   // to check which bomb has been touched
+//    int j=0;
+//    for(QList<released_bomb*>::Iterator i=released_bombs.begin();i!=released_bombs.end();i++)
 //    {
-//        if(x==franklin->released_bombs[])
+//        if(x==(*i)->x ||y==(*i)->y )
+//        {
+//         swap(released_bombs.begin(),i);
+//        }
 //    }
+    qDebug()<<"enemy: "<<x<<" , "<<y;
     scene()->removeItem(released_bombs[0]);
-    delete released_bombs[0];
-
-
+    delete (released_bombs[0]);
+    released_bombs.erase(released_bombs.begin());
 
 }
 
