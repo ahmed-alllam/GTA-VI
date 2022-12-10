@@ -102,5 +102,9 @@
         <file>assets/sounds/car crash.mp3</file>
         <file>assets/sounds/car shot.mp3</file>
         <file>assets/images/bullet_icon.png</file>
+        <file>assets/images/Franklin model 2 powered D.png</file>
+        <file>assets/images/Franklin model 2 powered L.png</file>
+        <file>assets/images/Franklin model 2 powered R.png</file>
+        <file>assets/images/Franklin model 2 powered U.png</file>
     </qresource>
 </RCC>

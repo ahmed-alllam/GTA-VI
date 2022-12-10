@@ -60,7 +60,7 @@ homepage::homepage(QGraphicsScene *scene)
     scene2->addPixmap(a);
 
     QPixmap t(":assets/images/tawfiq.png");
-    t = t.scaled(200, 200, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    t = t.scaled(200, 200, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
     QBitmap tt(200, 200);
     tt.fill(Qt::color0);
     QPainter ppp(&tt);

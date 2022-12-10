@@ -338,11 +338,11 @@ void level1::updateModeTxt()
         }
         else if (franklin->getIsDrunk())
         {
-            manager->txt->setPlainText("Drunk Model");
+            manager->txt->setPlainText("Drunk Mode");
         }
         else
         {
-            manager->txt->setPlainText("Normal Model");
+            manager->txt->setPlainText("Normal Mode");
         }
     }
 }
@@ -420,6 +420,11 @@ void level1::restart_game()
     QList<QGraphicsItem *> items = scene->items();
 
     franklin = nullptr;
+
+    timer2->stop();
+    timer3->stop();
+
+    enemy2 = nullptr;
     enemy1 = nullptr;
 
     // remove bullets
@@ -491,9 +496,9 @@ void level1::enemy_hit(QGraphicsItem *enemy)
             if (enemy2 == nullptr)
             {
                 open_gate();
-                timer2->stop();
                 timer3->stop();
             }
+            timer2->stop();
             scene->removeItem(enemy1);
             enemy1 = nullptr;
             delete enemy1;
@@ -508,8 +513,8 @@ void level1::enemy_hit(QGraphicsItem *enemy)
             {
                 open_gate();
                 timer2->stop();
-                timer3->stop();
             }
+            timer3->stop();
             scene->removeItem(enemy2);
             enemy2 = nullptr;
             delete enemy2;
@@ -560,4 +565,19 @@ void level1::new_heart()
 {
     extra_life *extra= new extra_life(boardData,6,1);
     scene->addItem(extra);
+}
+
+void level1::activate_mode()
+{
+    GameManager *manager = static_cast<GameManager *>(gameManager);
+    if(franklin->getIsPowerful())
+    {
+        manager->set_counter(30);
+        manager->activate_mode();
+    }
+    else if(franklin->getIsDrunk())
+    {
+        manager->set_counter(15);
+        manager->activate_mode();
+    }
 }

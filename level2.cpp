@@ -307,11 +307,11 @@ void level2::updateModeTxt()
         }
         else if (franklin->getIsDrunk())
         {
-            manager->txt->setPlainText("Drunk Model");
+            manager->txt->setPlainText("Drunk Mode");
         }
         else
         {
-            manager->txt->setPlainText("Normal Model");
+            manager->txt->setPlainText("Normal Mode");
         }
     }
 }
@@ -381,6 +381,8 @@ void level2::restart_game()
 
     franklin = nullptr;
     enemy1 = nullptr;
+    timer2->stop();
+
 
     // remove bullets
     bullets.clear();
@@ -514,4 +516,19 @@ void level2::new_heart()
 {
     extra_life *extra= new extra_life(boardData,6,1);
     scene->addItem(extra);
+}
+
+void level2::activate_mode()
+{
+    GameManager *manager = static_cast<GameManager *>(gameManager);
+    if(franklin->getIsPowerful())
+    {
+        manager->set_counter(30);
+        manager->activate_mode();
+    }
+    else if(franklin->getIsDrunk())
+    {
+        manager->set_counter(15);
+        manager->activate_mode();
+    }
 }

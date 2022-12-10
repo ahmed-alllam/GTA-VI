@@ -26,6 +26,7 @@ GameManager::GameManager(QGraphicsScene *scene)
 {
     this->scene = scene;
     levelNum = 1;
+    timer = new QTimer;
     currentLevel = new level1(this, scene);
     create_sound();
 }
@@ -115,6 +116,14 @@ void GameManager::create_healthbar()
     txt->setDefaultTextColor(Qt::white);
     scene->addItem(txt);
 
+    counter = new QGraphicsTextItem("00:00");
+    QFont fontc("Arial", 20, QFont::StyleNormal);
+    counter->setPos(1020, 20);
+    counter->setFont(fonty);
+    counter->setDefaultTextColor(Qt::white);
+    scene->addItem(counter);
+    counter->setVisible(false);
+
     /* Creating Hearts */
     hearts = new QGraphicsPixmapItem[3];
 
@@ -199,8 +208,13 @@ void GameManager::create_healthbar()
 
 }
 
-void GameManager::activate_mode() // displaying the progress bar
+void GameManager::set_counter(int n)
 {
+    countdown = n;
+}
+
+void GameManager::activate_mode() // displaying the progress bar
+{/*
     movie = new QMovie(":/assets/images/the_timer.gif");
 
     movie->setBackgroundColor(Qt::red);
@@ -219,7 +233,31 @@ void GameManager::activate_mode() // displaying the progress bar
                 // For some reason == movie->frameCount() crashes, so... *
                 l->setVisible(false);
             });
-    timer->start(10000);
+    if (p)
+    {
+        timer->start(30000);
+    }
+    else if (d)
+    {
+
+        timer->start(15000);
+    }*/
+    if (timer != nullptr)
+    {
+        timer->stop();
+    }
+    connect(timer, &QTimer::timeout, this, &GameManager::activate_mode);
+    counter->setPlainText("00:" + QString::number(countdown));
+    if(countdown > 0)
+    {
+        counter->setVisible(true);
+        countdown--;
+        timer->start(1000);
+    }
+    else
+    {
+        counter->setVisible(false);
+    }
 }
 
 void GameManager::open_gate()

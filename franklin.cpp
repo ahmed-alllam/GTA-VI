@@ -83,14 +83,22 @@ Franklin::Franklin(int boardData[12][16], void *currentLevel)
     franklinImager = franklinImager.scaledToWidth(unitWidth);
     franklinImager = franklinImager.scaledToHeight(unitHeight);
 
-    franklinImagell = QPixmap(":assets/images/Franklin model 2 powered 2.png"); // change  the image
-    franklinImagerr = QPixmap(":assets/images/Franklin model 2 powered.png");   // change  the image
+    franklinImagepl = QPixmap(":assets/images/Franklin model 2 powered L.png"); // change  the image
+    franklinImagepr = QPixmap(":assets/images/Franklin model 2 powered R.png");   // change  the image
+    franklinImagepu = QPixmap(":assets/images/Franklin model 2 powered U.png"); // change  the image
+    franklinImagepd = QPixmap(":assets/images/Franklin model 2 powered D.png");   // change  the image
 
-    franklinImagell = franklinImagell.scaledToWidth(unitWidth);
-    franklinImagell = franklinImagell.scaledToHeight(unitHeight);
+    franklinImagepl = franklinImagepl.scaledToWidth(unitWidth);
+    franklinImagepl = franklinImagepl.scaledToHeight(unitHeight);
 
-    franklinImagerr = franklinImagerr.scaledToWidth(unitWidth);
-    franklinImagerr = franklinImagerr.scaledToHeight(unitHeight);
+    franklinImagepr = franklinImagepr.scaledToWidth(unitWidth);
+    franklinImagepr = franklinImagepr.scaledToHeight(unitHeight);
+
+    franklinImagepu = franklinImagepu.scaledToWidth(unitWidth);
+    franklinImagepu = franklinImagepu.scaledToHeight(unitHeight);
+
+    franklinImagepd = franklinImagepd.scaledToWidth(unitWidth);
+    franklinImagepd = franklinImagepd.scaledToHeight(unitHeight);
 
     setPixmap(franklinImagel1);
 
@@ -133,38 +141,66 @@ void Franklin::keyPressEvent(QKeyEvent *event)
             {
                 x--;
                 direction = 2;
-                setPixmap(franklinImageu1);
+                if (bullets == 0)
+                {
+                    setPixmap(franklinImageu1);
 
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(300);
+                    connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                    timer->start(300);
+                }
+                else
+                {
+                    setPixmap(franklinImagepu);
+                }
             }
             else if (event->key() == Qt::Key_Down && boardData[x + 1][y] >= 0)
             {
                 x++;
                 direction = 3;
-                setPixmap(franklinImaged1);
+                if (bullets == 0)
+                {
+                    setPixmap(franklinImaged1);
 
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(300);
+                    connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                    timer->start(300);
+                }
+                else
+                {
+                    setPixmap(franklinImagepd);
+                }
             }
             else if (event->key() == Qt::Key_Right && boardData[x][y + 1] >= 0)
             {
                 y++;
                 direction = 0;
-                setPixmap(franklinImager1);
+                if (bullets == 0)
+                {
+                    setPixmap(franklinImager1);
 
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(300);
+                    connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                    timer->start(300);
+                }
+                else
+                {
+                    setPixmap(franklinImagepr);
+                }
                 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
             else if (event->key() == Qt::Key_Left && boardData[x][y - 1] >= 0)
             {
                 y--;
                 direction = 1;
-                setPixmap(franklinImagel1);
+                if (bullets == 0)
+                {
+                    setPixmap(franklinImagel1);
 
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(300);
+                    connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                    timer->start(300);
+                }
+                else
+                {
+                    setPixmap(franklinImagepl);
+                }
 //                                QTimer::singleShot(2000, this, SLOT(Move()));
             }
         }
@@ -174,38 +210,66 @@ void Franklin::keyPressEvent(QKeyEvent *event)
             {
                 x++;
                 direction = 3;
-                setPixmap(franklinImaged1);
+                if (bullets == 0)
+                {
+                    setPixmap(franklinImaged1);
 
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(300);
+                    connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                    timer->start(300);
+                }
+                else
+                {
+                    setPixmap(franklinImagepd);
+                }
             }
             else if (event->key() == Qt::Key_Down && boardData[x - 1][y] >= 0)
             {
                 x--;
                 direction = 2;
-                setPixmap(franklinImageu1);
+                if (bullets == 0)
+                {
+                    setPixmap(franklinImageu1);
 
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(300);
+                    connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                    timer->start(300);
+                }
+                else
+                {
+                    setPixmap(franklinImagepu);
+                }
             }
             else if (event->key() == Qt::Key_Left && boardData[x][y + 1] >= 0)
             {
                 y++;
                 direction = 0;
-                setPixmap(franklinImager1);
+                if (bullets == 0)
+                {
+                    setPixmap(franklinImager1);
 
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(300);
+                    connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                    timer->start(300);
+                }
+                else
+                {
+                    setPixmap(franklinImagepr);
+                }
                 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
             else if (event->key() == Qt::Key_Right && boardData[x][y - 1] >= 0)
             {
                 y--;
                 direction = 1;
-                setPixmap(franklinImagel1);
+                if (bullets == 0)
+                {
+                    setPixmap(franklinImagel1);
 
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(300);
+                    connect(timer, &QTimer::timeout, this, &Franklin::Move);
+                    timer->start(300);
+                }
+                else
+                {
+                    setPixmap(franklinImagepl);
+                }
                 //                QTimer::singleShot(2000, this, SLOT(Move()));
             }
         }
@@ -361,7 +425,7 @@ void Franklin::shoot()
     {
         if (bullets == 1)
         {
-            // change image to normal
+            Move();
         }
 
         bullets--;
@@ -412,15 +476,19 @@ void Franklin::checkCollision()
         {
             if (direction == 1)
             {
-                setPixmap(franklinImagell);
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(1000);
+                setPixmap(franklinImagepl);
+            }
+            else if (direction == 0)
+            {
+                setPixmap(franklinImagepr);
+            }
+            else if (direction == 2)
+            {
+                setPixmap(franklinImagepu);
             }
             else
             {
-                setPixmap(franklinImagerr);
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(1000);
+                setPixmap(franklinImagepd);
             }
             //if this is a powerful bullet -> powerful_pullets +1;
 
@@ -431,15 +499,19 @@ void Franklin::checkCollision()
         {
             if (direction == 1)
             {
-                setPixmap(franklinImagell);
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(1000);
+                setPixmap(franklinImagepl);
+            }
+            else if (direction == 0)
+            {
+                setPixmap(franklinImagepr);
+            }
+            else if (direction == 2)
+            {
+                setPixmap(franklinImagepu);
             }
             else
             {
-                setPixmap(franklinImagerr);
-                connect(timer, &QTimer::timeout, this, &Franklin::Move);
-                timer->start(1000);
+                setPixmap(franklinImagepd);
             }
 
             powerful_bullets++;
@@ -461,23 +533,15 @@ void Franklin::checkCollision()
         }
         else if (typeid(*(collision[i])) == typeid(pellet))
         {
-            if (direction == 1)
-            {
-                setPixmap(franklinImagel);
-            }
-            else
-            {
-                setPixmap(franklinImager);
-            }
-
             setPowerful(true);
+            Move();
             score++;
             manager->updateCounters();
             manager->updateModeTxt();
-            // manager->activate_mode();   //displaying the progress bar
+            manager->activate_mode();   //displaying the progress bar
 
             connect(timer, &QTimer::timeout, this, &Franklin::setPowerful2False);
-            timer->start(10000);
+            timer->start(30000);
             //            QTimer::singleShot(10000, this, SLOT(setPowerful(false)));
             (collision[i])->setVisible(false);
         }
@@ -487,10 +551,10 @@ void Franklin::checkCollision()
             setIsDrunk(true);
 
             manager->updateModeTxt();
-            //   manager->activate_mode();   //displaying the progress bar
+            manager->activate_mode();   //displaying the progress bar
 
             connect(timer, &QTimer::timeout, this, &Franklin::setDrunk2False);
-            timer->start(10000);
+            timer->start(15000);
             //            QTimer::singleShot(10000, this, SLOT(setIsDrunk(false)));
             (collision[i])->setVisible(false);
         }
