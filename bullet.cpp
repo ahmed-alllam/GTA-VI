@@ -17,6 +17,7 @@ bullet::bullet(int boardData[12][16], int x, int y)
 
     bulletImage = bulletImage.scaledToWidth(unitWidth);
     bulletImage = bulletImage.scaledToHeight(unitHeight);
+    taken = false;
 
     setPixmap(bulletImage);
 

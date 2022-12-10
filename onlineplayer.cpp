@@ -121,7 +121,7 @@ void OnlinePlayer::add_id()
     idText = new QGraphicsTextItem(id);
     idText->setDefaultTextColor(Qt::white);
     //    idText->setFont(QFont("Arial", 20));
-//    idText->setZValue(1);
+    //    idText->setZValue(1);
     scene()->addItem(idText);
     qDebug() << "id is " << id;
     qDebug() << scene();
@@ -132,7 +132,8 @@ void OnlinePlayer::add_id()
     }
 }
 
-void OnlinePlayer::add_health_bar() {
+void OnlinePlayer::add_health_bar()
+{
     healthBar = new QProgressBar();
     healthBar->setMaximum(3);
     healthBar->setMinimum(0);
@@ -147,7 +148,7 @@ void OnlinePlayer::add_health_bar() {
     healthBar->setStyleSheet("QProgressBar::chunk {background-color: red; border-radius: 5px;}"
                              "QProgressBar {border: 1px solid grey; border-radius: 5px; background-color: transparent;}");
 
-//    healthBar->setAlignment(Qt::AlignCenter);
+    //    healthBar->setAlignment(Qt::AlignCenter);
     healthBar->setFormat("");
     scene()->addWidget(healthBar);
 }
@@ -194,7 +195,7 @@ void OnlinePlayer::setCoordinates(int x, int y, int direction)
             idText->setRotation(90);
 
             healthBar->setOrientation(Qt::Vertical);
-                healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
+            healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
         }
         //        timer->stop();
     }
@@ -207,7 +208,7 @@ void OnlinePlayer::setCoordinates(int x, int y, int direction)
             idText->setRotation(90);
 
             healthBar->setOrientation(Qt::Vertical);
-                healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
+            healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
         }
         //        timer->stop();
     }
@@ -242,7 +243,6 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
                 healthBar->setOrientation(Qt::Vertical);
 
                 healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
-
             }
         }
         else if (event->key() == Qt::Key_Down && boardData[x + 1][y] >= 0)
@@ -258,7 +258,6 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
                 healthBar->setOrientation(Qt::Vertical);
 
                 healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
-
             }
         }
         else if (event->key() == Qt::Key_Right && boardData[x][y + 1] >= 0)
@@ -273,7 +272,7 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
 
                 healthBar->setOrientation(Qt::Horizontal);
 
-            healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
+                healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
             }
         }
         else if (event->key() == Qt::Key_Left && boardData[x][y - 1] >= 0)
@@ -288,7 +287,7 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
 
                 healthBar->setOrientation(Qt::Horizontal);
 
-            healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
+                healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
             }
         }
 
@@ -318,21 +317,27 @@ void OnlinePlayer::checkCollision()
         {
             // cast the item to a bullet
             bullet *bullet = dynamic_cast<class bullet *>(collision[i]);
-
+            if (bullet->taken == false)
+            {
+                bullet->taken = true;
                 OnlineLevel *manager = static_cast<OnlineLevel *>(currentLevel);
                 manager->remove_bullet(bullet->x, bullet->y);
                 bullets++;
                 manager->updateBullet(bullets);
+            }
         }
         else if (typeid(*(collision[i])) == typeid(pellet))
         {
             pellet *pellet = dynamic_cast<class pellet *>(collision[i]);
-
+            if (pellet->taken == false)
+            {
+                pellet->taken = true;
                 OnlineLevel *manager = static_cast<OnlineLevel *>(currentLevel);
                 manager->remove_pellet(pellet->x, pellet->y);
 
                 score++;
-            manager->updateScore(score);
+                manager->updateScore(score);
+            }
         }
     }
 }
@@ -357,7 +362,8 @@ void OnlinePlayer::shoot()
     }
 }
 
-void OnlinePlayer::hit() {
+void OnlinePlayer::hit()
+{
     health--;
     healthBar->setValue(health);
 }
