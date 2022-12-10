@@ -45,6 +45,7 @@ public:
     virtual void delete_released_bomb(int,int); // added
     virtual void create_extra_life();
     virtual void new_heart();
+    virtual void activate_mode();
 
 private:
     QTimer *timer;

@@ -22,6 +22,7 @@ private:
     QTimer *timer3; // win checker
     QMediaPlayer *player = new QMediaPlayer;
     QAudioOutput *audioOutput = new QAudioOutput;
+    int countdown;
 public slots:
 
 void restart_game();
@@ -30,6 +31,7 @@ void exit();
 public:
     QGraphicsScene *scene;
     QGraphicsRectItem **panels;
+    QGraphicsTextItem * counter;
     QGraphicsTextItem * txt;
     QGraphicsTextItem * bulletsCounter;
     QGraphicsTextItem * coinsCounter;
@@ -62,6 +64,7 @@ public:
     void open_gate();
     void close_gate();
     void delete_released_bomb(int,int);
+    void set_counter(int n);
 };
 
 #endif // GAMEMANAGER_H

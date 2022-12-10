@@ -300,11 +300,11 @@ void level3::updateModeTxt()
         }
         else if (franklin->getIsDrunk())
         {
-            manager->txt->setPlainText("Drunk Model");
+            manager->txt->setPlainText("Drunk Mode");
         }
         else
         {
-            manager->txt->setPlainText("Normal Model");
+            manager->txt->setPlainText("Normal Mode");
         }
     }
 }
@@ -429,9 +429,9 @@ void level3::enemy_hit(QGraphicsItem *enemy)
             if (enemy2 == nullptr)
             {
                 open_gate();
-                timer2->stop();
                 timer3->stop();
             }
+            timer2->stop();
             scene->removeItem(enemy1);
             enemy1 = nullptr;
             delete enemy1;
@@ -446,8 +446,8 @@ void level3::enemy_hit(QGraphicsItem *enemy)
             {
                 open_gate();
                 timer2->stop();
-                timer3->stop();
             }
+            timer3->stop();
             scene->removeItem(enemy2);
             enemy2 = nullptr;
             delete enemy2;
@@ -523,4 +523,19 @@ void level3::create_extra_life()
 void level3::new_heart()
 {
     extra_life *extra= new extra_life(boardData,1,1);
+}
+
+void level3::activate_mode()
+{
+    GameManager *manager = static_cast<GameManager *>(gameManager);
+    if(franklin->getIsPowerful())
+    {
+        manager->set_counter(30);
+        manager->activate_mode();
+    }
+    else if(franklin->getIsDrunk())
+    {
+        manager->set_counter(15);
+        manager->activate_mode();
+    }
 }

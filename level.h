@@ -32,6 +32,7 @@ public:
 virtual void  delete_released_bomb(int,int)=0; // added
     virtual void create_extra_life()=0;
     virtual void new_heart()=0;
+    virtual void activate_mode()=0;
 
 };
 
