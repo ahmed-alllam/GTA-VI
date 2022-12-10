@@ -42,7 +42,6 @@ void GameManager::launch_game()
     create_pellets();
     create_healthbar();
     qDebug()<<"launch el game tmam";
-    Win();
 }
 
 void GameManager::add_board_images()
@@ -269,21 +268,6 @@ void GameManager::remove_heart()
     currentLevel->remove_heart();
 }
 
-QGraphicsRectItem *GameManager::drawPanel(int x, int y, int width, int height, QColor color, double opacity)
-{
-    // draws a panel at the specified location with the specified properties
-
-    QGraphicsRectItem *panel = new QGraphicsRectItem(x, y, width, height);
-    QBrush brush;
-    brush.setStyle(Qt::SolidPattern);
-    brush.setColor(color);
-    panel->setBrush(brush);
-    panel->setOpacity(opacity);
-    scene->addItem(panel);
-
-    return panel;
-}
-
 void GameManager::game_over()
 {
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
@@ -293,8 +277,6 @@ void GameManager::game_over()
         scene->items()[i]->setEnabled(false);
     }
     // back ground panel and main
-    panels = new QGraphicsRectItem *[2];
-
     //    panels[0] = drawPanel(0,0,screenWidth,screenHeight,Qt::black,0.65);
     QFile gameoverUI(":/forms/gameover.ui");
     gameoverUI.open(QFile::ReadOnly);
@@ -316,7 +298,9 @@ void GameManager::game_over()
 
     QObject::connect(
         nextButton, &QPushButton::clicked, this, [=]()
-        { restart_game(); },
+        {
+//        gameover->setVisible(false);
+        restart_game(); },
         Qt::QueuedConnection);
 
     QObject::connect(quitButton, &QPushButton::clicked, [=]()
@@ -332,8 +316,6 @@ void GameManager::Win()
         scene->items()[i]->setEnabled(false);
     }
     // back ground panel and main
-    panels = new QGraphicsRectItem *[2];
-
     // using uiloader to load the gameover ui file
     QFile gameoverUI(":/forms/gameover.ui");
     gameoverUI.open(QFile::ReadOnly);
@@ -358,11 +340,13 @@ void GameManager::Win()
     if(levelNum != 3)
         nextButton->setText("Next Level");
     else
-        nextButton->setText("Player Again");
+        nextButton->setText("Play Again");
 
     QObject::connect(
         nextButton, &QPushButton::clicked, this, [=]()
-        { restart_game(); },
+        {
+//        gameover->setVisible(false);
+        restart_game(); },
         Qt::QueuedConnection);
 
     QObject::connect(quitButton, &QPushButton::clicked, [=]()

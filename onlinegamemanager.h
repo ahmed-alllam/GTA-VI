@@ -22,7 +22,6 @@ private:
     QString state;
     OnlineLevel *level;
 public:
-    QGraphicsRectItem **panels;
     QGraphicsTextItem * txt;
     QGraphicsTextItem * bulletsCounter;
     QGraphicsTextItem * coinsCounter;
@@ -30,7 +29,6 @@ public:
     OnlineGameManager(QGraphicsScene *scene, QString token, QString username);
     void create_game_id_panel();
     void join_game();
-    QGraphicsRectItem * drawPanel(int x, int y, int width, int height, QColor color, double opacity);
     void shoot(int x, int y, int direction);
     void create_healthbar();   // to create and display the pellet
     void create_new_game();

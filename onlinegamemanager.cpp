@@ -197,13 +197,14 @@ void OnlineGameManager::shoot(int x, int y, int direction)
     bulletsCounter->setPlainText(QString::number(bulletsCounter->toPlainText().toInt() - 1));
 }
 
-
-void OnlineGameManager::player_hit(int health) {
+void OnlineGameManager::player_hit(int health)
+{
     // emit the new health of the player to the socket
     socket->sendTextMessage(QString("{\"type\":\"playerHit\",\"game\":{\"gameId\":\"%1\"},\"playerId\":\"%2\"}").arg(game_id).arg(username));
 }
 
-void OnlineGameManager::remove_heart(int health) {
+void OnlineGameManager::remove_heart(int health)
+{
     if (health >= 0)
     {
         scene->removeItem(&(hearts[health]));
@@ -211,13 +212,13 @@ void OnlineGameManager::remove_heart(int health) {
 
     if (health == 0)
     {
-//       game_over();
+        //       game_over();
     }
 }
 
 void OnlineGameManager::game_over()
 {
-    if(state != "gameStarted")
+    if (state != "gameStarted")
         return;
 
     qDebug() << "Game Over";
@@ -230,21 +231,29 @@ void OnlineGameManager::game_over()
         scene->items()[i]->setEnabled(false);
     }
 
-    drawPanel(screenWidth / 3 - 20, screenHeight / 3 - 20, 400, 400, Qt::lightGray, 1);
+    QFile gameoverUI(":/forms/gameover.ui");
+    gameoverUI.open(QFile::ReadOnly);
+    QUiLoader loader;
+    QWidget *gameover = loader.load(&gameoverUI);
+    gameoverUI.close();
+    // add gameover to the middle of the screen
+    gameover->setStyleSheet("QWidget {border: 5px solid white; border-radius: 10px; background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.09589655 rgba(80, 150, 1, 255), stop:1 rgba(51, 95, 63, 255));}");
 
-    /* Gmae Over Text*/
-    QGraphicsTextItem *overText = new QGraphicsTextItem("Game Over");
-    QFont fonty("Arial", 20, QFont::StyleNormal);
-    overText->setPos(screenWidth / 3 + 100, screenHeight / 3 + 80);
-    overText->setFont(fonty);
-    scene->addItem(overText);
+    gameover->setGeometry(screenWidth / 2 - gameover->width() / 2, screenHeight / 2 - gameover->height() / 2, gameover->width(), gameover->height());
 
-    QPushButton *quit;
-    quit = new QPushButton("Restart again");
-    quit->setGeometry(screenWidth / 3 + 100, screenHeight / 3 + 250, 100, 50);
-    scene->addWidget(quit);
+    scene->addWidget(gameover);
 
-    QObject::connect(quit, &QPushButton::clicked, [=]()
+    QPushButton *nextButton = gameover->findChild<QPushButton *>("next");
+    nextButton->setVisible(false);
+    QPushButton *quitButton = gameover->findChild<QPushButton *>("quit");
+    // put quit button in the middle of the gameover
+    quitButton->setGeometry(gameover->width() / 2 - quitButton->width() / 2, gameover->height() - quitButton->height() - 80, quitButton->width(), quitButton->height());
+
+    QLabel *label = gameover->findChild<QLabel *>("text");
+
+    label->setText("You Lose!");
+
+    QObject::connect(quitButton, &QPushButton::clicked, [=]()
                      { exit(); });
 }
 
@@ -302,8 +311,8 @@ void OnlineGameManager::onDisconnected()
 {
     qDebug() << "Disconnected";
 
-    if(state == "gameOver" || state == "gameWon")
-          return;
+    if (state == "gameOver" || state == "gameWon")
+        return;
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
@@ -312,21 +321,27 @@ void OnlineGameManager::onDisconnected()
         scene->items()[i]->setEnabled(false);
     }
 
-    drawPanel(screenWidth / 3 - 20, screenHeight / 3 - 20, 400, 400, Qt::lightGray, 1);
+    QFile gameoverUI(":/forms/gameover.ui");
+    gameoverUI.open(QFile::ReadOnly);
+    QUiLoader loader;
+    QWidget *gameover = loader.load(&gameoverUI);
+    gameoverUI.close();
+    // add gameover to the middle of the screen
+    gameover->setStyleSheet("QWidget {border: 5px solid white; border-radius: 10px; background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.09589655 rgba(80, 150, 1, 255), stop:1 rgba(51, 95, 63, 255));}");
 
-    /* Gmae Over Text*/
-    QGraphicsTextItem *overText = new QGraphicsTextItem("Disconnected");
-    QFont fonty("Arial", 20, QFont::StyleNormal);
-    overText->setPos(screenWidth / 3 + 100, screenHeight / 3 + 80);
-    overText->setFont(fonty);
-    scene->addItem(overText);
+    gameover->setGeometry(screenWidth / 2 - gameover->width() / 2, screenHeight / 2 - gameover->height() / 2, gameover->width(), gameover->height());
 
-    QPushButton *quit;
-    quit = new QPushButton("Quit");
-    quit->setGeometry(screenWidth / 3 + 100, screenHeight / 3 + 250, 100, 50);
-    scene->addWidget(quit);
+    scene->addWidget(gameover);
 
-    QObject::connect(quit, &QPushButton::clicked, [=]()
+    QPushButton *nextButton = gameover->findChild<QPushButton *>("next");
+    nextButton->setVisible(false);
+    QPushButton *quitButton = gameover->findChild<QPushButton *>("quit");
+    quitButton->setGeometry(gameover->width() / 2 - quitButton->width() / 2, gameover->height() - quitButton->height() - 80, quitButton->width(), quitButton->height());
+    QLabel *label = gameover->findChild<QLabel *>("text");
+
+    label->setText("Game Disconnected");
+
+    QObject::connect(quitButton, &QPushButton::clicked, [=]()
                      { exit(); });
 }
 
@@ -339,23 +354,9 @@ void OnlineGameManager::exit()
     // todo
 }
 
-QGraphicsRectItem *OnlineGameManager::drawPanel(int x, int y, int width, int height, QColor color, double opacity)
+void OnlineGameManager::gameWon()
 {
-    // draws a panel at the specified location with the specified properties
-
-    QGraphicsRectItem *panel = new QGraphicsRectItem(x, y, width, height);
-    QBrush brush;
-    brush.setStyle(Qt::SolidPattern);
-    brush.setColor(color);
-    panel->setBrush(brush);
-    panel->setOpacity(opacity);
-    scene->addItem(panel);
-
-    return panel;
-}
-
-void OnlineGameManager::gameWon() {
-    if(state != "gameStarted")
+    if (state != "gameStarted")
         return;
 
     state = "gameWon";
@@ -367,36 +368,46 @@ void OnlineGameManager::gameWon() {
         scene->items()[i]->setEnabled(false);
     }
 
-    drawPanel(screenWidth / 3 - 20, screenHeight / 3 - 20, 400, 400, Qt::lightGray, 1);
+    QFile gameoverUI(":/forms/gameover.ui");
+    gameoverUI.open(QFile::ReadOnly);
+    QUiLoader loader;
+    QWidget *gameover = loader.load(&gameoverUI);
+    gameoverUI.close();
+    // add gameover to the middle of the screen
+    gameover->setStyleSheet("QWidget {border: 5px solid white; border-radius: 10px; background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.09589655 rgba(80, 150, 1, 255), stop:1 rgba(51, 95, 63, 255));}");
 
-    /* Gmae Over Text*/
-    QGraphicsTextItem *overText = new QGraphicsTextItem("You Won!");
-    QFont fonty("Arial", 20, QFont::StyleNormal);
-    overText->setPos(screenWidth / 3 + 100, screenHeight / 3 + 80);
-    overText->setFont(fonty);
-    scene->addItem(overText);
+    gameover->setGeometry(screenWidth / 2 - gameover->width() / 2, screenHeight / 2 - gameover->height() / 2, gameover->width(), gameover->height());
 
-    QPushButton *quit;
-    quit = new QPushButton("Play again");
-    quit->setGeometry(screenWidth / 3 + 100, screenHeight / 3 + 250, 100, 50);
-    scene->addWidget(quit);
+    scene->addWidget(gameover);
 
-    QObject::connect(quit, &QPushButton::clicked, [=]()
+    QPushButton *nextButton = gameover->findChild<QPushButton *>("next");
+    nextButton->setVisible(false);
+    QPushButton *quitButton = gameover->findChild<QPushButton *>("quit");
+    // put the quit button in the middle of gameover   
+    quitButton->setGeometry(gameover->width() / 2 - quitButton->width() / 2, gameover->height() - quitButton->height() - 80, quitButton->width(), quitButton->height());
+    QLabel *label = gameover->findChild<QLabel *>("text");
+
+    label->setText("You Win!");
+
+    QObject::connect(quitButton, &QPushButton::clicked, [=]()
                      { exit(); });
 
     // make all player in level have 0 health
     for (size_t i = 0, n = level->players.size(); i < n; i++)
     {
-        if(level->players[i]->id != username) {
-        level->players[i]->health = 0;
-        level->players[i]->healthBar->setValue(0);
+        if (level->players[i]->id != username)
+        {
+            level->players[i]->health = 0;
+            level->players[i]->healthBar->setValue(0);
         }
     }
 }
 
-void OnlineGameManager::playerDied(QString id) {
+void OnlineGameManager::playerDied(QString id)
+{
     // remove the player with the same id from the level
-    if(id == username) {
+    if (id == username)
+    {
         game_over();
     }
 
@@ -438,14 +449,19 @@ void OnlineGameManager::onTextMessageReceived(QString message)
     else if (type == "shoot")
     {
         emit shoot_another_bullet(json["x"].toInt(), json["y"].toInt(), json["direction"].toInt());
-    } else if (type == "playerDied") {
+    }
+    else if (type == "playerDied")
+    {
         emit playerDied(json["player"].toString());
-    } else if(type == "gameWon") {
+    }
+    else if (type == "gameWon")
+    {
         emit gameWon();
     }
-    else if(type == "gameLost") {
-           emit game_over();
-       }
+    else if (type == "gameLost")
+    {
+        emit game_over();
+    }
     else if (type == "error")
     {
         qDebug() << "Error";
@@ -463,7 +479,7 @@ void OnlineGameManager::create_sound()
     player->setAudioOutput(audioOutput);
     player->setLoops(QMediaPlayer::Infinite);
     player->setSource(QUrl("qrc:/assets/sounds/backsound.mp3"));
-        player->play();
+    player->play();
 }
 
 void OnlineGameManager::create_healthbar()
@@ -481,7 +497,7 @@ void OnlineGameManager::create_healthbar()
     scene->addItem(panel);
 
     txt = new QGraphicsTextItem("NORMAL MODE");
-     QFont fonty("Arial", 20, QFont::StyleNormal);
+    QFont fonty("Arial", 20, QFont::StyleNormal);
     // txt->setPos(540, 20);
     // txt->setFont(fonty);
     // txt->setDefaultTextColor(Qt::white);
