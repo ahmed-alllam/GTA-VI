@@ -128,7 +128,9 @@ void car::move()
               return;
             }
     else
-            bossPath = getPath();
+    {
+        bossPath = getPath();
+    }
 }
 
 void car::checkCollision()

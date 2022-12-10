@@ -128,7 +128,9 @@ void dog::move()
               return;
             }
     else
-            bossPath = getPath();
+    {
+        bossPath = getPath();
+    }
 }
 
 void dog::checkCollision()

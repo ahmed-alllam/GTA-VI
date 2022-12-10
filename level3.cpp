@@ -347,6 +347,7 @@ void level3::remove_heart()
 
         manager->game_over();
         timer2->stop();
+        timer3->stop();
     }
 }
 
@@ -355,9 +356,7 @@ void level3::restart_game()
 
     QList<QGraphicsItem *> items = scene->items();
 
-    timer2->stop();
-    timer3->stop();
-
+    franklin = nullptr;
     enemy2 = nullptr;
     enemy1 = nullptr;
 
