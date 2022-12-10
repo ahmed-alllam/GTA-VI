@@ -59,13 +59,15 @@ void MainWindow::on_Buy_bomb_clicked()
 
 void MainWindow::on_Buy_powerfulbullet_clicked()
 {
+           qDebug()<<powerful_bullet::is_available();
     powerful_bullet::make_available();
+    qDebug()<<powerful_bullet::is_available();
 }
 
 
 void MainWindow::on_Buy_health_clicked()
-{       qDebug()<<extra_life::is_available();
+{
      extra_life::make_available();
-        qDebug()<<extra_life::is_available();
+
 }
 
