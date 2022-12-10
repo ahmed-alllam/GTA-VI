@@ -6,15 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1015</width>
-    <height>600</height>
+    <width>844</width>
+    <height>582</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:rgb(74, 74, 74);
+   <string notr="true">background-color:#191A19;
+background-color:rgb(48, 48, 48);
 QPushButton{
 color:blue;
 }
@@ -27,8 +28,8 @@ QTabBar::tab {
    <widget class="QPushButton" name="ExitButton">
     <property name="geometry">
      <rect>
-      <x>810</x>
-      <y>0</y>
+      <x>740</x>
+      <y>30</y>
       <width>65</width>
       <height>65</height>
      </rect>
@@ -46,8 +47,8 @@ border:none;</string>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>80</y>
+      <x>40</x>
+      <y>50</y>
       <width>51</width>
       <height>62</height>
      </rect>
@@ -57,8 +58,9 @@ border:none;</string>
 background:none;
 border:none;
  font-family: Arial;
-  font-size: 20px;
-  font-weight: Bold;</string>
+  font-size: 22px;
+  font-weight: Bold;
+color:rgb(209, 144, 40);</string>
     </property>
     <property name="text">
      <string>200</string>
@@ -71,7 +73,7 @@ border:none;
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>80</y>
+      <y>50</y>
       <width>611</width>
       <height>461</height>
      </rect>
@@ -89,10 +91,13 @@ border:none;
      </size>
     </property>
     <property name="styleSheet">
-     <string notr="true">QTabBar::tab {
+     <string notr="true">
+QTabBar::tab {
     margin-left:70px;
 	margin-right:10px;
-	font: 17pt &quot;Segoe Print&quot;;
+	font: 18pt &quot;Segoe Print&quot;;
+  font-weight: Bold;
+
 color:black;
 background-color: rgb(227, 227, 227);
 
@@ -112,13 +117,13 @@ QTabBar::tab:selected, QTabBar::tab:hover {
     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                 stop: 0 #fafafa, stop: 0.4 #f4f4f4,
                                 stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);
-color:red;
+color:rgb(209, 144, 40);
 }
 
 QTabBar::tab:selected {
     border-color: #9B9B9B;
     border-bottom-color: #C2C7CB; /* same as pane color */
-	background-color: rgb(180, 156, 37);
+background-color: rgb(42, 116, 53);
 }
 
 QTabBar::tab:!selected {
@@ -130,7 +135,7 @@ QTabBar::tab:!selected {
      <enum>QTabWidget::North</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="iconSize">
      <size>
@@ -158,7 +163,8 @@ QTabBar::tab:!selected {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color:rgb(220, 220, 220);</string>
+       <string notr="true">background-color:rgb(220, 220, 220);
+background-color: rgb(42, 116, 53);</string>
       </property>
      </widget>
      <widget class="QLabel" name="bomb_price_label">
@@ -223,11 +229,62 @@ border:none;</string>
        </font>
       </property>
       <property name="mouseTracking">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(223, 74, 112);
-</string>
+       <string notr="true">
+ QPushButton#Buy_bomb {
+border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #white;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #FFFFFF;
+background-color: #1e1d23;
+ }
+
+ 
+QPushButton#Buy_bomb:hover{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #37efba;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #FFFFFF;
+	padding-bottom: 2px;
+	background-color: #1e1d23;
+}
+QPushButton#Buy_bomb:pressed{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #37efba;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #37efba;
+	padding-bottom: 2px;
+    margin-top: 4px;     
+	background-color: #1e1d23;
+	background-color: rgb(126, 126, 126);
+}
+QPushButton#Buy_bomb:disabled{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #808086;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #808086;
+	padding-bottom: 1px;
+	background-color: #1e1d23;
+
+}</string>
       </property>
       <property name="text">
        <string>BUY</string>
@@ -243,7 +300,8 @@ border:none;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color:rgb(220, 220, 220);</string>
+       <string notr="true">background-color:rgb(220, 220, 220);
+background-color: rgb(42, 116, 53);</string>
       </property>
      </widget>
      <widget class="QPushButton" name="Buy_powerfulbullet">
@@ -264,11 +322,62 @@ border:none;</string>
        </font>
       </property>
       <property name="mouseTracking">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(223, 74, 112);
-</string>
+       <string notr="true">
+ QPushButton#Buy_powerfulbullet {
+border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #white;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #FFFFFF;
+background-color: #1e1d23;
+ }
+
+ 
+QPushButton#Buy_powerfulbullet:hover{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #37efba;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #FFFFFF;
+	padding-bottom: 2px;
+	background-color: #1e1d23;
+}
+QPushButton#Buy_powerfulbullet:pressed{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #37efba;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #37efba;
+	padding-bottom: 2px;
+    margin-top: 4px;     
+	background-color: #1e1d23;
+	background-color: rgb(126, 126, 126);
+}
+QPushButton#Buy_powerfulbullet:disabled{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #808086;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #808086;
+	padding-bottom: 1px;
+	background-color: #1e1d23;
+
+}</string>
       </property>
       <property name="text">
        <string>BUY</string>
@@ -330,7 +439,8 @@ border:none;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color:rgb(220, 220, 220);</string>
+       <string notr="true">background-color:rgb(220, 220, 220);
+background-color: rgb(42, 116, 53);</string>
       </property>
      </widget>
      <widget class="QPushButton" name="Buy_health">
@@ -351,11 +461,62 @@ border:none;</string>
        </font>
       </property>
       <property name="mouseTracking">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(223, 74, 112);
-</string>
+       <string notr="true">
+ QPushButton#Buy_health {
+border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #white;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #FFFFFF;
+background-color: #1e1d23;
+ }
+
+ 
+QPushButton#Buy_health:hover{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #37efba;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #FFFFFF;
+	padding-bottom: 2px;
+	background-color: #1e1d23;
+}
+QPushButton#Buy_health:pressed{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #37efba;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #37efba;
+	padding-bottom: 2px;
+    margin-top: 4px;     
+	background-color: #1e1d23;
+	background-color: rgb(126, 126, 126);
+}
+QPushButton#Buy_health:disabled{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #808086;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #808086;
+	padding-bottom: 1px;
+	background-color: #1e1d23;
+
+}</string>
       </property>
       <property name="text">
        <string>BUY</string>
@@ -412,7 +573,8 @@ color:rgb(209, 144, 40);</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color:rgb(220, 220, 220);</string>
+       <string notr="true">background-color:rgb(220, 220, 220);
+background-color: rgb(42, 116, 53);</string>
       </property>
      </widget>
      <widget class="QLabel" name="health_price_2">
@@ -474,11 +636,62 @@ border:none;</string>
        </font>
       </property>
       <property name="mouseTracking">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(223, 74, 112);
-</string>
+       <string notr="true">
+ QPushButton#Buy_health_2 {
+border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #white;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #FFFFFF;
+background-color: #1e1d23;
+ }
+
+ 
+QPushButton#Buy_health_2:hover{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #37efba;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #FFFFFF;
+	padding-bottom: 2px;
+	background-color: #1e1d23;
+}
+QPushButton#Buy_health_2:pressed{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #37efba;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #37efba;
+	padding-bottom: 2px;
+    margin-top: 4px;     
+	background-color: #1e1d23;
+	background-color: rgb(126, 126, 126);
+}
+QPushButton#Buy_health_2:disabled{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #808086;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #808086;
+	padding-bottom: 1px;
+	background-color: #1e1d23;
+
+}</string>
       </property>
       <property name="text">
        <string>BUY</string>
@@ -499,7 +712,8 @@ border:none;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color:rgb(220, 220, 220);</string>
+       <string notr="true">background-color:rgb(220, 220, 220);
+background-color: rgb(42, 116, 53);</string>
       </property>
      </widget>
      <widget class="QPushButton" name="Buy_bomb_3">
@@ -520,11 +734,62 @@ border:none;</string>
        </font>
       </property>
       <property name="mouseTracking">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(223, 74, 112);
-</string>
+       <string notr="true">
+ QPushButton#Buy_bomb_3 {
+border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #white;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #FFFFFF;
+background-color: #1e1d23;
+ }
+
+ 
+QPushButton#Buy_bomb_3:hover{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #37efba;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #FFFFFF;
+	padding-bottom: 2px;
+	background-color: #1e1d23;
+}
+QPushButton#Buy_bomb_3:pressed{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #37efba;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #37efba;
+	padding-bottom: 2px;
+    margin-top: 4px;     
+	background-color: #1e1d23;
+	background-color: rgb(126, 126, 126);
+}
+QPushButton#Buy_bomb_3:disabled{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #808086;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #808086;
+	padding-bottom: 1px;
+	background-color: #1e1d23;
+
+}</string>
       </property>
       <property name="text">
        <string>BUY</string>
@@ -573,31 +838,11 @@ border:none;</string>
      </widget>
     </widget>
    </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>0</y>
-      <width>121</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color:transparent;
-background:none;
-border:none;
-font: 700 24pt &quot;Rockwell Condensed&quot;;
-collor:qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0, stop:0.322115 rgba(153, 33, 0, 246), stop:1 rgba(255, 255, 255, 255));</string>
-    </property>
-    <property name="text">
-     <string>SHOP</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="coins_image">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>90</y>
+      <x>80</x>
+      <y>60</y>
       <width>51</width>
       <height>41</height>
      </rect>
@@ -614,7 +859,6 @@ border:none;</string>
    </widget>
    <zorder>ExitButton</zorder>
    <zorder>tabWidget</zorder>
-   <zorder>label_2</zorder>
    <zorder>label</zorder>
    <zorder>coins_image</zorder>
   </widget>
@@ -623,7 +867,7 @@ border:none;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1015</width>
+     <width>844</width>
      <height>32</height>
     </rect>
    </property>

@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    
+    this->setWindowFlags(Qt::FramelessWindowHint);
     ui->setupUi(this);
    ui->label->setText("300");
 
