@@ -326,6 +326,8 @@ void level3::updateCounters()
 
     if (manager->bulletsCounter != nullptr)
         manager->bulletsCounter->setPlainText(QString::number(franklin->getBulletsCount()));
+    if (manager->bombsCounter != nullptr)
+        manager->bombsCounter->setPlainText(QString::number(franklin->getBombsCount()));
     if (manager->coinsCounter != nullptr)
         manager->coinsCounter->setPlainText(QString::number(franklin->getCoinsCount()));
 }
@@ -350,6 +352,7 @@ void level3::remove_heart()
 
 void level3::restart_game()
 {
+
     QList<QGraphicsItem *> items = scene->items();
 
     franklin = nullptr;
@@ -358,13 +361,15 @@ void level3::restart_game()
     // remove bullets
     bullets.clear();
     powerful_bullets.clear();
+    //remove bombs
+    bombs.clear();
     // remove pellets
     pellets.clear();
     drunk = nullptr;
 
     for (int i = 0; i < items.size(); i++)
     {
-        if (typeid(*items[i]) == typeid(QGraphicsProxyWidget) || typeid(*items[i]) == typeid(QGraphicsTextItem) || typeid(*items[i]) == typeid(QPushButton) || typeid(*items[i]) == typeid(QGraphicsRectItem) || typeid(*items[i]) == typeid(bullet) || typeid(*items[i]) == typeid(class Franklin) || typeid(*items[i]) == typeid(car) || typeid(*items[i]) == typeid(dog) || typeid(*items[i]) == typeid(class Drunk) || typeid(*items[i]) == typeid(class pellet) || typeid(*items[i]) == typeid(class FlyingBullet))
+        if (typeid(*items[i]) == typeid(QGraphicsProxyWidget) || typeid(*items[i]) == typeid(QGraphicsTextItem) || typeid(*items[i]) == typeid(QPushButton) || typeid(*items[i]) == typeid(QGraphicsRectItem) || typeid(*items[i]) == typeid(bullet) || typeid(*items[i]) == typeid(powerful_bullet)|| typeid(*items[i]) == typeid(bomb)|| typeid(*items[i]) == typeid(extra_life) || typeid(*items[i]) == typeid(class Franklin) || typeid(*items[i]) == typeid(class Drunk) || typeid(*items[i]) == typeid(class pellet) || typeid(*items[i]) == typeid(class FlyingBullet) || typeid(*items[i]) == typeid(class dog))
         {
             scene->removeItem(items[i]);
             delete items[i];
@@ -384,7 +389,7 @@ void level3::restart_game()
 
         delete[] boardItems[i];
         boardItems[i] = nullptr;
-    }
+     }
 
     timer->stop();
     timer2->stop();
