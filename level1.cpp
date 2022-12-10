@@ -411,7 +411,10 @@ void level1::remove_heart()
     if (health == 0)
     {
         manager->game_over();
+
         timer2->stop();
+        timer3->stop();
+
     }
 }
 
@@ -420,10 +423,6 @@ void level1::restart_game()
     QList<QGraphicsItem *> items = scene->items();
 
     franklin = nullptr;
-
-    timer2->stop();
-    timer3->stop();
-
     enemy2 = nullptr;
     enemy1 = nullptr;
 
@@ -466,7 +465,7 @@ void level1::player_hit()
 {
     if (enemy1 != nullptr)
     {
-        enemy1->setXandY(10, 14);
+        enemy1->setXandY(10, 12);
         enemy1->getPath();
     }
     else
@@ -475,7 +474,7 @@ void level1::player_hit()
     }
     if (enemy2 != nullptr)
     {
-        enemy2->setXandY(1, 1);
+        enemy2->setXandY(2, 1);
         enemy2->getPath();
     }
     else

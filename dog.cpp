@@ -30,7 +30,7 @@ unitHeight(h)
 
     setPixmap(enemy4LImage);
     health = 4;
-    x = 1;
+    x = 2;
     y = 1;
     direction = 0;
 
@@ -128,7 +128,9 @@ void dog::move()
               return;
             }
     else
-            bossPath = getPath();
+    {
+        bossPath = getPath();
+    }
 }
 
 void dog::checkCollision()
