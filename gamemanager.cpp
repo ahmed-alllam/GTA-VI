@@ -14,6 +14,7 @@
 #include <QPushButton>
 #include <QProgressBar>
 #include <QMessageBox>
+#include <QUiLoader>
 #include <QGraphicsRectItem>
 #include <QGraphicsProxyWidget>
 #include <qprocess.h>
@@ -194,6 +195,8 @@ void GameManager::create_healthbar()
 
     }
 
+    bombsCounter= new QGraphicsTextItem("0");
+
 
     /*Drunk and label part */
 
@@ -299,21 +302,6 @@ void GameManager::remove_heart()
     currentLevel->remove_heart();
 }
 
-QGraphicsRectItem *GameManager::drawPanel(int x, int y, int width, int height, QColor color, double opacity)
-{
-    // draws a panel at the specified location with the specified properties
-
-    QGraphicsRectItem *panel = new QGraphicsRectItem(x, y, width, height);
-    QBrush brush;
-    brush.setStyle(Qt::SolidPattern);
-    brush.setColor(color);
-    panel->setBrush(brush);
-    panel->setOpacity(opacity);
-    scene->addItem(panel);
-
-    return panel;
-}
-
 void GameManager::game_over()
 {
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
@@ -323,35 +311,33 @@ void GameManager::game_over()
         scene->items()[i]->setEnabled(false);
     }
     // back ground panel and main
-    panels = new QGraphicsRectItem *[2];
-
     //    panels[0] = drawPanel(0,0,screenWidth,screenHeight,Qt::black,0.65);
-    panels[1] = drawPanel(screenWidth / 3 - 20, screenHeight / 3 - 20, 400, 400, Qt::lightGray, 1);
+    QFile gameoverUI(":/forms/gameover.ui");
+    gameoverUI.open(QFile::ReadOnly);
+    QUiLoader loader;
+    QWidget *gameover = loader.load(&gameoverUI);
+    gameoverUI.close();
+    gameover->setGeometry(screenWidth / 2 - gameover->width() / 2, screenHeight / 2 - gameover->height() / 2, gameover->width(), gameover->height());
+    gameover->setStyleSheet("QWidget {border: 5px solid white; border-radius: 10px; background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.09589655 rgba(80, 150, 1, 255), stop:1 rgba(51, 95, 63, 255));}");
+    scene->addWidget(gameover);
 
-    /* Gmae Over Text*/
-    QGraphicsTextItem *overText = new QGraphicsTextItem("GAME OVER");
-    QFont fonty("Arial", 20, QFont::StyleNormal);
-    overText->setPos(screenWidth / 3 + 100, screenHeight / 3 + 80);
-    overText->setFont(fonty);
-    scene->addItem(overText);
+    QPushButton *nextButton = gameover->findChild<QPushButton *>("next");
+    QPushButton *quitButton = gameover->findChild<QPushButton *>("quit");
+    QLabel *label = gameover->findChild<QLabel *>("text");
+
+    label->setText("Game Over!");
+    nextButton->setText("Play Again");
 
     win = false;
-    QPushButton *p = new QPushButton;
-    p->setText("PLAY AGAIN");
-    p->setGeometry(screenWidth / 3 + 40, screenHeight / 3 + 250, 100, 50);
-    scene->addWidget(p);
 
     QObject::connect(
-        p, &QPushButton::clicked, this, [=]()
-        { restart_game(); },
+        nextButton, &QPushButton::clicked, this, [=]()
+        {
+//        gameover->setVisible(false);
+        restart_game(); },
         Qt::QueuedConnection);
 
-    QPushButton *quit;
-    quit = new QPushButton("Quit");
-    quit->setGeometry(screenWidth / 3 + 230, screenHeight / 3 + 250, 100, 50);
-    scene->addWidget(quit);
-
-    QObject::connect(quit, &QPushButton::clicked, [=]()
+    QObject::connect(quitButton, &QPushButton::clicked, [=]()
                      { exit(); });
 }
 
@@ -364,41 +350,40 @@ void GameManager::Win()
         scene->items()[i]->setEnabled(false);
     }
     // back ground panel and main
-    panels = new QGraphicsRectItem *[2];
+    // using uiloader to load the gameover ui file
+    QFile gameoverUI(":/forms/gameover.ui");
+    gameoverUI.open(QFile::ReadOnly);
+    QUiLoader loader;
+    QWidget *gameover = loader.load(&gameoverUI);
+    gameoverUI.close();
+    // add gameover to the middle of the screen
+    gameover->setStyleSheet("QWidget {border: 5px solid white; border-radius: 10px; background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.09589655 rgba(80, 150, 1, 255), stop:1 rgba(51, 95, 63, 255));}");
 
-    //    panels[0] = drawPanel(0,0,screenWidth,screenHeight,Qt::black,0.65);
-    panels[1] = drawPanel(screenWidth / 3 - 20, screenHeight / 3 - 20, 400, 400, Qt::lightGray, 1);
+    gameover->setGeometry(screenWidth / 2 - gameover->width() / 2, screenHeight / 2 - gameover->height() / 2, gameover->width(), gameover->height());
 
-    /* Gmae Over Text*/
-    QGraphicsTextItem *overText = new QGraphicsTextItem("You WON!!!!!!");
-    QFont fonty("Arial", 20, QFont::StyleNormal);
-    overText->setPos(screenWidth / 3 + 100, screenHeight / 3 + 80);
-    overText->setFont(fonty);
-    scene->addItem(overText);
+    scene->addWidget(gameover);
+
+    QPushButton *nextButton = gameover->findChild<QPushButton *>("next");
+    QPushButton *quitButton = gameover->findChild<QPushButton *>("quit");
+    QLabel *label = gameover->findChild<QLabel *>("text");
+
+    label->setText("You Won!");
 
     win = true;
 
-    QPushButton *p = new QPushButton;
     if(levelNum != 3)
-        p->setText("NEXT LEVEL");
+        nextButton->setText("Next Level");
     else
-        p->setText("PLAY AGAIN");
-    p->setGeometry(screenWidth / 3 + 40, screenHeight / 3 + 250, 100, 50);
-    // update the level
-    // level =
-    scene->addWidget(p);
+        nextButton->setText("Play Again");
 
     QObject::connect(
-        p, &QPushButton::clicked, this, [=]()
-        { restart_game(); },
+        nextButton, &QPushButton::clicked, this, [=]()
+        {
+//        gameover->setVisible(false);
+        restart_game(); },
         Qt::QueuedConnection);
 
-    QPushButton *quit;
-    quit = new QPushButton("Quit");
-    quit->setGeometry(screenWidth / 3 + 230, screenHeight / 3 + 250, 100, 50);
-    scene->addWidget(quit);
-
-    QObject::connect(quit, &QPushButton::clicked, [=]()
+    QObject::connect(quitButton, &QPushButton::clicked, [=]()
                      { exit(); });
 
 }

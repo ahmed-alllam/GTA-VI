@@ -1,5 +1,5 @@
-#include "level2.h"
 #include "gamemanager.h"
+#include "level2.h"
 #include "flyingbullet.h"
 #include <QGuiApplication>
 #include <QFile>
@@ -336,6 +336,8 @@ void level2::updateCounters()
 
     if (manager->bulletsCounter != nullptr)
         manager->bulletsCounter->setPlainText(QString::number(franklin->getBulletsCount()));
+    if (manager->bombsCounter != nullptr)
+        manager->bombsCounter->setPlainText(QString::number(franklin->getBombsCount()));
     if (manager->coinsCounter != nullptr)
         manager->coinsCounter->setPlainText(QString::number(franklin->getCoinsCount()));
 }
@@ -360,6 +362,7 @@ void level2::remove_heart()
 
 void level2::restart_game()
 {
+
     QList<QGraphicsItem *> items = scene->items();
 
     franklin = nullptr;
@@ -367,14 +370,16 @@ void level2::restart_game()
 
     // remove bullets
     bullets.clear();
-powerful_bullets.clear();
+    powerful_bullets.clear();
+    //remove bombs
+    bombs.clear();
     // remove pellets
     pellets.clear();
     drunk = nullptr;
 
     for (int i = 0; i < items.size(); i++)
     {
-        if (typeid(*items[i]) == typeid(QGraphicsProxyWidget) || typeid(*items[i]) == typeid(QGraphicsTextItem) || typeid(*items[i]) == typeid(QPushButton) || typeid(*items[i]) == typeid(QGraphicsRectItem) || typeid(*items[i]) == typeid(bullet) || typeid(*items[i]) == typeid(class Franklin) || typeid(*items[i]) == typeid(car) || typeid(*items[i]) == typeid(class Drunk) || typeid(*items[i]) == typeid(class pellet) || typeid(*items[i]) == typeid(class FlyingBullet))
+        if (typeid(*items[i]) == typeid(QGraphicsProxyWidget) || typeid(*items[i]) == typeid(QGraphicsTextItem) || typeid(*items[i]) == typeid(QPushButton) || typeid(*items[i]) == typeid(QGraphicsRectItem) || typeid(*items[i]) == typeid(bullet) || typeid(*items[i]) == typeid(powerful_bullet)|| typeid(*items[i]) == typeid(bomb)|| typeid(*items[i]) == typeid(extra_life) || typeid(*items[i]) == typeid(class Franklin) || typeid(*items[i]) == typeid(class Drunk) || typeid(*items[i]) == typeid(class pellet) || typeid(*items[i]) == typeid(class FlyingBullet))
         {
             scene->removeItem(items[i]);
             delete items[i];
@@ -394,7 +399,7 @@ powerful_bullets.clear();
 
         delete[] boardItems[i];
         boardItems[i] = nullptr;
-    }
+     }
 
 }
 
@@ -480,21 +485,21 @@ void level2::delete_released_bomb(int x, int y)
 {
 franklin->delete_released_bomb(x,y);
 }
+
 void level2::create_extra_life()
 {
     GameManager *manager = static_cast<GameManager *>(gameManager);
-    int health = franklin->getHealth();
-
+    int health = franklin->getHealth()-1;
     if (health >= 0)
     {
         scene->addItem(&(manager->hearts[health]));
     }
-
 }
 
 void level2::new_heart()
 {
-    extra_life *extra= new extra_life(boardData,1,1);
+    extra_life *extra= new extra_life(boardData,6,1);
+    scene->addItem(extra);
 }
 
 void level2::activate_mode()

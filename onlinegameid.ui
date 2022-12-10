@@ -6,21 +6,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1095</width>
-    <height>762</height>
+    <width>1080</width>
+    <height>900</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Frame</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: white</string>
+   <string notr="true">QFrame {
+background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.09589655 rgba(80, 150, 1, 255), stop:1 rgba(51, 95, 63, 255))
+}
+QLineEdit {
+ border-radius: 10px;
+}
+</string>
   </property>
   <widget class="QPushButton" name="createNew">
    <property name="geometry">
     <rect>
-     <x>450</x>
-     <y>360</y>
+     <x>440</x>
+     <y>480</y>
      <width>201</width>
      <height>71</height>
     </rect>
@@ -30,6 +36,12 @@
      <pointsize>17</pointsize>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">
+color:green;background-color:white;
+border-radius: 20px;
+</string>
+   </property>
    <property name="text">
     <string>Create New Game</string>
    </property>
@@ -37,8 +49,8 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>420</x>
-     <y>140</y>
+     <x>410</x>
+     <y>250</y>
      <width>261</width>
      <height>51</height>
     </rect>
@@ -51,8 +63,12 @@
    <property name="layoutDirection">
     <enum>Qt::LeftToRight</enum>
    </property>
+   <property name="styleSheet">
+    <string notr="true">color:white;background-color: transparent
+</string>
+   </property>
    <property name="text">
-    <string>Enter the Game ID</string>
+    <string>Enter Game ID</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -61,8 +77,8 @@
   <widget class="QLineEdit" name="lineEdit">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>230</y>
+     <x>330</x>
+     <y>350</y>
      <width>161</width>
      <height>31</height>
     </rect>
@@ -71,8 +87,8 @@
   <widget class="QPushButton" name="join">
    <property name="geometry">
     <rect>
-     <x>610</x>
-     <y>230</y>
+     <x>600</x>
+     <y>340</y>
      <width>131</width>
      <height>41</height>
     </rect>
@@ -82,6 +98,12 @@
      <pointsize>17</pointsize>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">
+color:green;background-color:white;
+border-radius: 20px;
+</string>
+   </property>
    <property name="text">
     <string>Join</string>
    </property>
@@ -89,8 +111,8 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>540</x>
-     <y>300</y>
+     <x>510</x>
+     <y>420</y>
      <width>58</width>
      <height>16</height>
     </rect>
@@ -100,15 +122,22 @@
      <pointsize>20</pointsize>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">color:white;background-color: transparent
+</string>
+   </property>
    <property name="text">
     <string>Or</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
   <widget class="QLabel" name="errorLabel">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>470</y>
+     <x>250</x>
+     <y>590</y>
      <width>581</width>
      <height>51</height>
     </rect>
@@ -121,8 +150,36 @@
    <property name="layoutDirection">
     <enum>Qt::LeftToRight</enum>
    </property>
+   <property name="styleSheet">
+    <string notr="true">color:white;background-color: transparent
+</string>
+   </property>
    <property name="text">
     <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>0</y>
+     <width>561</width>
+     <height>141</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>29</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:white;background-color: transparent</string>
+   </property>
+   <property name="text">
+    <string>Welcome to GTA Online Mode</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>

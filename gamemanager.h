@@ -57,7 +57,6 @@ public:
 //    void Next_level();
     void create_bombs();
     void remove_bombs();
-    QGraphicsRectItem* drawPanel(int x, int y, int width, int height, QColor color, double opacity);
 //    void restart_game();
     void game_over();
     void activate_mode();

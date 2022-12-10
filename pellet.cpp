@@ -17,6 +17,7 @@ pellet::pellet(int boardData[12][16], int x, int y)
     pelletImage = pelletImage.scaledToHeight(unitHeight);
 
     setPixmap(pelletImage);
+    taken = false;
 
     this->x = x;
     this->y = y;
