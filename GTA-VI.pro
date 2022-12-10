@@ -20,6 +20,7 @@ SOURCES += \
     Drunk.cpp \
     bomb.cpp \
     bullet.cpp \
+    car.cpp \
     dog.cpp \
     enemy1.cpp \
     extra_life.cpp \
@@ -47,6 +48,7 @@ HEADERS += \
     Drunk.h \
     bomb.h \
     bullet.h \
+    car.h \
     dog.h \
     enemy1.h \
     extra_life.h \
