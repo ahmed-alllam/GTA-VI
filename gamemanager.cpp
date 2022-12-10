@@ -110,18 +110,18 @@ void GameManager::create_healthbar()
 
     txt = new QGraphicsTextItem("NORMAL MODE");
     QFont fonty("Arial", 20, QFont::StyleNormal);
-    txt->setPos(740, 20);
+    txt->setPos(640, 20);
     txt->setFont(fonty);
     txt->setDefaultTextColor(Qt::white);
     scene->addItem(txt);
 
-    counter = new QGraphicsTextItem("00:00");
-    QFont fontc("Arial", 20, QFont::StyleNormal);
-    counter->setPos(1020, 20);
-    counter->setFont(fonty);
-    counter->setDefaultTextColor(Qt::white);
-    scene->addItem(counter);
-    counter->setVisible(false);
+//    counter = new QGraphicsTextItem("00:00");
+//    QFont fontc("Arial", 20, QFont::StyleNormal);
+//    counter->setPos(1020, 20);
+//    counter->setFont(fonty);
+//    counter->setDefaultTextColor(Qt::white);
+//    scene->addItem(counter);
+//    counter->setVisible(false);
 
     /* Creating Hearts */
     hearts = new QGraphicsPixmapItem[3];
@@ -207,23 +207,32 @@ void GameManager::create_healthbar()
 
 }
 
-void GameManager::set_counter(int n)
-{
-    countdown = n;
-}
+//void GameManager::set_counter(int n)
+//{
+//    countdown = n;
+//}
 
-void GameManager::activate_mode() // displaying the progress bar
-{/*
+//void GameManager::update()
+//{
+//    if (timer != nullptr)
+//    {
+//        timer->stop();
+//    }
+//    countdown--;
+//    activate_mode();
+//}
+
+void GameManager::activate_mode(bool d, bool p) // displaying the progress bar
+{
     movie = new QMovie(":/assets/images/the_timer.gif");
 
     movie->setBackgroundColor(Qt::red);
     QLabel *l = new QLabel();
-    l->setGeometry(840, 20, 200, 30);
+    l->setGeometry(900, 20, 200, 30);
     movie->setScaledSize(l->size());
     l->setMovie(movie);
     movie->start();
     scene->addWidget(l);
-    movie->setSpeed(35);
 
     connect(timer, &QTimer::timeout, movie, &QMovie::stop);
     connect(timer, &QTimer::timeout, l,
@@ -235,28 +244,25 @@ void GameManager::activate_mode() // displaying the progress bar
     if (p)
     {
         timer->start(30000);
+        movie->setSpeed(10);
     }
     else if (d)
     {
 
         timer->start(15000);
-    }*/
-    if (timer != nullptr)
-    {
-        timer->stop();
+        movie->setSpeed(20);
     }
-    connect(timer, &QTimer::timeout, this, &GameManager::activate_mode);
-    counter->setPlainText("00:" + QString::number(countdown));
-    if(countdown > 0)
-    {
-        counter->setVisible(true);
-        countdown--;
-        timer->start(1000);
-    }
-    else
-    {
-        counter->setVisible(false);
-    }
+//    connect(timer, &QTimer::timeout, this, &GameManager::update);
+//    counter->setPlainText("00:" + QString::number(countdown));
+//    if(countdown > 0)
+//    {
+//        counter->setVisible(true);
+//        timer->start(1000);
+//    }
+//    else
+//    {
+//        counter->setVisible(false);
+//    }
 }
 
 void GameManager::open_gate()

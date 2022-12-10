@@ -331,7 +331,7 @@ void level1::updateModeTxt()
     {
         if (franklin->getIsPowerful() && franklin->getIsDrunk())
         {
-            manager->txt->setPlainText("Powerful and Drunk Mode");
+            manager->txt->setPlainText("Powerful and Drunk");
         }
         else if (franklin->getIsPowerful())
         {
@@ -569,14 +569,15 @@ void level1::new_heart()
 void level1::activate_mode()
 {
     GameManager *manager = static_cast<GameManager *>(gameManager);
-    if(franklin->getIsPowerful())
-    {
-        manager->set_counter(30);
-        manager->activate_mode();
-    }
-    else if(franklin->getIsDrunk())
-    {
-        manager->set_counter(15);
-        manager->activate_mode();
-    }
+    manager->activate_mode(franklin->getIsDrunk(), franklin->getIsPowerful());
+//    if(franklin->getIsPowerful())
+//    {
+//        manager->set_counter(30);
+//        manager->activate_mode();
+//    }
+//    else if(franklin->getIsDrunk())
+//    {
+//        manager->set_counter(15);
+//        manager->activate_mode();
+//    }
 }

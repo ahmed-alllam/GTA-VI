@@ -22,7 +22,7 @@ private:
     QTimer *timer3; // win checker
     QMediaPlayer *player = new QMediaPlayer;
     QAudioOutput *audioOutput = new QAudioOutput;
-    int countdown;
+//    int countdown;
 public slots:
 
 void restart_game();
@@ -60,11 +60,12 @@ public:
     void remove_bombs();
 //    void restart_game();
     void game_over();
-    void activate_mode();
+    void activate_mode(bool d, bool p);
     void open_gate();
     void close_gate();
     void delete_released_bomb(int,int);
-    void set_counter(int n);
+//    void set_counter(int n);
+//    void update();
 };
 
 #endif // GAMEMANAGER_H
