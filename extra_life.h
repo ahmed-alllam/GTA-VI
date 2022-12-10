@@ -9,8 +9,8 @@ class extra_life: public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 private:
-    int x;
-    int y;
+//    int x;
+//    int y;
     int boardData[12][16];
     static bool available ; //buyed or not
 public:
