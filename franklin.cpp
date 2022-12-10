@@ -457,6 +457,7 @@ void Franklin::checkCollision()
             manager->create_extra_life();
             (collision[i])->setVisible(false);
             qDebug()<<"health3: "<<health;
+            return;
         }
         else if (typeid(*(collision[i])) == typeid(pellet))
         {
