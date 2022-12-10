@@ -490,8 +490,6 @@ void Franklin::checkCollision()
             {
                 setPixmap(franklinImagepd);
             }
-            //if this is a powerful bullet -> powerful_pullets +1;
-
             bullets++;
             manager->updateCounters();
             (collision[i])->setVisible(false);
@@ -513,7 +511,6 @@ void Franklin::checkCollision()
             {
                 setPixmap(franklinImagepd);
             }
-
             powerful_bullets++;
             manager->updateCounters();
             (collision[i])->setVisible(false);

@@ -35,7 +35,7 @@ public:
     QGraphicsTextItem * txt;
     QGraphicsTextItem * bulletsCounter;
     QGraphicsTextItem * coinsCounter;
-    QGraphicsTextItem * bombsCounter;//bombs
+    QGraphicsTextItem * bombsCounter=nullptr;//added to solve a bug
     QGraphicsPixmapItem* hearts;
     QGraphicsPixmapItem* pwoerfull_sign=nullptr;
     QMovie *gate;// added

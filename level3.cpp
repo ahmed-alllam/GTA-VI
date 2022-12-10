@@ -227,7 +227,7 @@ void level3::create_bullets()
 
     if(powerful_bullet::is_available())//if he buyied powerful bullet, put it in the map
     {
-        powerful_bullet *powerful= new class powerful_bullet(boardData,1,14);
+        powerful_bullet *powerful= new class powerful_bullet(boardData,2,14);
         powerful_bullets.clear();
         powerful_bullets.push_back(powerful);
     }
