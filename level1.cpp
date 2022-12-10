@@ -400,6 +400,11 @@ void level1::restart_game()
     QList<QGraphicsItem *> items = scene->items();
 
     franklin = nullptr;
+
+    timer2->stop();
+    timer3->stop();
+
+    enemy2 = nullptr;
     enemy1 = nullptr;
 
     // remove bullets

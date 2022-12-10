@@ -26,6 +26,7 @@ GameManager::GameManager(QGraphicsScene *scene)
 {
     this->scene = scene;
     levelNum = 1;
+    timer = new QTimer;
     currentLevel = new level1(this, scene);
     create_sound();
 }
@@ -243,19 +244,22 @@ void GameManager::activate_mode() // displaying the progress bar
 
         timer->start(15000);
     }*/
-    timer->stop();
+    if (timer != nullptr)
+    {
+        timer->stop();
+    }
     connect(timer, &QTimer::timeout, this, &GameManager::activate_mode);
     counter->setPlainText("00:" + QString::number(countdown));
     if(countdown > 0)
     {
         counter->setVisible(true);
+        countdown--;
+        timer->start(1000);
     }
     else
     {
         counter->setVisible(false);
     }
-    countdown--;
-    timer->start(1000);
 }
 
 void GameManager::open_gate()

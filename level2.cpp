@@ -367,6 +367,8 @@ void level2::restart_game()
 
     franklin = nullptr;
     enemy1 = nullptr;
+    timer2->stop();
+
 
     // remove bullets
     bullets.clear();
