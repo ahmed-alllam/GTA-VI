@@ -20,7 +20,8 @@
 
 QGraphicsView{
     border-radius: 50%;
-}</string>
+}
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
