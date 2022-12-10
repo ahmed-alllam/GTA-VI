@@ -42,7 +42,6 @@ void GameManager::launch_game()
         create_bombs();
     create_pellets();
     create_healthbar();
-    qDebug()<<"launch el game tmam";
 }
 
 void GameManager::add_board_images()
