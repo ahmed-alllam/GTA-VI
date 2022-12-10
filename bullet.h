@@ -11,6 +11,7 @@ public:
     int x;
     int y;
     int boardData[12][16];
+    bool taken;
 public:
     bullet(int boardData[12][16], int x, int y);
 signals:
