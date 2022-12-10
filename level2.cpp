@@ -1,5 +1,5 @@
-#include "level2.h"
 #include "gamemanager.h"
+#include "level2.h"
 #include "flyingbullet.h"
 #include <QGuiApplication>
 #include <QFile>
@@ -480,19 +480,19 @@ void level2::delete_released_bomb(int x, int y)
 {
 franklin->delete_released_bomb(x,y);
 }
+
 void level2::create_extra_life()
 {
     GameManager *manager = static_cast<GameManager *>(gameManager);
-    int health = franklin->getHealth();
-
+    int health = franklin->getHealth()-1;
     if (health >= 0)
     {
         scene->addItem(&(manager->hearts[health]));
     }
-
 }
 
 void level2::new_heart()
 {
-    extra_life *extra= new extra_life(boardData,1,1);
+    extra_life *extra= new extra_life(boardData,6,1);
+    scene->addItem(extra);
 }

@@ -496,12 +496,10 @@ void level1::create_extra_life()
 {
     GameManager *manager = static_cast<GameManager *>(gameManager);
     int health = franklin->getHealth()-1;
-qDebug()<<"health1: "<<health;
     if (health >= 0)
     {
         scene->addItem(&(manager->hearts[health]));
     }
-qDebug()<<"health2: "<<health;
 }
 
 void level1::new_heart()
