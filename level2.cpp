@@ -202,7 +202,7 @@ void level2::create_enemies()
 
     timer2 = new QTimer();
     QObject::connect(timer2, &QTimer::timeout, enemy1, &car::move);
-    timer2->start(250);
+    timer2->start(300);
 }
 
 

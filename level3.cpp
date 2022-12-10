@@ -209,7 +209,7 @@ void level3::create_enemies()
     QObject::connect(timer2, &QTimer::timeout, enemy1, &dog::move);
     QObject::connect(timer3, &QTimer::timeout, enemy2, &car::move);
     timer2->start(500);
-    timer3->start(250);
+    timer3->start(300);
 }
 
 void level3::create_bullets()
