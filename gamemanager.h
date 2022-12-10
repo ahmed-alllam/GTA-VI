@@ -37,6 +37,7 @@ public:
     QGraphicsTextItem * coinsCounter;
     QGraphicsTextItem * bombsCounter;//bombs
     QGraphicsPixmapItem* hearts;
+    QGraphicsPixmapItem* pwoerfull_sign=nullptr;
     QMovie *gate;// added
     QMovie* movie; // added
     GameManager(QGraphicsScene *scene);

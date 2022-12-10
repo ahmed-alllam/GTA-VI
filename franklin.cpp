@@ -526,11 +526,9 @@ void Franklin::checkCollision()
         }
         else if (typeid(*(collision[i])) == typeid(extra_life))
         {
-            qDebug()<<"health0: "<<health;
             health++;
             manager->create_extra_life();
             (collision[i])->setVisible(false);
-            qDebug()<<"health3: "<<health;
             return;
         }
         else if (typeid(*(collision[i])) == typeid(pellet))
@@ -579,6 +577,7 @@ void Franklin::hit()
         this->x = 5;
         this->y = 7;
         bullets = 0;
+        powerful_bullets=0;
         manager->remove_bullets();
         manager->create_bullets();
         manager->updateCounters();
@@ -595,6 +594,11 @@ void Franklin::hit()
 int Franklin::getCoinsCount()
 {
     return this->score;
+}
+
+int Franklin::getPowerfullBullets()
+{
+ return this->powerful_bullets;
 }
 
 int Franklin::getBulletsCount()
@@ -687,7 +691,6 @@ void Franklin::powerful_shoot()
     if (powerful_bullets > 0)
     {
 
-        //powerful_bullets--;
         powerful_bullets--;
 
         // put sound if you want here

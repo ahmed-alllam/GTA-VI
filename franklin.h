@@ -67,6 +67,7 @@ public:
     int getBulletsCount();
     int getBombsCount(); // added
     int getCoinsCount();
+    int getPowerfullBullets();
     void editboard(int x);
     QTimer *timer = new QTimer(this);
     QList<released_bomb*> released_bombs;

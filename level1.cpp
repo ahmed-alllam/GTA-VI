@@ -370,9 +370,29 @@ void level1::updateCounters()
 
     if (manager->bulletsCounter != nullptr)
         manager->bulletsCounter->setPlainText(QString::number(franklin->getBulletsCount()));
+    if(manager->pwoerfull_sign==nullptr && powerful_bullet::is_available() && franklin->getPowerfullBullets()>0)
+    {
+        manager->pwoerfull_sign = new QGraphicsPixmapItem;
+        QPixmap blankImage(":/assets/images/bullet_icon.png");
+        blankImage = blankImage.scaledToWidth(25);
+        blankImage = blankImage.scaledToHeight(25);
+        manager->pwoerfull_sign->setPixmap(blankImage);
+        manager->pwoerfull_sign->setPos(335, 8);
+        scene->addItem(manager->pwoerfull_sign);
+
+    }
+    if(manager->pwoerfull_sign!=nullptr  && franklin->getPowerfullBullets()==0)
+    {
+
+        scene->removeItem(manager->pwoerfull_sign);
+        delete manager->pwoerfull_sign;
+        manager->pwoerfull_sign=nullptr;
+
+    }
 
     if (manager->bombsCounter != nullptr)
         manager->bombsCounter->setPlainText(QString::number(franklin->getBombsCount()));
+    qDebug()<<"bombs counter:"<<franklin->getBombsCount();
 
     if (manager->coinsCounter != nullptr)
         manager->coinsCounter->setPlainText(QString::number(franklin->getCoinsCount()));

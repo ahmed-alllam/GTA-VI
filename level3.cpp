@@ -326,10 +326,25 @@ void level3::updateCounters()
 
     if (manager->bulletsCounter != nullptr)
         manager->bulletsCounter->setPlainText(QString::number(franklin->getBulletsCount()));
-    if (manager->bombsCounter != nullptr)
-        manager->bombsCounter->setPlainText(QString::number(franklin->getBombsCount()));
-    if (manager->coinsCounter != nullptr)
-        manager->coinsCounter->setPlainText(QString::number(franklin->getCoinsCount()));
+    if(manager->pwoerfull_sign==nullptr && powerful_bullet::is_available() && franklin->getPowerfullBullets()>0)
+    {
+        manager->pwoerfull_sign = new QGraphicsPixmapItem;
+        QPixmap blankImage(":/assets/images/bullet_icon.png");
+        blankImage = blankImage.scaledToWidth(20);
+        blankImage = blankImage.scaledToHeight(20);
+        manager->pwoerfull_sign->setPixmap(blankImage);
+        manager->pwoerfull_sign->setPos(335, 8);
+        scene->addItem(manager->pwoerfull_sign);
+
+    }
+    if(manager->pwoerfull_sign!=nullptr  && franklin->getPowerfullBullets()==0)
+    {
+
+        scene->removeItem(manager->pwoerfull_sign);
+        delete manager->pwoerfull_sign;
+        manager->pwoerfull_sign=nullptr;
+    }
+
 }
 
 void level3::remove_heart()
