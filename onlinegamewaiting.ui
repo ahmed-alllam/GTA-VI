@@ -6,30 +6,39 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>950</width>
-    <height>627</height>
+    <width>1080</width>
+    <height>900</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Frame</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:white
+   <string notr="true">QFrame {
+background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.09589655 rgba(80, 150, 1, 255), stop:1 rgba(51, 95, 63, 255))
+}
+QLineEdit {
+ border-radius: 10px;
+}
 </string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>60</y>
+     <x>350</x>
+     <y>240</y>
      <width>411</width>
-     <height>151</height>
+     <height>111</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <pointsize>25</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:white;background-color: transparent
+</string>
    </property>
    <property name="text">
     <string>Waiting for players to join</string>
@@ -41,40 +50,72 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>260</y>
-     <width>411</width>
+     <x>190</x>
+     <y>350</y>
+     <width>351</width>
      <height>151</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>25</pointsize>
+     <pointsize>31</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:white;background-color: transparent
+</string>
    </property>
    <property name="text">
     <string>Game ID:</string>
    </property>
    <property name="alignment">
-    <set>Qt::AlignCenter</set>
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
   <widget class="QLabel" name="gameId">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>260</y>
-     <width>411</width>
+     <x>590</x>
+     <y>350</y>
+     <width>291</width>
      <height>151</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>25</pointsize>
+     <pointsize>31</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:white;background-color: transparent
+</string>
    </property>
    <property name="text">
     <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>10</y>
+     <width>561</width>
+     <height>141</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>29</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:white;background-color: transparent</string>
+   </property>
+   <property name="text">
+    <string>Welcome to GTA Online Mode</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
