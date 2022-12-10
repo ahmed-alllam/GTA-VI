@@ -6,7 +6,7 @@
 
 #include "level.h"
 #include "franklin.h"
-#include "dog.h"
+#include "car.h"
 #include "bullet.h"
 #include "pellet.h"
 #include "Drunk.h"
@@ -23,7 +23,7 @@ private:
     QGraphicsScene *scene;
     void * gameManager;
     Franklin *franklin;
-    dog *enemy1;
+    car *enemy1;
     QList<bullet*> bullets;
     QList<powerful_bullet*> powerful_bullets;
     QList<pellet*> pellets;

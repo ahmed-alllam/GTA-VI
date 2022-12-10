@@ -91,5 +91,15 @@
         <file>assets/sounds/Dog cry.mp3</file>
         <file>assets/sounds/Evil Laugh.mp3</file>
         <file>assets/sounds/Hurt.mp3</file>
+        <file>assets/images/car1L.png</file>
+        <file>assets/images/car1R.png</file>
+        <file>assets/images/car2L.png</file>
+        <file>assets/images/car2R.png</file>
+        <file>assets/images/car3L.png</file>
+        <file>assets/images/car3R.png</file>
+        <file>assets/images/car4L.png</file>
+        <file>assets/images/car4R.png</file>
+        <file>assets/sounds/car crash.mp3</file>
+        <file>assets/sounds/car shot.mp3</file>
     </qresource>
 </RCC>

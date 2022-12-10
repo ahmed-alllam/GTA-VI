@@ -1,4 +1,4 @@
-#include "enemy1.h"
+#include "car.h"
 #include "franklin.h"
 #include <QGraphicsScene>
 #include <QKeyEvent>
@@ -7,105 +7,117 @@
 #include <QTimer>
 #include "gamemanager.h"
 #include "level.h"
-#include"bomb.h"
-#include"released_bomb.h"
+#include <vector>
 #include <queue>
+
 #define INF 9999
 
 using namespace std;
 
-enemy1::enemy1(int boardData[12][16], void *currentLevel, int w, int h):
+car::car(int boardData[12][16], void * gameManager, int w, int h):
 unitWidth(w),
 unitHeight(h)
 {
     bossPath = vector<pair<int,int>>();
-    qDebug() << bossPath.max_size() <<'\n';
-    this->currentLevel = currentLevel;
+
+    this->currentLevel = gameManager;
     while(!bossPath.empty())
     {bossPath.pop_back();}
 
-    QPixmap enemy1FLImage(":assets/images/GangsterFL.png");
-//    QPixmap enemy1FRImage(":assets/images/GangsterFR.png");
-//    QPixmap enemy1HLImage(":assets/images/GangsterHL.png");
-//    QPixmap enemy1HRImage(":assets/images/GangsterHR.png");
+    QPixmap enemy4LImage(":assets/images/car4L.png");
+    enemy4LImage = enemy4LImage.scaledToWidth(unitWidth);
+    enemy4LImage = enemy4LImage.scaledToHeight(unitHeight);
 
-    enemy1FLImage = enemy1FLImage.scaledToWidth(unitWidth);
-    enemy1FLImage = enemy1FLImage.scaledToHeight(unitHeight);
-
-//    enemy1FRImage = enemy1FRImage.scaledToWidth(unitWidth);
-//    enemy1FRImage = enemy1FRImage.scaledToHeight(unitHeight);
-
-//    enemy1HLImage = enemy1HLImage.scaledToWidth(unitWidth);
-//    enemy1HLImage = enemy1HLImage.scaledToHeight(unitHeight);
-
-//    enemy1HRImage = enemy1HRImage.scaledToWidth(unitWidth);
-//    enemy1HRImage = enemy1HRImage.scaledToHeight(unitHeight);
-
-    setPixmap(enemy1FLImage);
-    health = 2;
-    x = 10;
+    setPixmap(enemy4LImage);
+    health = 4;
+    x = 1;
     y = 14;
     direction = 0;
 
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
 
-    for (int i = 0; i < 12; i++)
-    {
-        for (int j = 0; j < 16; j++)
-        {
+    for(int i = 0; i < 12; i++){
+        for(int j = 0; j < 16; j++){
             this->boardData[i][j] = boardData[i][j];
         }
     }
 }
 
-void enemy1::move()
+void car::move()
 {
+    checkCollision();
     if(!bossPath.empty())
             {
-              if(x==bossPath[bossPath.size()-1].first&&y+1==bossPath[bossPath.size()-1].second)
+        if(x==bossPath[bossPath.size()-1].first&&y+1==bossPath[bossPath.size()-1].second)
+        {
+           checkCollision();
+           direction = 1;
+        }
+        else if(x==bossPath[bossPath.size()-1].first&&y-1==bossPath[bossPath.size()-1].second)
+        {
+            checkCollision();
+            direction = 0;
+        }
+              if(direction == 1)
               {
-                 checkCollision();
-                 direction = 1;
+                 if(health == 4)
+                 {
+                     QPixmap enemy4RImage(":assets/images/car4R.png");
+                     enemy4RImage = enemy4RImage.scaledToWidth(unitWidth);
+                     enemy4RImage = enemy4RImage.scaledToHeight(unitHeight);
+                     setPixmap(enemy4RImage);
+                 }
+                 else if(health == 3)
+                 {
+                     QPixmap enemy3RImage(":assets/images/car3R.png");
+                     enemy3RImage = enemy3RImage.scaledToWidth(unitWidth);
+                     enemy3RImage = enemy3RImage.scaledToHeight(unitHeight);
+                     setPixmap(enemy3RImage);
+                 }
+                 else if(health == 2)
+                 {
+                     QPixmap enemy2RImage(":assets/images/car2R.png");
+                     enemy2RImage = enemy2RImage.scaledToWidth(unitWidth);
+                     enemy2RImage = enemy2RImage.scaledToHeight(unitHeight);
+                     setPixmap(enemy2RImage);
+                 }
+                 else if(health == 1)
+                 {
+                     QPixmap enemy1RImage(":assets/images/car1R.png");
+                     enemy1RImage = enemy1RImage.scaledToWidth(unitWidth);
+                     enemy1RImage = enemy1RImage.scaledToHeight(unitHeight);
+                     setPixmap(enemy1RImage);
+                 }
               }
-              else if(x==bossPath[bossPath.size()-1].first&&y-1==bossPath[bossPath.size()-1].second)
+              else if (direction == 0)
               {
-                  checkCollision();
-                  direction = 0;
-              }
-              if (direction == 0)
-              {
-
-                  if(health == 2)
+                  if(health == 4)
                   {
-                      QPixmap enemy1FLImage(":assets/images/GangsterFL.png");
-                      enemy1FLImage = enemy1FLImage.scaledToWidth(unitWidth);
-                      enemy1FLImage = enemy1FLImage.scaledToHeight(unitHeight);
-                      setPixmap(enemy1FLImage);
+                      QPixmap enemy4LImage(":assets/images/car4L.png");
+                      enemy4LImage = enemy4LImage.scaledToWidth(unitWidth);
+                      enemy4LImage = enemy4LImage.scaledToHeight(unitHeight);
+                      setPixmap(enemy4LImage);
+                  }
+                  else if(health == 3)
+                  {
+                      QPixmap enemy3LImage(":assets/images/car3L.png");
+                      enemy3LImage = enemy3LImage.scaledToWidth(unitWidth);
+                      enemy3LImage = enemy3LImage.scaledToHeight(unitHeight);
+                      setPixmap(enemy3LImage);
+                  }
+                  else if(health == 2)
+                  {
+                      QPixmap enemy2LImage(":assets/images/car2L.png");
+                      enemy2LImage = enemy2LImage.scaledToWidth(unitWidth);
+                      enemy2LImage = enemy2LImage.scaledToHeight(unitHeight);
+                      setPixmap(enemy2LImage);
                   }
                   else if(health == 1)
                   {
-                      QPixmap enemy1HLImage(":assets/images/GangsterHL.png");
-                      enemy1HLImage = enemy1HLImage.scaledToWidth(unitWidth);
-                      enemy1HLImage = enemy1HLImage.scaledToHeight(unitHeight);
-                      setPixmap(enemy1HLImage);
-                  }
-              }
-              else if (direction == 1)
-              {
-
-                  if(health == 2)
-                  {
-                      QPixmap enemy1FRImage(":assets/images/GangsterFR.png");
-                      enemy1FRImage = enemy1FRImage.scaledToWidth(unitWidth);
-                      enemy1FRImage = enemy1FRImage.scaledToHeight(unitHeight);
-                      setPixmap(enemy1FRImage);
-                  }
-                  else if(health == 1)
-                  {
-                      QPixmap enemy1HRImage(":assets/images/GangsterHR.png");
-                      enemy1HRImage = enemy1HRImage.scaledToWidth(unitWidth);
-                      enemy1HRImage = enemy1HRImage.scaledToHeight(unitHeight);
-                      setPixmap(enemy1HRImage);
+                      QPixmap enemy1LImage(":assets/images/car1L.png");
+                      enemy1LImage = enemy1LImage.scaledToWidth(unitWidth);
+                      enemy1LImage = enemy1LImage.scaledToHeight(unitHeight);
+                      setPixmap(enemy1LImage);
                   }
               }
               bossPosition.first=bossPath[bossPath.size()-1].first;
@@ -116,12 +128,10 @@ void enemy1::move()
               return;
             }
     else
-    {
-        bossPath = getPath();
-    }
+            bossPath = getPath();
 }
 
-void enemy1::checkCollision()
+void car::checkCollision()
 {
     QList<QGraphicsItem *> colliding_items = collidingItems();
     for (int i = 0, n = colliding_items.size(); i < n; ++i)
@@ -134,7 +144,7 @@ void enemy1::checkCollision()
             QMediaPlayer *player = new QMediaPlayer;
             QAudioOutput *audioOutput = new QAudioOutput;
             player->setAudioOutput(audioOutput);
-            player->setSource(QUrl("qrc:/assets/sounds/Evil Laugh.mp3"));
+            player->setSource(QUrl("qrc:/assets/sounds/car crash.mp3"));
             player->play();
 
             level *manager = static_cast<level *>(currentLevel);
@@ -149,7 +159,7 @@ void enemy1::checkCollision()
             QMediaPlayer *player = new QMediaPlayer;
             QAudioOutput *audioOutput = new QAudioOutput;
             player->setAudioOutput(audioOutput);
-            player->setSource(QUrl("qrc:/assets/sounds/Hurt.mp3"));
+            player->setSource(QUrl("qrc:/assets/sounds/car shot.mp3"));
             player->play();
 
             manager->enemy_hit(this);
@@ -158,34 +168,46 @@ void enemy1::checkCollision()
     }
 }
 
-int enemy1::getX()
+int car::getX()
 {
     return this->x;
 }
 
-int enemy1::getY()
+int car::getY()
 {
     return this->y;
 }
 
-int enemy1::getHealth()
+int car::getHealth()
 {
     return this->health;
 }
 
-void enemy1::setXandY(int x, int y)
+void car::setXandY(int x, int y)
 {
     this->x = x;
     this->y = y;
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
 }
 
-void enemy1::reduceHealth()
+void car::reduceHealth()
 {
     this->health--;
 }
 
-vector<pair<int, int>> enemy1::getPath() {
+int car::H_Calculation(int x, int y)
+{
+    int playerX = 0;
+    int playerY = 0;
+
+    level *manager = static_cast<level *>(currentLevel);
+    manager->getDest(playerX, playerY);
+
+    return abs(x - playerX) + abs(y - playerY);
+}
+
+
+vector<pair<int, int>> car::getPath() {
     int playerX = 0;
     int playerY = 0;
 
@@ -265,13 +287,3 @@ vector<pair<int, int>> enemy1::getPath() {
     return path;
 }
 
-int enemy1::H_Calculation(int x, int y)
-{
-    int playerX = 0;
-    int playerY = 0;
-
-    level *manager = static_cast<level *>(currentLevel);
-    manager->getDest(playerX, playerY);
-
-    return abs(x - playerX) + abs(y - playerY);
-}
