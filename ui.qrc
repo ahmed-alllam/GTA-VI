@@ -2,5 +2,6 @@
 <qresource prefix="/forms">
 <file>onlinegameid.ui</file>
 <file>onlinegamewaiting.ui</file>
+<file>gameover.ui</file>
 </qresource>
 </RCC>

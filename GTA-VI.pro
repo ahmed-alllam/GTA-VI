@@ -72,6 +72,7 @@ HEADERS += \
     released_bomb.h
 
 FORMS += \
+    gameover.ui \
     homepage.ui \
     log_in.ui \
     mainwindow.ui \
