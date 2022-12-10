@@ -26,22 +26,22 @@ released_bomb::released_bomb(int boardData[12][16], int x, int y,int direction, 
     this->x = x;
     this->y = y;
     this->manager= manager;
-    if (direction == 0 /*&& boardData[y+1][x]>0*/)  //should  check if there is a block
-    {
-        y++;
-    }
-    else if (direction == 1 /*&& boardData[y-1][x]>0*/)
-    {
-        y--;
-    }
-    else if (direction == 2 /*&& boardData[y][x+1]>0*/)
-    {
-      x--;
-    }
-    else /*if(direction==3 /*&& boardData[y][x-1]>0)*/
-    {
-      x++;
-    }
+//    if (direction == 0 /*&& boardData[y+1][x]>0*/)  //should  check if there is a block
+//    {
+//        y++;
+//    }
+//    else if (direction == 1 /*&& boardData[y-1][x]>0*/)
+//    {
+//        y--;
+//    }
+//    else if (direction == 2 /*&& boardData[y][x+1]>0*/)
+//    {
+//      x--;
+//    }
+//    else /*if(direction==3 /*&& boardData[y][x-1]>0)*/
+//    {
+//      x++;
+//    }
 
     setPos( unitWidth + y * unitWidth, unitHeight + x * unitHeight);
     for (int i = 0; i < 12; i++)
