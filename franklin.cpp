@@ -5,6 +5,8 @@
 #include <QList>
 #include <QGuiApplication>
 #include <enemy1.h>
+#include <dog.h>
+#include <car.h>
 #include <pellet.h>
 #include <bullet.h>
 #include<bomb.h>
@@ -402,7 +404,7 @@ void Franklin::checkCollision()
     QList<QGraphicsItem *> collision = collidingItems();
     for (int i = 0; i < collision.size(); i++)
     {
-        if (typeid(*(collision[i])) == typeid(enemy1))
+        if (typeid(*(collision[i])) == typeid(enemy1) || typeid(*(collision[i])) == typeid(dog) || typeid(*(collision[i])) == typeid(car))
         {
             manager->player_hit();
         }

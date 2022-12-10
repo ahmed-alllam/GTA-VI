@@ -99,5 +99,7 @@
         <file>assets/images/car3R.png</file>
         <file>assets/images/car4L.png</file>
         <file>assets/images/car4R.png</file>
+        <file>assets/sounds/car crash.mp3</file>
+        <file>assets/sounds/car shot.mp3</file>
     </qresource>
 </RCC>

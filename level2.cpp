@@ -197,11 +197,11 @@ void level2::create_enemies()
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
     int unitWidth = qMin(screenWidth, screenHeight) / 13;
     int unitHeight = qMin(screenWidth, screenHeight) / 13;
-    enemy1 = new class dog (boardData, this, unitWidth, unitHeight);
+    enemy1 = new class car (boardData, this, unitWidth, unitHeight);
     scene->addItem(enemy1);
 
     timer2 = new QTimer();
-    QObject::connect(timer2, &QTimer::timeout, enemy1, &dog::move);
+    QObject::connect(timer2, &QTimer::timeout, enemy1, &car::move);
     timer2->start(250);
 }
 
@@ -374,7 +374,7 @@ powerful_bullets.clear();
 
     for (int i = 0; i < items.size(); i++)
     {
-        if (typeid(*items[i]) == typeid(QGraphicsProxyWidget) || typeid(*items[i]) == typeid(QGraphicsTextItem) || typeid(*items[i]) == typeid(QPushButton) || typeid(*items[i]) == typeid(QGraphicsRectItem) || typeid(*items[i]) == typeid(bullet) || typeid(*items[i]) == typeid(class Franklin) || typeid(*items[i]) == typeid(dog) || typeid(*items[i]) == typeid(class Drunk) || typeid(*items[i]) == typeid(class pellet) || typeid(*items[i]) == typeid(class FlyingBullet))
+        if (typeid(*items[i]) == typeid(QGraphicsProxyWidget) || typeid(*items[i]) == typeid(QGraphicsTextItem) || typeid(*items[i]) == typeid(QPushButton) || typeid(*items[i]) == typeid(QGraphicsRectItem) || typeid(*items[i]) == typeid(bullet) || typeid(*items[i]) == typeid(class Franklin) || typeid(*items[i]) == typeid(car) || typeid(*items[i]) == typeid(class Drunk) || typeid(*items[i]) == typeid(class pellet) || typeid(*items[i]) == typeid(class FlyingBullet))
         {
             scene->removeItem(items[i]);
             delete items[i];
@@ -402,7 +402,7 @@ void level2::player_hit()
 {
     if (enemy1 != nullptr)
     {
-        enemy1->setXandY(1, 1);
+        enemy1->setXandY(1, 14);
         enemy1->getPath();
     }
     else
@@ -416,7 +416,7 @@ void level2::player_hit()
 void level2::enemy_hit(QGraphicsItem *enemy)
 {
 
-    if (typeid(*enemy) == typeid(dog) && enemy1 != nullptr)
+    if (typeid(*enemy) == typeid(car) && enemy1 != nullptr)
     {
         enemy1->reduceHealth();
         if (enemy1->getHealth() == 0)

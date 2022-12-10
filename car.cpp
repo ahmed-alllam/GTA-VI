@@ -30,7 +30,7 @@ unitHeight(h)
 
     setPixmap(enemy4LImage);
     health = 4;
-    x = 10;
+    x = 1;
     y = 14;
     direction = 0;
 
@@ -144,7 +144,7 @@ void car::checkCollision()
             QMediaPlayer *player = new QMediaPlayer;
             QAudioOutput *audioOutput = new QAudioOutput;
             player->setAudioOutput(audioOutput);
-            player->setSource(QUrl("qrc:/assets/sounds/car att.mp3"));
+            player->setSource(QUrl("qrc:/assets/sounds/car crash.mp3"));
             player->play();
 
             level *manager = static_cast<level *>(currentLevel);
@@ -159,7 +159,7 @@ void car::checkCollision()
             QMediaPlayer *player = new QMediaPlayer;
             QAudioOutput *audioOutput = new QAudioOutput;
             player->setAudioOutput(audioOutput);
-            player->setSource(QUrl("qrc:/assets/sounds/car cry.mp3"));
+            player->setSource(QUrl("qrc:/assets/sounds/car shot.mp3"));
             player->play();
 
             manager->enemy_hit(this);

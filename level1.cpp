@@ -202,9 +202,16 @@ void level1::create_enemies()
    enemy1 = new class enemy1(boardData, this, unitWidth, unitHeight);
     scene->addItem(enemy1);
 
+    enemy2 = new dog(boardData, this, unitWidth, unitHeight);
+     scene->addItem(enemy2);
+
     timer2 = new QTimer();
     QObject::connect(timer2, &QTimer::timeout, enemy1, &enemy1::move);
-    timer2->start(500);
+    timer2->start(750);
+
+    timer3 = new QTimer();
+    QObject::connect(timer3, &QTimer::timeout, enemy2, &dog::move);
+    timer3->start(500);
 }
 
 void level1::create_bullets()
@@ -406,7 +413,7 @@ void level1::restart_game()
 
     for (int i = 0; i < items.size(); i++)
     {
-        if (typeid(*items[i]) == typeid(QGraphicsProxyWidget) || typeid(*items[i]) == typeid(QGraphicsTextItem) || typeid(*items[i]) == typeid(QPushButton) || typeid(*items[i]) == typeid(QGraphicsRectItem) || typeid(*items[i]) == typeid(bullet) || typeid(*items[i]) == typeid(powerful_bullet)|| typeid(*items[i]) == typeid(bomb) || typeid(*items[i]) == typeid(class Franklin) || typeid(*items[i]) == typeid(class enemy1) || typeid(*items[i]) == typeid(class Drunk) || typeid(*items[i]) == typeid(class pellet) || typeid(*items[i]) == typeid(class FlyingBullet))
+        if (typeid(*items[i]) == typeid(QGraphicsProxyWidget) || typeid(*items[i]) == typeid(QGraphicsTextItem) || typeid(*items[i]) == typeid(QPushButton) || typeid(*items[i]) == typeid(QGraphicsRectItem) || typeid(*items[i]) == typeid(bullet) || typeid(*items[i]) == typeid(powerful_bullet)|| typeid(*items[i]) == typeid(bomb) || typeid(*items[i]) == typeid(class Franklin) || typeid(*items[i]) == typeid(class enemy1) || typeid(*items[i]) == typeid(class Drunk) || typeid(*items[i]) == typeid(class pellet) || typeid(*items[i]) == typeid(class FlyingBullet) || typeid(*items[i]) == typeid(class dog))
         {
             scene->removeItem(items[i]);
             delete items[i];
@@ -434,12 +441,21 @@ void level1::player_hit()
 {
     if (enemy1 != nullptr)
     {
-        enemy1->setXandY(9, 8);
+        enemy1->setXandY(10, 14);
         enemy1->getPath();
     }
     else
     {
         timer2->stop();
+    }
+    if (enemy2 != nullptr)
+    {
+        enemy2->setXandY(1, 1);
+        enemy2->getPath();
+    }
+    else
+    {
+        timer3->stop();
     }
 
     franklin->hit();
@@ -447,18 +463,36 @@ void level1::player_hit()
 
 void level1::enemy_hit(QGraphicsItem *enemy)
 {
-
     if (typeid(*enemy) == typeid(class enemy1) && enemy1 != nullptr)
     {
         enemy1->reduceHealth();
         if (enemy1->getHealth() == 0)
         {
-
-            open_gate();
-            timer2->stop();
+            if (enemy2 == nullptr)
+            {
+                open_gate();
+                timer2->stop();
+                timer3->stop();
+            }
             scene->removeItem(enemy1);
             enemy1 = nullptr;
             delete enemy1;
+        }
+    }
+    else if (typeid(*enemy) == typeid(dog) && enemy2 != nullptr)
+    {
+        enemy2->reduceHealth();
+        if (enemy2->getHealth() == 0)
+        {
+            if (enemy1 == nullptr)
+            {
+                open_gate();
+                timer2->stop();
+                timer3->stop();
+            }
+            scene->removeItem(enemy2);
+            enemy2 = nullptr;
+            delete enemy2;
         }
     }
 }

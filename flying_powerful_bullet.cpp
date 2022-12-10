@@ -6,6 +6,7 @@
 #include <QTimer>
 #include "enemy1.h"
 #include "dog.h"
+#include "car.h"
 #include "level.h"
 #include "gamemanager.h"
 
@@ -100,8 +101,32 @@ void flying_powerful_bullet::move()
 
     for (int i = 0; i < colliding_items.size(); i++)
     {
-        if (typeid(*colliding_items[i]) == typeid(enemy1) || typeid(*colliding_items[i]) == typeid(dog))
+        if (typeid(*colliding_items[i]) == typeid(enemy1) || typeid(*colliding_items[i]) == typeid(dog) || typeid(*colliding_items[i]) == typeid(car))
         {
+            if(typeid(*colliding_items[i]) == typeid(enemy1))
+            {
+                QMediaPlayer *player = new QMediaPlayer;
+                QAudioOutput *audioOutput = new QAudioOutput;
+                player->setAudioOutput(audioOutput);
+                player->setSource(QUrl("qrc:/assets/sounds/Hurt.mp3"));
+                player->play();
+            }
+            else if(typeid(*colliding_items[i]) == typeid(dog))
+            {
+                QMediaPlayer *player = new QMediaPlayer;
+                QAudioOutput *audioOutput = new QAudioOutput;
+                player->setAudioOutput(audioOutput);
+                player->setSource(QUrl("qrc:/assets/sounds/Dog cry.mp3"));
+                player->play();
+            }
+            else
+            {
+                QMediaPlayer *player = new QMediaPlayer;
+                QAudioOutput *audioOutput = new QAudioOutput;
+                player->setAudioOutput(audioOutput);
+                player->setSource(QUrl("qrc:/assets/sounds/car shot.mp3"));
+                player->play();
+            }
             if(scene() != nullptr) {
                 scene()->removeItem(this);
                 delete this;

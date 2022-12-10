@@ -7,6 +7,7 @@
 #include "level.h"
 #include "franklin.h"
 #include "enemy1.h"
+#include "dog.h"
 #include "bullet.h"
 #include "pellet.h"
 #include "Drunk.h"
@@ -20,10 +21,12 @@ class level1 : public level
 private:
     QTimer *timer;
     QTimer *timer2;
+    QTimer *timer3;
     QGraphicsScene *scene;
     void * gameManager;
     Franklin *franklin;
     enemy1 *enemy1;
+    dog *enemy2;
     QList<bullet*> bullets;
     QList<powerful_bullet*> powerful_bullets;
     QList<pellet*> pellets;
