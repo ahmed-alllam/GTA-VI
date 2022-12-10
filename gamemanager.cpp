@@ -187,8 +187,6 @@ void GameManager::create_healthbar()
 
     }
 
-    bombsCounter= new QGraphicsTextItem("0");
-
 
     /*Drunk and label part */
 

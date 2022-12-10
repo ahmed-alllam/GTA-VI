@@ -392,6 +392,7 @@ void level1::updateCounters()
 
     if (manager->bombsCounter != nullptr)
         manager->bombsCounter->setPlainText(QString::number(franklin->getBombsCount()));
+    qDebug()<<"bombs counter:"<<franklin->getBombsCount();
 
     if (manager->coinsCounter != nullptr)
         manager->coinsCounter->setPlainText(QString::number(franklin->getCoinsCount()));
