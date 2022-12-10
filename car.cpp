@@ -30,8 +30,8 @@ unitHeight(h)
 
     setPixmap(enemy4LImage);
     health = 4;
-    x = 1;
-    y = 14;
+    x = 6;
+    y = 1;
     direction = 0;
 
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);

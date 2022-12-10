@@ -44,7 +44,7 @@ unitHeight(h)
     setPixmap(enemy1FLImage);
     health = 2;
     x = 10;
-    y = 14;
+    y = 12;
     direction = 0;
 
     setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
