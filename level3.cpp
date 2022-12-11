@@ -418,6 +418,7 @@ void level3::player_hit()
     if (enemy1 != nullptr)
     {
         enemy1->setXandY(1, 2);
+        enemy1->bossPath.clear();
         enemy1->getPath();
     }
     else
@@ -427,6 +428,7 @@ void level3::player_hit()
     if (enemy2 != nullptr)
     {
         enemy2->setXandY(6, 1);
+        enemy1->bossPath.clear();
         enemy2->getPath();
     }
     else

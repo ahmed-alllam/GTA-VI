@@ -67,6 +67,8 @@
         "fstream": "cpp",
         "valarray": "cpp",
         "filesystem": "cpp",
-        "queue": "cpp"
+        "queue": "cpp",
+        "deque": "cpp",
+        "set": "cpp"
     }
 }
