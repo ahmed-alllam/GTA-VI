@@ -474,7 +474,7 @@ void level1::player_hit()
     }
     if (enemy2 != nullptr)
     {
-        enemy2->setXandY(2, 1);
+        enemy2->setXandY(1, 2);
         enemy2->getPath();
     }
     else
