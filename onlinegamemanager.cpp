@@ -375,8 +375,6 @@ void OnlineGameManager::gameWon()
     // add gameover to the middle of the screen
     gameover->setGeometry((screenWidth / 2) - (gameover->width() * 3 / 4), (screenHeight / 2) - (gameover->height() / 2), gameover->width(), gameover->height());
 
-    gameover->setGeometry(screenWidth / 2 - gameover->width() / 2, screenHeight / 2 - gameover->height() / 2, gameover->width(), gameover->height());
-
     scene->addWidget(gameover);
 
     QPushButton *nextButton = gameover->findChild<QPushButton *>("next");
