@@ -3,6 +3,7 @@
 #include"bomb.h"
 #include"powerful_bullet.h"
 #include"extra_life.h"
+#include "payment_info.h"
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -102,6 +103,9 @@ void MainWindow::on_Buy_health_clicked()
 
 void MainWindow::on_Buy_bomb_3_clicked()
 {
+    payment_info dialog(this);
+    dialog.setModal(true);
+    dialog.exec();
     coins += 500;
     ui->label->setText(QString::number(coins));
     ui->label_2->setVisible(false);

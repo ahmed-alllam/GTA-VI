@@ -40,6 +40,7 @@ SOURCES += \
     onlinegamemanager.cpp \
     onlinelevel.cpp \
     onlineplayer.cpp \
+    payment_info.cpp \
     pellet.cpp \
     powerful_bullet.cpp \
     released_bomb.cpp
@@ -67,6 +68,7 @@ HEADERS += \
     onlinegamemanager.h \
     onlinelevel.h \
     onlineplayer.h \
+    payment_info.h \
     pellet.h \
     powerful_bullet.h \
     released_bomb.h
@@ -77,7 +79,8 @@ FORMS += \
     log_in.ui \
     mainwindow.ui \
     onlinegameid.ui \
-    onlinegamewaiting.ui
+    onlinegamewaiting.ui \
+    payment_info.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
