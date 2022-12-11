@@ -185,7 +185,7 @@ void OnlineLevel::add_board_images()
 
 void OnlineLevel::create_board()
 {
-    QFile file(":Maze.txt");
+    QFile file(":Maze online.txt");
     file.open(QIODevice::ReadOnly);
     QTextStream stream(&file);
     QString temp;

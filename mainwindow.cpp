@@ -3,13 +3,16 @@
 #include"bomb.h"
 #include"powerful_bullet.h"
 #include"extra_life.h"
+#include "payment_info.h"
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     this->setWindowFlags(Qt::FramelessWindowHint);
     ui->setupUi(this);
-   ui->label->setText("300");
+   ui->label->setText("1500");
+   coins = 1500;
+   ui->label_2->setVisible(false);
 
     ui->ExitButton->setIcon( QIcon(":/assets/images/button.png"));
     ui->ExitButton->setIconSize(QSize(65, 65));
@@ -52,20 +55,59 @@ void MainWindow::on_ExitButton_clicked()
 
 void MainWindow::on_Buy_bomb_clicked()
 {
-    bomb::make_available();
-
+    if(coins >= 500)
+    {
+        bomb::make_available();
+        ui->label_2->setVisible(false);
+        coins -= 500;
+        ui->label->setText(QString::number(coins));
+    }
+    else
+    {
+        ui->label_2->setVisible(true);
+    }
 }
 
 
 void MainWindow::on_Buy_powerfulbullet_clicked()
 {
+    if(coins >= 400)
+    {
     powerful_bullet::make_available();
+    ui->label_2->setVisible(false);
+    coins -= 400;
+    ui->label->setText(QString::number(coins));
+    }
+    else
+    {
+        ui->label_2->setVisible(true);
+    }
 }
 
 
 void MainWindow::on_Buy_health_clicked()
 {
-     extra_life::make_available();
+    if(coins >= 500)
+    {
+        extra_life::make_available();
+        coins -= 500;
+        ui->label_2->setVisible(false);
+        ui->label->setText(QString::number(coins));
+    }
+    else
+    {
+        ui->label_2->setVisible(true);
+    }
+}
 
+
+void MainWindow::on_Buy_bomb_3_clicked()
+{
+    payment_info dialog(this);
+    dialog.setModal(true);
+    dialog.exec();
+    coins += 500;
+    ui->label->setText(QString::number(coins));
+    ui->label_2->setVisible(false);
 }
 

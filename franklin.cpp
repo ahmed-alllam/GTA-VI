@@ -575,15 +575,19 @@ void Franklin::hit()
         this->y = 7;
         bullets = 0;
         powerful_bullets=0;
+        setPowerful(false);
+        setDrunk2False();
+        setPowerful2False();
         manager->remove_bullets();
         manager->create_bullets();
+        manager->updateModeTxt();
         manager->updateCounters();
         setPos(unitWidth + y * unitWidth, unitHeight + x * unitHeight);
     }
     else
     {
-        setPowerful(false);
-        manager->updateModeTxt();
+        setPowerful2False();
+//        manager->updateModeTxt();
         Move();
     }
 }

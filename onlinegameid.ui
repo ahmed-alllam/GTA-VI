@@ -112,9 +112,9 @@ border-radius: 20px;
    <property name="geometry">
     <rect>
      <x>510</x>
-     <y>420</y>
-     <width>58</width>
-     <height>16</height>
+     <y>410</y>
+     <width>81</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="font">

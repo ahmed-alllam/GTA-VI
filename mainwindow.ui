@@ -6,16 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>844</width>
-    <height>582</height>
+    <width>870</width>
+    <height>541</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:#191A19;
-background-color:rgb(48, 48, 48);
+   <string notr="true">background-color:transparent;
+
 QPushButton{
 color:blue;
 }
@@ -25,228 +25,142 @@ QTabBar::tab {
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="ExitButton">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <widget class="QFrame" name="mainFrame">
     <property name="geometry">
      <rect>
-      <x>740</x>
-      <y>30</y>
-      <width>65</width>
-      <height>65</height>
+      <x>0</x>
+      <y>0</y>
+      <width>865</width>
+      <height>541</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:transparent;
+     <string notr="true">#mainFrame {
+background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.09589655 rgba(80, 150, 1, 255), stop:1 rgba(51, 95, 63, 255)) !important;
+ border-radius: 50px !important;
+border: 5px solid white !important;
+}</string>
+    </property>
+    <widget class="QPushButton" name="ExitButton">
+     <property name="geometry">
+      <rect>
+       <x>754</x>
+       <y>20</y>
+       <width>71</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:transparent;
 border-image:url(qrc:/assets/images/button.png);
 background:none;
 border:none;</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>50</y>
-      <width>51</width>
-      <height>62</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color:transparent;
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>40</y>
+       <width>51</width>
+       <height>62</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:transparent;
 background:none;
 border:none;
  font-family: Arial;
   font-size: 22px;
   font-weight: Bold;
-color:rgb(209, 144, 40);</string>
-    </property>
-    <property name="text">
-     <string>200</string>
-    </property>
-   </widget>
-   <widget class="QTabWidget" name="tabWidget">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>50</y>
-      <width>611</width>
-      <height>461</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>20</width>
-      <height>30</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>123214</width>
-      <height>16777215</height>
-     </size>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">
+color:white;</string>
+     </property>
+     <property name="text">
+      <string>200</string>
+     </property>
+    </widget>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>50</y>
+       <width>611</width>
+       <height>391</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>20</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>123214</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <kerning>true</kerning>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QTabWidget::pane {
+    border: 0px;
+    background-color: transparent;
+    background: transparent;
+    }
 QTabBar::tab {
     margin-left:70px;
 	margin-right:10px;
-	font: 18pt &quot;Segoe Print&quot;;
+	font: 15pt &quot;Segoe Print&quot;;
   font-weight: Bold;
-
-color:black;
-background-color: rgb(227, 227, 227);
-
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,
-                                stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
-    border: 2px solid #C4C4C3;
-    border-bottom-color: #C2C7CB; /* same as the pane color */
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
+color:green;
+background-color: white;
     min-width: 10ex;
-    padding: 1px;
+    padding: 10px;
+    border: 3px solid green;
+    border-radius: 20px;
 }
-QTabBar::tab:selected, QTabBar::tab:hover {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #fafafa, stop: 0.4 #f4f4f4,
-                                stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);
-color:rgb(209, 144, 40);
+QTabBar::tab:selected {
+color:white;
+}
+
+ QTabBar::tab:hover {
+  color: rgb(209, 144, 40);
 }
 
 QTabBar::tab:selected {
-    border-color: #9B9B9B;
-    border-bottom-color: #C2C7CB; /* same as pane color */
-background-color: rgb(42, 116, 53);
+  color: rgb(209, 144, 40);
+background-color:white;
 }
 
-QTabBar::tab:!selected {
-    margin-top: 4px; /* make non-selected tabs look smaller */
-}
-</string>
-    </property>
-    <property name="tabPosition">
-     <enum>QTabWidget::North</enum>
-    </property>
-    <property name="currentIndex">
-     <number>0</number>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>35</width>
-      <height>33</height>
-     </size>
-    </property>
-    <property name="elideMode">
-     <enum>Qt::ElideMiddle</enum>
-    </property>
-    <property name="usesScrollButtons">
-     <bool>false</bool>
-    </property>
-    <widget class="QWidget" name="weapons">
-     <attribute name="title">
-      <string>weapons</string>
-     </attribute>
-     <widget class="QGraphicsView" name="weapon_view">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>50</y>
-        <width>491</width>
-        <height>121</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:rgb(220, 220, 220);
-background-color: rgb(42, 116, 53);</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="bomb_price_label">
-      <property name="geometry">
-       <rect>
-        <x>250</x>
-        <y>80</y>
-        <width>101</width>
-        <height>81</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:transparent;
-background:none;
-border:none;
- font-family: Arial;
-  font-size: 34px;
-  font-weight: Bold;
-color:rgb(209, 144, 40);</string>
-      </property>
-      <property name="text">
-       <string>500</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="bomb_label">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>60</y>
-        <width>121</width>
-        <height>111</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:transparent;
-border-image:url(qrc:/assets/images/button.png);
-background:none;
-border:none;</string>
-      </property>
-      <property name="text">
-       <string>bomb image</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="Buy_bomb">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>450</x>
-        <y>100</y>
-        <width>91</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Sitka Small</family>
-        <pointsize>14</pointsize>
-        <bold>false</bold>
-        <strikeout>false</strikeout>
-       </font>
-      </property>
-      <property name="mouseTracking">
-       <bool>true</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">
- QPushButton#Buy_bomb {
+
+ QPushButton {
 border-style: solid;
+border-radius: 20px;
 	border-top-color: transparent;
 	border-right-color: transparent;
 	border-left-color: transparent;
-	border-bottom-color: #white;
+	border-bottom-color: #green;
 	border-bottom-width: 2px;
 	border-style: solid;
-	color: #FFFFFF;
-background-color: #1e1d23;
+	color: green;
+background-color: white;
  }
 
  
-QPushButton#Buy_bomb:hover{
+QPushButton:hover{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -258,7 +172,7 @@ QPushButton#Buy_bomb:hover{
 	padding-bottom: 2px;
 	background-color: #1e1d23;
 }
-QPushButton#Buy_bomb:pressed{
+QPushButton:pressed{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -272,7 +186,7 @@ QPushButton#Buy_bomb:pressed{
 	background-color: #1e1d23;
 	background-color: rgb(126, 126, 126);
 }
-QPushButton#Buy_bomb:disabled{
+QPushButton:disabled{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -285,61 +199,122 @@ QPushButton#Buy_bomb:disabled{
 	background-color: #1e1d23;
 
 }</string>
-      </property>
-      <property name="text">
-       <string>BUY</string>
-      </property>
-     </widget>
-     <widget class="QGraphicsView" name="weapon_view2">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>180</y>
-        <width>491</width>
-        <height>121</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:rgb(220, 220, 220);
-background-color: rgb(42, 116, 53);</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="Buy_powerfulbullet">
-      <property name="geometry">
-       <rect>
-        <x>450</x>
-        <y>230</y>
-        <width>91</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Sitka Small</family>
-        <pointsize>14</pointsize>
-        <bold>false</bold>
-        <strikeout>false</strikeout>
-       </font>
-      </property>
-      <property name="mouseTracking">
-       <bool>true</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">
- QPushButton#Buy_powerfulbullet {
+     </property>
+     <property name="tabPosition">
+      <enum>QTabWidget::North</enum>
+     </property>
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>35</width>
+       <height>33</height>
+      </size>
+     </property>
+     <property name="elideMode">
+      <enum>Qt::ElideMiddle</enum>
+     </property>
+     <property name="usesScrollButtons">
+      <bool>false</bool>
+     </property>
+     <widget class="QWidget" name="weapons">
+      <attribute name="title">
+       <string>weapons</string>
+      </attribute>
+      <widget class="QGraphicsView" name="weapon_view">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>50</y>
+         <width>491</width>
+         <height>121</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="bomb_price_label">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>80</y>
+         <width>101</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:transparent;
+background:none;
+border:none;
+ font-family: Arial;
+  font-size: 34px;
+  font-weight: Bold;
+color:white;</string>
+       </property>
+       <property name="text">
+        <string>500</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="bomb_label">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>60</y>
+         <width>121</width>
+         <height>111</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:transparent;
+border-image:url(qrc:/assets/images/button.png);
+background:none;
+border:none;</string>
+       </property>
+       <property name="text">
+        <string>bomb image</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Buy_bomb">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>450</x>
+         <y>100</y>
+         <width>91</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Sitka Small</family>
+         <pointsize>14</pointsize>
+         <bold>false</bold>
+         <strikeout>false</strikeout>
+        </font>
+       </property>
+       <property name="mouseTracking">
+        <bool>true</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
 border-style: solid;
+border-radius: 20px;
 	border-top-color: transparent;
 	border-right-color: transparent;
 	border-left-color: transparent;
-	border-bottom-color: #white;
+	border-bottom-color: #green;
 	border-bottom-width: 2px;
 	border-style: solid;
-	color: #FFFFFF;
-background-color: #1e1d23;
+	color: green;
+background-color: white;
  }
 
  
-QPushButton#Buy_powerfulbullet:hover{
+QPushButton:hover{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -351,7 +326,7 @@ QPushButton#Buy_powerfulbullet:hover{
 	padding-bottom: 2px;
 	background-color: #1e1d23;
 }
-QPushButton#Buy_powerfulbullet:pressed{
+QPushButton:pressed{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -365,7 +340,7 @@ QPushButton#Buy_powerfulbullet:pressed{
 	background-color: #1e1d23;
 	background-color: rgb(126, 126, 126);
 }
-QPushButton#Buy_powerfulbullet:disabled{
+QPushButton:disabled{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -378,103 +353,194 @@ QPushButton#Buy_powerfulbullet:disabled{
 	background-color: #1e1d23;
 
 }</string>
-      </property>
-      <property name="text">
-       <string>BUY</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="powerfulbullet_price_label">
-      <property name="geometry">
-       <rect>
-        <x>250</x>
-        <y>200</y>
-        <width>101</width>
-        <height>81</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:transparent;
+       </property>
+       <property name="text">
+        <string>BUY</string>
+       </property>
+      </widget>
+      <widget class="QGraphicsView" name="weapon_view2">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>180</y>
+         <width>491</width>
+         <height>121</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Buy_powerfulbullet">
+       <property name="geometry">
+        <rect>
+         <x>450</x>
+         <y>220</y>
+         <width>91</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Sitka Small</family>
+         <pointsize>14</pointsize>
+         <bold>false</bold>
+         <strikeout>false</strikeout>
+        </font>
+       </property>
+       <property name="mouseTracking">
+        <bool>true</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+border-style: solid;
+border-radius: 20px;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #green;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: green;
+background-color: white;
+ }
+
+ 
+QPushButton:hover{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #37efba;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #FFFFFF;
+	padding-bottom: 2px;
+	background-color: #1e1d23;
+}
+QPushButton:pressed{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #37efba;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #37efba;
+	padding-bottom: 2px;
+    margin-top: 4px;     
+	background-color: #1e1d23;
+	background-color: rgb(126, 126, 126);
+}
+QPushButton:disabled{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #808086;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #808086;
+	padding-bottom: 1px;
+	background-color: #1e1d23;
+
+}</string>
+       </property>
+       <property name="text">
+        <string>BUY</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="powerfulbullet_price_label">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>200</y>
+         <width>101</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:transparent;
 background:none;
 border:none;
  font-family: Arial;
   font-size: 34px;
   font-weight: Bold;
-color:rgb(209, 144, 40);</string>
-      </property>
-      <property name="text">
-       <string>400</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="pwerfulbullet_label">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>180</y>
-        <width>121</width>
-        <height>111</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:transparent;
+color:white;</string>
+       </property>
+       <property name="text">
+        <string>400</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="pwerfulbullet_label">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>180</y>
+         <width>121</width>
+         <height>111</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:transparent;
 border-image:url(qrc:/assets/images/button.png);
 background:none;
 border:none;</string>
-      </property>
-      <property name="text">
-       <string>powerfull bullet image</string>
-      </property>
+       </property>
+       <property name="text">
+        <string>powerfull bullet image</string>
+       </property>
+      </widget>
      </widget>
-    </widget>
-    <widget class="QWidget" name="shields">
-     <attribute name="title">
-      <string>shields</string>
-     </attribute>
-     <widget class="QGraphicsView" name="weapon_view2_2">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>50</y>
-        <width>491</width>
-        <height>121</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:rgb(220, 220, 220);
-background-color: rgb(42, 116, 53);</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="Buy_health">
-      <property name="geometry">
-       <rect>
-        <x>450</x>
-        <y>100</y>
-        <width>91</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Sitka Small</family>
-        <pointsize>14</pointsize>
-        <bold>false</bold>
-        <strikeout>false</strikeout>
-       </font>
-      </property>
-      <property name="mouseTracking">
-       <bool>true</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">
- QPushButton#Buy_health {
+     <widget class="QWidget" name="shields">
+      <attribute name="title">
+       <string>shields</string>
+      </attribute>
+      <widget class="QGraphicsView" name="weapon_view2_2">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>50</y>
+         <width>491</width>
+         <height>121</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Buy_health">
+       <property name="geometry">
+        <rect>
+         <x>450</x>
+         <y>100</y>
+         <width>91</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Sitka Small</family>
+         <pointsize>14</pointsize>
+         <bold>false</bold>
+         <strikeout>false</strikeout>
+        </font>
+       </property>
+       <property name="mouseTracking">
+        <bool>true</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton#Buy_health {
 border-style: solid;
+border-radius: 20px;
 	border-top-color: transparent;
 	border-right-color: transparent;
 	border-left-color: transparent;
-	border-bottom-color: #white;
+	border-bottom-color: #green;
 	border-bottom-width: 2px;
 	border-style: solid;
-	color: #FFFFFF;
-background-color: #1e1d23;
+	color: green;
+background-color: white;
  }
 
  
@@ -517,143 +583,142 @@ QPushButton#Buy_health:disabled{
 	background-color: #1e1d23;
 
 }</string>
-      </property>
-      <property name="text">
-       <string>BUY</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="health_image">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>60</y>
-        <width>121</width>
-        <height>111</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:transparent;
+       </property>
+       <property name="text">
+        <string>BUY</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="health_image">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>60</y>
+         <width>121</width>
+         <height>111</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:transparent;
 border-image:url(qrc:/assets/images/button.png);
 background:none;
 border:none;</string>
-      </property>
-      <property name="text">
-       <string>health_image</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="health_price">
-      <property name="geometry">
-       <rect>
-        <x>280</x>
-        <y>80</y>
-        <width>101</width>
-        <height>81</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:transparent;
+       </property>
+       <property name="text">
+        <string>health_image</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="health_price">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>80</y>
+         <width>101</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:transparent;
 background:none;
 border:none;
  font-family: Arial;
   font-size: 34px;
   font-weight: Bold;
-color:rgb(209, 144, 40);</string>
-      </property>
-      <property name="text">
-       <string>500</string>
-      </property>
-     </widget>
-     <widget class="QGraphicsView" name="weapon_view2_4">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>190</y>
-        <width>491</width>
-        <height>121</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:rgb(220, 220, 220);
-background-color: rgb(42, 116, 53);</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="health_price_2">
-      <property name="geometry">
-       <rect>
-        <x>290</x>
-        <y>220</y>
-        <width>101</width>
-        <height>81</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:transparent;
+color:white;</string>
+       </property>
+       <property name="text">
+        <string>500</string>
+       </property>
+      </widget>
+      <widget class="QGraphicsView" name="weapon_view2_4">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>190</y>
+         <width>491</width>
+         <height>121</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="health_price_2">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>200</y>
+         <width>101</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:transparent;
 background:none;
 border:none;
  font-family: Arial;
   font-size: 34px;
   font-weight: Bold;
-color:rgb(209, 144, 40);</string>
-      </property>
-      <property name="text">
-       <string>500</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="drink_image">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>200</y>
-        <width>121</width>
-        <height>111</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:transparent;
+color:white;</string>
+       </property>
+       <property name="text">
+        <string>500</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="drink_image">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>190</y>
+         <width>121</width>
+         <height>111</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:transparent;
 border-image:url(qrc:/assets/images/button.png);
 background:none;
 border:none;</string>
-      </property>
-      <property name="text">
-       <string>drink-image</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="Buy_health_2">
-      <property name="geometry">
-       <rect>
-        <x>450</x>
-        <y>240</y>
-        <width>91</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Sitka Small</family>
-        <pointsize>14</pointsize>
-        <bold>false</bold>
-        <strikeout>false</strikeout>
-       </font>
-      </property>
-      <property name="mouseTracking">
-       <bool>true</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">
- QPushButton#Buy_health_2 {
+       </property>
+       <property name="text">
+        <string>drink-image</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Buy_health_2">
+       <property name="geometry">
+        <rect>
+         <x>450</x>
+         <y>220</y>
+         <width>91</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Sitka Small</family>
+         <pointsize>14</pointsize>
+         <bold>false</bold>
+         <strikeout>false</strikeout>
+        </font>
+       </property>
+       <property name="mouseTracking">
+        <bool>true</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton#Buy_health {
 border-style: solid;
+border-radius: 20px;
 	border-top-color: transparent;
 	border-right-color: transparent;
 	border-left-color: transparent;
-	border-bottom-color: #white;
+	border-bottom-color: #green;
 	border-bottom-width: 2px;
 	border-style: solid;
-	color: #FFFFFF;
-background-color: #1e1d23;
+	color: green;
+background-color: white;
  }
 
  
-QPushButton#Buy_health_2:hover{
+QPushButton#Buy_health:hover{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -665,7 +730,7 @@ QPushButton#Buy_health_2:hover{
 	padding-bottom: 2px;
 	background-color: #1e1d23;
 }
-QPushButton#Buy_health_2:pressed{
+QPushButton#Buy_health:pressed{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -679,7 +744,7 @@ QPushButton#Buy_health_2:pressed{
 	background-color: #1e1d23;
 	background-color: rgb(126, 126, 126);
 }
-QPushButton#Buy_health_2:disabled{
+QPushButton#Buy_health:disabled{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -692,66 +757,65 @@ QPushButton#Buy_health_2:disabled{
 	background-color: #1e1d23;
 
 }</string>
-      </property>
-      <property name="text">
-       <string>BUY</string>
-      </property>
+       </property>
+       <property name="text">
+        <string>BUY</string>
+       </property>
+      </widget>
      </widget>
-    </widget>
-    <widget class="QWidget" name="coins">
-     <attribute name="title">
-      <string>coins</string>
-     </attribute>
-     <widget class="QGraphicsView" name="weapon_view2_3">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>50</y>
-        <width>491</width>
-        <height>121</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:rgb(220, 220, 220);
-background-color: rgb(42, 116, 53);</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="Buy_bomb_3">
-      <property name="geometry">
-       <rect>
-        <x>450</x>
-        <y>100</y>
-        <width>91</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Sitka Small</family>
-        <pointsize>14</pointsize>
-        <bold>false</bold>
-        <strikeout>false</strikeout>
-       </font>
-      </property>
-      <property name="mouseTracking">
-       <bool>true</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">
- QPushButton#Buy_bomb_3 {
+     <widget class="QWidget" name="coins">
+      <attribute name="title">
+       <string>coins</string>
+      </attribute>
+      <widget class="QGraphicsView" name="weapon_view2_3">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>50</y>
+         <width>491</width>
+         <height>121</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Buy_bomb_3">
+       <property name="geometry">
+        <rect>
+         <x>450</x>
+         <y>100</y>
+         <width>91</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Sitka Small</family>
+         <pointsize>14</pointsize>
+         <bold>false</bold>
+         <strikeout>false</strikeout>
+        </font>
+       </property>
+       <property name="mouseTracking">
+        <bool>true</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
 border-style: solid;
+border-radius: 20px;
 	border-top-color: transparent;
 	border-right-color: transparent;
 	border-left-color: transparent;
-	border-bottom-color: #white;
+	border-bottom-color: #green;
 	border-bottom-width: 2px;
 	border-style: solid;
-	color: #FFFFFF;
-background-color: #1e1d23;
+	color: green;
+background-color: white;
  }
 
  
-QPushButton#Buy_bomb_3:hover{
+QPushButton:hover{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -763,7 +827,7 @@ QPushButton#Buy_bomb_3:hover{
 	padding-bottom: 2px;
 	background-color: #1e1d23;
 }
-QPushButton#Buy_bomb_3:pressed{
+QPushButton:pressed{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -777,7 +841,7 @@ QPushButton#Buy_bomb_3:pressed{
 	background-color: #1e1d23;
 	background-color: rgb(126, 126, 126);
 }
-QPushButton#Buy_bomb_3:disabled{
+QPushButton:disabled{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -790,89 +854,126 @@ QPushButton#Buy_bomb_3:disabled{
 	background-color: #1e1d23;
 
 }</string>
-      </property>
-      <property name="text">
-       <string>BUY</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="bomb_price_label_3">
-      <property name="geometry">
-       <rect>
-        <x>260</x>
-        <y>80</y>
-        <width>101</width>
-        <height>81</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:transparent;
+       </property>
+       <property name="text">
+        <string>BUY</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="bomb_price_label_3">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>80</y>
+         <width>101</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:transparent;
 background:none;
 border:none;
  font-family: Arial;
   font-size: 34px;
   font-weight: Bold;
-color:rgb(209, 144, 40);</string>
-      </property>
-      <property name="text">
-       <string>500</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="coins_image1">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>60</y>
-        <width>121</width>
-        <height>111</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:transparent;
+color:white;</string>
+       </property>
+       <property name="text">
+        <string>500</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="coins_image1">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>60</y>
+         <width>121</width>
+         <height>111</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:transparent;
 border-image:url(qrc:/assets/images/button.png);
 background:none;
 border:none;</string>
-      </property>
-      <property name="text">
-       <string>coins_image 1</string>
-      </property>
+       </property>
+       <property name="text">
+        <string>coins_image 1</string>
+       </property>
+      </widget>
      </widget>
     </widget>
+    <widget class="QLabel" name="coins_image">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>50</y>
+       <width>51</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:transparent;
+border-image:url(qrc:/assets/images/button.png);
+background:none;
+border:none;</string>
+     </property>
+     <property name="text">
+      <string>image</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>450</y>
+       <width>491</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>12</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: white;</string>
+     </property>
+     <property name="text">
+      <string>You do not have enough coins. Please buy more</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <zorder>ExitButton</zorder>
+    <zorder>tabWidget</zorder>
+    <zorder>label</zorder>
+    <zorder>coins_image</zorder>
+    <zorder>label_2</zorder>
    </widget>
-   <widget class="QLabel" name="coins_image">
+   <widget class="QMenuBar" name="menubar">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>60</y>
-      <width>51</width>
-      <height>41</height>
+      <x>-30</x>
+      <y>-10</y>
+      <width>920</width>
+      <height>25</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background-color:transparent;
-border-image:url(qrc:/assets/images/button.png);
-background:none;
-border:none;</string>
-    </property>
-    <property name="text">
-     <string>image</string>
+   </widget>
+   <widget class="QStatusBar" name="statusbar">
+    <property name="geometry">
+     <rect>
+      <x>-30</x>
+      <y>-10</y>
+      <width>3</width>
+      <height>27</height>
+     </rect>
     </property>
    </widget>
-   <zorder>ExitButton</zorder>
-   <zorder>tabWidget</zorder>
-   <zorder>label</zorder>
-   <zorder>coins_image</zorder>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>844</width>
-     <height>32</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>

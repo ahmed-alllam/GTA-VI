@@ -33,6 +33,8 @@ GameManager::GameManager(QGraphicsScene *scene)
 
 void GameManager::launch_game()
 {
+    l = new QLabel();
+    l->setGeometry(900, 20, 200, 30);
     create_board();
     add_board_images();
     create_player();
@@ -110,18 +112,18 @@ void GameManager::create_healthbar()
 
     txt = new QGraphicsTextItem("NORMAL MODE");
     QFont fonty("Arial", 20, QFont::StyleNormal);
-    txt->setPos(740, 20);
+    txt->setPos(640, 20);
     txt->setFont(fonty);
     txt->setDefaultTextColor(Qt::white);
     scene->addItem(txt);
 
-    counter = new QGraphicsTextItem("00:00");
-    QFont fontc("Arial", 20, QFont::StyleNormal);
-    counter->setPos(1020, 20);
-    counter->setFont(fonty);
-    counter->setDefaultTextColor(Qt::white);
-    scene->addItem(counter);
-    counter->setVisible(false);
+//    counter = new QGraphicsTextItem("00:00");
+//    QFont fontc("Arial", 20, QFont::StyleNormal);
+//    counter->setPos(1020, 20);
+//    counter->setFont(fonty);
+//    counter->setDefaultTextColor(Qt::white);
+//    scene->addItem(counter);
+//    counter->setVisible(false);
 
     /* Creating Hearts */
     hearts = new QGraphicsPixmapItem[3];
@@ -207,56 +209,75 @@ void GameManager::create_healthbar()
 
 }
 
-void GameManager::set_counter(int n)
-{
-    countdown = n;
-}
+//void GameManager::set_counter(int n)
+//{
+//    countdown = n;
+//}
 
-void GameManager::activate_mode() // displaying the progress bar
-{/*
+//void GameManager::update()
+//{
+//    if (timer != nullptr)
+//    {
+//        timer->stop();
+//    }
+//    countdown--;
+//    activate_mode();
+//}
+
+void GameManager::activate_mode(bool d, bool p) // displaying the progress bar
+{
+    if(d || p) {
     movie = new QMovie(":/assets/images/the_timer.gif");
 
     movie->setBackgroundColor(Qt::red);
-    QLabel *l = new QLabel();
-    l->setGeometry(840, 20, 200, 30);
     movie->setScaledSize(l->size());
+    l->setGeometry(900, 20, 200, 30);
     l->setMovie(movie);
+    l->setVisible(true);
+    l->setGeometry(900, 20, 200, 30);
     movie->start();
     scene->addWidget(l);
-    movie->setSpeed(35);
 
     connect(timer, &QTimer::timeout, movie, &QMovie::stop);
     connect(timer, &QTimer::timeout, l,
-            [l]()
+            [this]()
             {
                 // For some reason == movie->frameCount() crashes, so... *
-                l->setVisible(false);
+                this->l->setVisible(false);
             });
     if (p)
     {
         timer->start(30000);
+        movie->setSpeed(10);
     }
     else if (d)
     {
 
         timer->start(15000);
-    }*/
-    if (timer != nullptr)
-    {
-        timer->stop();
+        movie->setSpeed(20);
     }
-    connect(timer, &QTimer::timeout, this, &GameManager::activate_mode);
-    counter->setPlainText("00:" + QString::number(countdown));
-    if(countdown > 0)
-    {
-        counter->setVisible(true);
-        countdown--;
-        timer->start(1000);
     }
-    else
-    {
-        counter->setVisible(false);
+
+    qDebug() << "wfe in updatemode txt";
+    if(!p && !d) {
+        qDebug() << "wfe in if condi";
+        if(movie != nullptr && l != nullptr) {
+        movie->stop();
+        l->setVisible(false);
+        }
+
     }
+//    connect(timer, &QTimer::timeout, this, &GameManager::update);
+//    counter->setPlainText("00:" + QString::number(countdown));
+//    if(countdown > 0)
+//    {
+//        counter->setVisible(true);
+//        timer->start(1000);
+//    }
+//    else
+//    {
+//        counter->setVisible(false);
+//    }
 }
 
 void GameManager::open_gate()
@@ -318,7 +339,7 @@ void GameManager::game_over()
     QUiLoader loader;
     QWidget *gameover = loader.load(&gameoverUI);
     gameoverUI.close();
-    gameover->setGeometry(screenWidth / 2 - gameover->width() / 2, screenHeight / 2 - gameover->height() / 2, gameover->width(), gameover->height());
+    gameover->setGeometry((screenWidth / 2) - (gameover->width() * 3 / 4), (screenHeight / 2) - (gameover->height() / 2), gameover->width(), gameover->height());
     gameover->setStyleSheet("QWidget {border: 5px solid white; border-radius: 10px; background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.09589655 rgba(80, 150, 1, 255), stop:1 rgba(51, 95, 63, 255));}");
     scene->addWidget(gameover);
 
@@ -360,7 +381,7 @@ void GameManager::Win()
     // add gameover to the middle of the screen
     gameover->setStyleSheet("QWidget {border: 5px solid white; border-radius: 10px; background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.09589655 rgba(80, 150, 1, 255), stop:1 rgba(51, 95, 63, 255));}");
 
-    gameover->setGeometry(screenWidth / 2 - gameover->width() / 2, screenHeight / 2 - gameover->height() / 2, gameover->width(), gameover->height());
+    gameover->setGeometry((screenWidth / 2) - (gameover->width() * 3 / 4), (screenHeight / 2) - (gameover->height() / 2), gameover->width(), gameover->height());
 
     scene->addWidget(gameover);
 

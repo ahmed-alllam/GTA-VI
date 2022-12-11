@@ -21,71 +21,46 @@ OnlinePlayer::OnlinePlayer(int boardData[12][16], void *currentLevel, QString us
     this->currPlayer = false;
     this->idText = nullptr;
 
-    franklinImagel1 = QPixmap(":assets/images/Franklin model 2 m3.png");
-    franklinImagel2 = QPixmap(":assets/images/Franklin model 2 m2.png");
-    franklinImager1 = QPixmap(":assets/images/Franklin model 2 m4.png");
-    franklinImager2 = QPixmap(":assets/images/Franklin model 2 m1.png");
-    franklinImaged1 = QPixmap(":assets/images/Franklin D m1.png");
-    franklinImaged2 = QPixmap(":assets/images/Franklin D m2.png");
-    franklinImageu1 = QPixmap(":assets/images/Franklin U m1.png");
-    franklinImageu2 = QPixmap(":assets/images/Franklin U m2.png");
-    franklinImageu = QPixmap(":assets/images/Franklin U protected.png");
-    franklinImaged = QPixmap(":assets/images/Franklin D protected.png");
+    franklinImagel = QPixmap(":assets/images/Franklin model 2 m2.png");
+    franklinImager = QPixmap(":assets/images/Franklin model 2 m1.png");
+    franklinImaged = QPixmap(":assets/images/Franklin D m2.png");
+    franklinImageu = QPixmap(":assets/images/Franklin U m2.png");
 
     int screenWidth = QGuiApplication::primaryScreen()->availableSize().width();
     int screenHeight = QGuiApplication::primaryScreen()->availableSize().height();
     unitWidth = qMin(screenWidth, screenHeight) / 13;
     unitHeight = qMin(screenWidth, screenHeight) / 13;
 
-    franklinImagel1 = franklinImagel1.scaledToWidth(unitWidth);
-    franklinImagel1 = franklinImagel1.scaledToHeight(unitHeight);
-
-    franklinImagel2 = franklinImagel2.scaledToWidth(unitWidth);
-    franklinImagel2 = franklinImagel2.scaledToHeight(unitHeight);
-
-    franklinImager1 = franklinImager1.scaledToWidth(unitWidth);
-    franklinImager1 = franklinImager1.scaledToHeight(unitHeight);
-
-    franklinImager2 = franklinImager2.scaledToWidth(unitWidth);
-    franklinImager2 = franklinImager2.scaledToHeight(unitHeight);
-
-    franklinImaged1 = franklinImaged1.scaledToWidth(unitWidth);
-    franklinImaged1 = franklinImaged1.scaledToHeight(unitHeight);
-
-    franklinImaged2 = franklinImaged2.scaledToWidth(unitWidth);
-    franklinImaged2 = franklinImaged2.scaledToHeight(unitHeight);
-
-    franklinImageu1 = franklinImageu1.scaledToWidth(unitWidth);
-    franklinImageu1 = franklinImageu1.scaledToHeight(unitHeight);
-
-    franklinImageu2 = franklinImageu2.scaledToWidth(unitWidth);
-    franklinImageu2 = franklinImageu2.scaledToHeight(unitHeight);
-
+    franklinImagel = franklinImagel.scaledToWidth(unitWidth);
+    franklinImagel = franklinImagel.scaledToHeight(unitHeight);
+    
+    franklinImager = franklinImager.scaledToWidth(unitWidth);
+    franklinImager = franklinImager.scaledToHeight(unitHeight);
+    
     franklinImaged = franklinImaged.scaledToWidth(unitWidth);
     franklinImaged = franklinImaged.scaledToHeight(unitHeight);
 
     franklinImageu = franklinImageu.scaledToWidth(unitWidth);
     franklinImageu = franklinImageu.scaledToHeight(unitHeight);
+    
+    franklinImagepl = QPixmap(":assets/images/Franklin model 2 powered L.png"); // change  the image
+    franklinImagepr = QPixmap(":assets/images/Franklin model 2 powered R.png");   // change  the image
+    franklinImagepu = QPixmap(":assets/images/Franklin model 2 powered U.png"); // change  the image
+    franklinImagepd = QPixmap(":assets/images/Franklin model 2 powered D.png");   // change  the image
 
-    franklinImagel = QPixmap(":assets/images/Franklin model 2 protected 2.png"); // change  the image
-    franklinImager = QPixmap(":assets/images/Franklin model 2 protected.png");   // change  the image
+    franklinImagepl = franklinImagepl.scaledToWidth(unitWidth);
+    franklinImagepl = franklinImagepl.scaledToHeight(unitHeight);
 
-    franklinImagel = franklinImagel.scaledToWidth(unitWidth);
-    franklinImagel = franklinImagel.scaledToHeight(unitHeight);
+    franklinImagepr = franklinImagepr.scaledToWidth(unitWidth);
+    franklinImagepr = franklinImagepr.scaledToHeight(unitHeight);
 
-    franklinImager = franklinImager.scaledToWidth(unitWidth);
-    franklinImager = franklinImager.scaledToHeight(unitHeight);
+    franklinImagepu = franklinImagepu.scaledToWidth(unitWidth);
+    franklinImagepu = franklinImagepu.scaledToHeight(unitHeight);
 
-    franklinImagell = QPixmap(":assets/images/Franklin model 2 powered 2.png"); // change  the image
-    franklinImagerr = QPixmap(":assets/images/Franklin model 2 powered.png");   // change  the image
+    franklinImagepd = franklinImagepd.scaledToWidth(unitWidth);
+    franklinImagepd = franklinImagepd.scaledToHeight(unitHeight);
 
-    franklinImagell = franklinImagell.scaledToWidth(unitWidth);
-    franklinImagell = franklinImagell.scaledToHeight(unitHeight);
-
-    franklinImagerr = franklinImagerr.scaledToWidth(unitWidth);
-    franklinImagerr = franklinImagerr.scaledToHeight(unitHeight);
-
-    setPixmap(franklinImagel1);
+    setPixmap(franklinImagel);
 
     //    QMediaPlayer *player = new QMediaPlayer;
     //    QAudioOutput *audioOutput = new QAudioOutput;
@@ -229,67 +204,133 @@ void OnlinePlayer::keyPressEvent(QKeyEvent *event)
     if (currPlayer == true)
     {
         OnlineLevel *manager = static_cast<OnlineLevel *>(currentLevel);
+	
+		if (bullets == 0)
+		{
+        	if (event->key() == Qt::Key_Up && boardData[x - 1][y] >= 0)
+        	{
+            	x--;
+            	direction = 2;
+            	setPixmap(franklinImageu);
+            	if (idText != nullptr)
+            	{
+        	        idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
+    	            idText->setRotation(90);
+	
+    	            healthBar->setOrientation(Qt::Vertical);
+	
+            	    healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
+            	}
+    	    }
+        	else if (event->key() == Qt::Key_Down && boardData[x + 1][y] >= 0)
+        	{
+            	x++;
+            	direction = 3;
+            	setPixmap(franklinImaged);
+            	if (idText != nullptr)
+            	{
+            	    idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
+            	    idText->setRotation(90);
 
-        if (event->key() == Qt::Key_Up && boardData[x - 1][y] >= 0)
-        {
-            x--;
-            direction = 2;
-            setPixmap(franklinImageu);
-            if (idText != nullptr)
-            {
-                idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
-                idText->setRotation(90);
+            	    healthBar->setOrientation(Qt::Vertical);
+	
+    	            healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
+        	    }
+        	}	
+        	else if (event->key() == Qt::Key_Right && boardData[x][y + 1] >= 0)
+        	{
+        	    y++;
+            	direction = 0;
+            	setPixmap(franklinImager);
+            	if (idText != nullptr)
+            	{
+            	    idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
+            	    idText->setRotation(0);
 
-                healthBar->setOrientation(Qt::Vertical);
+            	    healthBar->setOrientation(Qt::Horizontal);
+	
+    	            healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
+        	    }
+        	}
+        	else if (event->key() == Qt::Key_Left && boardData[x][y - 1] >= 0)
+        	{
+        	    y--;
+        	    direction = 1;
+            	setPixmap(franklinImagel);
+            	if (idText != nullptr)
+        	    {
+            	    idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
+            	    idText->setRotation(0);
 
-                healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
-            }
+	                healthBar->setOrientation(Qt::Horizontal);
+
+    	            healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
+        	    }
+        	}
         }
-        else if (event->key() == Qt::Key_Down && boardData[x + 1][y] >= 0)
+        else
         {
-            x++;
-            direction = 3;
-            setPixmap(franklinImaged);
-            if (idText != nullptr)
-            {
-                idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
-                idText->setRotation(90);
+        	if (event->key() == Qt::Key_Up && boardData[x - 1][y] >= 0)
+        	{
+            	x--;
+            	direction = 2;
+            	setPixmap(franklinImagepu);
+            	if (idText != nullptr)
+            	{
+        	        idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
+    	            idText->setRotation(90);
+	
+    	            healthBar->setOrientation(Qt::Vertical);
+	
+            	    healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
+            	}
+    	    }
+        	else if (event->key() == Qt::Key_Down && boardData[x + 1][y] >= 0)
+        	{
+            	x++;
+            	direction = 3;
+            	setPixmap(franklinImagepd);
+            	if (idText != nullptr)
+            	{
+            	    idText->setPos(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20);
+            	    idText->setRotation(90);
 
-                healthBar->setOrientation(Qt::Vertical);
+            	    healthBar->setOrientation(Qt::Vertical);
+	
+    	            healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
+        	    }
+        	}	
+        	else if (event->key() == Qt::Key_Right && boardData[x][y + 1] >= 0)
+        	{
+        	    y++;
+            	direction = 0;
+            	setPixmap(franklinImagepr);
+            	if (idText != nullptr)
+            	{
+            	    idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
+            	    idText->setRotation(0);
 
-                healthBar->setGeometry(unitWidth + y * unitWidth + 90, unitHeight + x * unitHeight + 20, 10, 50);
-            }
-        }
-        else if (event->key() == Qt::Key_Right && boardData[x][y + 1] >= 0)
-        {
-            y++;
-            direction = 0;
-            setPixmap(franklinImager);
-            if (idText != nullptr)
-            {
-                idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
-                idText->setRotation(0);
+            	    healthBar->setOrientation(Qt::Horizontal);
+	
+    	            healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
+        	    }
+        	}
+        	else if (event->key() == Qt::Key_Left && boardData[x][y - 1] >= 0)
+        	{
+        	    y--;
+        	    direction = 1;
+            	setPixmap(franklinImagepl);
+            	if (idText != nullptr)
+        	    {
+            	    idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
+            	    idText->setRotation(0);
 
-                healthBar->setOrientation(Qt::Horizontal);
+	                healthBar->setOrientation(Qt::Horizontal);
 
-                healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
-            }
-        }
-        else if (event->key() == Qt::Key_Left && boardData[x][y - 1] >= 0)
-        {
-            y--;
-            direction = 1;
-            setPixmap(franklinImagel);
-            if (idText != nullptr)
-            {
-                idText->setPos(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 25);
-                idText->setRotation(0);
-
-                healthBar->setOrientation(Qt::Horizontal);
-
-                healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
-            }
-        }
+    	            healthBar->setGeometry(unitWidth + y * unitWidth + 20, unitHeight + x * unitHeight - 35, 50, 10);
+        	    }
+        	}
+		}
 
         if (event->key() == Qt::Key_Space)
         {

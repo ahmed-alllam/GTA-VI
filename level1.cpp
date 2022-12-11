@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QGraphicsProxyWidget>
 #include <QPushButton>
+#include <QMovie>
 
 level1::level1(void *gameManager, QGraphicsScene *scene)
 {
@@ -327,11 +328,12 @@ void level1::updateModeTxt()
 {
     GameManager *manager = static_cast<GameManager *>(gameManager);
 
+
     if (manager->txt != nullptr && franklin != nullptr)
     {
         if (franklin->getIsPowerful() && franklin->getIsDrunk())
         {
-            manager->txt->setPlainText("Powerful and Drunk Mode");
+            manager->txt->setPlainText("Powerful and Drunk");
         }
         else if (franklin->getIsPowerful())
         {
@@ -344,6 +346,7 @@ void level1::updateModeTxt()
         else
         {
             manager->txt->setPlainText("Normal Mode");
+            manager->activate_mode(false, false);
         }
     }
 }
@@ -474,7 +477,7 @@ void level1::player_hit()
     }
     if (enemy2 != nullptr)
     {
-        enemy2->setXandY(2, 1);
+        enemy2->setXandY(1, 2);
         enemy2->getPath();
     }
     else
@@ -569,14 +572,15 @@ void level1::new_heart()
 void level1::activate_mode()
 {
     GameManager *manager = static_cast<GameManager *>(gameManager);
-    if(franklin->getIsPowerful())
-    {
-        manager->set_counter(30);
-        manager->activate_mode();
-    }
-    else if(franklin->getIsDrunk())
-    {
-        manager->set_counter(15);
-        manager->activate_mode();
-    }
+    manager->activate_mode(franklin->getIsDrunk(), franklin->getIsPowerful());
+//    if(franklin->getIsPowerful())
+//    {
+//        manager->set_counter(30);
+//        manager->activate_mode();
+//    }
+//    else if(franklin->getIsDrunk())
+//    {
+//        manager->set_counter(15);
+//        manager->activate_mode();
+//    }
 }
