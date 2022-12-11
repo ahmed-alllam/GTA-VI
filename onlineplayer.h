@@ -25,20 +25,14 @@ public:
     void * currentLevel;
     QProgressBar *healthBar;
     QGraphicsTextItem *idText;
-    QPixmap franklinImagel1;
-    QPixmap franklinImagel2;
-    QPixmap franklinImageu1;
-    QPixmap franklinImageu2;
-    QPixmap franklinImaged1;
-    QPixmap franklinImaged2;
-    QPixmap franklinImager1;
-    QPixmap franklinImager2;
     QPixmap franklinImagel;
-    QPixmap franklinImager;
     QPixmap franklinImageu;
     QPixmap franklinImaged;
-    QPixmap franklinImagell;
-    QPixmap franklinImagerr;
+    QPixmap franklinImager;
+    QPixmap franklinImagepr;
+    QPixmap franklinImagepl;
+    QPixmap franklinImagepu;
+    QPixmap franklinImagepd;
     int unitWidth;
     int unitHeight;
 public:
