@@ -18,6 +18,8 @@ public:
 private slots:
     void on_pay_clicked();
 
+    void on_cancel_clicked();
+
 private:
     Ui::payment_info *ui;
 };
