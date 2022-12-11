@@ -323,6 +323,9 @@ void level3::close_gate()
 void level3::updateCounters()
 {
     GameManager *manager = static_cast<GameManager *>(gameManager);
+    qDebug() << "in update counters bullets "<< manager->bulletsCounter << " " << QString::number(franklin->getBulletsCount());
+    qDebug() << "in update counters bombs " << manager->bombsCounter << " " << QString::number(franklin->getBombsCount());
+    qDebug() << "in update counters coins "<< manager->coinsCounter << " " << QString::number(franklin->getCoinsCount());
 
     if (manager->bulletsCounter != nullptr)
         manager->bulletsCounter->setPlainText(QString::number(franklin->getBulletsCount()));
@@ -330,8 +333,8 @@ void level3::updateCounters()
     {
         manager->pwoerfull_sign = new QGraphicsPixmapItem;
         QPixmap blankImage(":/assets/images/bullet_icon.png");
-        blankImage = blankImage.scaledToWidth(20);
-        blankImage = blankImage.scaledToHeight(20);
+        blankImage = blankImage.scaledToWidth(25);
+        blankImage = blankImage.scaledToHeight(25);
         manager->pwoerfull_sign->setPixmap(blankImage);
         manager->pwoerfull_sign->setPos(335, 8);
         scene->addItem(manager->pwoerfull_sign);
@@ -343,8 +346,14 @@ void level3::updateCounters()
         scene->removeItem(manager->pwoerfull_sign);
         delete manager->pwoerfull_sign;
         manager->pwoerfull_sign=nullptr;
+
     }
 
+    if (manager->bombsCounter != nullptr)
+        manager->bombsCounter->setPlainText(QString::number(franklin->getBombsCount()));
+
+    if (manager->coinsCounter != nullptr)
+        manager->coinsCounter->setPlainText(QString::number(franklin->getCoinsCount()));
 }
 
 void level3::remove_heart()

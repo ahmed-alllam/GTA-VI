@@ -333,6 +333,9 @@ void level2::close_gate()
 void level2::updateCounters()
 {
     GameManager *manager = static_cast<GameManager *>(gameManager);
+    qDebug() << "in update counters bullets "<< manager->bulletsCounter << " " << QString::number(franklin->getBulletsCount());
+    qDebug() << "in update counters bombs " << manager->bombsCounter << " " << QString::number(franklin->getBombsCount());
+    qDebug() << "in update counters coins "<< manager->coinsCounter << " " << QString::number(franklin->getCoinsCount());
 
     if (manager->bulletsCounter != nullptr)
         manager->bulletsCounter->setPlainText(QString::number(franklin->getBulletsCount()));
@@ -353,7 +356,14 @@ void level2::updateCounters()
         scene->removeItem(manager->pwoerfull_sign);
         delete manager->pwoerfull_sign;
         manager->pwoerfull_sign=nullptr;
+
     }
+
+    if (manager->bombsCounter != nullptr)
+        manager->bombsCounter->setPlainText(QString::number(franklin->getBombsCount()));
+
+    if (manager->coinsCounter != nullptr)
+        manager->coinsCounter->setPlainText(QString::number(franklin->getCoinsCount()));
 }
 
 void level2::remove_heart()

@@ -245,12 +245,12 @@ void GameManager::activate_mode(bool d, bool p) // displaying the progress bar
                 // For some reason == movie->frameCount() crashes, so... *
                 this->l->setVisible(false);
             });
-    if (p)
+    if (p && (timer != nullptr && movie != nullptr))
     {
         timer->start(30000);
         movie->setSpeed(10);
     }
-    else if (d)
+    else if (d && (timer != nullptr && movie != nullptr))
     {
 
         timer->start(15000);

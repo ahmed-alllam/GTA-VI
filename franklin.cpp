@@ -587,7 +587,7 @@ void Franklin::hit()
     else
     {
         setPowerful2False();
-//        manager->updateModeTxt();
+        manager->updateModeTxt();
         Move();
     }
 }
