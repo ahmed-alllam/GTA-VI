@@ -328,7 +328,8 @@ void OnlineGameManager::onDisconnected()
     // add gameover to the middle of the screen
     gameover->setStyleSheet("QWidget {border: 5px solid white; border-radius: 10px; background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.09589655 rgba(80, 150, 1, 255), stop:1 rgba(51, 95, 63, 255));}");
 
-    gameover->setGeometry((screenWidth / 2) - (gameover->width() * 3 / 4), (screenHeight / 2) - (gameover->height() / 2), gameover->width(), gameover->height());
+    gameover->setGeometry((screenWidth / 2) - (gameover->width() * 3 / 4), (screenHeight / 2) - gameover->height() / 2, gameover->width(), gameover->height());
+
     scene->addWidget(gameover);
 
     QPushButton *nextButton = gameover->findChild<QPushButton *>("next");
@@ -374,7 +375,9 @@ void OnlineGameManager::gameWon()
     // add gameover to the middle of the screen
     gameover->setStyleSheet("QWidget {border: 5px solid white; border-radius: 10px; background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.09589655 rgba(80, 150, 1, 255), stop:1 rgba(51, 95, 63, 255));}");
 
-    gameover->setGeometry((screenWidth / 2) - (gameover->width() * 3 / 4), (screenHeight / 2) - (gameover->height() / 2), gameover->width(), gameover->height());    scene->addWidget(gameover);
+    gameover->setGeometry(screenWidth / 2 - gameover->width() / 2, screenHeight / 2 - gameover->height() / 2, gameover->width(), gameover->height());
+
+    scene->addWidget(gameover);
 
     QPushButton *nextButton = gameover->findChild<QPushButton *>("next");
     nextButton->setVisible(false);

@@ -26,6 +26,8 @@ homepage::homepage(QGraphicsScene *scene)
 
     this->scene = scene;
 
+    this->setFixedSize(this->size());
+
     ui->pass->setEchoMode(QLineEdit::Password);
     ui->OnlineButton->setVisible(false);
     ui->pushButton->setVisible(false);
@@ -220,6 +222,7 @@ void homepage::on_marketButton_clicked()
     MainWindow * main =new MainWindow;
     main->show();
 
-
+    // make the main window transparent only the parent
+    main->centralWidget()->setStyleSheet("QWidget #centralWidget { background-color: rgba(0, 0, 0, 0); }");
 }
 

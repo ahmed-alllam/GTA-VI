@@ -9,6 +9,7 @@
 #include "level.h"
 #include <QAudioFormat>
 #include <QMediaPlayer>
+#include <QLabel>
 #include <QAudioOutput>
 class GameManager: public QObject
 {
@@ -22,6 +23,7 @@ private:
     QTimer *timer3; // win checker
     QMediaPlayer *player = new QMediaPlayer;
     QAudioOutput *audioOutput = new QAudioOutput;
+    QLabel * l;
 //    int countdown;
 public slots:
 

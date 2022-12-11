@@ -29,6 +29,8 @@ GameManager::GameManager(QGraphicsScene *scene)
     timer = new QTimer;
     currentLevel = new level1(this, scene);
     create_sound();
+    l = new QLabel();
+    l->setGeometry(900, 20, 200, 30);
 }
 
 void GameManager::launch_game()
@@ -224,22 +226,22 @@ void GameManager::create_healthbar()
 
 void GameManager::activate_mode(bool d, bool p) // displaying the progress bar
 {
+    if(d || p) {
     movie = new QMovie(":/assets/images/the_timer.gif");
 
     movie->setBackgroundColor(Qt::red);
-    QLabel *l = new QLabel();
-    l->setGeometry(900, 20, 200, 30);
     movie->setScaledSize(l->size());
     l->setMovie(movie);
+    l->setVisible(true);
     movie->start();
     scene->addWidget(l);
 
     connect(timer, &QTimer::timeout, movie, &QMovie::stop);
     connect(timer, &QTimer::timeout, l,
-            [l]()
+            [this]()
             {
                 // For some reason == movie->frameCount() crashes, so... *
-                l->setVisible(false);
+                this->l->setVisible(false);
             });
     if (p)
     {
@@ -251,6 +253,15 @@ void GameManager::activate_mode(bool d, bool p) // displaying the progress bar
 
         timer->start(15000);
         movie->setSpeed(20);
+    }
+    }
+
+    qDebug() << "wfe in updatemode txt";
+    if(!p && !d) {
+        qDebug() << "wfe in if condi";
+        movie->stop();
+        l->setVisible(false);
+
     }
 //    connect(timer, &QTimer::timeout, this, &GameManager::update);
 //    counter->setPlainText("00:" + QString::number(countdown));

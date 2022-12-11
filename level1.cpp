@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QGraphicsProxyWidget>
 #include <QPushButton>
+#include <QMovie>
 
 level1::level1(void *gameManager, QGraphicsScene *scene)
 {
@@ -327,6 +328,7 @@ void level1::updateModeTxt()
 {
     GameManager *manager = static_cast<GameManager *>(gameManager);
 
+
     if (manager->txt != nullptr && franklin != nullptr)
     {
         if (franklin->getIsPowerful() && franklin->getIsDrunk())
@@ -344,6 +346,7 @@ void level1::updateModeTxt()
         else
         {
             manager->txt->setPlainText("Normal Mode");
+            manager->activate_mode(false, false);
         }
     }
 }
