@@ -9,6 +9,9 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     this->setWindowFlags(Qt::FramelessWindowHint);
+    //set window background color to transparent
+    this-> setAttribute(Qt::WA_TranslucentBackground);
+
     ui->setupUi(this);
    ui->label->setText("1500");
    coins = 1500;

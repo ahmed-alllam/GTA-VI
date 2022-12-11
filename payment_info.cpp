@@ -18,6 +18,7 @@ payment_info::payment_info(QWidget *parent) :
     ui(new Ui::payment_info)
 {
     ui->setupUi(this);
+    ui->warning->setText("");
 }
 
 payment_info::~payment_info()
@@ -27,9 +28,23 @@ payment_info::~payment_info()
 
 void payment_info::on_pay_clicked()
 {
+    qDebug() << ui->card_numb->text();
     if(((ui->CVV)->text()).toInt()<100 ||((ui->CVV)->text()).toInt()>999 )
        ui->warning->setText("not valid CVV");
+    else if(((ui->card_numb)->text()).toLong()<1000000000000000 ||((ui->card_numb)->text()).toLong()>9999999999999999 )
+         ui->warning->setText("not valid card number");
+     else
+     {
+          ui->warning->setText("payment done");
+          // close the window
+            this->close();
+     }
+
+}
 
 
+void payment_info::on_cancel_clicked()
+{
+    this->close();
 }
 

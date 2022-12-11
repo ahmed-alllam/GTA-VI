@@ -204,7 +204,7 @@ QPushButton:disabled{
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <property name="iconSize">
       <size>
@@ -958,8 +958,8 @@ border:none;</string>
      <rect>
       <x>-30</x>
       <y>-10</y>
-      <width>920</width>
-      <height>25</height>
+      <width>870</width>
+      <height>24</height>
      </rect>
     </property>
    </widget>
