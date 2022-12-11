@@ -14,17 +14,32 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:#191A19;
-background-color:rgb(48, 48, 48);
+   <string notr="true">background-color:transparent;
+
 QPushButton{
 color:blue;
 }
 QTabBar::tab {
     margin-left:40px;
     margin-right:40px;
-}</string>
+}
+
+
+   </string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">QWidget #centralwidget{
+background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.09589655 rgba(80, 150, 1, 255), stop:1 rgba(51, 95, 63, 255));
+ border-radius: 50px;
+border: 5px solid white;
+}
+
+QTabWidget #tabWidget {
+background-color: transparent;
+}
+</string>
+   </property>
    <widget class="QPushButton" name="ExitButton">
     <property name="geometry">
      <rect>
@@ -90,52 +105,51 @@ color:rgb(209, 144, 40);</string>
       <height>16777215</height>
      </size>
     </property>
+    <property name="font">
+     <font>
+      <kerning>true</kerning>
+     </font>
+    </property>
     <property name="styleSheet">
      <string notr="true">
+     QTabWidget::pane {
+    border: 0px;
+    background-color: transparent;
+    background: transparent;
+    }
 QTabBar::tab {
     margin-left:70px;
 	margin-right:10px;
-	font: 18pt &quot;Segoe Print&quot;;
+	font: 15pt &quot;Segoe Print&quot;;
   font-weight: Bold;
-
-color:black;
-background-color: rgb(227, 227, 227);
-
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,
-                                stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
-    border: 2px solid #C4C4C3;
-    border-bottom-color: #C2C7CB; /* same as the pane color */
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
+color:green;
+background-color: white;
     min-width: 10ex;
-    padding: 1px;
+    padding: 10px;
+    border: 3px solid green;
+    border-radius: 20px;
 }
-QTabBar::tab:selected, QTabBar::tab:hover {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #fafafa, stop: 0.4 #f4f4f4,
-                                stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);
-color:rgb(209, 144, 40);
+QTabBar::tab:selected {
+color:white;
+}
+
+ QTabBar::tab:hover {
+  color: rgb(209, 144, 40);
 }
 
 QTabBar::tab:selected {
-    border-color: #9B9B9B;
-    border-bottom-color: #C2C7CB; /* same as pane color */
-background-color: rgb(42, 116, 53);
+  color: rgb(209, 144, 40);
+background-color:white;
 }
 
-QTabBar::tab:!selected {
-    margin-top: 4px; /* make non-selected tabs look smaller */
-}
+
 </string>
     </property>
     <property name="tabPosition">
      <enum>QTabWidget::North</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="iconSize">
      <size>
@@ -163,8 +177,7 @@ QTabBar::tab:!selected {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color:rgb(220, 220, 220);
-background-color: rgb(42, 116, 53);</string>
+       <string notr="true"/>
       </property>
      </widget>
      <widget class="QLabel" name="bomb_price_label">
@@ -300,8 +313,7 @@ QPushButton#Buy_bomb:disabled{
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color:rgb(220, 220, 220);
-background-color: rgb(42, 116, 53);</string>
+       <string notr="true"/>
       </property>
      </widget>
      <widget class="QPushButton" name="Buy_powerfulbullet">
@@ -439,8 +451,7 @@ border:none;</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color:rgb(220, 220, 220);
-background-color: rgb(42, 116, 53);</string>
+       <string notr="true"/>
       </property>
      </widget>
      <widget class="QPushButton" name="Buy_health">
@@ -573,8 +584,7 @@ color:rgb(209, 144, 40);</string>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color:rgb(220, 220, 220);
-background-color: rgb(42, 116, 53);</string>
+       <string notr="true"/>
       </property>
      </widget>
      <widget class="QLabel" name="health_price_2">
@@ -712,8 +722,7 @@ QPushButton#Buy_health_2:disabled{
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color:rgb(220, 220, 220);
-background-color: rgb(42, 116, 53);</string>
+       <string notr="true"/>
       </property>
      </widget>
      <widget class="QPushButton" name="Buy_bomb_3">
@@ -868,7 +877,7 @@ border:none;</string>
      <x>0</x>
      <y>0</y>
      <width>844</width>
-     <height>32</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>
