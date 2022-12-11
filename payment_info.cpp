@@ -31,7 +31,7 @@ void payment_info::on_pay_clicked()
     qDebug() << ui->card_numb->text();
     if(((ui->CVV)->text()).toInt()<100 ||((ui->CVV)->text()).toInt()>999 )
        ui->warning->setText("not valid CVV");
-    else if(((ui->card_numb)->text()).toLong()<1000000000000000 ||((ui->card_numb)->text()).toLong()>9999999999999999 )
+    else if(((ui->card_numb)->text()).toLongLong()<1000000000000000 ||((ui->card_numb)->text()).toLongLong()>9999999999999999 )
          ui->warning->setText("not valid card number");
      else
      {
