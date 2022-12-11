@@ -23,7 +23,10 @@ private slots:
 
     void on_Buy_health_clicked();
 
+    void on_Buy_bomb_3_clicked();
+
 private:
     Ui::MainWindow *ui;
+    int coins;
 };
 #endif // MAINWINDOW_H
