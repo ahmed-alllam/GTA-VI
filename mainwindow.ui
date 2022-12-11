@@ -143,13 +143,66 @@ background-color:white;
 }
 
 
+ QPushButton {
+border-style: solid;
+border-radius: 20px;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #green;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: green;
+background-color: white;
+ }
+
+ 
+QPushButton:hover{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #37efba;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #FFFFFF;
+	padding-bottom: 2px;
+	background-color: #1e1d23;
+}
+QPushButton:pressed{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #37efba;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #37efba;
+	padding-bottom: 2px;
+    margin-top: 4px;     
+	background-color: #1e1d23;
+	background-color: rgb(126, 126, 126);
+}
+QPushButton:disabled{
+	border-style: solid;
+	border-top-color: transparent;
+	border-right-color: transparent;
+	border-left-color: transparent;
+	border-bottom-color: #808086;
+	border-bottom-width: 2px;
+	border-style: solid;
+	color: #808086;
+	padding-bottom: 1px;
+	background-color: #1e1d23;
+
+}
 </string>
     </property>
     <property name="tabPosition">
      <enum>QTabWidget::North</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="iconSize">
      <size>
@@ -246,20 +299,21 @@ border:none;</string>
       </property>
       <property name="styleSheet">
        <string notr="true">
- QPushButton#Buy_bomb {
+ QPushButton {
 border-style: solid;
+border-radius: 20px;
 	border-top-color: transparent;
 	border-right-color: transparent;
 	border-left-color: transparent;
-	border-bottom-color: #white;
+	border-bottom-color: #green;
 	border-bottom-width: 2px;
 	border-style: solid;
-	color: #FFFFFF;
-background-color: #1e1d23;
+	color: green;
+background-color: white;
  }
 
  
-QPushButton#Buy_bomb:hover{
+QPushButton:hover{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -271,7 +325,7 @@ QPushButton#Buy_bomb:hover{
 	padding-bottom: 2px;
 	background-color: #1e1d23;
 }
-QPushButton#Buy_bomb:pressed{
+QPushButton:pressed{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -285,7 +339,7 @@ QPushButton#Buy_bomb:pressed{
 	background-color: #1e1d23;
 	background-color: rgb(126, 126, 126);
 }
-QPushButton#Buy_bomb:disabled{
+QPushButton:disabled{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -297,7 +351,8 @@ QPushButton#Buy_bomb:disabled{
 	padding-bottom: 1px;
 	background-color: #1e1d23;
 
-}</string>
+}
+</string>
       </property>
       <property name="text">
        <string>BUY</string>
@@ -320,7 +375,7 @@ QPushButton#Buy_bomb:disabled{
       <property name="geometry">
        <rect>
         <x>450</x>
-        <y>230</y>
+        <y>220</y>
         <width>91</width>
         <height>41</height>
        </rect>
@@ -338,20 +393,21 @@ QPushButton#Buy_bomb:disabled{
       </property>
       <property name="styleSheet">
        <string notr="true">
- QPushButton#Buy_powerfulbullet {
+ QPushButton {
 border-style: solid;
+border-radius: 20px;
 	border-top-color: transparent;
 	border-right-color: transparent;
 	border-left-color: transparent;
-	border-bottom-color: #white;
+	border-bottom-color: #green;
 	border-bottom-width: 2px;
 	border-style: solid;
-	color: #FFFFFF;
-background-color: #1e1d23;
+	color: green;
+background-color: white;
  }
 
  
-QPushButton#Buy_powerfulbullet:hover{
+QPushButton:hover{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -363,7 +419,7 @@ QPushButton#Buy_powerfulbullet:hover{
 	padding-bottom: 2px;
 	background-color: #1e1d23;
 }
-QPushButton#Buy_powerfulbullet:pressed{
+QPushButton:pressed{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -377,7 +433,7 @@ QPushButton#Buy_powerfulbullet:pressed{
 	background-color: #1e1d23;
 	background-color: rgb(126, 126, 126);
 }
-QPushButton#Buy_powerfulbullet:disabled{
+QPushButton:disabled{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -389,7 +445,8 @@ QPushButton#Buy_powerfulbullet:disabled{
 	padding-bottom: 1px;
 	background-color: #1e1d23;
 
-}</string>
+}
+</string>
       </property>
       <property name="text">
        <string>BUY</string>
@@ -478,14 +535,15 @@ border:none;</string>
        <string notr="true">
  QPushButton#Buy_health {
 border-style: solid;
+border-radius: 20px;
 	border-top-color: transparent;
 	border-right-color: transparent;
 	border-left-color: transparent;
-	border-bottom-color: #white;
+	border-bottom-color: #green;
 	border-bottom-width: 2px;
 	border-style: solid;
-	color: #FFFFFF;
-background-color: #1e1d23;
+	color: green;
+background-color: white;
  }
 
  
@@ -555,7 +613,7 @@ border:none;</string>
      <widget class="QLabel" name="health_price">
       <property name="geometry">
        <rect>
-        <x>280</x>
+        <x>250</x>
         <y>80</y>
         <width>101</width>
         <height>81</height>
@@ -590,8 +648,8 @@ color:rgb(209, 144, 40);</string>
      <widget class="QLabel" name="health_price_2">
       <property name="geometry">
        <rect>
-        <x>290</x>
-        <y>220</y>
+        <x>250</x>
+        <y>200</y>
         <width>101</width>
         <height>81</height>
        </rect>
@@ -613,7 +671,7 @@ color:rgb(209, 144, 40);</string>
       <property name="geometry">
        <rect>
         <x>80</x>
-        <y>200</y>
+        <y>190</y>
         <width>121</width>
         <height>111</height>
        </rect>
@@ -632,7 +690,7 @@ border:none;</string>
       <property name="geometry">
        <rect>
         <x>450</x>
-        <y>240</y>
+        <y>220</y>
         <width>91</width>
         <height>41</height>
        </rect>
@@ -650,20 +708,21 @@ border:none;</string>
       </property>
       <property name="styleSheet">
        <string notr="true">
- QPushButton#Buy_health_2 {
+ QPushButton#Buy_health {
 border-style: solid;
+border-radius: 20px;
 	border-top-color: transparent;
 	border-right-color: transparent;
 	border-left-color: transparent;
-	border-bottom-color: #white;
+	border-bottom-color: #green;
 	border-bottom-width: 2px;
 	border-style: solid;
-	color: #FFFFFF;
-background-color: #1e1d23;
+	color: green;
+background-color: white;
  }
 
  
-QPushButton#Buy_health_2:hover{
+QPushButton#Buy_health:hover{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -675,7 +734,7 @@ QPushButton#Buy_health_2:hover{
 	padding-bottom: 2px;
 	background-color: #1e1d23;
 }
-QPushButton#Buy_health_2:pressed{
+QPushButton#Buy_health:pressed{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -689,7 +748,7 @@ QPushButton#Buy_health_2:pressed{
 	background-color: #1e1d23;
 	background-color: rgb(126, 126, 126);
 }
-QPushButton#Buy_health_2:disabled{
+QPushButton#Buy_health:disabled{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -747,20 +806,21 @@ QPushButton#Buy_health_2:disabled{
       </property>
       <property name="styleSheet">
        <string notr="true">
- QPushButton#Buy_bomb_3 {
+ QPushButton {
 border-style: solid;
+border-radius: 20px;
 	border-top-color: transparent;
 	border-right-color: transparent;
 	border-left-color: transparent;
-	border-bottom-color: #white;
+	border-bottom-color: #green;
 	border-bottom-width: 2px;
 	border-style: solid;
-	color: #FFFFFF;
-background-color: #1e1d23;
+	color: green;
+background-color: white;
  }
 
  
-QPushButton#Buy_bomb_3:hover{
+QPushButton:hover{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -772,7 +832,7 @@ QPushButton#Buy_bomb_3:hover{
 	padding-bottom: 2px;
 	background-color: #1e1d23;
 }
-QPushButton#Buy_bomb_3:pressed{
+QPushButton:pressed{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -786,7 +846,7 @@ QPushButton#Buy_bomb_3:pressed{
 	background-color: #1e1d23;
 	background-color: rgb(126, 126, 126);
 }
-QPushButton#Buy_bomb_3:disabled{
+QPushButton:disabled{
 	border-style: solid;
 	border-top-color: transparent;
 	border-right-color: transparent;
@@ -798,7 +858,8 @@ QPushButton#Buy_bomb_3:disabled{
 	padding-bottom: 1px;
 	background-color: #1e1d23;
 
-}</string>
+}
+</string>
       </property>
       <property name="text">
        <string>BUY</string>
@@ -807,7 +868,7 @@ QPushButton#Buy_bomb_3:disabled{
      <widget class="QLabel" name="bomb_price_label_3">
       <property name="geometry">
        <rect>
-        <x>260</x>
+        <x>250</x>
         <y>80</y>
         <width>101</width>
         <height>81</height>
