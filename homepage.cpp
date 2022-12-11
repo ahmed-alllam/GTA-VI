@@ -215,8 +215,6 @@ void homepage::on_Sign_clicked()
     ui->pass->setText("");
 }
 
-
-
 void homepage::on_marketButton_clicked()
 {
     MainWindow * main =new MainWindow;

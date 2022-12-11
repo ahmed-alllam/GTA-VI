@@ -29,12 +29,12 @@ GameManager::GameManager(QGraphicsScene *scene)
     timer = new QTimer;
     currentLevel = new level1(this, scene);
     create_sound();
-    l = new QLabel();
-    l->setGeometry(900, 20, 200, 30);
 }
 
 void GameManager::launch_game()
 {
+    l = new QLabel();
+    l->setGeometry(900, 20, 200, 30);
     create_board();
     add_board_images();
     create_player();
@@ -231,8 +231,10 @@ void GameManager::activate_mode(bool d, bool p) // displaying the progress bar
 
     movie->setBackgroundColor(Qt::red);
     movie->setScaledSize(l->size());
+    l->setGeometry(900, 20, 200, 30);
     l->setMovie(movie);
     l->setVisible(true);
+    l->setGeometry(900, 20, 200, 30);
     movie->start();
     scene->addWidget(l);
 
@@ -259,8 +261,10 @@ void GameManager::activate_mode(bool d, bool p) // displaying the progress bar
     qDebug() << "wfe in updatemode txt";
     if(!p && !d) {
         qDebug() << "wfe in if condi";
+        if(movie != nullptr && l != nullptr) {
         movie->stop();
         l->setVisible(false);
+        }
 
     }
 //    connect(timer, &QTimer::timeout, this, &GameManager::update);
